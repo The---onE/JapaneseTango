@@ -15,6 +15,7 @@ import com.xmx.tango.R;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
+import com.xmx.tango.Tools.Timer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,9 +23,14 @@ import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 public class HomeFragment extends BaseFragment {
     Tango tango;
 
-    TextView pronunciation;
-    TextView writing;
-    TextView meaning;
+    long writingTime = 2500;
+    Timer writingTimer;
+    long meaningTime = 3500;
+    Timer meaningTimer;
+
+    TextView pronunciationView;
+    TextView writingView;
+    TextView meaningView;
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -33,9 +39,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        pronunciation = (TextView) view.findViewById(R.id.tv_tango_pronunciation);
-        writing = (TextView) view.findViewById(R.id.tv_tango_writing);
-        meaning = (TextView) view.findViewById(R.id.tv_tango_meaning);
+        pronunciationView = (TextView) view.findViewById(R.id.tv_tango_pronunciation);
+        writingView = (TextView) view.findViewById(R.id.tv_tango_writing);
+        meaningView = (TextView) view.findViewById(R.id.tv_tango_meaning);
     }
 
     @Override
@@ -55,8 +61,9 @@ public class HomeFragment extends BaseFragment {
                         int h = wm.getDefaultDisplay().getHeight();
                         float y = h - motionEvent.getRawY();
                         if (y > h / 3) {
-                            loadNewTango();
+                            //TODO
                             showToast(R.string.remember_forever);
+                            loadNewTango();
                         }
                         break;
                 }
@@ -67,16 +74,18 @@ public class HomeFragment extends BaseFragment {
         remember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadNewTango();
+                //TODO
                 showToast(R.string.remember);
+                loadNewTango();
             }
         });
 
         view.findViewById(R.id.btn_forget).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadNewTango();
+                //TODO
                 showToast(R.string.forget);
+                loadNewTango();
             }
         });
     }
@@ -89,8 +98,32 @@ public class HomeFragment extends BaseFragment {
     private void loadNewTango() {
         tango = TangoManager.getInstance().randomTango();
 
-        pronunciation.setText(tango.pronunciation);
-        writing.setText(tango.writing);
-        meaning.setText(tango.meaning);
+        pronunciationView.setText(tango.pronunciation);
+
+        writingView.setText("");
+        if (writingTimer != null) {
+            writingTimer.stop();
+        }
+        writingTimer = new Timer() {
+            @Override
+            public void timer() {
+                writingView.setText(tango.writing);
+                writingTimer.stop();
+            }
+        };
+        writingTimer.start(writingTime);
+
+        meaningView.setText("");
+        if (meaningTimer != null) {
+            meaningTimer.stop();
+        }
+        meaningTimer = new Timer() {
+            @Override
+            public void timer() {
+                meaningView.setText(tango.meaning);
+                meaningTimer.stop();
+            }
+        };
+        meaningTimer.start(meaningTime);
     }
 }
