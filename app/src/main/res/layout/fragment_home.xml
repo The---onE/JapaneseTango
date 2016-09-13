@@ -6,7 +6,41 @@
     android:orientation="vertical"
     tools:context="com.xmx.tango.Fragments.HomeFragment">
 
+    <RelativeLayout
+        android:id="@+id/layout_tango"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tv_tango_pronunciation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_tango_writing"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="32dp"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_tango_writing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="42sp" />
+
+        <TextView
+            android:id="@+id/tv_tango_meaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_tango_writing"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:textSize="42sp" />
+
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/layout_bottom_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
