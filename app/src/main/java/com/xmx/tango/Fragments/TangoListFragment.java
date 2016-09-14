@@ -14,9 +14,7 @@ import com.xmx.tango.Tango.TangoAdapter;
 import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
-import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
-import com.xmx.tango.Tools.Timer;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

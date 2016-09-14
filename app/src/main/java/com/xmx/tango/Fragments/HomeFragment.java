@@ -1,7 +1,9 @@
 package com.xmx.tango.Fragments;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +19,9 @@ import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.Timer;
 
+import net.gimite.jatts.JapaneseTextToSpeech;
+
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -90,6 +95,34 @@ public class HomeFragment extends BaseFragment {
                 //TODO
                 //showToast(R.string.forget);
                 loadNewTango();
+            }
+        });
+
+        writingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String writing = writingView.getText().toString();
+                if (writing != "") {
+                    JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
+                    tts.speak(writing, TextToSpeech.QUEUE_FLUSH, params);
+
+                }
+            }
+        });
+
+        pronunciationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pronunciation = pronunciationView.getText().toString();
+                if (pronunciation != "") {
+                    JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
+                    tts.speak(pronunciation, TextToSpeech.QUEUE_FLUSH, params);
+
+                }
             }
         });
     }
