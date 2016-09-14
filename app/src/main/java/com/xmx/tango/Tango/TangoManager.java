@@ -49,7 +49,7 @@ public class TangoManager {
             tangoVersion = manager.getVersion();
 
             tangoList.clear();
-            tangoList = manager.selectAll("LastTime", false);
+            tangoList = manager.selectAll("addTime", false);
 
             version++;
         }

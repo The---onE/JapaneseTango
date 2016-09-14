@@ -11,7 +11,9 @@ import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
+import com.xmx.tango.Fragments.AddTangoFragment;
 import com.xmx.tango.Fragments.HomeFragment;
+import com.xmx.tango.Fragments.TangoListFragment;
 import com.xmx.tango.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.tango.Tools.PagerAdapter;
 import com.xmx.tango.User.Callback.AutoLoginCallback;
@@ -32,9 +34,13 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
+        fragments.add(new TangoListFragment());
+        fragments.add(new AddTangoFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
+        titles.add("列表");
+        titles.add("添加");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 

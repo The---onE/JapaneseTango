@@ -1,0 +1,50 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xmx.tango.Fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/edit_writing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="@string/writing"
+            android:textSize="32sp" />
+
+        <EditText
+            android:id="@+id/edit_pronunciation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_writing"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="@string/pronunciation"
+            android:textSize="32sp" />
+
+        <EditText
+            android:id="@+id/edit_meaning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_pronunciation"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="@string/meaning"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/btn_add_tango"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_meaning"
+            android:layout_marginTop="50dp"
+            android:text="@string/add" />
+    </RelativeLayout>
+
+</ScrollView>

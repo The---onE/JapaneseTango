@@ -89,4 +89,8 @@
     <string name="forget">没记住</string>
     <string name="remember_forever">彻底记住</string>
 
+    <string name="writing">写法</string>
+    <string name="pronunciation">发音</string>
+    <string name="meaning">解释</string>
+
 </resources>

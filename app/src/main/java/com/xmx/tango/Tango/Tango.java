@@ -54,8 +54,8 @@ public class Tango implements ISQLEntity {
         content.put("Voice", voice);
         content.put("Score", score);
         content.put("Frequency", frequency);
-        content.put("AddTime", addTime.getTime());
-        content.put("LastTime", lastTime.getTime());
+        content.put("AddTime", addTime != null ? addTime.getTime() : 0);
+        content.put("LastTime", lastTime != null ? lastTime.getTime() : 0);
         content.put("Flags", flags);
         return content;
     }

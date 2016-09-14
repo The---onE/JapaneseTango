@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment {
                         float y = h - motionEvent.getRawY();
                         if (y > h / 3) {
                             //TODO
-                            showToast(R.string.remember_forever);
+                            //showToast(R.string.remember_forever);
                             loadNewTango();
                         }
                         break;
@@ -79,7 +79,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 //TODO
-                showToast(R.string.remember);
+                //showToast(R.string.remember);
                 loadNewTango();
             }
         });
@@ -88,7 +88,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 //TODO
-                showToast(R.string.forget);
+                //showToast(R.string.forget);
                 loadNewTango();
             }
         });
