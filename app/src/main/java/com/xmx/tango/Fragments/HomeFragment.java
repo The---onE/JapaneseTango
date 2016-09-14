@@ -17,20 +17,24 @@ import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.Timer;
 
+import java.util.Random;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment {
     Tango tango;
 
-    long writingTime = 2500;
-    Timer writingTimer;
+    long answerTime = 2500;
+    Timer answerTimer;
     long meaningTime = 3500;
     Timer meaningTimer;
 
     TextView pronunciationView;
     TextView writingView;
     TextView meaningView;
+
+    Random random = new Random();
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -96,22 +100,43 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadNewTango() {
-        tango = TangoManager.getInstance().randomTango();
-
-        pronunciationView.setText(tango.pronunciation);
-
-        writingView.setText("");
-        if (writingTimer != null) {
-            writingTimer.stop();
+        Tango temp = TangoManager.getInstance().randomTango();
+        if (tango != null && temp.id == tango.id) {
+            tango = TangoManager.getInstance().nextTango();
+        } else {
+            tango = temp;
         }
-        writingTimer = new Timer() {
-            @Override
-            public void timer() {
-                writingView.setText(tango.writing);
-                writingTimer.stop();
+
+        boolean r = random.nextBoolean();
+        if (r) {
+            pronunciationView.setText(tango.pronunciation);
+            writingView.setText("");
+            if (answerTimer != null) {
+                answerTimer.stop();
             }
-        };
-        writingTimer.start(writingTime);
+            answerTimer = new Timer() {
+                @Override
+                public void timer() {
+                    writingView.setText(tango.writing);
+                    answerTimer.stop();
+                }
+            };
+            answerTimer.start(answerTime);
+        } else {
+            writingView.setText(tango.writing);
+            pronunciationView.setText("");
+            if (answerTimer != null) {
+                answerTimer.stop();
+            }
+            answerTimer = new Timer() {
+                @Override
+                public void timer() {
+                    pronunciationView.setText(tango.pronunciation);
+                    answerTimer.stop();
+                }
+            };
+            answerTimer.start(answerTime);
+        }
 
         meaningView.setText("");
         if (meaningTimer != null) {

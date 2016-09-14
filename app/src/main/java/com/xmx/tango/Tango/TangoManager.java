@@ -20,6 +20,24 @@ public class TangoManager {
     long tangoVersion = 0;
     long version = System.currentTimeMillis();
     List<Tango> tangoList = new ArrayList<>();
+    Random random = new Random();
+
+    int index = 0;
+    List<Tango> tempTangos = new ArrayList<>();
+    private TangoManager() {
+        Tango t1 = new Tango();
+        t1.id = 0;
+        t1.writing = "愛";
+        t1.pronunciation = "アイ";
+        tempTangos.add(t1);
+
+        Tango t2 = new Tango();
+        t2.id = 1;
+        t2.writing = "大切";
+        t2.pronunciation = "タイセツ";
+        t2.meaning = "重要";
+        tempTangos.add(t2);
+    }
 
     public List<Tango> getData() {
         return tangoList;
@@ -42,24 +60,25 @@ public class TangoManager {
         updateData();
         int size = tangoList.size();
         if (size > 0) {
-            int r = new Random().nextInt(size);
-            return tangoList.get(r);
+            index = random.nextInt(size);
+            return tangoList.get(index);
         } else {
             //TODO
-            List<Tango> tangos = new ArrayList<>();
-            Tango t1 = new Tango();
-            t1.writing = "愛";
-            t1.pronunciation = "アイ";
-            tangos.add(t1);
+            index = random.nextInt(tempTangos.size());
+            return tempTangos.get(index);
+        }
+    }
 
-            Tango t2 = new Tango();
-            t2.writing = "大切";
-            t2.pronunciation = "タイセツ";
-            t2.meaning = "重要";
-            tangos.add(t2);
-
-            int r = new Random().nextInt(tangos.size());
-            return tangos.get(r);
+    public Tango nextTango() {
+        updateData();
+        int size = tangoList.size();
+        if (size > 0) {
+            index = (++index) % size;
+            return tangoList.get(index);
+        } else {
+            //TODO
+            index = (++index) % tempTangos.size();
+            return tempTangos.get(index);
         }
     }
 }
