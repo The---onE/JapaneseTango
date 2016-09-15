@@ -33,4 +33,34 @@ public class DataManager {
         editor.putLong("version", value);
         editor.apply();
     }
+
+    public int getInt(String key) {
+        return mData.getInt(key, -1);
+    }
+
+    public int getInt(String key, int def) {
+        return mData.getInt(key, def);
+    }
+
+    public void setInt(String key, int value) {
+        SharedPreferences.Editor editor = mData.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public void intIncres(String key, int delta) {
+        int i = getInt(key);
+        i += delta;
+        setInt(key, i);
+    }
+
+    public long getLong(String key, long def) {
+        return mData.getLong(key, def);
+    }
+
+    public void setLong(String key, long value) {
+        SharedPreferences.Editor editor = mData.edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
 }

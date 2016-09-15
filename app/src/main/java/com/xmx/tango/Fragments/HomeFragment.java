@@ -13,11 +13,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.xmx.tango.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
+import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.Timer;
 
@@ -34,10 +36,13 @@ import java.util.Random;
  */
 public class HomeFragment extends BaseFragment {
     static final int REMEMBER_SCORE = 5;
+    static final int TIRED_COEFFICIENT = 25;
+    static final int REMEMBER_MIN_SCORE = 2;
     static final int FORGET_SCORE = -2;
     static final int REMEMBER_FOREVER_SCORE = 32;
 
     Tango tango;
+    int count;
 
     long answerTime = 2500;
     Timer answerTimer;
@@ -47,13 +52,25 @@ public class HomeFragment extends BaseFragment {
     TextView pronunciationView;
     TextView writingView;
     TextView meaningView;
+    TextView countView;
 
     Random random = new Random();
 
     private void remember() {
         if (tango != null) {
+            Date last = tango.lastTime;
+            Date now = new Date();
+            if (!isSameDate(now, last)) {
+                count++;
+                DataManager.getInstance().setInt("tango_count", count);
+                DataManager.getInstance().setLong("last_time", now.getTime());
+                countView.setText("今日已记：" + count);
+            }
+
+            int score = REMEMBER_SCORE - count / TIRED_COEFFICIENT;
+            score = Math.max(score, REMEMBER_MIN_SCORE);
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + REMEMBER_SCORE),
+                    "Score=" + (tango.score + score),
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new TangoListChangeEvent());
         }
@@ -62,14 +79,24 @@ public class HomeFragment extends BaseFragment {
     private void forget() {
         if (tango != null) {
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + FORGET_SCORE),
-                    "LastTime=" + new Date().getTime());
+                    "Score=" + (tango.score + FORGET_SCORE));
+            //"LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new TangoListChangeEvent());
         }
     }
 
     private void rememberForever() {
         if (tango != null) {
+
+            Date last = tango.lastTime;
+            Date now = new Date();
+            if (!isSameDate(now, last)) {
+                count++;
+                DataManager.getInstance().setInt("tango_count", count);
+                DataManager.getInstance().setLong("last_time", now.getTime());
+                countView.setText("今日已记：" + count);
+            }
+
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + REMEMBER_FOREVER_SCORE),
                     "LastTime=" + new Date().getTime());
@@ -87,6 +114,17 @@ public class HomeFragment extends BaseFragment {
         pronunciationView = (TextView) view.findViewById(R.id.tv_tango_pronunciation);
         writingView = (TextView) view.findViewById(R.id.tv_tango_writing);
         meaningView = (TextView) view.findViewById(R.id.tv_tango_meaning);
+        countView = (TextView) view.findViewById(R.id.tv_tango_count);
+
+        Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
+        Date now = new Date();
+        count = DataManager.getInstance().getInt("tango_count", 0);
+        if (!isSameDate(now, last)) {
+            count = 0;
+            DataManager.getInstance().setInt("tango_count", 0);
+            DataManager.getInstance().setLong("last_time", now.getTime());
+        }
+        countView.setText("今日已记：" + count);
     }
 
     @Override
@@ -214,5 +252,10 @@ public class HomeFragment extends BaseFragment {
             }
         };
         meaningTimer.start(meaningTime);
+    }
+
+    boolean isSameDate(Date now, Date last) {
+        return now.getTime() - last.getTime() < Constants.DAY_TIME
+                && now.getDate() == last.getDate();
     }
 }
