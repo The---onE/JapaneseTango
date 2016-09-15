@@ -93,4 +93,6 @@
     <string name="pronunciation">发音</string>
     <string name="meaning">解释</string>
 
+    <string name="add_error">写法和发音不能同时为空</string>
+
 </resources>

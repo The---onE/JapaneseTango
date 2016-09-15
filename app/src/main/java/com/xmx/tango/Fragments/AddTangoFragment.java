@@ -46,6 +46,11 @@ public class AddTangoFragment extends xUtilsFragment {
         String meaning = meaningView.getText().toString();
         entity.meaning = meaning;
 
+        if (writing.equals("") && pronunciation.equals("")) {
+            showToast(R.string.add_error);
+            return;
+        }
+
         entity.addTime = new Date();
         TangoEntityManager.getInstance().insertData(entity);
 

@@ -102,12 +102,11 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 String writing = writingView.getText().toString();
-                if (writing != "") {
+                if (!writing.equals("")) {
                     JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
-                    HashMap<String, String> params = new HashMap<String, String>();
+                    HashMap<String, String> params = new HashMap<>();
                     params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
                     tts.speak(writing, TextToSpeech.QUEUE_FLUSH, params);
-
                 }
             }
         });
@@ -116,12 +115,11 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 String pronunciation = pronunciationView.getText().toString();
-                if (pronunciation != "") {
+                if (!pronunciation.equals("")) {
                     JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
-                    HashMap<String, String> params = new HashMap<String, String>();
+                    HashMap<String, String> params = new HashMap<>();
                     params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
                     tts.speak(pronunciation, TextToSpeech.QUEUE_FLUSH, params);
-
                 }
             }
         });
