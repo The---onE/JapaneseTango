@@ -15,12 +15,17 @@ import android.widget.TextView;
 
 import com.xmx.tango.R;
 import com.xmx.tango.Tango.Tango;
+import com.xmx.tango.Tango.TangoEntityManager;
+import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.Timer;
 
 import net.gimite.jatts.JapaneseTextToSpeech;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -28,6 +33,10 @@ import java.util.Random;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment {
+    static final int REMEMBER_SCORE = 5;
+    static final int FORGET_SCORE = -2;
+    static final int REMEMBER_FOREVER_SCORE = 32;
+
     Tango tango;
 
     long answerTime = 2500;
@@ -40,6 +49,33 @@ public class HomeFragment extends BaseFragment {
     TextView meaningView;
 
     Random random = new Random();
+
+    private void remember() {
+        if (tango != null) {
+            TangoEntityManager.getInstance().updateData(tango.id,
+                    "Score=" + (tango.score + REMEMBER_SCORE),
+                    "LastTime=" + new Date().getTime());
+            EventBus.getDefault().post(new TangoListChangeEvent());
+        }
+    }
+
+    private void forget() {
+        if (tango != null) {
+            TangoEntityManager.getInstance().updateData(tango.id,
+                    "Score=" + (tango.score + FORGET_SCORE),
+                    "LastTime=" + new Date().getTime());
+            EventBus.getDefault().post(new TangoListChangeEvent());
+        }
+    }
+
+    private void rememberForever() {
+        if (tango != null) {
+            TangoEntityManager.getInstance().updateData(tango.id,
+                    "Score=" + (tango.score + REMEMBER_FOREVER_SCORE),
+                    "LastTime=" + new Date().getTime());
+            EventBus.getDefault().post(new TangoListChangeEvent());
+        }
+    }
 
     @Override
     protected View getContentView(LayoutInflater inflater, ViewGroup container) {
@@ -70,8 +106,7 @@ public class HomeFragment extends BaseFragment {
                         int h = wm.getDefaultDisplay().getHeight();
                         float y = h - motionEvent.getRawY();
                         if (y > h / 3) {
-                            //TODO
-                            //showToast(R.string.remember_forever);
+                            rememberForever();
                             loadNewTango();
                         }
                         break;
@@ -83,8 +118,7 @@ public class HomeFragment extends BaseFragment {
         remember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
-                //showToast(R.string.remember);
+                remember();
                 loadNewTango();
             }
         });
@@ -92,8 +126,7 @@ public class HomeFragment extends BaseFragment {
         view.findViewById(R.id.btn_forget).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
-                //showToast(R.string.forget);
+                forget();
                 loadNewTango();
             }
         });

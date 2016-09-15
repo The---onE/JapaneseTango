@@ -8,6 +8,8 @@ import java.util.Random;
  * Created by The_onE on 2016/9/13.
  */
 public class TangoManager {
+    static final int SELECT_TANGO_LIMIT = 8;
+
     private static TangoManager instance;
 
     public synchronized static TangoManager getInstance() {
@@ -58,10 +60,11 @@ public class TangoManager {
 
     public Tango randomTango() {
         updateData();
-        int size = tangoList.size();
+        List<Tango> tangos = TangoEntityManager.getInstance().selectTangoScoreAsc(SELECT_TANGO_LIMIT);
+        int size = tangos.size();
         if (size > 0) {
             index = random.nextInt(size);
-            return tangoList.get(index);
+            return tangos.get(index);
         } else {
             //TODO
             index = random.nextInt(tempTangos.size());
@@ -71,10 +74,11 @@ public class TangoManager {
 
     public Tango nextTango() {
         updateData();
-        int size = tangoList.size();
+        List<Tango> tangos = TangoEntityManager.getInstance().selectTangoScoreAsc(SELECT_TANGO_LIMIT);
+        int size = tangos.size();
         if (size > 0) {
             index = (++index) % size;
-            return tangoList.get(index);
+            return tangos.get(index);
         } else {
             //TODO
             index = (++index) % tempTangos.size();

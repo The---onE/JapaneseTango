@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
-    private SQLiteDatabase database = null;
+    protected SQLiteDatabase database = null;
     long version = System.currentTimeMillis();
     protected boolean openFlag = false;
 
@@ -181,7 +181,7 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         version++;
     }
 
-    private List<Entity> convertToEntities(Cursor cursor) {
+    protected List<Entity> convertToEntities(Cursor cursor) {
         if (!checkDatabase()) {
             return null;
         }
