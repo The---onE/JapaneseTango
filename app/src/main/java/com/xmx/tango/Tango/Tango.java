@@ -15,6 +15,7 @@ public class Tango implements ISQLEntity {
     public String writing;
     public String pronunciation;
     public String meaning;
+    public int tone;
     public String partOfSpeech;
     public String image;
     public String voice;
@@ -23,6 +24,7 @@ public class Tango implements ISQLEntity {
     public Date addTime;
     public Date lastTime;
     public String flags;
+    public int delFlag;
 
     @Override
     public String tableFields() {
@@ -30,6 +32,7 @@ public class Tango implements ISQLEntity {
                 "Writing text, " +
                 "Pronunciation text, " +
                 "Meaning text, " +
+                "Tone integer not null default(0), " +
                 "PartOfSpeech text, " +
                 "Image text, " +
                 "Voice text, " +
@@ -37,7 +40,8 @@ public class Tango implements ISQLEntity {
                 "Frequency integer not null default(0), " +
                 "AddTime integer not null default(0), " +
                 "LastTime integer not null default(0), " +
-                "Flags text";
+                "Flags text, " +
+                "DelFlag integer not null default(0)";
     }
 
     @Override
@@ -49,6 +53,7 @@ public class Tango implements ISQLEntity {
         content.put("Writing", writing);
         content.put("Pronunciation", pronunciation);
         content.put("Meaning", meaning);
+        content.put("Tone", tone);
         content.put("PartOfSpeech", partOfSpeech);
         content.put("Image", image);
         content.put("Voice", voice);
@@ -57,6 +62,7 @@ public class Tango implements ISQLEntity {
         content.put("AddTime", addTime != null ? addTime.getTime() : 0);
         content.put("LastTime", lastTime != null ? lastTime.getTime() : 0);
         content.put("Flags", flags);
+        content.put("DelFlag", delFlag);
         return content;
     }
 
@@ -67,14 +73,16 @@ public class Tango implements ISQLEntity {
         entity.writing = c.getString(1);
         entity.pronunciation = c.getString(2);
         entity.meaning = c.getString(3);
-        entity.partOfSpeech = c.getString(4);
-        entity.image = c.getString(5);
-        entity.voice = c.getString(6);
-        entity.score = c.getInt(7);
-        entity.frequency = c.getInt(8);
-        entity.addTime = new Date(c.getLong(9));
-        entity.lastTime = new Date(c.getLong(10));
-        entity.flags = c.getString(11);
+        entity.tone = c.getInt(4);
+        entity.partOfSpeech = c.getString(5);
+        entity.image = c.getString(6);
+        entity.voice = c.getString(7);
+        entity.score = c.getInt(8);
+        entity.frequency = c.getInt(9);
+        entity.addTime = new Date(c.getLong(10));
+        entity.lastTime = new Date(c.getLong(11));
+        entity.flags = c.getString(12);
+        entity.delFlag = c.getInt(13);
 
         return entity;
     }

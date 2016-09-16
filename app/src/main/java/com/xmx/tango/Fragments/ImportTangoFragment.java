@@ -36,6 +36,15 @@ public class ImportTangoFragment extends xUtilsFragment {
     @ViewInject(R.id.edit_format)
     EditText formatView;
 
+    @ViewInject(R.id.edit_writing_index)
+    EditText writingIndexView;
+
+    @ViewInject(R.id.edit_pronunciation_index)
+    EditText pronunciationIndexView;
+
+    @ViewInject(R.id.edit_meaning_index)
+    EditText meaningIndexView;
+
     @Event(value = R.id.btn_import_tango)
     private void onImportTangoClick(View view) {
         String text = textView.getText().toString();
@@ -43,22 +52,51 @@ public class ImportTangoFragment extends xUtilsFragment {
         Pattern pattern = Pattern.compile(format);
         Matcher matcher = pattern.matcher(text);
 
+        String writingIndexStr = writingIndexView.getText().toString();
+        int writingIndex = -1;
+        if (!writingIndexStr.equals("")) {
+            writingIndex = Integer.parseInt(writingIndexStr);
+        }
+
+        String pronunciationIndexStr = pronunciationIndexView.getText().toString();
+        int pronunciationIndex = -1;
+        if (!pronunciationIndexStr.equals("")) {
+            pronunciationIndex = Integer.parseInt(pronunciationIndexStr);
+        }
+
+        String meaningIndexStr = meaningIndexView.getText().toString();
+        int meaningIndex = -1;
+        if (!meaningIndexStr.equals("")) {
+            meaningIndex = Integer.parseInt(meaningIndexStr);
+        }
+
         List<String> match = new ArrayList<>();
         final List<Tango> tangoList = new ArrayList<>();
         while (matcher.find()) {
             Tango t = new Tango();
-            String writing = matcher.group(1);
-            String pronunciation = matcher.group(2);
+            String writing = "";
+            if (writingIndex > 0) {
+                writing = matcher.group(writingIndex);
+            }
+            String pronunciation = "";
+            if (pronunciationIndex > 0) {
+                pronunciation = matcher.group(pronunciationIndex);
+            }
+            String meaning = "";
+            if (meaningIndex > 0) {
+                meaning = matcher.group(meaningIndex);
+            }
 
             t.writing = writing;
             t.pronunciation = pronunciation;
-            match.add(writing + ":" + pronunciation);
+            t.meaning = meaning;
+            match.add(writing + ":" + pronunciation + "|" + meaning);
             tangoList.add(t);
         }
         String array[] = new String[match.size()];
         array = match.toArray(array);
         new AlertDialog.Builder(getContext())
-                .setTitle("列表框")
+                .setTitle("识别出的単語")
                 .setItems(array, null)
                 .setPositiveButton("导入", new DialogInterface.OnClickListener() {
                     @Override
