@@ -1,0 +1,40 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xmx.tango.Fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="@string/text"
+            android:textSize="32sp" />
+
+        <EditText
+            android:id="@+id/edit_format"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_text"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:hint="@string/format"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/btn_import_tango"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_format"
+            android:layout_marginTop="50dp"
+            android:text="@string/import_tango" />
+    </RelativeLayout>
+
+</ScrollView>

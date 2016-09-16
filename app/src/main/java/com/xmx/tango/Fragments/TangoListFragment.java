@@ -108,7 +108,9 @@ public class TangoListFragment extends xUtilsFragment {
             }
         });
 
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     private void updateTangoList() {
