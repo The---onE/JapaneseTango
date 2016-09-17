@@ -26,22 +26,29 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         openDatabase();
     }
 
-    public List<Tango> selectTangoScoreAsc(int count) {
+    public List<Tango> selectTangoScoreAsc(int count, boolean reviewFlag) {
         if (!checkDatabase()) {
             return null;
         }
         String type = DataManager.getInstance().getString("tango_type");
-        Cursor cursor;
+        String typeStr;
         if (!type.equals("")) {
-            cursor = database.rawQuery("select * from " + tableName +
-                            " where Type = '" + type + "'" +
-                            " order by Score asc, LastTime asc limit " + count,
-                    null);
+            typeStr = " where Type = '" + type + "'";
         } else {
-            cursor = database.rawQuery("select * from " + tableName +
-                            " order by Score asc, LastTime asc limit " + count,
-                    null);
+            typeStr = "";
         }
+
+        String reviewStr;
+        if (reviewFlag) {
+            reviewStr = "Frequency desc, ";
+        } else {
+            reviewStr = "";
+        }
+
+        Cursor cursor = database.rawQuery("select * from " + tableName +
+                        typeStr +
+                        " order by " + reviewStr + "Score asc, LastTime asc limit " + count,
+                null);
         return convertToEntities(cursor);
     }
 }

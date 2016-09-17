@@ -14,6 +14,7 @@ import com.xmx.tango.Tools.Data.DataManager;
 public class SettingActivity extends BaseTempActivity {
 
     EditText typeView;
+    EditText goalView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -21,6 +22,9 @@ public class SettingActivity extends BaseTempActivity {
 
         typeView = getViewById(R.id.edit_type);
         typeView.setText(DataManager.getInstance().getString("tango_type"));
+
+        goalView = getViewById(R.id.edit_goal);
+        goalView.setText("" + DataManager.getInstance().getInt("tango_goal", 0));
     }
 
     @Override
@@ -30,6 +34,15 @@ public class SettingActivity extends BaseTempActivity {
             public void onClick(View view) {
                 String type = typeView.getText().toString().trim();
                 DataManager.getInstance().setString("tango_type", type);
+                showToast("更改成功");
+            }
+        });
+
+        getViewById(R.id.btn_change_goal).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int goal = Integer.parseInt(goalView.getText().toString());
+                DataManager.getInstance().setInt("tango_goal", goal);
                 showToast("更改成功");
             }
         });

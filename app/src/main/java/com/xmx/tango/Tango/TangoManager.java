@@ -58,9 +58,10 @@ public class TangoManager {
         return version;
     }
 
-    public Tango randomTango() {
+    public Tango randomTango(boolean reviewFlag) {
         updateData();
-        List<Tango> tangos = TangoEntityManager.getInstance().selectTangoScoreAsc(SELECT_TANGO_LIMIT);
+        List<Tango> tangos = TangoEntityManager.getInstance()
+                .selectTangoScoreAsc(SELECT_TANGO_LIMIT, reviewFlag);
         int size = tangos.size();
         if (size > 0) {
             index = random.nextInt(size);
@@ -72,9 +73,10 @@ public class TangoManager {
         }
     }
 
-    public Tango nextTango() {
+    public Tango nextTango(boolean reviewFlag) {
         updateData();
-        List<Tango> tangos = TangoEntityManager.getInstance().selectTangoScoreAsc(SELECT_TANGO_LIMIT);
+        List<Tango> tangos = TangoEntityManager.getInstance()
+                .selectTangoScoreAsc(SELECT_TANGO_LIMIT, reviewFlag);
         int size = tangos.size();
         if (size > 0) {
             index = (++index) % size;

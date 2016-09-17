@@ -100,6 +100,8 @@
 
     <string name="add_error">写法和发音不能同时为空</string>
 
+    <string name="goal">每日目标</string>
+
     <string name="change">更改</string>
 
 </resources>

@@ -40,9 +40,11 @@ public class HomeFragment extends BaseFragment {
     static final int REMEMBER_MIN_SCORE = 2;
     static final int FORGET_SCORE = -2;
     static final int REMEMBER_FOREVER_SCORE = 32;
+    static final int REVIEW_FREQUENCY = 5;
 
     Tango tango;
     int count;
+    int review;
 
     long answerTime = 2500;
     Timer answerTimer;
@@ -60,17 +62,27 @@ public class HomeFragment extends BaseFragment {
         if (tango != null && tango.id > 0) {
             Date last = tango.lastTime;
             Date now = new Date();
+            int frequency = tango.frequency;
             if (!isSameDate(now, last)) {
-                count++;
-                DataManager.getInstance().setInt("tango_count", count);
-                DataManager.getInstance().setLong("last_time", now.getTime());
-                countView.setText("今日已记：" + count);
+                if (frequency > 0) { //复习
+                    review++;
+                    frequency--;
+                    DataManager.getInstance().setInt("tango_review", review);
+                    DataManager.getInstance().setLong("last_time", now.getTime());
+                } else { //学习
+                    count++;
+                    frequency = REVIEW_FREQUENCY;
+                    DataManager.getInstance().setInt("tango_count", count);
+                    DataManager.getInstance().setLong("last_time", now.getTime());
+                }
+                countView.setText("今日复习：" + review + "\n今日已记：" + count);
             }
 
             int score = REMEMBER_SCORE - count / TIRED_COEFFICIENT;
             score = Math.max(score, REMEMBER_MIN_SCORE);
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + score),
+                    "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new TangoListChangeEvent());
         }
@@ -89,15 +101,24 @@ public class HomeFragment extends BaseFragment {
         if (tango != null && tango.id > 0) {
             Date last = tango.lastTime;
             Date now = new Date();
+            int frequency = tango.frequency;
             if (!isSameDate(now, last)) {
-                count++;
-                DataManager.getInstance().setInt("tango_count", count);
-                DataManager.getInstance().setLong("last_time", now.getTime());
-                countView.setText("今日已记：" + count);
+                if (frequency > 0) { //复习
+                    review++;
+                    DataManager.getInstance().setInt("tango_review", review);
+                    DataManager.getInstance().setLong("last_time", now.getTime());
+                } else { //学习
+                    count++;
+                    DataManager.getInstance().setInt("tango_count", count);
+                    DataManager.getInstance().setLong("last_time", now.getTime());
+                }
+                countView.setText("今日复习：" + review + "\n今日已记：" + count);
             }
+            frequency = 0;
 
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + REMEMBER_FOREVER_SCORE),
+                    "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new TangoListChangeEvent());
         }
@@ -118,12 +139,15 @@ public class HomeFragment extends BaseFragment {
         Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
         Date now = new Date();
         count = DataManager.getInstance().getInt("tango_count", 0);
+        review = DataManager.getInstance().getInt("tango_review", 0);
         if (!isSameDate(now, last)) {
             count = 0;
             DataManager.getInstance().setInt("tango_count", 0);
+            review = 0;
+            DataManager.getInstance().setInt("tango_review", 0);
             DataManager.getInstance().setLong("last_time", now.getTime());
         }
-        countView.setText("今日已记：" + count);
+        countView.setText("今日复习：" + review + "\n今日已记：" + count);
     }
 
     @Override
@@ -201,9 +225,11 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadNewTango() {
-        Tango temp = TangoManager.getInstance().randomTango();
+        int goal = DataManager.getInstance().getInt("tango_goal", 0);
+        boolean reviewFlag = count >= goal;
+        Tango temp = TangoManager.getInstance().randomTango(reviewFlag);
         if (tango != null && temp.id == tango.id) {
-            tango = TangoManager.getInstance().nextTango();
+            tango = TangoManager.getInstance().nextTango(reviewFlag);
         } else {
             tango = temp;
         }
