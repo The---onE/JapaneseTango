@@ -45,6 +45,9 @@ public class ImportTangoFragment extends xUtilsFragment {
     @ViewInject(R.id.edit_meaning_index)
     EditText meaningIndexView;
 
+    @ViewInject(R.id.edit_type)
+    EditText typeView;
+
     @Event(value = R.id.btn_import_tango)
     private void onImportTangoClick(View view) {
         String text = textView.getText().toString();
@@ -70,6 +73,8 @@ public class ImportTangoFragment extends xUtilsFragment {
             meaningIndex = Integer.parseInt(meaningIndexStr);
         }
 
+        final String type = typeView.getText().toString().trim();
+
         List<String> match = new ArrayList<>();
         final List<Tango> tangoList = new ArrayList<>();
         while (matcher.find()) {
@@ -77,14 +82,17 @@ public class ImportTangoFragment extends xUtilsFragment {
             String writing = "";
             if (writingIndex > 0) {
                 writing = matcher.group(writingIndex);
+                writing = writing.trim();
             }
             String pronunciation = "";
             if (pronunciationIndex > 0) {
                 pronunciation = matcher.group(pronunciationIndex);
+                pronunciation = pronunciation.trim();
             }
             String meaning = "";
             if (meaningIndex > 0) {
                 meaning = matcher.group(meaningIndex);
+                meaning = meaning.trim();
             }
 
             t.writing = writing;
@@ -102,11 +110,13 @@ public class ImportTangoFragment extends xUtilsFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         for (Tango t : tangoList) {
+                            t.type = type;
                             t.addTime = new Date();
 
                             TangoEntityManager.getInstance().insertData(t);
                         }
                         EventBus.getDefault().post(new TangoListChangeEvent());
+                        showToast("导入成功");
                     }
                 })
                 .setNegativeButton("取消", null)

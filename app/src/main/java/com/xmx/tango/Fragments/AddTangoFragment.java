@@ -33,18 +33,24 @@ public class AddTangoFragment extends xUtilsFragment {
     @ViewInject(R.id.edit_meaning)
     EditText meaningView;
 
+    @ViewInject(R.id.edit_type)
+    EditText typeView;
+
     @Event(value = R.id.btn_add_tango)
     private void onAddTangoClick(View view) {
         Tango entity = new Tango();
 
-        String writing = writingView.getText().toString();
+        String writing = writingView.getText().toString().trim();
         entity.writing = writing;
 
-        String pronunciation = pronunciationView.getText().toString();
+        String pronunciation = pronunciationView.getText().toString().trim();
         entity.pronunciation = pronunciation;
 
-        String meaning = meaningView.getText().toString();
+        String meaning = meaningView.getText().toString().trim();
         entity.meaning = meaning;
+
+        String type = typeView.getText().toString().trim();
+        entity.type = type;
 
         if (writing.equals("") && pronunciation.equals("")) {
             showToast(R.string.add_error);

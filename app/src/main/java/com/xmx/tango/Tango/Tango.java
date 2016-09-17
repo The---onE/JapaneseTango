@@ -25,6 +25,7 @@ public class Tango implements ISQLEntity {
     public Date lastTime;
     public String flags;
     public int delFlag;
+    public String type;
 
     @Override
     public String tableFields() {
@@ -41,7 +42,8 @@ public class Tango implements ISQLEntity {
                 "AddTime integer not null default(0), " +
                 "LastTime integer not null default(0), " +
                 "Flags text, " +
-                "DelFlag integer not null default(0)";
+                "DelFlag integer not null default(0), " +
+                "Type text";
     }
 
     @Override
@@ -63,6 +65,7 @@ public class Tango implements ISQLEntity {
         content.put("LastTime", lastTime != null ? lastTime.getTime() : 0);
         content.put("Flags", flags);
         content.put("DelFlag", delFlag);
+        content.put("Type", type);
         return content;
     }
 
@@ -83,6 +86,7 @@ public class Tango implements ISQLEntity {
         entity.lastTime = new Date(c.getLong(11));
         entity.flags = c.getString(12);
         entity.delFlag = c.getInt(13);
+        entity.type = c.getString(14);
 
         return entity;
     }
