@@ -63,4 +63,14 @@ public class DataManager {
         editor.putLong(key, value);
         editor.apply();
     }
+
+    public String getString(String key) {
+        return mData.getString(key, "");
+    }
+
+    public void setString(String key, String value) {
+        SharedPreferences.Editor editor = mData.edit();
+        editor.putString(key, value);
+        editor.apply();
+    }
 }

@@ -2,6 +2,7 @@ package com.xmx.tango.Tango;
 
 import android.database.Cursor;
 
+import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.Data.SQL.BaseSQLEntityManager;
 
 import java.util.List;
@@ -29,9 +30,18 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         if (!checkDatabase()) {
             return null;
         }
-        Cursor cursor = database.rawQuery("select * from " + tableName +
-                " order by Score asc, LastTime asc limit " + count,
-                null);
+        String type = DataManager.getInstance().getString("tango_type");
+        Cursor cursor;
+        if (!type.equals("")) {
+            cursor = database.rawQuery("select * from " + tableName +
+                            " where Type = '" + type + "'" +
+                            " order by Score asc, LastTime asc limit " + count,
+                    null);
+        } else {
+            cursor = database.rawQuery("select * from " + tableName +
+                            " order by Score asc, LastTime asc limit " + count,
+                    null);
+        }
         return convertToEntities(cursor);
     }
 }

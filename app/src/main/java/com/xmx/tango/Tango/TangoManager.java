@@ -28,13 +28,13 @@ public class TangoManager {
     List<Tango> tempTangos = new ArrayList<>();
     private TangoManager() {
         Tango t1 = new Tango();
-        t1.id = 0;
+        t1.id = -1;
         t1.writing = "愛";
         t1.pronunciation = "アイ";
         tempTangos.add(t1);
 
         Tango t2 = new Tango();
-        t2.id = 1;
+        t2.id = -2;
         t2.writing = "大切";
         t2.pronunciation = "タイセツ";
         t2.meaning = "重要";

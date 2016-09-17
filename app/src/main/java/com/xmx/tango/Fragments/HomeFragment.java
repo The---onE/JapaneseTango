@@ -57,7 +57,7 @@ public class HomeFragment extends BaseFragment {
     Random random = new Random();
 
     private void remember() {
-        if (tango != null) {
+        if (tango != null && tango.id > 0) {
             Date last = tango.lastTime;
             Date now = new Date();
             if (!isSameDate(now, last)) {
@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void forget() {
-        if (tango != null) {
+        if (tango != null && tango.id > 0) {
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + FORGET_SCORE));
             //"LastTime=" + new Date().getTime());
@@ -86,8 +86,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void rememberForever() {
-        if (tango != null) {
-
+        if (tango != null && tango.id > 0) {
             Date last = tango.lastTime;
             Date now = new Date();
             if (!isSameDate(now, last)) {
