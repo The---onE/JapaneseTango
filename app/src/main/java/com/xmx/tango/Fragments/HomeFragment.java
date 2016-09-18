@@ -39,7 +39,7 @@ public class HomeFragment extends BaseFragment {
     static final int TIRED_COEFFICIENT = 25;
     static final int REMEMBER_MIN_SCORE = 2;
     static final int FORGET_SCORE = -2;
-    static final int REMEMBER_FOREVER_SCORE = 32;
+    static final int REMEMBER_FOREVER_SCORE = 64;
     static final int REVIEW_FREQUENCY = 5;
 
     Tango tango;
