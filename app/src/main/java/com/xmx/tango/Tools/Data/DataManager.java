@@ -68,6 +68,10 @@ public class DataManager {
         return mData.getString(key, "");
     }
 
+    public String getString(String key, String def) {
+        return mData.getString(key, def);
+    }
+
     public void setString(String key, String value) {
         SharedPreferences.Editor editor = mData.edit();
         editor.putString(key, value);
