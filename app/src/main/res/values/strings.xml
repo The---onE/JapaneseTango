@@ -103,5 +103,6 @@
     <string name="goal">每日目标</string>
 
     <string name="change">更改</string>
+    <string name="choose_file">选择文件</string>
 
 </resources>
