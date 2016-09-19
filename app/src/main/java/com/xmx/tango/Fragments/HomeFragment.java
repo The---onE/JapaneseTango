@@ -36,7 +36,7 @@ import java.util.Random;
  */
 public class HomeFragment extends BaseFragment {
     static final int REMEMBER_SCORE = 5;
-    static final int TIRED_COEFFICIENT = 25;
+    static final int TIRED_COEFFICIENT = 35;
     static final int REMEMBER_MIN_SCORE = 2;
     static final int FORGET_SCORE = -2;
     static final int REMEMBER_FOREVER_SCORE = 64;
@@ -64,11 +64,13 @@ public class HomeFragment extends BaseFragment {
             Date now = new Date();
             int frequency = tango.frequency;
             if (!isSameDate(now, last)) {
-                if (frequency > 0) { //复习
+                if (last.getTime() > 0) { //复习
                     review++;
-                    frequency--;
                     DataManager.getInstance().setInt("tango_review", review);
                     DataManager.getInstance().setLong("last_time", now.getTime());
+                    if (frequency > 0) {
+                        frequency--;
+                    }
                 } else { //学习
                     count++;
                     frequency = REVIEW_FREQUENCY;
@@ -78,7 +80,7 @@ public class HomeFragment extends BaseFragment {
                 countView.setText("今日复习：" + review + "\n今日已记：" + count);
             }
 
-            int score = REMEMBER_SCORE - count / TIRED_COEFFICIENT;
+            int score = REMEMBER_SCORE - (count + review) / TIRED_COEFFICIENT;
             score = Math.max(score, REMEMBER_MIN_SCORE);
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + score),
@@ -103,7 +105,7 @@ public class HomeFragment extends BaseFragment {
             Date now = new Date();
             int frequency = tango.frequency;
             if (!isSameDate(now, last)) {
-                if (frequency > 0) { //复习
+                if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setInt("tango_review", review);
                     DataManager.getInstance().setLong("last_time", now.getTime());
