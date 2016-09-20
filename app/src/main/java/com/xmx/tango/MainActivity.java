@@ -120,6 +120,21 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_home:
                 vp.setCurrentItem(0);
                 break;
+            case R.id.nav_tango_list:
+                vp.setCurrentItem(1);
+                break;
+            case R.id.nav_add_tango:
+                vp.setCurrentItem(2);
+                break;
+            case R.id.nav_import_tango:
+                vp.setCurrentItem(3);
+                break;
+            case R.id.nav_import_file:
+                vp.setCurrentItem(4);
+                break;
+            case R.id.nav_setting:
+                startActivity(SettingActivity.class);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.xmx.tango.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.tango.Tools.Data.DataManager;
 
@@ -20,6 +22,8 @@ public class SettingActivity extends BaseTempActivity {
 
     TextView typeView;
     TextView goalView;
+    TextView speakView;
+    EditText testView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -34,6 +38,12 @@ public class SettingActivity extends BaseTempActivity {
 
         goalView = getViewById(R.id.tv_goal);
         goalView.setText("" + DataManager.getInstance().getInt("tango_goal", 0));
+
+        speakView = getViewById(R.id.tv_speaker);
+        speakView.setText(DataManager.getInstance()
+                .getString("tango_speaker", Constants.SPEAKERS[0]));
+
+        testView = getViewById(R.id.edit_speak);
     }
 
     @Override
@@ -91,6 +101,32 @@ public class SettingActivity extends BaseTempActivity {
                             }
                         })
                         .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_speaker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("朗读音色")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setItems(Constants.SPEAKERS, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DataManager.getInstance().setString("tango_speaker"
+                                        , Constants.SPEAKERS[i]);
+                                speakView.setText(Constants.SPEAKERS[i]);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.btn_speak).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text = testView.getText().toString();
+                SpeakTangoManager.getInstance().speak(text);
             }
         });
     }

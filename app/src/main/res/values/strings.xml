@@ -105,4 +105,7 @@
     <string name="change">更改</string>
     <string name="choose_file">选择文件</string>
 
+    <string name="test_text">测试文本</string>
+    <string name="speak_test">音色测试</string>
+
 </resources>

@@ -4,6 +4,7 @@ import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.PushMessage.ReceiveMessageActivity;
 import com.xmx.tango.User.UserManager;
@@ -30,6 +31,8 @@ public class Application extends android.app.Application {
         UserManager.getInstance().setContext(this);
 
         DataManager.getInstance().setContext(this);
+
+        SpeakTangoManager.getInstance().setContext(this);
 
         Fresco.initialize(this);
     }

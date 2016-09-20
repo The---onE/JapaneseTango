@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoAdapter;
 import com.xmx.tango.Tango.TangoEntityManager;
@@ -50,10 +51,7 @@ public class TangoListFragment extends xUtilsFragment {
                 Tango tango = (Tango) tangoAdapter.getItem(i);
                 String writing = tango.writing;
                 if (!writing.equals("")) {
-                    JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
-                    tts.speak(writing, TextToSpeech.QUEUE_FLUSH, params);
+                    SpeakTangoManager.getInstance().speak(writing);
                 }
             }
         });

@@ -5,6 +5,18 @@
         <item
             android:id="@+id/nav_home"
             android:title="首页" />
+        <item
+            android:id="@+id/nav_tango_list"
+            android:title="列表" />
+        <item
+            android:id="@+id/nav_add_tango"
+            android:title="添加" />
+        <item
+            android:id="@+id/nav_import_tango"
+            android:title="导入" />
+        <item
+            android:id="@+id/nav_import_file"
+            android:title="CSV导入" />
     </group>
 
     <group android:checkableBehavior="single">

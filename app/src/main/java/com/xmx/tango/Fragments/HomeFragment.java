@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.xmx.tango.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
@@ -199,10 +200,7 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View view) {
                 String writing = writingView.getText().toString();
                 if (!writing.equals("")) {
-                    JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
-                    tts.speak(writing, TextToSpeech.QUEUE_FLUSH, params);
+                    SpeakTangoManager.getInstance().speak(writing);
                 }
             }
         });
@@ -212,10 +210,7 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View view) {
                 String pronunciation = pronunciationView.getText().toString();
                 if (!pronunciation.equals("")) {
-                    JapaneseTextToSpeech tts = new JapaneseTextToSpeech(getContext(), null);
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, "male01");
-                    tts.speak(pronunciation, TextToSpeech.QUEUE_FLUSH, params);
+                    SpeakTangoManager.getInstance().speak(pronunciation);
                 }
             }
         });
