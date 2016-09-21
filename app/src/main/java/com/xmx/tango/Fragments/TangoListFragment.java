@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.SearchTangoDialog;
 import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoAdapter;
@@ -24,6 +26,7 @@ import net.gimite.jatts.JapaneseTextToSpeech;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.Date;
@@ -38,6 +41,12 @@ public class TangoListFragment extends xUtilsFragment {
     @ViewInject(R.id.list_tango)
     ListView tangoList;
     TangoAdapter tangoAdapter;
+
+    @Event(value = R.id.btn_search)
+    private void onSearchClick(View view) {
+        SearchTangoDialog dialog = new SearchTangoDialog(getContext());
+        dialog.show();
+    }
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {

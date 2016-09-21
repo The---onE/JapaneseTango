@@ -12,6 +12,12 @@ public class TangoManager {
 
     private static TangoManager instance;
 
+    public String writing;
+    public String pronunciation;
+    public String meaning;
+    public String partOfSpeech;
+    public String type;
+
     public synchronized static TangoManager getInstance() {
         if (null == instance) {
             instance = new TangoManager();
@@ -19,13 +25,14 @@ public class TangoManager {
         return instance;
     }
 
-    long tangoVersion = 0;
+    //long tangoVersion = 0;
     long version = System.currentTimeMillis();
     List<Tango> tangoList = new ArrayList<>();
     Random random = new Random();
 
     int index = 0;
     List<Tango> tempTangos = new ArrayList<>();
+
     private TangoManager() {
         Tango t1 = new Tango();
         t1.id = -1;
@@ -47,19 +54,36 @@ public class TangoManager {
 
     public long updateData() {
         TangoEntityManager manager = TangoEntityManager.getInstance();
-        if (manager.getVersion() != tangoVersion) {
-            tangoVersion = manager.getVersion();
+        //tangoVersion = manager.getVersion();
 
-            tangoList.clear();
-            tangoList = manager.selectAll("addTime", false);
-
-            version++;
+        tangoList.clear();
+        //tangoList = manager.selectAll("addTime", false);
+        List<String> con = new ArrayList<>();
+        if (writing != null && !writing.equals("")) {
+            con.add("Writing like '%" + writing + "%'");
         }
+        if (pronunciation != null && !pronunciation.equals("")) {
+            con.add("Pronunciation like '%" + pronunciation + "%'");
+        }
+        if (meaning != null && !meaning.equals("")) {
+            con.add("Meaning like '%" + meaning + "%'");
+        }
+        if (partOfSpeech != null && !partOfSpeech.equals("")) {
+            con.add("PartOfSpeech like '%" + partOfSpeech + "%'");
+        }
+        if (type != null && !type.equals("")) {
+            con.add("Type like '%" + type + "%'");
+        }
+
+        String array[] = new String[con.size()];
+        array = con.toArray(array);
+        tangoList = manager.selectByCondition("addTime", false, array);
+
+        version++;
         return version;
     }
 
     public Tango randomTango(boolean reviewFlag) {
-        updateData();
         List<Tango> tangos = TangoEntityManager.getInstance()
                 .selectTangoScoreAsc(SELECT_TANGO_LIMIT, reviewFlag);
         int size = tangos.size();
@@ -74,7 +98,6 @@ public class TangoManager {
     }
 
     public Tango nextTango(boolean reviewFlag) {
-        updateData();
         List<Tango> tangos = TangoEntityManager.getInstance()
                 .selectTangoScoreAsc(SELECT_TANGO_LIMIT, reviewFlag);
         int size = tangos.size();
