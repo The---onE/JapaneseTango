@@ -33,7 +33,7 @@ public class Tango implements ISQLEntity {
                 "Writing text, " +
                 "Pronunciation text, " +
                 "Meaning text, " +
-                "Tone integer not null default(0), " +
+                "Tone integer not null default(-1), " +
                 "PartOfSpeech text, " +
                 "Image text, " +
                 "Voice text, " +

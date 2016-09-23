@@ -232,8 +232,14 @@ public class HomeFragment extends BaseFragment {
         }
 
         boolean r = random.nextBoolean();
+        final String pro;
+        if (tango.tone >= 0) {
+            pro = tango.pronunciation + Constants.TONES[tango.tone];
+        } else {
+            pro = tango.pronunciation;
+        }
         if (r) {
-            pronunciationView.setText(tango.pronunciation);
+            pronunciationView.setText(pro);
             writingView.setText("");
             if (answerTimer != null) {
                 answerTimer.stop();
@@ -255,7 +261,7 @@ public class HomeFragment extends BaseFragment {
             answerTimer = new Timer() {
                 @Override
                 public void timer() {
-                    pronunciationView.setText(tango.pronunciation);
+                    pronunciationView.setText(pro);
                     answerTimer.stop();
                 }
             };

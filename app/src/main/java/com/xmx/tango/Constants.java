@@ -35,4 +35,6 @@ public class Constants {
     public static final String[] DAY_OF_WEEK = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
 
     public static final String SPEAKERS[] = {"male01", "female01", "male02"};
+
+    public static final String TONES[] = {"⓪", "①", "②", "③", "④", "⑤", "⑥", "⑦"};
 }

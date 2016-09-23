@@ -89,12 +89,12 @@ public class ImportFileFragment extends xUtilsFragment {
                         tango.type = type;
 
                         tango.addTime = new Date();
-                        showToast("导入成功");
                         TangoEntityManager.getInstance().insertData(tango);
                     } else {
                         break;
                     }
                 }
+                showToast("导入成功");
                 is.close();
                 EventBus.getDefault().post(new TangoListChangeEvent());
             } catch (Exception e) {

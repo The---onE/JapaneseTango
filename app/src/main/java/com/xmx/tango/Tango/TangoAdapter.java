@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xmx.tango.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.Tools.Data.BaseEntityAdapter;
 
@@ -47,7 +48,14 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
         if (position < mData.size()) {
             Tango tango = mData.get(position);
             holder.writing.setText(tango.writing);
-            holder.pronunciation.setText(tango.pronunciation);
+
+            String pro;
+            if (tango.tone >= 0) {
+                pro = tango.pronunciation + Constants.TONES[tango.tone];
+            } else {
+                pro = tango.pronunciation;
+            }
+            holder.pronunciation.setText(pro);
 
             String mea = tango.meaning;
             if (!tango.partOfSpeech.equals("")) {
