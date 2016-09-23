@@ -26,16 +26,24 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         openDatabase();
     }
 
-    public List<Tango> selectTangoScoreAsc(int count, boolean reviewFlag) {
+    public List<Tango> selectTangoScoreAsc(int count, boolean reviewFlag, int maxFrequency) {
         if (!checkDatabase()) {
             return null;
         }
         String type = DataManager.getInstance().getString("tango_type");
-        String typeStr;
+        String conStr;
         if (!type.equals("")) {
-            typeStr = " where Type = '" + type + "'";
+            conStr = " where Type = '" + type + "'";
         } else {
-            typeStr = "";
+            conStr = "";
+        }
+
+        if (maxFrequency >= 0) {
+            if (!conStr.equals("")) {
+                conStr += ", Frequency <= " + maxFrequency;
+            } else {
+                conStr = " where Frequency <= " + maxFrequency;
+            }
         }
 
         String reviewStr;
@@ -46,7 +54,7 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         }
 
         Cursor cursor = database.rawQuery("select * from " + tableName +
-                        typeStr +
+                        conStr +
                         " order by " + reviewStr + "Score asc, LastTime asc limit " + count,
                 null);
         return convertToEntities(cursor);

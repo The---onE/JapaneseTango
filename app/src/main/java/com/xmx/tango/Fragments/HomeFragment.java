@@ -42,10 +42,13 @@ public class HomeFragment extends BaseFragment {
     static final int FORGET_SCORE = -2;
     static final int REMEMBER_FOREVER_SCORE = 64;
     static final int REVIEW_FREQUENCY = 5;
+    static final int TODAY_CONSECUTIVE_REVIEW_MAX = 10;
 
     Tango tango;
     int count;
     int review;
+    int frequencyMax;
+    int todayConsecutive = 0;
 
     long answerTime = 2500;
     Timer answerTimer;
@@ -64,7 +67,9 @@ public class HomeFragment extends BaseFragment {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
+            int goal = DataManager.getInstance().getInt("tango_goal", 0);
             if (!isSameDate(now, last)) {
+                todayConsecutive = 0;
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setInt("tango_review", review);
@@ -79,6 +84,13 @@ public class HomeFragment extends BaseFragment {
                     DataManager.getInstance().setLong("last_time", now.getTime());
                 }
                 countView.setText("今日复习：" + review + "\n今日已记：" + count);
+            } else if (count >= goal) {
+                todayConsecutive++;
+                if (todayConsecutive > TODAY_CONSECUTIVE_REVIEW_MAX) {
+                    todayConsecutive = 0;
+                    frequencyMax--;
+                    DataManager.getInstance().setInt("frequency_max", frequencyMax);
+                }
             }
 
             int score = REMEMBER_SCORE - (count + review) / TIRED_COEFFICIENT;
@@ -143,11 +155,15 @@ public class HomeFragment extends BaseFragment {
         Date now = new Date();
         count = DataManager.getInstance().getInt("tango_count", 0);
         review = DataManager.getInstance().getInt("tango_review", 0);
+        frequencyMax = DataManager.getInstance().getInt("frequency_max", REVIEW_FREQUENCY);
         if (!isSameDate(now, last)) {
             count = 0;
             DataManager.getInstance().setInt("tango_count", 0);
             review = 0;
             DataManager.getInstance().setInt("tango_review", 0);
+            frequencyMax = REVIEW_FREQUENCY;
+            DataManager.getInstance().setInt("frequency_max", REVIEW_FREQUENCY);
+
             DataManager.getInstance().setLong("last_time", now.getTime());
         }
         countView.setText("今日复习：" + review + "\n今日已记：" + count);
@@ -224,9 +240,9 @@ public class HomeFragment extends BaseFragment {
     private void loadNewTango() {
         int goal = DataManager.getInstance().getInt("tango_goal", 0);
         boolean reviewFlag = count >= goal;
-        Tango temp = TangoManager.getInstance().randomTango(reviewFlag);
+        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, frequencyMax);
         if (tango != null && temp.id == tango.id) {
-            tango = TangoManager.getInstance().nextTango(reviewFlag);
+            tango = TangoManager.getInstance().nextTango(reviewFlag, frequencyMax);
         } else {
             tango = temp;
         }
