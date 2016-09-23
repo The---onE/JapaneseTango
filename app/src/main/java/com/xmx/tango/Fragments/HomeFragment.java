@@ -269,7 +269,11 @@ public class HomeFragment extends BaseFragment {
         meaningTimer = new Timer() {
             @Override
             public void timer() {
-                meaningView.setText(tango.meaning);
+                String mea = tango.meaning;
+                if (!tango.partOfSpeech.equals("")) {
+                    mea = "[" + tango.partOfSpeech + "]" + mea;
+                }
+                meaningView.setText(mea);
                 meaningTimer.stop();
             }
         };

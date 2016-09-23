@@ -48,7 +48,13 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             Tango tango = mData.get(position);
             holder.writing.setText(tango.writing);
             holder.pronunciation.setText(tango.pronunciation);
-            holder.meaning.setText(tango.meaning);
+
+            String mea = tango.meaning;
+            if (!tango.partOfSpeech.equals("")) {
+                mea = "[" + tango.partOfSpeech + "]" + mea;
+            }
+            holder.meaning.setText(mea);
+
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeString = df.format(tango.addTime);
             holder.time.setText(timeString);
