@@ -79,7 +79,7 @@ public class ImportFileFragment extends xUtilsFragment {
                         tango.writing = strings[0];
                         tango.pronunciation = strings[1];
                         tango.meaning = strings[2];
-                        int i = 0;
+                        int i = -1;
                         try {
                             i = Integer.parseInt(strings[3]);
                         } catch (Exception e) {

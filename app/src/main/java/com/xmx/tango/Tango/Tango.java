@@ -12,20 +12,20 @@ import java.util.Date;
  */
 public class Tango implements ISQLEntity {
     public long id = -1;
-    public String writing;
-    public String pronunciation;
-    public String meaning;
-    public int tone;
-    public String partOfSpeech;
-    public String image;
-    public String voice;
-    public int score;
-    public int frequency;
-    public Date addTime;
-    public Date lastTime;
-    public String flags;
-    public int delFlag;
-    public String type;
+    public String writing = "";
+    public String pronunciation = "";
+    public String meaning = "";
+    public int tone = -1;
+    public String partOfSpeech = "";
+    public String image = "";
+    public String voice = "";
+    public int score = 0;
+    public int frequency = 0;
+    public Date addTime = new Date(0);
+    public Date lastTime = new Date(0);
+    public String flags = "";
+    public int delFlag = 0;
+    public String type = "";
 
     @Override
     public String tableFields() {

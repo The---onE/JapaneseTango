@@ -55,7 +55,7 @@ public class SplashActivity extends BaseActivity {
                     List<Tango> tangoList = TangoManager.getInstance().getData();
                     for (Tango tango : tangoList) {
                         if (tango.score > 0) {
-                            int newScore = (tango.score * 2 / 3);
+                            int newScore = Constants.FORGOTTEN_SCORE(tango.score);
                             TangoEntityManager.getInstance().updateData(tango.id,
                                     "Score=" + newScore);
 

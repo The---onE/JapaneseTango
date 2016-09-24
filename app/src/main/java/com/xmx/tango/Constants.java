@@ -36,5 +36,17 @@ public class Constants {
 
     public static final String SPEAKERS[] = {"male01", "female01", "male02"};
 
-    public static final String TONES[] = {"⓪", "①", "②", "③", "④", "⑤", "⑥", "⑦"};
+    public static final String TONES[] = {"〇", "①", "②", "③", "④", "⑤", "⑥", "⑦"};
+
+    public static final int REMEMBER_SCORE = 7;
+    public static final int TIRED_COEFFICIENT = 35;
+    public static final int REMEMBER_MIN_SCORE = 4;
+    public static final int FORGET_SCORE = -3;
+    public static final int REMEMBER_FOREVER_SCORE = 64;
+    public static final int REVIEW_FREQUENCY = 5;
+    public static final int TODAY_CONSECUTIVE_REVIEW_MAX = 10;
+
+    public static int FORGOTTEN_SCORE(int source) {
+        return source * 4 / 5;
+    }
 }

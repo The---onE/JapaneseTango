@@ -36,13 +36,6 @@ import java.util.Random;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment {
-    static final int REMEMBER_SCORE = 5;
-    static final int TIRED_COEFFICIENT = 35;
-    static final int REMEMBER_MIN_SCORE = 2;
-    static final int FORGET_SCORE = -2;
-    static final int REMEMBER_FOREVER_SCORE = 64;
-    static final int REVIEW_FREQUENCY = 5;
-    static final int TODAY_CONSECUTIVE_REVIEW_MAX = 10;
 
     Tango tango;
     int count;
@@ -79,22 +72,22 @@ public class HomeFragment extends BaseFragment {
                     }
                 } else { //学习
                     count++;
-                    frequency = REVIEW_FREQUENCY;
+                    frequency = Constants.REVIEW_FREQUENCY;
                     DataManager.getInstance().setInt("tango_count", count);
                     DataManager.getInstance().setLong("last_time", now.getTime());
                 }
                 countView.setText("今日复习：" + review + "\n今日已记：" + count);
             } else if (count >= goal) {
                 todayConsecutive++;
-                if (todayConsecutive > TODAY_CONSECUTIVE_REVIEW_MAX) {
+                if (todayConsecutive > Constants.TODAY_CONSECUTIVE_REVIEW_MAX) {
                     todayConsecutive = 0;
                     frequencyMax--;
                     DataManager.getInstance().setInt("frequency_max", frequencyMax);
                 }
             }
 
-            int score = REMEMBER_SCORE - (count + review) / TIRED_COEFFICIENT;
-            score = Math.max(score, REMEMBER_MIN_SCORE);
+            int score = Constants.REMEMBER_SCORE - (count + review) / Constants.TIRED_COEFFICIENT;
+            score = Math.max(score, Constants.REMEMBER_MIN_SCORE);
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + score),
                     "Frequency=" + frequency,
@@ -106,7 +99,7 @@ public class HomeFragment extends BaseFragment {
     private void forget() {
         if (tango != null && tango.id > 0) {
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + FORGET_SCORE));
+                    "Score=" + (tango.score + Constants.FORGET_SCORE));
             //"LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new TangoListChangeEvent());
         }
@@ -132,7 +125,7 @@ public class HomeFragment extends BaseFragment {
             frequency = 0;
 
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + REMEMBER_FOREVER_SCORE),
+                    "Score=" + (tango.score + Constants.REMEMBER_FOREVER_SCORE),
                     "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new TangoListChangeEvent());
@@ -155,14 +148,14 @@ public class HomeFragment extends BaseFragment {
         Date now = new Date();
         count = DataManager.getInstance().getInt("tango_count", 0);
         review = DataManager.getInstance().getInt("tango_review", 0);
-        frequencyMax = DataManager.getInstance().getInt("frequency_max", REVIEW_FREQUENCY);
+        frequencyMax = DataManager.getInstance().getInt("frequency_max", Constants.REVIEW_FREQUENCY);
         if (!isSameDate(now, last)) {
             count = 0;
             DataManager.getInstance().setInt("tango_count", 0);
             review = 0;
             DataManager.getInstance().setInt("tango_review", 0);
-            frequencyMax = REVIEW_FREQUENCY;
-            DataManager.getInstance().setInt("frequency_max", REVIEW_FREQUENCY);
+            frequencyMax = Constants.REVIEW_FREQUENCY;
+            DataManager.getInstance().setInt("frequency_max", Constants.REVIEW_FREQUENCY);
 
             DataManager.getInstance().setLong("last_time", now.getTime());
         }
