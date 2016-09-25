@@ -1,9 +1,7 @@
 package com.xmx.tango.Fragments;
 
 import android.content.Context;
-import android.media.AudioManager;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,12 +22,9 @@ import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.Timer;
 
-import net.gimite.jatts.JapaneseTextToSpeech;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -49,8 +44,10 @@ public class HomeFragment extends BaseFragment {
     Timer meaningTimer;
 
     TextView pronunciationView;
+    TextView toneView;
     TextView writingView;
     TextView meaningView;
+    TextView partView;
     TextView countView;
 
     Random random = new Random();
@@ -140,8 +137,10 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         pronunciationView = (TextView) view.findViewById(R.id.tv_tango_pronunciation);
+        toneView = (TextView) view.findViewById(R.id.tv_tango_tone);
         writingView = (TextView) view.findViewById(R.id.tv_tango_writing);
         meaningView = (TextView) view.findViewById(R.id.tv_tango_meaning);
+        partView = (TextView) view.findViewById(R.id.tv_tango_part);
         countView = (TextView) view.findViewById(R.id.tv_tango_count);
 
         Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
@@ -241,14 +240,11 @@ public class HomeFragment extends BaseFragment {
         }
 
         boolean r = random.nextBoolean();
-        final String pro;
-        if (tango.tone >= 0) {
-            pro = tango.pronunciation + Constants.TONES[tango.tone];
-        } else {
-            pro = tango.pronunciation;
-        }
         if (r) {
-            pronunciationView.setText(pro);
+            pronunciationView.setText(tango.pronunciation);
+            if (tango.tone >= 0) {
+                toneView.setText(Constants.TONES[tango.tone]);
+            }
             writingView.setText("");
             if (answerTimer != null) {
                 answerTimer.stop();
@@ -264,13 +260,17 @@ public class HomeFragment extends BaseFragment {
         } else {
             writingView.setText(tango.writing);
             pronunciationView.setText("");
+            toneView.setText("");
             if (answerTimer != null) {
                 answerTimer.stop();
             }
             answerTimer = new Timer() {
                 @Override
                 public void timer() {
-                    pronunciationView.setText(pro);
+                    pronunciationView.setText(tango.pronunciation);
+                    if (tango.tone >= 0) {
+                        toneView.setText(Constants.TONES[tango.tone]);
+                    }
                     answerTimer.stop();
                 }
             };
@@ -278,17 +278,17 @@ public class HomeFragment extends BaseFragment {
         }
 
         meaningView.setText("");
+        partView.setText("");
         if (meaningTimer != null) {
             meaningTimer.stop();
         }
         meaningTimer = new Timer() {
             @Override
             public void timer() {
-                String mea = tango.meaning;
                 if (!tango.partOfSpeech.equals("")) {
-                    mea = "[" + tango.partOfSpeech + "]" + mea;
+                    partView.setText("[" + tango.partOfSpeech + "]");
                 }
-                meaningView.setText(mea);
+                meaningView.setText(tango.meaning);
                 meaningTimer.stop();
             }
         };

@@ -26,7 +26,9 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
     static class ViewHolder {
         TextView writing;
         TextView pronunciation;
+        TextView tone;
         TextView meaning;
+        TextView part;
         TextView time;
     }
 
@@ -38,7 +40,9 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             holder = new ViewHolder();
             holder.writing = (TextView) convertView.findViewById(R.id.item_writing);
             holder.pronunciation = (TextView) convertView.findViewById(R.id.item_pronunciation);
+            holder.tone = (TextView) convertView.findViewById(R.id.item_tone);
             holder.meaning = (TextView) convertView.findViewById(R.id.item_meaning);
+            holder.part = (TextView) convertView.findViewById(R.id.item_part);
             holder.time = (TextView) convertView.findViewById(R.id.item_time);
             convertView.setTag(holder);
         } else {
@@ -49,19 +53,15 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             Tango tango = mData.get(position);
             holder.writing.setText(tango.writing);
 
-            String pro;
+            holder.pronunciation.setText(tango.pronunciation);
             if (tango.tone >= 0) {
-                pro = tango.pronunciation + Constants.TONES[tango.tone];
-            } else {
-                pro = tango.pronunciation;
+                holder.tone.setText(Constants.TONES[tango.tone]);
             }
-            holder.pronunciation.setText(pro);
 
-            String mea = tango.meaning;
             if (!tango.partOfSpeech.equals("")) {
-                mea = "[" + tango.partOfSpeech + "]" + mea;
+                holder.part.setText("[" + tango.partOfSpeech + "]");
             }
-            holder.meaning.setText(mea);
+            holder.meaning.setText(tango.meaning);
 
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeString = df.format(tango.addTime);
