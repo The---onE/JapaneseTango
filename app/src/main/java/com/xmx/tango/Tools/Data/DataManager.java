@@ -48,7 +48,21 @@ public class DataManager {
         editor.apply();
     }
 
-    public void intIncres(String key, int delta) {
+    public float getFloat(String key) {
+        return mData.getFloat(key, -1);
+    }
+
+    public float getFloat(String key, float def) {
+        return mData.getFloat(key, def);
+    }
+
+    public void setFloat(String key, float value) {
+        SharedPreferences.Editor editor = mData.edit();
+        editor.putFloat(key, value);
+        editor.apply();
+    }
+
+    public void intIncrease(String key, int delta) {
         int i = getInt(key);
         i += delta;
         setInt(key, i);

@@ -35,12 +35,9 @@ public class HomeFragment extends BaseFragment {
     Tango tango;
     int count;
     int review;
-    int frequencyMax;
     int todayConsecutive = 0;
 
-    long answerTime = 2500;
     Timer answerTimer;
-    long meaningTime = 3500;
     Timer meaningTimer;
 
     TextView pronunciationView;
@@ -57,7 +54,7 @@ public class HomeFragment extends BaseFragment {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            int goal = DataManager.getInstance().getInt("tango_goal", 0);
+            int goal = DataManager.getInstance().getInt("tango_goal", 30);
             if (!isSameDate(now, last)) {
                 todayConsecutive = 0;
                 if (last.getTime() > 0) { //复习
@@ -78,8 +75,10 @@ public class HomeFragment extends BaseFragment {
                 todayConsecutive++;
                 if (todayConsecutive > Constants.TODAY_CONSECUTIVE_REVIEW_MAX) {
                     todayConsecutive = 0;
+                    int frequencyMax = DataManager.getInstance().getInt("review_frequency",
+                            Constants.REVIEW_FREQUENCY);
                     frequencyMax--;
-                    DataManager.getInstance().setInt("frequency_max", frequencyMax);
+                    DataManager.getInstance().setInt("review_frequency", frequencyMax);
                 }
             }
 
@@ -147,14 +146,13 @@ public class HomeFragment extends BaseFragment {
         Date now = new Date();
         count = DataManager.getInstance().getInt("tango_count", 0);
         review = DataManager.getInstance().getInt("tango_review", 0);
-        frequencyMax = DataManager.getInstance().getInt("frequency_max", Constants.REVIEW_FREQUENCY);
         if (!isSameDate(now, last)) {
             count = 0;
             DataManager.getInstance().setInt("tango_count", 0);
             review = 0;
             DataManager.getInstance().setInt("tango_review", 0);
-            frequencyMax = Constants.REVIEW_FREQUENCY;
-            DataManager.getInstance().setInt("frequency_max", Constants.REVIEW_FREQUENCY);
+
+            DataManager.getInstance().setInt("review_frequency", Constants.REVIEW_FREQUENCY);
 
             DataManager.getInstance().setLong("last_time", now.getTime());
         }
@@ -230,11 +228,13 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadNewTango() {
-        int goal = DataManager.getInstance().getInt("tango_goal", 0);
+        int goal = DataManager.getInstance().getInt("tango_goal", 30);
         boolean reviewFlag = count >= goal;
-        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, frequencyMax);
+        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getInt("review_frequency",
+                Constants.REVIEW_FREQUENCY));
         if (tango != null && temp.id == tango.id) {
-            tango = TangoManager.getInstance().nextTango(reviewFlag, frequencyMax);
+            tango = TangoManager.getInstance().nextTango(reviewFlag, DataManager.getInstance().getInt("review_frequency",
+                    Constants.REVIEW_FREQUENCY));
         } else {
             tango = temp;
         }
@@ -256,7 +256,7 @@ public class HomeFragment extends BaseFragment {
                     answerTimer.stop();
                 }
             };
-            answerTimer.start(answerTime);
+            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000);
         } else {
             writingView.setText(tango.writing);
             pronunciationView.setText("");
@@ -274,7 +274,7 @@ public class HomeFragment extends BaseFragment {
                     answerTimer.stop();
                 }
             };
-            answerTimer.start(answerTime);
+            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000);
         }
 
         meaningView.setText("");
@@ -292,7 +292,7 @@ public class HomeFragment extends BaseFragment {
                 meaningTimer.stop();
             }
         };
-        meaningTimer.start(meaningTime);
+        meaningTimer.start((int) DataManager.getInstance().getFloat("meaning_time", 3.5f) * 1000);
     }
 
     boolean isSameDate(Date now, Date last) {

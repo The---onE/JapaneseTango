@@ -22,6 +22,9 @@ public class SettingActivity extends BaseTempActivity {
 
     TextView typeView;
     TextView goalView;
+    TextView answerTimeView;
+    TextView meaningTimeView;
+    TextView frequencyView;
     TextView speakView;
     EditText testView;
 
@@ -37,7 +40,17 @@ public class SettingActivity extends BaseTempActivity {
         typeView.setText(type);
 
         goalView = getViewById(R.id.tv_goal);
-        goalView.setText("" + DataManager.getInstance().getInt("tango_goal", 0));
+        goalView.setText("" + DataManager.getInstance().getInt("tango_goal", 30));
+
+        answerTimeView = getViewById(R.id.tv_answer_time);
+        answerTimeView.setText("" + DataManager.getInstance().getFloat("answer_time", 2.5f));
+
+        meaningTimeView = getViewById(R.id.tv_meaning_time);
+        meaningTimeView.setText("" + DataManager.getInstance().getFloat("meaning_time", 3.5f));
+
+        frequencyView = getViewById(R.id.tv_frequency);
+        frequencyView.setText("" + DataManager.getInstance().getInt("review_frequency",
+                Constants.REVIEW_FREQUENCY));
 
         speakView = getViewById(R.id.tv_speaker);
         speakView.setText(DataManager.getInstance()
@@ -82,7 +95,7 @@ public class SettingActivity extends BaseTempActivity {
                 goalEdit.setTextColor(Color.BLACK);
                 goalEdit.setTextSize(24);
                 goalEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
-                goalEdit.setText("" + DataManager.getInstance().getInt("tango_goal", 0));
+                goalEdit.setText("" + DataManager.getInstance().getInt("tango_goal", 30));
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("每日的学习目标")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -94,10 +107,110 @@ public class SettingActivity extends BaseTempActivity {
                                 int goal = 0;
                                 if (!goalString.equals("")) {
                                     goal = Integer.parseInt(goalString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
                                 }
                                 DataManager.getInstance().setInt("tango_goal", goal);
                                 showToast("更改成功");
                                 goalView.setText("" + goal);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_answer_time).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText answerTimeEdit = new EditText(getBaseContext());
+                answerTimeEdit.setTextColor(Color.BLACK);
+                answerTimeEdit.setTextSize(24);
+                answerTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                answerTimeEdit.setText("" + DataManager.getInstance().getFloat("answer_time", 2.5f));
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("答案延迟时间")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(answerTimeEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String answerTimeString = answerTimeEdit.getText().toString();
+                                float answerTime = 0;
+                                if (!answerTimeString.equals("")) {
+                                    answerTime = Float.parseFloat(answerTimeString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
+                                }
+                                DataManager.getInstance().setFloat("answer_time", answerTime);
+                                showToast("更改成功");
+                                answerTimeView.setText("" + answerTime);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_meaning_time).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText meaningTimeEdit = new EditText(getBaseContext());
+                meaningTimeEdit.setTextColor(Color.BLACK);
+                meaningTimeEdit.setTextSize(24);
+                meaningTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                meaningTimeEdit.setText("" + DataManager.getInstance().getFloat("meaning_time", 3.5f));
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("解释延迟时间")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(meaningTimeEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String meaningTimeString = meaningTimeEdit.getText().toString();
+                                float meaningTime = 0;
+                                if (!meaningTimeString.equals("")) {
+                                    meaningTime = Float.parseFloat(meaningTimeString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
+                                }
+                                DataManager.getInstance().setFloat("meaning_time", meaningTime);
+                                showToast("更改成功");
+                                meaningTimeView.setText("" + meaningTime);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_frequency).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText frequencyEdit = new EditText(getBaseContext());
+                frequencyEdit.setTextColor(Color.BLACK);
+                frequencyEdit.setTextSize(24);
+                frequencyEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                frequencyEdit.setText("" + DataManager.getInstance().getInt("review_frequency",
+                        Constants.REVIEW_FREQUENCY));
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("复习系数")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(frequencyEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String frequencyString = frequencyEdit.getText().toString();
+                                int frequency = 0;
+                                if (!frequencyString.equals("")) {
+                                    frequency = Integer.parseInt(frequencyString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
+                                }
+                                DataManager.getInstance().setInt("review_frequency", frequency);
+                                showToast("更改成功");
+                                frequencyView.setText("" + frequency);
                             }
                         })
                         .setNegativeButton("取消", null).show();
