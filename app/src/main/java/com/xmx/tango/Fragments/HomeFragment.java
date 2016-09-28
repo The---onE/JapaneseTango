@@ -54,7 +54,7 @@ public class HomeFragment extends BaseFragment {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            int goal = DataManager.getInstance().getInt("tango_goal", 30);
+            int goal = DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL);
             if (!isSameDate(now, last)) {
                 todayConsecutive = 0;
                 if (last.getTime() > 0) { //复习
@@ -228,7 +228,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadNewTango() {
-        int goal = DataManager.getInstance().getInt("tango_goal", 30);
+        int goal = DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL);
         boolean reviewFlag = count >= goal;
         Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getInt("review_frequency",
                 Constants.REVIEW_FREQUENCY));

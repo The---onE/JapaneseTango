@@ -47,6 +47,7 @@ public class SplashActivity extends BaseActivity {
         if (!isSameDate(now, last)) {
             DataManager.getInstance().setInt("tango_count", 0);
             DataManager.getInstance().setInt("tango_review", 0);
+            DataManager.getInstance().setInt("review_frequency", Constants.REVIEW_FREQUENCY);
             DataManager.getInstance().setLong("last_time", now.getTime());
             new AsyncTask<Void, Void, Void>() {
                 @Override

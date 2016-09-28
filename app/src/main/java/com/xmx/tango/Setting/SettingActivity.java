@@ -40,7 +40,7 @@ public class SettingActivity extends BaseTempActivity {
         typeView.setText(type);
 
         goalView = getViewById(R.id.tv_goal);
-        goalView.setText("" + DataManager.getInstance().getInt("tango_goal", 30));
+        goalView.setText("" + DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL));
 
         answerTimeView = getViewById(R.id.tv_answer_time);
         answerTimeView.setText("" + DataManager.getInstance().getFloat("answer_time", 2.5f));
@@ -95,7 +95,7 @@ public class SettingActivity extends BaseTempActivity {
                 goalEdit.setTextColor(Color.BLACK);
                 goalEdit.setTextSize(24);
                 goalEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
-                goalEdit.setText("" + DataManager.getInstance().getInt("tango_goal", 30));
+                goalEdit.setText("" + DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL));
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("每日的学习目标")
                         .setIcon(android.R.drawable.ic_dialog_info)
