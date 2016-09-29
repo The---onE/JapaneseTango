@@ -36,7 +36,7 @@ public class Constants {
 
     public static final String SPEAKERS[] = {"male01", "female01", "male02"};
 
-    public static final String TONES[] = {"〇", "①", "②", "③", "④", "⑤", "⑥", "⑦"};
+    public static final String TONES[] = {"◎", "①", "②", "③", "④", "⑤", "⑥", "⑦"};
 
     public static final int REMEMBER_SCORE = 7;
     public static final int TIRED_COEFFICIENT = 35;

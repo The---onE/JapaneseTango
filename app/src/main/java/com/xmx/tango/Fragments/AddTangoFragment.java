@@ -33,6 +33,12 @@ public class AddTangoFragment extends xUtilsFragment {
     @ViewInject(R.id.edit_meaning)
     EditText meaningView;
 
+    @ViewInject(R.id.edit_tone)
+    EditText toneView;
+
+    @ViewInject(R.id.edit_part_of_speech)
+    EditText partOfSpeechView;
+
     @ViewInject(R.id.edit_type)
     EditText typeView;
 
@@ -49,6 +55,21 @@ public class AddTangoFragment extends xUtilsFragment {
         String meaning = meaningView.getText().toString().trim();
         entity.meaning = meaning;
 
+        String toneStr = toneView.getText().toString().trim();
+        int tone = -1;
+        if (!toneStr.equals("")) {
+            try {
+                tone = Integer.parseInt(toneStr);
+            } catch (Exception e) {
+                showToast("音调格式不合法");
+                return;
+            }
+        }
+        entity.tone = tone;
+
+        String partOfSpeech = partOfSpeechView.getText().toString().trim();
+        entity.partOfSpeech = partOfSpeech;
+
         String type = typeView.getText().toString().trim();
         entity.type = type;
 
@@ -63,6 +84,9 @@ public class AddTangoFragment extends xUtilsFragment {
         writingView.setText("");
         pronunciationView.setText("");
         meaningView.setText("");
+        toneView.setText("");
+        partOfSpeechView.setText("");
+        typeView.setText("");
 
         showToast(R.string.add_success);
 
