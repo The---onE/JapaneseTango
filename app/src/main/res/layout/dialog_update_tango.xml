@@ -9,7 +9,7 @@
         android:id="@+id/edit_writing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:hint="@string/writing"
         android:textSize="32sp" />
@@ -18,7 +18,7 @@
         android:id="@+id/edit_pronunciation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:hint="@string/pronunciation"
         android:textSize="32sp" />
@@ -27,9 +27,37 @@
         android:id="@+id/edit_meaning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:hint="@string/meaning"
+        android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/edit_tone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/tone"
+        android:inputType="number"
+        android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/edit_part_of_speech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/part_of_speech"
+        android:textSize="32sp" />
+
+    <EditText
+        android:id="@+id/edit_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="@string/type"
         android:textSize="32sp" />
 
     <LinearLayout

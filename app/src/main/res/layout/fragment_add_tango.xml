@@ -63,7 +63,7 @@
             android:id="@+id/edit_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_part_or_speech"
+            android:layout_below="@+id/edit_part_of_speech"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:hint="@string/type"

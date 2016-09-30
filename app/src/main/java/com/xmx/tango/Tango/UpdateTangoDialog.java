@@ -20,6 +20,9 @@ public class UpdateTangoDialog extends Dialog {
     EditText writingView;
     EditText pronunciationView;
     EditText meaningView;
+    EditText toneView;
+    EditText partOfSpeechView;
+    EditText typeView;
 
     public UpdateTangoDialog(Context context, Tango tango) {
         super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
@@ -34,10 +37,16 @@ public class UpdateTangoDialog extends Dialog {
         writingView = (EditText) findViewById(R.id.edit_writing);
         pronunciationView = (EditText) findViewById(R.id.edit_pronunciation);
         meaningView = (EditText) findViewById(R.id.edit_meaning);
+        toneView = (EditText) findViewById(R.id.edit_tone);
+        partOfSpeechView = (EditText) findViewById(R.id.edit_part_of_speech);
+        typeView = (EditText) findViewById(R.id.edit_type);
 
         writingView.setText(tango.writing);
         pronunciationView.setText(tango.pronunciation);
         meaningView.setText(tango.meaning);
+        toneView.setText("" + tango.tone);
+        partOfSpeechView.setText(tango.partOfSpeech);
+        typeView.setText(tango.type);
 
         findViewById(R.id.btn_update).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,16 +54,32 @@ public class UpdateTangoDialog extends Dialog {
                 String writing = writingView.getText().toString();
                 String pronunciation = pronunciationView.getText().toString();
                 String meaning = meaningView.getText().toString();
+                String toneStr = toneView.getText().toString();
+                String partOfSpeech = partOfSpeechView.getText().toString();
+                String type = typeView.getText().toString();
 
                 if (writing.equals("") && pronunciation.equals("")) {
                     Toast.makeText(getContext(), R.string.add_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                int tone = -1;
+                if (!toneStr.equals("")) {
+                    try {
+                        tone = Integer.parseInt(toneStr);
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(),"音调格式不合法", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
                 TangoEntityManager.getInstance().updateData(tango.id,
                         "Writing='" + writing + "'",
                         "Pronunciation='" + pronunciation + "'",
-                        "Meaning='" + meaning + "'");
+                        "Meaning='" + meaning + "'",
+                        "Tone=" + tone,
+                        "PartOfSpeech='" + partOfSpeech + "'",
+                        "Type='" + type + "'");
 
 
                 EventBus.getDefault().post(new TangoListChangeEvent());
