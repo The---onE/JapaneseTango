@@ -16,6 +16,7 @@ import com.xmx.tango.Fragments.HomeFragment;
 import com.xmx.tango.Fragments.ImportFileFragment;
 import com.xmx.tango.Fragments.ImportTangoFragment;
 import com.xmx.tango.Fragments.TangoListFragment;
+import com.xmx.tango.Log.OperationLogActivity;
 import com.xmx.tango.Setting.SettingActivity;
 import com.xmx.tango.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.tango.Tools.PagerAdapter;
@@ -134,6 +135,9 @@ public class MainActivity extends BaseNavigationActivity {
                 break;
             case R.id.nav_setting:
                 startActivity(SettingActivity.class);
+                break;
+            case R.id.nav_log:
+                startActivity(OperationLogActivity.class);
                 break;
         }
 

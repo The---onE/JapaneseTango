@@ -52,16 +52,20 @@ public class SplashActivity extends BaseActivity {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    TangoManager.getInstance().updateData();
-                    List<Tango> tangoList = TangoManager.getInstance().getData();
-                    for (Tango tango : tangoList) {
-                        if (tango.score > 0) {
-                            int newScore = Constants.FORGOTTEN_SCORE(tango.score);
-                            TangoEntityManager.getInstance().updateData(tango.id,
-                                    "Score=" + newScore);
-
-                            EventBus.getDefault().post(new TangoListChangeEvent());
+                    try {
+                        TangoManager.getInstance().updateData();
+                        List<Tango> tangoList = TangoManager.getInstance().getData();
+                        for (int i = 0; i < tangoList.size(); i++) {
+                            Tango tango = tangoList.get(i);
+                            if (tango.score > 0) {
+                                int newScore = Constants.FORGOTTEN_SCORE(tango.score);
+                                TangoEntityManager.getInstance().updateData(tango.id,
+                                        "Score=" + newScore);
+                            }
                         }
+                        EventBus.getDefault().post(new TangoListChangeEvent());
+                    } catch (Exception e) {
+                        filterException(e);
                     }
                     return null;
                 }

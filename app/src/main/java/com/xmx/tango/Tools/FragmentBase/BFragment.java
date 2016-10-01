@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.xmx.tango.Constants;
+import com.xmx.tango.Tools.OperationLog.OperationLogEntityManager;
 
 /**
  * Created by The_onE on 2016/3/17.
@@ -16,6 +17,7 @@ public abstract class BFragment extends Fragment {
         if (e != null && Constants.EXCEPTION_DEBUG) {
             e.printStackTrace();
             showToast(e.getMessage());
+            OperationLogEntityManager.getInstance().addLog(e.getMessage());
             return false;
         } else {
             return true;

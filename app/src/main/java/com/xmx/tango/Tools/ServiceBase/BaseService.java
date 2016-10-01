@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.xmx.tango.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.Tools.OperationLog.OperationLogEntityManager;
 
 /**
  * Created by The_onE on 2016/7/1.
@@ -63,6 +64,7 @@ public abstract class BaseService extends Service {
         if (e != null && Constants.EXCEPTION_DEBUG) {
             e.printStackTrace();
             showToast(e.getMessage());
+            OperationLogEntityManager.getInstance().addLog(e.getMessage());
             return false;
         } else {
             return true;

@@ -25,9 +25,9 @@ public class OperationLogEntityManager extends BaseSQLEntityManager<OperationLog
         openDatabase();
     }
 
-    public void addLog(String oper) {
+    public void addLog(String operation) {
         OperationLog entity = new OperationLog();
-        entity.mOperation = oper;
+        entity.mOperation = operation;
         entity.mTime = new Date();
         insertData(entity);
         EventBus.getDefault().post(new LogChangeEvent());

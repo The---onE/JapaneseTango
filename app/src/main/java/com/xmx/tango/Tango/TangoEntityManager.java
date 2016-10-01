@@ -40,7 +40,7 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
 
         if (maxFrequency >= 0) {
             if (!conStr.equals("")) {
-                conStr += ", Frequency <= " + maxFrequency;
+                conStr += " and Frequency <= " + maxFrequency;
             } else {
                 conStr = " where Frequency <= " + maxFrequency;
             }
@@ -51,6 +51,11 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
             reviewStr = "Frequency desc, ";
         } else {
             reviewStr = "";
+            if (!conStr.equals("")) {
+                conStr += " and Frequency >= 0";
+            } else {
+                conStr = " where Frequency >= 0";
+            }
         }
 
         Cursor cursor = database.rawQuery("select * from " + tableName +

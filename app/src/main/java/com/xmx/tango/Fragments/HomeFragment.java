@@ -150,7 +150,7 @@ public class HomeFragment extends BaseFragment {
                 }
                 countView.setText("今日复习：" + review + "\n今日已记：" + count);
             }
-            frequency = 0;
+            frequency = -1;
 
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + Constants.REMEMBER_FOREVER_SCORE),

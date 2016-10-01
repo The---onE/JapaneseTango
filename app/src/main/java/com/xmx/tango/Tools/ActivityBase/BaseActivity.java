@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xmx.tango.Constants;
+import com.xmx.tango.Tools.OperationLog.OperationLogEntityManager;
 
 import org.xutils.x;
 
@@ -66,6 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (e != null && Constants.EXCEPTION_DEBUG) {
             e.printStackTrace();
             showToast(e.getMessage());
+            OperationLogEntityManager.getInstance().addLog(e.getMessage());
             return false;
         } else {
             return true;
