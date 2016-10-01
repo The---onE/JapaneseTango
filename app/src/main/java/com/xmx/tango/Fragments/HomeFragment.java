@@ -49,6 +49,38 @@ public class HomeFragment extends BaseFragment {
 
     Random random = new Random();
 
+    private boolean operateFlag = true;
+    private static final int REMEMBER = 1;
+    private static final int FORGET = 2;
+    private static final int REMEMBER_FOREVER = 3;
+
+    private boolean operateTango(final int operation) {
+        if (tango != null && tango.id > 0 && operateFlag) {
+            switch (operation) {
+                case REMEMBER:
+                    remember();
+                    break;
+                case FORGET:
+                    forget();
+                    break;
+                case REMEMBER_FOREVER:
+                    rememberForever();
+                    break;
+            }
+            operateFlag = false;
+            new Timer() {
+                @Override
+                public void timer() {
+                    operateFlag = true;
+                }
+            }.start(Constants.INTERVAL_TIME_MIN, true);
+
+            loadNewTango();
+            return true;
+        }
+        return false;
+    }
+
     private void remember() {
         if (tango != null && tango.id > 0) {
             Date last = tango.lastTime;
@@ -176,8 +208,7 @@ public class HomeFragment extends BaseFragment {
                         int h = wm.getDefaultDisplay().getHeight();
                         float y = h - motionEvent.getRawY();
                         if (y > h / 3) {
-                            rememberForever();
-                            loadNewTango();
+                            operateTango(REMEMBER_FOREVER);
                         }
                         break;
                 }
@@ -188,16 +219,14 @@ public class HomeFragment extends BaseFragment {
         remember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remember();
-                loadNewTango();
+                operateTango(REMEMBER);
             }
         });
 
         view.findViewById(R.id.btn_forget).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                forget();
-                loadNewTango();
+                operateTango(FORGET);
             }
         });
 
@@ -253,10 +282,9 @@ public class HomeFragment extends BaseFragment {
                 @Override
                 public void timer() {
                     writingView.setText(tango.writing);
-                    answerTimer.stop();
                 }
             };
-            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000);
+            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
         } else {
             writingView.setText(tango.writing);
             pronunciationView.setText("");
@@ -271,10 +299,9 @@ public class HomeFragment extends BaseFragment {
                     if (tango.tone >= 0) {
                         toneView.setText(Constants.TONES[tango.tone]);
                     }
-                    answerTimer.stop();
                 }
             };
-            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000);
+            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
         }
 
         meaningView.setText("");
@@ -289,10 +316,9 @@ public class HomeFragment extends BaseFragment {
                     partView.setText("[" + tango.partOfSpeech + "]");
                 }
                 meaningView.setText(tango.meaning);
-                meaningTimer.stop();
             }
         };
-        meaningTimer.start((int) DataManager.getInstance().getFloat("meaning_time", 3.5f) * 1000);
+        meaningTimer.start((int) DataManager.getInstance().getFloat("meaning_time", 3.5f) * 1000, true);
     }
 
     boolean isSameDate(Date now, Date last) {

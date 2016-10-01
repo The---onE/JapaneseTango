@@ -7,13 +7,16 @@ import android.os.Handler;
  */
 public abstract class Timer {
     long delay = 1000;
+    boolean onceFlag = false;
 
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             timer();
-            handler.postDelayed(this, delay);
+            if (!onceFlag) {
+                handler.postDelayed(this, delay);
+            }
         }
     };
 
@@ -21,6 +24,13 @@ public abstract class Timer {
 
     public void start(long d) {
         delay = d;
+        onceFlag = false;
+        handler.postDelayed(runnable, delay);
+    }
+
+    public void start(long d, boolean once) {
+        delay = d;
+        onceFlag = once;
         handler.postDelayed(runnable, delay);
     }
 
