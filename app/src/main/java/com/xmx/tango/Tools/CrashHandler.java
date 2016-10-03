@@ -53,13 +53,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
 
         ex.printStackTrace();
-        OperationLogEntityManager.getInstance().addLog(ex.getMessage());
+        OperationLogEntityManager.getInstance().addLog("" + ex);
 
         new Thread() {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "出现错误" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "出现错误" + ex, Toast.LENGTH_LONG).show();
                 Looper.loop();
             }
         }.start();

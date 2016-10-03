@@ -44,13 +44,6 @@ public class OperationLogActivity extends BaseTempActivity {
                 operationLogAdapter.updateList(OperationLogManager.getInstance().getData());
             }
         });
-
-        getViewById(R.id.btn_error_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int e = 1 / 0;
-            }
-        });
     }
 
     @Override
