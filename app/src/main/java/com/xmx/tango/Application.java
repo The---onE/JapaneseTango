@@ -5,6 +5,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xmx.tango.Tango.SpeakTangoManager;
+import com.xmx.tango.Tools.CrashHandler;
 import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.PushMessage.ReceiveMessageActivity;
 import com.xmx.tango.User.UserManager;
@@ -21,6 +22,9 @@ public class Application extends android.app.Application {
 
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG);
+
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
 
         AVOSCloud.initialize(this, Constants.APP_ID, Constants.APP_KEY);
 
