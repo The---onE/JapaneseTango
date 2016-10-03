@@ -271,7 +271,7 @@ public class HomeFragment extends BaseFragment {
         boolean r = random.nextBoolean();
         if (r) {
             pronunciationView.setText(tango.pronunciation);
-            if (tango.tone >= 0) {
+            if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
                 toneView.setText(Constants.TONES[tango.tone]);
             }
             writingView.setText("");
@@ -296,7 +296,7 @@ public class HomeFragment extends BaseFragment {
                 @Override
                 public void timer() {
                     pronunciationView.setText(tango.pronunciation);
-                    if (tango.tone >= 0) {
+                    if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
                         toneView.setText(Constants.TONES[tango.tone]);
                     }
                 }

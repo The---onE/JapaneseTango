@@ -54,7 +54,7 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             holder.writing.setText(tango.writing);
 
             holder.pronunciation.setText(tango.pronunciation);
-            if (tango.tone >= 0) {
+            if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
                 holder.tone.setText(Constants.TONES[tango.tone]);
             }
 
