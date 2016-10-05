@@ -38,7 +38,9 @@ public class HomeFragment extends BaseFragment {
     int todayConsecutive = 0;
 
     Timer answerTimer;
+    boolean answerFlag = false;
     Timer meaningTimer;
+    boolean meaningFlag = false;
 
     TextView pronunciationView;
     TextView toneView;
@@ -249,6 +251,21 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+
+        view.findViewById(R.id.btn_answer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!answerFlag && answerTimer!=null) {
+                    answerTimer.execute();
+                    answerTimer.stop();
+                }
+
+                if (!meaningFlag && meaningTimer!=null) {
+                    meaningTimer.execute();
+                    meaningTimer.stop();
+                }
+            }
+        });
     }
 
     @Override
@@ -257,6 +274,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadNewTango() {
+        answerFlag = false;
+        meaningFlag = false;
+
         int goal = DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL);
         boolean reviewFlag = count >= goal;
         Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getInt("review_frequency",
@@ -282,6 +302,7 @@ public class HomeFragment extends BaseFragment {
                 @Override
                 public void timer() {
                     writingView.setText(tango.writing);
+                    answerFlag = true;
                 }
             };
             answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
@@ -299,6 +320,7 @@ public class HomeFragment extends BaseFragment {
                     if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
                         toneView.setText(Constants.TONES[tango.tone]);
                     }
+                    answerFlag = true;
                 }
             };
             answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
@@ -316,6 +338,8 @@ public class HomeFragment extends BaseFragment {
                     partView.setText("[" + tango.partOfSpeech + "]");
                 }
                 meaningView.setText(tango.meaning);
+
+                meaningFlag = true;
             }
         };
         meaningTimer.start((int) DataManager.getInstance().getFloat("meaning_time", 3.5f) * 1000, true);
