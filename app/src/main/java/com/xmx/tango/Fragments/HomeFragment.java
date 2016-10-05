@@ -77,7 +77,17 @@ public class HomeFragment extends BaseFragment {
                 }
             }.start(Constants.INTERVAL_TIME_MIN, true);
 
-            loadNewTango();
+            if (answerFlag && meaningFlag) {
+                loadNewTango();
+            } else {
+                showAnswer();
+                new Timer() {
+                    @Override
+                    public void timer() {
+                        loadNewTango();
+                    }
+                }.start(Constants.NEW_TANGO_DELAY, true);
+            }
             return true;
         }
         return false;
@@ -255,15 +265,7 @@ public class HomeFragment extends BaseFragment {
         view.findViewById(R.id.btn_answer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!answerFlag && answerTimer!=null) {
-                    answerTimer.execute();
-                    answerTimer.stop();
-                }
-
-                if (!meaningFlag && meaningTimer!=null) {
-                    meaningTimer.execute();
-                    meaningTimer.stop();
-                }
+                showAnswer();
             }
         });
     }
@@ -348,5 +350,17 @@ public class HomeFragment extends BaseFragment {
     boolean isSameDate(Date now, Date last) {
         return now.getTime() - last.getTime() < Constants.DAY_TIME
                 && now.getDate() == last.getDate();
+    }
+
+    private void showAnswer() {
+        if (!answerFlag && answerTimer!=null) {
+            answerTimer.execute();
+            answerTimer.stop();
+        }
+
+        if (!meaningFlag && meaningTimer!=null) {
+            meaningTimer.execute();
+            meaningTimer.stop();
+        }
     }
 }
