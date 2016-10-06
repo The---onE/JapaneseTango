@@ -1,6 +1,7 @@
 package com.xmx.tango.Fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -49,6 +50,10 @@ public class HomeFragment extends BaseFragment {
     TextView partView;
     TextView countView;
 
+    Button rememberButton;
+    Button forgetButton;
+    Button answerButton;
+
     Random random = new Random();
 
     private boolean operateFlag = true;
@@ -70,12 +75,8 @@ public class HomeFragment extends BaseFragment {
                     break;
             }
             operateFlag = false;
-            new Timer() {
-                @Override
-                public void timer() {
-                    operateFlag = true;
-                }
-            }.start(Constants.INTERVAL_TIME_MIN, true);
+            rememberButton.setBackgroundColor(Color.LTGRAY);
+            forgetButton.setBackgroundColor(Color.LTGRAY);
 
             if (answerFlag && meaningFlag) {
                 loadNewTango();
@@ -186,6 +187,10 @@ public class HomeFragment extends BaseFragment {
         partView = (TextView) view.findViewById(R.id.tv_tango_part);
         countView = (TextView) view.findViewById(R.id.tv_tango_count);
 
+        rememberButton = (Button) view.findViewById(R.id.btn_remember);
+        forgetButton = (Button) view.findViewById(R.id.btn_forget);
+        answerButton = (Button) view.findViewById(R.id.btn_answer);
+
         Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
         Date now = new Date();
         count = DataManager.getInstance().getInt("tango_count", 0);
@@ -205,8 +210,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void setListener(View view) {
-        Button remember = (Button) view.findViewById(R.id.btn_remember);
-        remember.setOnTouchListener(new View.OnTouchListener() {
+        rememberButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
@@ -228,14 +232,14 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        remember.setOnClickListener(new View.OnClickListener() {
+        rememberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 operateTango(REMEMBER);
             }
         });
 
-        view.findViewById(R.id.btn_forget).setOnClickListener(new View.OnClickListener() {
+        forgetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 operateTango(FORGET);
@@ -262,7 +266,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        view.findViewById(R.id.btn_answer).setOnClickListener(new View.OnClickListener() {
+        answerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAnswer();
@@ -278,6 +282,15 @@ public class HomeFragment extends BaseFragment {
     private void loadNewTango() {
         answerFlag = false;
         meaningFlag = false;
+        answerButton.setVisibility(View.VISIBLE);
+        new Timer() {
+            @Override
+            public void timer() {
+                operateFlag = true;
+                rememberButton.setBackgroundColor(Color.TRANSPARENT);
+                forgetButton.setBackgroundColor(Color.TRANSPARENT);
+            }
+        }.start(Constants.INTERVAL_TIME_MIN, true);
 
         int goal = DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL);
         boolean reviewFlag = count >= goal;
@@ -305,6 +318,9 @@ public class HomeFragment extends BaseFragment {
                 public void timer() {
                     writingView.setText(tango.writing);
                     answerFlag = true;
+                    if (meaningFlag) {
+                        answerButton.setVisibility(View.GONE);
+                    }
                 }
             };
             answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
@@ -323,6 +339,9 @@ public class HomeFragment extends BaseFragment {
                         toneView.setText(Constants.TONES[tango.tone]);
                     }
                     answerFlag = true;
+                    if (meaningFlag) {
+                        answerButton.setVisibility(View.GONE);
+                    }
                 }
             };
             answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
@@ -342,6 +361,9 @@ public class HomeFragment extends BaseFragment {
                 meaningView.setText(tango.meaning);
 
                 meaningFlag = true;
+                if (answerFlag) {
+                    answerButton.setVisibility(View.GONE);
+                }
             }
         };
         meaningTimer.start((int) DataManager.getInstance().getFloat("meaning_time", 3.5f) * 1000, true);
