@@ -39,6 +39,6 @@ public abstract class Timer {
     }
 
     public void execute() {
-        runnable.run();
+        timer();
     }
 }
