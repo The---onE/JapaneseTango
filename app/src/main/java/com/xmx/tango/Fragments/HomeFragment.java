@@ -217,6 +217,8 @@ public class HomeFragment extends BaseFragment {
             pronunciationView.setText(tango.pronunciation);
             if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
                 toneView.setText(Constants.TONES[tango.tone]);
+            } else {
+                toneView.setText("");
             }
             writingView.setText("");
             if (answerTimer != null) {
@@ -246,6 +248,8 @@ public class HomeFragment extends BaseFragment {
                     pronunciationView.setText(tango.pronunciation);
                     if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
                         toneView.setText(Constants.TONES[tango.tone]);
+                    } else {
+                        toneView.setText("");
                     }
                     answerFlag = true;
                     if (meaningFlag) {
