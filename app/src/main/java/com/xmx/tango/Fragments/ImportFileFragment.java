@@ -75,21 +75,33 @@ public class ImportFileFragment extends xUtilsFragment {
                     str = reader.readLine();
                     if (str != null) {
                         String[] strings = str.split(",");
-                        Tango tango = new Tango();
-                        tango.writing = strings[0];
-                        tango.pronunciation = strings[1];
-                        tango.meaning = strings[2];
-                        int i = -1;
-                        try {
-                            i = Integer.parseInt(strings[3]);
-                        } catch (Exception e) {
-                        }
-                        tango.tone = i;
-                        tango.partOfSpeech = strings[4];
-                        tango.type = type;
+                        if (strings.length > 1) {
+                            Tango tango = new Tango();
+                            if (strings.length > 0) {
+                                tango.writing = strings[0];
+                                if (strings.length > 1) {
+                                    tango.pronunciation = strings[1];
+                                    if (strings.length > 2) {
+                                        tango.meaning = strings[2];
+                                        if (strings.length > 3) {
+                                            try {
+                                                tango.tone = Integer.parseInt(strings[3]);
+                                            } catch (Exception e) {
+                                                tango.tone = -1;
+                                            }
+                                            if (strings.length > 4) {
+                                                tango.partOfSpeech = strings[4];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
-                        tango.addTime = new Date();
-                        TangoEntityManager.getInstance().insertData(tango);
+                            tango.type = type;
+
+                            tango.addTime = new Date();
+                            TangoEntityManager.getInstance().insertData(tango);
+                        }
                     } else {
                         break;
                     }

@@ -16,17 +16,12 @@ import com.xmx.tango.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tango.Tango;
-import com.xmx.tango.Tango.TangoEntityManager;
-import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tango.TangoOperator;
 import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.FragmentBase.BaseFragment;
 import com.xmx.tango.Tools.Timer;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -61,6 +56,10 @@ public class HomeFragment extends BaseFragment {
 
     private boolean operateTango(final int operation) {
         if (tango != null && tango.id > 0 && operateFlag) {
+            operateFlag = false;
+            rememberButton.setBackgroundColor(Color.LTGRAY);
+            forgetButton.setBackgroundColor(Color.LTGRAY);
+
             switch (operation) {
                 case REMEMBER:
                     TangoOperator.getInstance().remember(tango);
@@ -74,10 +73,6 @@ public class HomeFragment extends BaseFragment {
             }
             countView.setText("今日复习：" + TangoOperator.getInstance().review +
                     "\n今日已记：" + TangoOperator.getInstance().study);
-
-            operateFlag = false;
-            rememberButton.setBackgroundColor(Color.LTGRAY);
-            forgetButton.setBackgroundColor(Color.LTGRAY);
 
             if (answerFlag && meaningFlag) {
                 loadNewTango();

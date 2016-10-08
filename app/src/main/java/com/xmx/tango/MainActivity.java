@@ -38,15 +38,15 @@ public class MainActivity extends BaseNavigationActivity {
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
-        fragments.add(new TangoListFragment());
         fragments.add(new AddTangoFragment());
+        fragments.add(new TangoListFragment());
         fragments.add(new ImportTangoFragment());
         fragments.add(new ImportFileFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
-        titles.add("列表");
         titles.add("添加");
+        titles.add("列表");
         titles.add("导入");
         titles.add("CSV导入");
 
@@ -121,10 +121,10 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_home:
                 vp.setCurrentItem(0);
                 break;
-            case R.id.nav_tango_list:
+            case R.id.nav_add_tango:
                 vp.setCurrentItem(1);
                 break;
-            case R.id.nav_add_tango:
+            case R.id.nav_tango_list:
                 vp.setCurrentItem(2);
                 break;
             case R.id.nav_import_tango:
