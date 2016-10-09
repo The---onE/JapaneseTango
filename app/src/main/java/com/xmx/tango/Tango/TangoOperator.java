@@ -79,7 +79,7 @@ public class TangoOperator {
                     "Score=" + (tango.score + score),
                     "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
-            EventBus.getDefault().post(new TangoListChangeEvent());
+            EventBus.getDefault().post(new OperateTangoEvent());
         }
     }
 
@@ -88,7 +88,7 @@ public class TangoOperator {
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + Constants.FORGET_SCORE));
             //"LastTime=" + new Date().getTime());
-            EventBus.getDefault().post(new TangoListChangeEvent());
+            EventBus.getDefault().post(new OperateTangoEvent());
         }
     }
 
@@ -114,7 +114,7 @@ public class TangoOperator {
                     "Score=" + (tango.score + Constants.REMEMBER_FOREVER_SCORE),
                     "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
-            EventBus.getDefault().post(new TangoListChangeEvent());
+            EventBus.getDefault().post(new OperateTangoEvent());
         }
     }
 

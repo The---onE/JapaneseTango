@@ -9,6 +9,7 @@ import com.xmx.tango.Constants;
 import com.xmx.tango.MainActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.Tools.ActivityBase.BaseActivity;
+import com.xmx.tango.Tools.ActivityBase.BaseSplashActivity;
 import com.xmx.tango.User.LoginActivity;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.BGABannerUtil;
 
-public class SplashBannerActivity extends BaseActivity {
+public class SplashBannerActivity extends BaseSplashActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -48,17 +49,5 @@ public class SplashBannerActivity extends BaseActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-    }
-
-    void startLoginActivity() {
-        Intent loginIntent = new Intent(SplashBannerActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    void startMainActivity() {
-        Intent mainIntent = new Intent(SplashBannerActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-        finish();
     }
 }

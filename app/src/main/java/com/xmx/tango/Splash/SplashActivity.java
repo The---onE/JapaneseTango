@@ -13,6 +13,7 @@ import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tools.ActivityBase.BaseActivity;
+import com.xmx.tango.Tools.ActivityBase.BaseSplashActivity;
 import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.User.LoginActivity;
 
@@ -21,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseSplashActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -71,18 +72,6 @@ public class SplashActivity extends BaseActivity {
                 }
             }.execute();
         }
-    }
-
-    void startLoginActivity() {
-        Intent loginIntent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    void startMainActivity() {
-        Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-        finish();
     }
 
     boolean isSameDate(Date now, Date last) {

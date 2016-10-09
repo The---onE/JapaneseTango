@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.OperateTangoEvent;
 import com.xmx.tango.Tango.SearchTangoDialog;
 import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tango.Tango;
@@ -50,7 +51,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        TangoManager.getInstance().updateData();
+        //TangoManager.getInstance().updateData(); //在SplashActivity中调用
         tangoAdapter = new TangoAdapter(getContext(), TangoManager.getInstance().getData());
         tangoList.setAdapter(tangoAdapter);
 
@@ -129,4 +130,7 @@ public class TangoListFragment extends xUtilsFragment {
     public void onEvent(TangoListChangeEvent event) {
         updateTangoList();
     }
+
+    @Subscribe
+    public void onEvent(OperateTangoEvent event) {}
 }

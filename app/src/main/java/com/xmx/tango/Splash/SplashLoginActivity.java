@@ -10,12 +10,13 @@ import com.xmx.tango.Constants;
 import com.xmx.tango.MainActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.Tools.ActivityBase.BaseActivity;
+import com.xmx.tango.Tools.ActivityBase.BaseSplashActivity;
 import com.xmx.tango.User.Callback.AutoLoginCallback;
 import com.xmx.tango.User.LoginActivity;
 import com.xmx.tango.User.UserConstants;
 import com.xmx.tango.User.UserManager;
 
-public class SplashLoginActivity extends BaseActivity {
+public class SplashLoginActivity extends BaseSplashActivity {
     boolean loginFlag = false;
     boolean timeFlag = false;
     boolean notLoginFlag = false;
@@ -107,19 +108,5 @@ public class SplashLoginActivity extends BaseActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-    }
-
-    void startLoginActivity() {
-        startFlag = true;
-        Intent loginIntent = new Intent(SplashLoginActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
-    }
-
-    void startMainActivity() {
-        startFlag = true;
-        Intent mainIntent = new Intent(SplashLoginActivity.this, MainActivity.class);
-        startActivity(mainIntent);
-        finish();
     }
 }
