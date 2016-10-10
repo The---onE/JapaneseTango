@@ -68,6 +68,13 @@ public class ImportFileFragment extends xUtilsFragment {
         if (fileFlag) {
             String type = typeView.getText().toString().trim();
             try {
+                if (filePath.contains("primary:")) {
+                    final String[] split = filePath.split(":");
+                    final String fileType = split[0];
+                    filePath = android.os.Environment
+                            .getExternalStorageDirectory() + "/" + split[1];
+                }
+
                 InputStream is = new FileInputStream(filePath);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                 String str = null;
