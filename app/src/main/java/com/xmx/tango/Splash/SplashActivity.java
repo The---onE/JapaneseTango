@@ -43,6 +43,7 @@ public class SplashActivity extends BaseSplashActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        TangoManager.getInstance().updateData();
         Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
         Date now = new Date();
         if (!isSameDate(now, last)) {
@@ -54,7 +55,6 @@ public class SplashActivity extends BaseSplashActivity {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     try {
-                        TangoManager.getInstance().updateData();
                         List<Tango> tangoList = TangoManager.getInstance().getData();
                         for (int i = 0; i < tangoList.size(); i++) {
                             Tango tango = tangoList.get(i);

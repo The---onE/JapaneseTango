@@ -74,20 +74,12 @@ public class HomeFragment extends BaseFragment {
             countView.setText("今日复习：" + TangoOperator.getInstance().review +
                     "\n今日已记：" + TangoOperator.getInstance().study);
 
-            if (answerFlag && meaningFlag) {
-                loadNewTango();
-            } else {
-                showAnswer();
-                new Timer() {
-                    @Override
-                    public void timer() {
-                        loadNewTango();
-                    }
-                }.start(Constants.NEW_TANGO_DELAY, true);
-            }
+            loadNew();
             return true;
+        } else {
+            loadNew();
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -181,6 +173,20 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void processLogic(View view, Bundle savedInstanceState) {
         loadNewTango();
+    }
+
+    private void loadNew() {
+        if (answerFlag && meaningFlag) {
+            loadNewTango();
+        } else {
+            showAnswer();
+            new Timer() {
+                @Override
+                public void timer() {
+                    loadNewTango();
+                }
+            }.start(Constants.NEW_TANGO_DELAY, true);
+        }
     }
 
     private void loadNewTango() {
