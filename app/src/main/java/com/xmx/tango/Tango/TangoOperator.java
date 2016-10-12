@@ -24,20 +24,20 @@ public class TangoOperator {
         return instance;
     }
     private TangoOperator() {
-        study = DataManager.getInstance().getInt("tango_study", 0);
-        review = DataManager.getInstance().getInt("tango_review", 0);
+        study = DataManager.getInstance().getTangoStudy();
+        review = DataManager.getInstance().getTangoReview();
 
-        Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
+        Date last = new Date(DataManager.getInstance().getLastTime());
         Date now = new Date();
         if (!isSameDate(now, last)) {
             study = 0;
-            DataManager.getInstance().setInt("tango_study", 0);
+            DataManager.getInstance().setTangoStudy(0);
             review = 0;
-            DataManager.getInstance().setInt("tango_review", 0);
+            DataManager.getInstance().setTangoReview(0);
 
-            DataManager.getInstance().setInt("review_frequency", Constants.REVIEW_FREQUENCY);
+            DataManager.getInstance().setReviewFrequency(Constants.REVIEW_FREQUENCY);
 
-            DataManager.getInstance().setLong("last_time", now.getTime());
+            DataManager.getInstance().setLastTime(now.getTime());
         }
     }
 
@@ -46,30 +46,29 @@ public class TangoOperator {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            int goal = DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL);
+            int goal = DataManager.getInstance().getTangoGoal();
             if (!isSameDate(now, last)) {
                 todayConsecutive = 0;
                 if (last.getTime() > 0) { //复习
                     review++;
-                    DataManager.getInstance().setInt("tango_review", review);
-                    DataManager.getInstance().setLong("last_time", now.getTime());
+                    DataManager.getInstance().setTangoReview(review);
+                    DataManager.getInstance().setLastTime(now.getTime());
                     if (frequency > 0) {
                         frequency--;
                     }
                 } else { //学习
                     study++;
                     frequency = Constants.REVIEW_FREQUENCY;
-                    DataManager.getInstance().setInt("tango_study", study);
-                    DataManager.getInstance().setLong("last_time", now.getTime());
+                    DataManager.getInstance().setTangoStudy(study);
+                    DataManager.getInstance().setLastTime(now.getTime());
                 }
             } else if (study >= goal) {
                 todayConsecutive++;
                 if (todayConsecutive > Constants.TODAY_CONSECUTIVE_REVIEW_MAX) {
                     todayConsecutive = 0;
-                    int frequencyMax = DataManager.getInstance().getInt("review_frequency",
-                            Constants.REVIEW_FREQUENCY);
+                    int frequencyMax = DataManager.getInstance().getReviewFrequency();
                     frequencyMax--;
-                    DataManager.getInstance().setInt("review_frequency", frequencyMax);
+                    DataManager.getInstance().setReviewFrequency(frequencyMax);
                 }
             }
 
@@ -100,12 +99,12 @@ public class TangoOperator {
             if (!isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     review++;
-                    DataManager.getInstance().setInt("tango_review", review);
-                    DataManager.getInstance().setLong("last_time", now.getTime());
+                    DataManager.getInstance().setTangoReview(review);
+                    DataManager.getInstance().setLastTime(now.getTime());
                 } else { //学习
                     study++;
-                    DataManager.getInstance().setInt("tango_study", study);
-                    DataManager.getInstance().setLong("last_time", now.getTime());
+                    DataManager.getInstance().setTangoStudy(study);
+                    DataManager.getInstance().setLastTime(now.getTime());
                 }
             }
             frequency = -1;

@@ -30,7 +30,7 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         if (!checkDatabase()) {
             return null;
         }
-        String type = DataManager.getInstance().getString("tango_type");
+        String type = DataManager.getInstance().getTangoType();
         String conStr;
         if (!type.equals("")) {
             conStr = " where Type = '" + type + "'";

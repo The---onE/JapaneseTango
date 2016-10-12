@@ -202,13 +202,11 @@ public class HomeFragment extends BaseFragment {
             }
         }.start(Constants.INTERVAL_TIME_MIN, true);
 
-        int goal = DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL);
+        int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
-        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getInt("review_frequency",
-                Constants.REVIEW_FREQUENCY));
+        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
         if (tango != null && temp.id == tango.id) {
-            tango = TangoManager.getInstance().nextTango(reviewFlag, DataManager.getInstance().getInt("review_frequency",
-                    Constants.REVIEW_FREQUENCY));
+            tango = TangoManager.getInstance().nextTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
         } else {
             tango = temp;
         }
@@ -235,7 +233,7 @@ public class HomeFragment extends BaseFragment {
                     }
                 }
             };
-            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
+            answerTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
         } else {
             writingView.setText(tango.writing);
             pronunciationView.setText("");
@@ -258,7 +256,7 @@ public class HomeFragment extends BaseFragment {
                     }
                 }
             };
-            answerTimer.start((int) DataManager.getInstance().getFloat("answer_time", 2.5f) * 1000, true);
+            answerTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
         }
 
         meaningView.setText("");
@@ -280,7 +278,7 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         };
-        meaningTimer.start((int) DataManager.getInstance().getFloat("meaning_time", 3.5f) * 1000, true);
+        meaningTimer.start((int) DataManager.getInstance().getMeaningTime() * 1000, true);
     }
 
     private void showAnswer() {

@@ -33,28 +33,26 @@ public class SettingActivity extends BaseTempActivity {
         setContentView(R.layout.activity_setting);
 
         typeView = getViewById(R.id.tv_type);
-        String type = DataManager.getInstance().getString("tango_type", "");
+        String type = DataManager.getInstance().getTangoType();
         if (type.equals("")) {
             type = "全部";
         }
         typeView.setText(type);
 
         goalView = getViewById(R.id.tv_goal);
-        goalView.setText("" + DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL));
+        goalView.setText("" + DataManager.getInstance().getTangoGoal());
 
         answerTimeView = getViewById(R.id.tv_answer_time);
-        answerTimeView.setText("" + DataManager.getInstance().getFloat("answer_time", 2.5f));
+        answerTimeView.setText("" + DataManager.getInstance().getAnswerTime());
 
         meaningTimeView = getViewById(R.id.tv_meaning_time);
-        meaningTimeView.setText("" + DataManager.getInstance().getFloat("meaning_time", 3.5f));
+        meaningTimeView.setText("" + DataManager.getInstance().getMeaningTime());
 
         frequencyView = getViewById(R.id.tv_frequency);
-        frequencyView.setText("" + DataManager.getInstance().getInt("review_frequency",
-                Constants.REVIEW_FREQUENCY));
+        frequencyView.setText("" + DataManager.getInstance().getReviewFrequency());
 
         speakView = getViewById(R.id.tv_speaker);
-        speakView.setText(DataManager.getInstance()
-                .getString("tango_speaker", Constants.SPEAKERS[0]));
+        speakView.setText(DataManager.getInstance().getTangoSpeaker());
 
         testView = getViewById(R.id.edit_speak);
     }
@@ -67,7 +65,7 @@ public class SettingActivity extends BaseTempActivity {
                 final EditText typeEdit = new EditText(getBaseContext());
                 typeEdit.setTextColor(Color.BLACK);
                 typeEdit.setTextSize(24);
-                typeEdit.setText(DataManager.getInstance().getString("tango_type", ""));
+                typeEdit.setText(DataManager.getInstance().getTangoType());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("学习的単語类型")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -76,7 +74,7 @@ public class SettingActivity extends BaseTempActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String type = typeEdit.getText().toString().trim();
-                                DataManager.getInstance().setString("tango_type", type);
+                                DataManager.getInstance().setTangoType(type);
                                 showToast("更改成功");
                                 if (type.equals("")) {
                                     type = "全部";
@@ -95,7 +93,7 @@ public class SettingActivity extends BaseTempActivity {
                 goalEdit.setTextColor(Color.BLACK);
                 goalEdit.setTextSize(24);
                 goalEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
-                goalEdit.setText("" + DataManager.getInstance().getInt("tango_goal", Constants.DEFAULT_GOAL));
+                goalEdit.setText("" + DataManager.getInstance().getTangoGoal());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("每日的学习目标")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -111,7 +109,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setInt("tango_goal", goal);
+                                DataManager.getInstance().setTangoGoal(goal);
                                 showToast("更改成功");
                                 goalView.setText("" + goal);
                             }
@@ -127,7 +125,7 @@ public class SettingActivity extends BaseTempActivity {
                 answerTimeEdit.setTextColor(Color.BLACK);
                 answerTimeEdit.setTextSize(24);
                 answerTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                answerTimeEdit.setText("" + DataManager.getInstance().getFloat("answer_time", 2.5f));
+                answerTimeEdit.setText("" + DataManager.getInstance().getAnswerTime());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("答案延迟时间")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -143,7 +141,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setFloat("answer_time", answerTime);
+                                DataManager.getInstance().setAnswerTime(answerTime);
                                 showToast("更改成功");
                                 answerTimeView.setText("" + answerTime);
                             }
@@ -159,7 +157,7 @@ public class SettingActivity extends BaseTempActivity {
                 meaningTimeEdit.setTextColor(Color.BLACK);
                 meaningTimeEdit.setTextSize(24);
                 meaningTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                meaningTimeEdit.setText("" + DataManager.getInstance().getFloat("meaning_time", 3.5f));
+                meaningTimeEdit.setText("" + DataManager.getInstance().getMeaningTime());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("解释延迟时间")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -175,7 +173,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setFloat("meaning_time", meaningTime);
+                                DataManager.getInstance().setMeaningTime(meaningTime);
                                 showToast("更改成功");
                                 meaningTimeView.setText("" + meaningTime);
                             }
@@ -191,8 +189,7 @@ public class SettingActivity extends BaseTempActivity {
                 frequencyEdit.setTextColor(Color.BLACK);
                 frequencyEdit.setTextSize(24);
                 frequencyEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-                frequencyEdit.setText("" + DataManager.getInstance().getInt("review_frequency",
-                        Constants.REVIEW_FREQUENCY));
+                frequencyEdit.setText("" + DataManager.getInstance().getReviewFrequency());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("复习系数")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -208,7 +205,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setInt("review_frequency", frequency);
+                                DataManager.getInstance().setReviewFrequency(frequency);
                                 showToast("更改成功");
                                 frequencyView.setText("" + frequency);
                             }
@@ -226,8 +223,7 @@ public class SettingActivity extends BaseTempActivity {
                         .setItems(Constants.SPEAKERS, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                DataManager.getInstance().setString("tango_speaker"
-                                        , Constants.SPEAKERS[i]);
+                                DataManager.getInstance().setTangoSpeaker(Constants.SPEAKERS[i]);
                                 speakView.setText(Constants.SPEAKERS[i]);
                             }
                         })

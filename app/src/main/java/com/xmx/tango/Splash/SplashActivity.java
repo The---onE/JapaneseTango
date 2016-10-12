@@ -44,13 +44,13 @@ public class SplashActivity extends BaseSplashActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         TangoManager.getInstance().updateData();
-        Date last = new Date(DataManager.getInstance().getLong("last_time", 0));
+        Date last = new Date(DataManager.getInstance().getLastTime());
         Date now = new Date();
         if (!isSameDate(now, last)) {
-            DataManager.getInstance().setInt("tango_count", 0);
-            DataManager.getInstance().setInt("tango_review", 0);
-            DataManager.getInstance().setInt("review_frequency", Constants.REVIEW_FREQUENCY);
-            DataManager.getInstance().setLong("last_time", now.getTime());
+            DataManager.getInstance().setTangoStudy(0);
+            DataManager.getInstance().setTangoReview(0);
+            DataManager.getInstance().setReviewFrequency(Constants.REVIEW_FREQUENCY);
+            DataManager.getInstance().setLastTime(now.getTime());
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {

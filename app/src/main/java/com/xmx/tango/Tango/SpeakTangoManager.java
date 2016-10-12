@@ -32,7 +32,7 @@ public class SpeakTangoManager {
     public void speak(String tango) {
         JapaneseTextToSpeech tts = new JapaneseTextToSpeech(mContext, null);
         HashMap<String, String> params = new HashMap<>();
-        String speaker = DataManager.getInstance().getString("tango_speaker", Constants.SPEAKERS[0]);
+        String speaker = DataManager.getInstance().getTangoSpeaker();
         params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, speaker);
         tts.speak(tango, TextToSpeech.QUEUE_FLUSH, params);
     }
