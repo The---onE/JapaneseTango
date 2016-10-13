@@ -62,6 +62,8 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
 
             if (!tango.partOfSpeech.equals("")) {
                 holder.part.setText("[" + tango.partOfSpeech + "]");
+            } else {
+                holder.part.setText("");
             }
             holder.meaning.setText(tango.meaning);
 

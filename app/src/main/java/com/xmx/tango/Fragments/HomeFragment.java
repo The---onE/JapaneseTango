@@ -211,22 +211,36 @@ public class HomeFragment extends BaseFragment {
             tango = temp;
         }
 
+        pronunciationView.setText(tango.pronunciation);
+        pronunciationView.setVisibility(View.INVISIBLE);
+        if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
+            toneView.setText(Constants.TONES[tango.tone]);
+        } else {
+            toneView.setText("");
+        }
+        toneView.setVisibility(View.INVISIBLE);
+        writingView.setText(tango.writing);
+        writingView.setVisibility(View.INVISIBLE);
+        if (!tango.partOfSpeech.equals("")) {
+            partView.setText("[" + tango.partOfSpeech + "]");
+        } else {
+            partView.setText("");
+        }
+        partView.setVisibility(View.INVISIBLE);
+        meaningView.setText(tango.meaning);
+        meaningView.setVisibility(View.INVISIBLE);
+
         boolean r = random.nextBoolean();
         if (r) {
-            pronunciationView.setText(tango.pronunciation);
-            if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
-                toneView.setText(Constants.TONES[tango.tone]);
-            } else {
-                toneView.setText("");
-            }
-            writingView.setText("");
+            pronunciationView.setVisibility(View.VISIBLE);
+            toneView.setVisibility(View.VISIBLE);
             if (answerTimer != null) {
                 answerTimer.stop();
             }
             answerTimer = new Timer() {
                 @Override
                 public void timer() {
-                    writingView.setText(tango.writing);
+                    writingView.setVisibility(View.VISIBLE);
                     answerFlag = true;
                     if (meaningFlag) {
                         answerButton.setVisibility(View.GONE);
@@ -235,21 +249,16 @@ public class HomeFragment extends BaseFragment {
             };
             answerTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
         } else {
-            writingView.setText(tango.writing);
-            pronunciationView.setText("");
-            toneView.setText("");
+            writingView.setVisibility(View.VISIBLE);
             if (answerTimer != null) {
                 answerTimer.stop();
             }
             answerTimer = new Timer() {
                 @Override
                 public void timer() {
-                    pronunciationView.setText(tango.pronunciation);
-                    if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
-                        toneView.setText(Constants.TONES[tango.tone]);
-                    } else {
-                        toneView.setText("");
-                    }
+                    pronunciationView.setVisibility(View.VISIBLE);
+                    toneView.setVisibility(View.VISIBLE);
+
                     answerFlag = true;
                     if (meaningFlag) {
                         answerButton.setVisibility(View.GONE);
@@ -259,18 +268,14 @@ public class HomeFragment extends BaseFragment {
             answerTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
         }
 
-        meaningView.setText("");
-        partView.setText("");
         if (meaningTimer != null) {
             meaningTimer.stop();
         }
         meaningTimer = new Timer() {
             @Override
             public void timer() {
-                if (!tango.partOfSpeech.equals("")) {
-                    partView.setText("[" + tango.partOfSpeech + "]");
-                }
-                meaningView.setText(tango.meaning);
+                partView.setVisibility(View.VISIBLE);
+                meaningView.setVisibility(View.VISIBLE);
 
                 meaningFlag = true;
                 if (answerFlag) {
