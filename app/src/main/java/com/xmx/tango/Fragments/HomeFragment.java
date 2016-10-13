@@ -31,9 +31,29 @@ public class HomeFragment extends BaseFragment {
 
     Tango tango;
 
-    Timer answerTimer;
-    boolean answerFlag = false;
-    Timer meaningTimer;
+    Timer pronunciationTimer = new Timer() {
+        @Override
+        public void timer() {
+            showPronunciation();
+            checkAnswer();
+        }
+    };
+    boolean pronunciationFlag = false;
+    Timer writingTimer = new Timer() {
+        @Override
+        public void timer() {
+            showWriting();
+            checkAnswer();
+        }
+    };
+    boolean writingFlag = false;
+    Timer meaningTimer = new Timer() {
+        @Override
+        public void timer() {
+            showMeaning();
+            checkAnswer();
+        }
+    };
     boolean meaningFlag = false;
 
     TextView pronunciationView;
@@ -175,8 +195,52 @@ public class HomeFragment extends BaseFragment {
         loadNewTango();
     }
 
+    private void checkAnswer() {
+        if (pronunciationFlag && writingFlag && meaningFlag) {
+            answerButton.setVisibility(View.GONE);
+        }
+    }
+
+    private void showPronunciation() {
+        pronunciationView.setVisibility(View.VISIBLE);
+        toneView.setVisibility(View.VISIBLE);
+        pronunciationFlag = true;
+    }
+
+    private void delayPronunciation() {
+        if (pronunciationTimer != null) {
+            pronunciationTimer.stop();
+            pronunciationTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
+        }
+    }
+
+    private void showWriting() {
+        writingView.setVisibility(View.VISIBLE);
+        writingFlag = true;
+    }
+
+    private void delayWriting() {
+        if (writingTimer != null) {
+            writingTimer.stop();
+            writingTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
+        }
+    }
+
+    private void showMeaning() {
+        partView.setVisibility(View.VISIBLE);
+        meaningView.setVisibility(View.VISIBLE);
+        meaningFlag = true;
+    }
+
+    private void delayMeaning() {
+        if (meaningTimer != null) {
+            meaningTimer.stop();
+            meaningTimer.start((int) DataManager.getInstance().getMeaningTime() * 1000, true);
+        }
+    }
+
     private void loadNew() {
-        if (answerFlag && meaningFlag) {
+        if (pronunciationFlag && writingFlag && meaningFlag) {
             loadNewTango();
         } else {
             showAnswer();
@@ -190,7 +254,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void loadNewTango() {
-        answerFlag = false;
+        pronunciationFlag = false;
+        writingFlag = false;
         meaningFlag = false;
         answerButton.setVisibility(View.VISIBLE);
         new Timer() {
@@ -232,64 +297,25 @@ public class HomeFragment extends BaseFragment {
 
         boolean r = random.nextBoolean();
         if (r) {
-            pronunciationView.setVisibility(View.VISIBLE);
-            toneView.setVisibility(View.VISIBLE);
-            if (answerTimer != null) {
-                answerTimer.stop();
-            }
-            answerTimer = new Timer() {
-                @Override
-                public void timer() {
-                    writingView.setVisibility(View.VISIBLE);
-                    answerFlag = true;
-                    if (meaningFlag) {
-                        answerButton.setVisibility(View.GONE);
-                    }
-                }
-            };
-            answerTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
+            showPronunciation();
+            delayWriting();
         } else {
-            writingView.setVisibility(View.VISIBLE);
-            if (answerTimer != null) {
-                answerTimer.stop();
-            }
-            answerTimer = new Timer() {
-                @Override
-                public void timer() {
-                    pronunciationView.setVisibility(View.VISIBLE);
-                    toneView.setVisibility(View.VISIBLE);
-
-                    answerFlag = true;
-                    if (meaningFlag) {
-                        answerButton.setVisibility(View.GONE);
-                    }
-                }
-            };
-            answerTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
+            showWriting();
+            delayPronunciation();
         }
 
-        if (meaningTimer != null) {
-            meaningTimer.stop();
-        }
-        meaningTimer = new Timer() {
-            @Override
-            public void timer() {
-                partView.setVisibility(View.VISIBLE);
-                meaningView.setVisibility(View.VISIBLE);
-
-                meaningFlag = true;
-                if (answerFlag) {
-                    answerButton.setVisibility(View.GONE);
-                }
-            }
-        };
-        meaningTimer.start((int) DataManager.getInstance().getMeaningTime() * 1000, true);
+        delayMeaning();
     }
 
     private void showAnswer() {
-        if (!answerFlag && answerTimer != null) {
-            answerTimer.execute();
-            answerTimer.stop();
+        if (!pronunciationFlag && pronunciationTimer != null) {
+            pronunciationTimer.execute();
+            pronunciationTimer.stop();
+        }
+
+        if (!writingFlag && writingTimer != null) {
+            writingTimer.execute();
+            writingTimer.stop();
         }
 
         if (!meaningFlag && meaningTimer != null) {
