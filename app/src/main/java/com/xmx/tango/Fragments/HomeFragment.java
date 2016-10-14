@@ -295,16 +295,44 @@ public class HomeFragment extends BaseFragment {
         meaningView.setText(tango.meaning);
         meaningView.setVisibility(View.INVISIBLE);
 
+        int i = random.nextInt(3);
         boolean r = random.nextBoolean();
-        if (r) {
-            showPronunciation();
-            delayWriting();
+        if (tango.pronunciation.equals(tango.writing)) {
+            if (r) {
+                showPronunciation();
+                showWriting();
+                delayMeaning();
+            } else {
+                delayPronunciation();
+                delayWriting();
+                showMeaning();
+            }
         } else {
-            showWriting();
-            delayPronunciation();
-        }
+            switch (i) {
+                case 0:
+                    showPronunciation();
+                    delayWriting();
+                    delayMeaning();
+                    break;
 
-        delayMeaning();
+                case 1:
+                    delayPronunciation();
+                    showWriting();
+                    delayMeaning();
+                    break;
+
+                case 2:
+                    delayPronunciation();
+                    delayWriting();
+                    showMeaning();
+                    break;
+
+                default:
+                    showPronunciation();
+                    showWriting();
+                    showMeaning();
+            }
+        }
     }
 
     private void showAnswer() {
