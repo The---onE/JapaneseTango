@@ -22,7 +22,8 @@ public class SettingActivity extends BaseTempActivity {
 
     TextView typeView;
     TextView goalView;
-    TextView answerTimeView;
+    TextView pronunciationTimeView;
+    TextView writingTimeView;
     TextView meaningTimeView;
     TextView frequencyView;
     TextView speakView;
@@ -42,8 +43,11 @@ public class SettingActivity extends BaseTempActivity {
         goalView = getViewById(R.id.tv_goal);
         goalView.setText("" + DataManager.getInstance().getTangoGoal());
 
-        answerTimeView = getViewById(R.id.tv_answer_time);
-        answerTimeView.setText("" + DataManager.getInstance().getAnswerTime());
+        pronunciationTimeView = getViewById(R.id.tv_pronunciation_time);
+        pronunciationTimeView.setText("" + DataManager.getInstance().getPronunciationTime());
+
+        writingTimeView = getViewById(R.id.tv_writing_time);
+        writingTimeView.setText("" + DataManager.getInstance().getWritingTime());
 
         meaningTimeView = getViewById(R.id.tv_meaning_time);
         meaningTimeView.setText("" + DataManager.getInstance().getMeaningTime());
@@ -118,32 +122,64 @@ public class SettingActivity extends BaseTempActivity {
             }
         });
 
-        getViewById(R.id.layout_answer_time).setOnClickListener(new View.OnClickListener() {
+        getViewById(R.id.layout_pronunciation_time).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText answerTimeEdit = new EditText(getBaseContext());
-                answerTimeEdit.setTextColor(Color.BLACK);
-                answerTimeEdit.setTextSize(24);
-                answerTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                answerTimeEdit.setText("" + DataManager.getInstance().getAnswerTime());
+                final EditText pronunciationTimeEdit = new EditText(getBaseContext());
+                pronunciationTimeEdit.setTextColor(Color.BLACK);
+                pronunciationTimeEdit.setTextSize(24);
+                pronunciationTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                pronunciationTimeEdit.setText("" + DataManager.getInstance().getPronunciationTime());
                 new AlertDialog.Builder(SettingActivity.this)
-                        .setTitle("答案延迟时间")
+                        .setTitle("发音延迟时间")
                         .setIcon(android.R.drawable.ic_dialog_info)
-                        .setView(answerTimeEdit)
+                        .setView(pronunciationTimeEdit)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                String answerTimeString = answerTimeEdit.getText().toString();
-                                float answerTime = 0;
-                                if (!answerTimeString.equals("")) {
-                                    answerTime = Float.parseFloat(answerTimeString);
+                                String pronunciationTimeString = pronunciationTimeEdit.getText().toString();
+                                float pronunciationTime = 0;
+                                if (!pronunciationTimeString.equals("")) {
+                                    pronunciationTime = Float.parseFloat(pronunciationTimeString);
                                 } else {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setAnswerTime(answerTime);
+                                DataManager.getInstance().setPronunciationTime(pronunciationTime);
                                 showToast("更改成功");
-                                answerTimeView.setText("" + answerTime);
+                                pronunciationTimeView.setText("" + pronunciationTime);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_writing_time).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText writingTimeEdit = new EditText(getBaseContext());
+                writingTimeEdit.setTextColor(Color.BLACK);
+                writingTimeEdit.setTextSize(24);
+                writingTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                writingTimeEdit.setText("" + DataManager.getInstance().getWritingTime());
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("写法延迟时间")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(writingTimeEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String writingTimeString = writingTimeEdit.getText().toString();
+                                float writingTime = 0;
+                                if (!writingTimeString.equals("")) {
+                                    writingTime = Float.parseFloat(writingTimeString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
+                                }
+                                DataManager.getInstance().setWritingTime(writingTime);
+                                showToast("更改成功");
+                                writingTimeView.setText("" + writingTime);
                             }
                         })
                         .setNegativeButton("取消", null).show();

@@ -129,11 +129,18 @@ public class DataManager {
         setInt("review_frequency", frequency);
     }
 
-    public float getAnswerTime() {
-        return getFloat("answer_time", 2.5f);
+    public float getPronunciationTime() {
+        return getFloat("pronunciation_time", 2.5f);
     }
-    public void setAnswerTime(float answerTime) {
-        setFloat("answer_time", answerTime);
+    public void setPronunciationTime(float writingTime) {
+        setFloat("pronunciation_time", writingTime);
+    }
+
+    public float getWritingTime() {
+        return getFloat("writing_time", 3.0f);
+    }
+    public void setWritingTime(float writingTime) {
+        setFloat("writing_time", writingTime);
     }
 
     public float getMeaningTime() {

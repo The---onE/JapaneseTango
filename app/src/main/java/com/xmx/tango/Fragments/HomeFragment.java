@@ -210,7 +210,7 @@ public class HomeFragment extends BaseFragment {
     private void delayPronunciation() {
         if (pronunciationTimer != null) {
             pronunciationTimer.stop();
-            pronunciationTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
+            pronunciationTimer.start((int) DataManager.getInstance().getPronunciationTime() * 1000, true);
         }
     }
 
@@ -222,7 +222,7 @@ public class HomeFragment extends BaseFragment {
     private void delayWriting() {
         if (writingTimer != null) {
             writingTimer.stop();
-            writingTimer.start((int) DataManager.getInstance().getAnswerTime() * 1000, true);
+            writingTimer.start((int) DataManager.getInstance().getWritingTime() * 1000, true);
         }
     }
 
