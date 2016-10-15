@@ -297,7 +297,34 @@ public class HomeFragment extends BaseFragment {
 
         int i = random.nextInt(3);
         boolean r = random.nextBoolean();
-        if (tango.pronunciation.equals(tango.writing)) {
+        if (tango.pronunciation.equals("")) {
+            showPronunciation();
+            if (r) {
+                showWriting();
+                delayMeaning();
+            } else {
+                delayWriting();
+                showMeaning();
+            }
+        } else if (tango.writing.equals("")) {
+            showWriting();
+            if (r) {
+                showPronunciation();
+                delayMeaning();
+            } else {
+                delayPronunciation();
+                showMeaning();
+            }
+        } else if (tango.meaning.equals("")) {
+            showMeaning();
+            if (r) {
+                showPronunciation();
+                delayWriting();
+            } else {
+                delayPronunciation();
+                showWriting();
+            }
+        } else if (tango.pronunciation.equals(tango.writing)) {
             if (r) {
                 showPronunciation();
                 showWriting();
