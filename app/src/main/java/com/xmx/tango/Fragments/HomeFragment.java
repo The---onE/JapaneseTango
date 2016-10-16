@@ -330,8 +330,19 @@ public class HomeFragment extends BaseFragment {
                 showWriting();
                 delayMeaning();
             } else {
-                delayPronunciation();
-                delayWriting();
+                int pTime = (int) DataManager.getInstance().getPronunciationTime() * 1000;
+                int wTime = (int) DataManager.getInstance().getWritingTime() * 1000;
+                int time = Math.min(pTime, wTime);
+                //delayPronunciation();
+                if (pronunciationTimer != null) {
+                    pronunciationTimer.stop();
+                    pronunciationTimer.start(time, true);
+                }
+                //delayWriting();
+                if (writingTimer != null) {
+                    writingTimer.stop();
+                    writingTimer.start(time, true);
+                }
                 showMeaning();
             }
         } else {
