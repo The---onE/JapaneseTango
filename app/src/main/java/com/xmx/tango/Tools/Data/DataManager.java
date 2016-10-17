@@ -94,11 +94,18 @@ public class DataManager {
         editor.apply();
     }
 
-    public long getLastTime() {
-        return getLong("last_time", 0);
+    public long getForgetLastTime() {
+        return getLong("last_forget_time", 0);
     }
-    public void setLastTime(long time) {
-        setLong("last_time", time);
+    public void setForgetLastTime(long time) {
+        setLong("last_forget_time", time);
+    }
+
+    public long getResetLastTime() {
+        return getLong("last_reset_time", 0);
+    }
+    public void setResetLastTime(long time) {
+        setLong("last_reset_time", time);
     }
 
     public int getTangoStudy() {

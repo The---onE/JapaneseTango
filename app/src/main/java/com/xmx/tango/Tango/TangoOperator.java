@@ -27,7 +27,7 @@ public class TangoOperator {
         study = DataManager.getInstance().getTangoStudy();
         review = DataManager.getInstance().getTangoReview();
 
-        Date last = new Date(DataManager.getInstance().getLastTime());
+        Date last = new Date(DataManager.getInstance().getResetLastTime());
         Date now = new Date();
         if (!isSameDate(now, last)) {
             study = 0;
@@ -37,7 +37,7 @@ public class TangoOperator {
 
             DataManager.getInstance().setReviewFrequency(Constants.REVIEW_FREQUENCY);
 
-            DataManager.getInstance().setLastTime(now.getTime());
+            DataManager.getInstance().setResetLastTime(now.getTime());
         }
     }
 
@@ -52,15 +52,14 @@ public class TangoOperator {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
-                    DataManager.getInstance().setLastTime(now.getTime());
+                    //DataManager.getInstance().setLastTime(now.getTime());
                     if (frequency > 0) {
                         frequency--;
                     }
                 } else { //学习
                     study++;
                     frequency = Constants.REVIEW_FREQUENCY;
-                    DataManager.getInstance().setTangoStudy(study);
-                    DataManager.getInstance().setLastTime(now.getTime());
+                    //DataManager.getInstance().setTangoStudy(study);
                 }
             } else if (study >= goal) {
                 todayConsecutive++;
@@ -100,11 +99,11 @@ public class TangoOperator {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
-                    DataManager.getInstance().setLastTime(now.getTime());
+                    //DataManager.getInstance().setLastTime(now.getTime());
                 } else { //学习
                     study++;
                     DataManager.getInstance().setTangoStudy(study);
-                    DataManager.getInstance().setLastTime(now.getTime());
+                    //DataManager.getInstance().setLastTime(now.getTime());
                 }
             }
             frequency = -1;
