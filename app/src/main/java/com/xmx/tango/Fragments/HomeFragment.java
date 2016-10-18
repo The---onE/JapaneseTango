@@ -158,8 +158,7 @@ public class HomeFragment extends xUtilsFragment {
                         break;
 
                     case MotionEvent.ACTION_UP:
-                        WindowManager wm = (WindowManager
-                                ) getContext().getApplicationContext()
+                        WindowManager wm = (WindowManager) getContext().getApplicationContext()
                                 .getSystemService(Context.WINDOW_SERVICE);
                         int h = wm.getDefaultDisplay().getHeight();
                         float y = h - motionEvent.getRawY();
@@ -236,6 +235,10 @@ public class HomeFragment extends xUtilsFragment {
         }
     }
 
+    private float measureWidth(TextView textView) {
+        return textView.getPaint().measureText(textView.getText().toString());
+    }
+
     private void loadNewTango() {
         pronunciationFlag = false;
         writingFlag = false;
@@ -263,24 +266,59 @@ public class HomeFragment extends xUtilsFragment {
             tango = temp;
         }
 
+        WindowManager wm = (WindowManager) getContext().getApplicationContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int textSize = 0;
+
+        textSize = Constants.DEFAULT_PRONUNCIATION_TEXT_SIZE;
+        pronunciationView.setTextSize(textSize);
         pronunciationView.setText(tango.pronunciation);
         pronunciationView.setVisibility(View.INVISIBLE);
+        toneView.setTextSize(textSize);
         if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
             toneView.setText(Constants.TONES[tango.tone]);
         } else {
             toneView.setText("");
         }
         toneView.setVisibility(View.INVISIBLE);
+        float pronunciationLength = measureWidth(pronunciationView) + measureWidth(toneView);
+        while (pronunciationLength > width) {
+            textSize -= 1;
+            pronunciationView.setTextSize(textSize);
+            toneView.setTextSize(textSize);
+            pronunciationLength = measureWidth(pronunciationView) + measureWidth(toneView);
+        }
+
+        textSize = Constants.DEFAULT_WRITING_TEXT_SIZE;
+        writingView.setTextSize(textSize);
         writingView.setText(tango.writing);
         writingView.setVisibility(View.INVISIBLE);
+        float writingLength = measureWidth(writingView);
+        while (writingLength > width) {
+            textSize -= 1;
+            writingView.setTextSize(textSize);
+            writingLength = measureWidth(writingView);
+        }
+
+        textSize = Constants.DEFAULT_MEANING_TEXT_SIZE;
+        partView.setTextSize(textSize);
         if (!tango.partOfSpeech.equals("")) {
             partView.setText("[" + tango.partOfSpeech + "]");
         } else {
             partView.setText("");
         }
         partView.setVisibility(View.INVISIBLE);
+        meaningView.setTextSize(Constants.DEFAULT_MEANING_TEXT_SIZE);
         meaningView.setText(tango.meaning);
         meaningView.setVisibility(View.INVISIBLE);
+        float meaningLength = measureWidth(meaningView) + measureWidth(partView);
+        while (meaningLength > width) {
+            textSize -= 1;
+            partView.setTextSize(textSize);
+            meaningView.setTextSize(textSize);
+            meaningLength = measureWidth(meaningView) + measureWidth(partView);
+        }
 
         int i = random.nextInt(3);
         boolean r = random.nextBoolean();

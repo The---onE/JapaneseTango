@@ -38,6 +38,10 @@ public class Constants {
 
     public static final String TONES[] = {"◎", "①", "②", "③", "④", "⑤", "⑥", "⑦"};
 
+    public static final int DEFAULT_PRONUNCIATION_TEXT_SIZE = 36;
+    public static final int DEFAULT_WRITING_TEXT_SIZE = 42;
+    public static final int DEFAULT_MEANING_TEXT_SIZE = 36;
+
     public static final int REMEMBER_SCORE = 7;
     public static final int TIRED_COEFFICIENT = 35;
     public static final int REMEMBER_MIN_SCORE = 4;
