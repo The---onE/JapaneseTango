@@ -30,6 +30,7 @@ import java.util.Random;
 public class HomeFragment extends BaseFragment {
 
     Tango tango;
+    Tango prevTango;
 
     Timer pronunciationTimer = new Timer() {
         @Override
@@ -62,6 +63,7 @@ public class HomeFragment extends BaseFragment {
     TextView meaningView;
     TextView partView;
     TextView countView;
+    TextView prevView;
 
     Button rememberButton;
     Button forgetButton;
@@ -115,6 +117,7 @@ public class HomeFragment extends BaseFragment {
         meaningView = (TextView) view.findViewById(R.id.tv_tango_meaning);
         partView = (TextView) view.findViewById(R.id.tv_tango_part);
         countView = (TextView) view.findViewById(R.id.tv_tango_count);
+        prevView = (TextView) view.findViewById(R.id.tv_tango_prev);
 
         rememberButton = (Button) view.findViewById(R.id.btn_remember);
         forgetButton = (Button) view.findViewById(R.id.btn_forget);
@@ -267,6 +270,10 @@ public class HomeFragment extends BaseFragment {
             }
         }.start(Constants.INTERVAL_TIME_MIN, true);
 
+        if (tango != null) {
+            prevTango = tango;
+            showPrevTango();
+        }
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
         Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
@@ -371,6 +378,18 @@ public class HomeFragment extends BaseFragment {
                     showMeaning();
             }
         }
+    }
+
+    private void showPrevTango() {
+        String text = prevTango.pronunciation + "\n";
+        if (!prevTango.writing.equals(prevTango.pronunciation)) {
+            text += prevTango.writing + "\n";
+        }
+        if (!prevTango.partOfSpeech.equals("")) {
+            text += "[" + prevTango.partOfSpeech + "]";
+        }
+        text += prevTango.meaning;
+        prevView.setText(text);
     }
 
     private void showAnswer() {
