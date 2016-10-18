@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,15 +17,20 @@ import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tango.TangoOperator;
 import com.xmx.tango.Tools.Data.DataManager;
-import com.xmx.tango.Tools.FragmentBase.BaseFragment;
+import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.tango.Tools.Timer;
+
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
 import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment {
+@ContentView(R.layout.fragment_home)
+public class HomeFragment extends xUtilsFragment {
 
     Tango tango;
     Tango prevTango;
@@ -57,17 +60,58 @@ public class HomeFragment extends BaseFragment {
     };
     boolean meaningFlag = false;
 
-    TextView pronunciationView;
-    TextView toneView;
-    TextView writingView;
-    TextView meaningView;
-    TextView partView;
-    TextView countView;
-    TextView prevView;
+    @ViewInject(R.id.tv_tango_pronunciation)
+    private TextView pronunciationView;
+    @ViewInject(R.id.tv_tango_tone)
+    private TextView toneView;
+    @ViewInject(R.id.tv_tango_writing)
+    private TextView writingView;
+    @ViewInject(R.id.tv_tango_meaning)
+    private TextView meaningView;
+    @ViewInject(R.id.tv_tango_part)
+    private TextView partView;
+    @ViewInject(R.id.tv_tango_count)
+    private TextView countView;
+    @ViewInject(R.id.tv_tango_prev)
+    private TextView prevView;
 
-    Button rememberButton;
-    Button forgetButton;
-    Button answerButton;
+    @ViewInject(R.id.btn_remember)
+    private Button rememberButton;
+    @ViewInject(R.id.btn_forget)
+    private Button forgetButton;
+    @ViewInject(R.id.btn_answer)
+    private Button answerButton;
+
+    @Event(value = R.id.btn_remember)
+    private void onRememberClick(View view) {
+        operateTango(REMEMBER);
+    }
+
+    @Event(value = R.id.btn_forget)
+    private void onForgetClick(View view) {
+        operateTango(FORGET);
+    }
+
+    @Event(value = R.id.btn_answer)
+    private void onAnswerClick(View view) {
+        showAnswer();
+    }
+
+    @Event(value = R.id.tv_tango_writing)
+    private void onWritingClick(View view) {
+        String writing = writingView.getText().toString();
+        if (!writing.equals("")) {
+            SpeakTangoManager.getInstance().speak(writing);
+        }
+    }
+
+    @Event(value = R.id.tv_tango_pronunciation)
+    private void onPronunciationClick(View view) {
+        String pronunciation = pronunciationView.getText().toString();
+        if (!pronunciation.equals("")) {
+            SpeakTangoManager.getInstance().speak(pronunciation);
+        }
+    }
 
     Random random = new Random();
 
@@ -105,30 +149,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    @Override
-    protected void initView(View view) {
-        pronunciationView = (TextView) view.findViewById(R.id.tv_tango_pronunciation);
-        toneView = (TextView) view.findViewById(R.id.tv_tango_tone);
-        writingView = (TextView) view.findViewById(R.id.tv_tango_writing);
-        meaningView = (TextView) view.findViewById(R.id.tv_tango_meaning);
-        partView = (TextView) view.findViewById(R.id.tv_tango_part);
-        countView = (TextView) view.findViewById(R.id.tv_tango_count);
-        prevView = (TextView) view.findViewById(R.id.tv_tango_prev);
-
-        rememberButton = (Button) view.findViewById(R.id.btn_remember);
-        forgetButton = (Button) view.findViewById(R.id.btn_forget);
-        answerButton = (Button) view.findViewById(R.id.btn_answer);
-
-        countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study);
-    }
-
-    @Override
-    protected void setListener(View view) {
+    protected void processLogic(Bundle savedInstanceState) {
         rememberButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -151,50 +172,9 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        rememberButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                operateTango(REMEMBER);
-            }
-        });
+        countView.setText("今日复习：" + TangoOperator.getInstance().review +
+                "\n今日已记：" + TangoOperator.getInstance().study);
 
-        forgetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                operateTango(FORGET);
-            }
-        });
-
-        writingView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String writing = writingView.getText().toString();
-                if (!writing.equals("")) {
-                    SpeakTangoManager.getInstance().speak(writing);
-                }
-            }
-        });
-
-        pronunciationView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String pronunciation = pronunciationView.getText().toString();
-                if (!pronunciation.equals("")) {
-                    SpeakTangoManager.getInstance().speak(pronunciation);
-                }
-            }
-        });
-
-        answerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAnswer();
-            }
-        });
-    }
-
-    @Override
-    protected void processLogic(View view, Bundle savedInstanceState) {
         loadNewTango();
     }
 

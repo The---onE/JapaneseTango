@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E3EDCD"
     tools:context="com.xmx.tango.Fragments.HomeFragment">
 
     <TextView
