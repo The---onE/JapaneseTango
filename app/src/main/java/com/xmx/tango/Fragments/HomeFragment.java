@@ -121,29 +121,32 @@ public class HomeFragment extends xUtilsFragment {
     private static final int REMEMBER_FOREVER = 3;
 
     private boolean operateTango(final int operation) {
-        if (tango != null && tango.id > 0 && operateFlag) {
+        if (operateFlag) {
             operateFlag = false;
             rememberButton.setBackgroundColor(Color.LTGRAY);
             forgetButton.setBackgroundColor(Color.LTGRAY);
+            if (tango != null && tango.id > 0) {
+                switch (operation) {
+                    case REMEMBER:
+                        TangoOperator.getInstance().remember(tango);
+                        break;
+                    case FORGET:
+                        TangoOperator.getInstance().forget(tango);
+                        break;
+                    case REMEMBER_FOREVER:
+                        TangoOperator.getInstance().rememberForever(tango);
+                        break;
+                }
+                countView.setText("今日复习：" + TangoOperator.getInstance().review +
+                        "\n今日已记：" + TangoOperator.getInstance().study);
 
-            switch (operation) {
-                case REMEMBER:
-                    TangoOperator.getInstance().remember(tango);
-                    break;
-                case FORGET:
-                    TangoOperator.getInstance().forget(tango);
-                    break;
-                case REMEMBER_FOREVER:
-                    TangoOperator.getInstance().rememberForever(tango);
-                    break;
+                loadNew();
+                return true;
+            } else {
+                loadNew();
+                return false;
             }
-            countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                    "\n今日已记：" + TangoOperator.getInstance().study);
-
-            loadNew();
-            return true;
         } else {
-            loadNew();
             return false;
         }
     }
@@ -192,7 +195,7 @@ public class HomeFragment extends xUtilsFragment {
     private void delayPronunciation() {
         if (pronunciationTimer != null) {
             pronunciationTimer.stop();
-            pronunciationTimer.start((int) DataManager.getInstance().getPronunciationTime() * 1000, true);
+            pronunciationTimer.start((long) (DataManager.getInstance().getPronunciationTime() * 1000), true);
         }
     }
 
@@ -204,7 +207,7 @@ public class HomeFragment extends xUtilsFragment {
     private void delayWriting() {
         if (writingTimer != null) {
             writingTimer.stop();
-            writingTimer.start((int) DataManager.getInstance().getWritingTime() * 1000, true);
+            writingTimer.start((long) (DataManager.getInstance().getWritingTime() * 1000), true);
         }
     }
 
@@ -217,7 +220,7 @@ public class HomeFragment extends xUtilsFragment {
     private void delayMeaning() {
         if (meaningTimer != null) {
             meaningTimer.stop();
-            meaningTimer.start((int) DataManager.getInstance().getMeaningTime() * 1000, true);
+            meaningTimer.start((long) (DataManager.getInstance().getMeaningTime() * 1000), true);
         }
     }
 

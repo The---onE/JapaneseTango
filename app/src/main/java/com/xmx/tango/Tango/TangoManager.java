@@ -37,15 +37,35 @@ public class TangoManager {
         Tango t1 = new Tango();
         t1.id = -1;
         t1.writing = "愛";
-        t1.pronunciation = "アイ";
+        t1.pronunciation = "あい";
+        t1.tone = 1;
         tempTangos.add(t1);
 
         Tango t2 = new Tango();
         t2.id = -2;
         t2.writing = "大切";
-        t2.pronunciation = "タイセツ";
-        t2.meaning = "重要";
+        t2.pronunciation = "たいせつ";
+        t2.tone = 0;
+        t2.meaning = "重要,珍贵";
+        t2.partOfSpeech = "形容动词";
         tempTangos.add(t2);
+
+        Tango t3 = new Tango();
+        t3.id = -3;
+        t3.writing = "ありがとうございます";
+        t3.pronunciation = "ありがとうございます";
+        t3.meaning = "谢谢";
+        t3.partOfSpeech = "惯用语";
+        tempTangos.add(t3);
+
+        Tango t4 = new Tango();
+        t4.id = -4;
+        t4.writing = "よろしくお願い申し上げます";
+        t4.pronunciation = "よろしくおねがいもうしあげます";
+        t4.meaning = "请多关照";
+        t4.partOfSpeech = "惯用语";
+        tempTangos.add(t4
+        );
     }
 
     public List<Tango> getData() {
