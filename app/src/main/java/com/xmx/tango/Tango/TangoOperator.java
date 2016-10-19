@@ -59,7 +59,7 @@ public class TangoOperator {
                 } else { //学习
                     study++;
                     frequency = Constants.REVIEW_FREQUENCY;
-                    //DataManager.getInstance().setTangoStudy(study);
+                    DataManager.getInstance().setTangoStudy(study);
                 }
             } else if (study >= goal) {
                 todayConsecutive++;
