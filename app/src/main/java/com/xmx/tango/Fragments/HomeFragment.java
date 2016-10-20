@@ -34,6 +34,7 @@ public class HomeFragment extends xUtilsFragment {
 
     Tango tango;
     Tango prevTango;
+    int prevOperate;
 
     Timer pronunciationTimer = new Timer() {
         @Override
@@ -125,6 +126,7 @@ public class HomeFragment extends xUtilsFragment {
             operateFlag = false;
             rememberButton.setBackgroundColor(Color.LTGRAY);
             forgetButton.setBackgroundColor(Color.LTGRAY);
+            prevOperate = operation;
             if (tango != null && tango.id > 0) {
                 switch (operation) {
                     case REMEMBER:
@@ -402,7 +404,19 @@ public class HomeFragment extends xUtilsFragment {
     }
 
     private void showPrevTango() {
-        String text = prevTango.pronunciation + "\n";
+        String text = "";
+        switch (prevOperate) {
+            case REMEMBER:
+                text = "√ ";
+                break;
+            case FORGET:
+                text = "× ";
+                break;
+            case REMEMBER_FOREVER:
+                text = "√ ";
+                break;
+        }
+        text += prevTango.pronunciation + "\n";
         if (!prevTango.writing.equals(prevTango.pronunciation)) {
             text += prevTango.writing + "\n";
         }
