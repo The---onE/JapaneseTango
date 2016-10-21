@@ -114,6 +114,13 @@ public class HomeFragment extends xUtilsFragment {
         }
     }
 
+    @Event(value = R.id.tv_tango_prev)
+    private void onPrevClick(View view) {
+        TangoOperator.getInstance().cancelOperate();
+        tango = null;
+        loadNewTango(prevTango);
+    }
+
     Random random = new Random();
 
     private boolean operateFlag = true;
@@ -245,6 +252,17 @@ public class HomeFragment extends xUtilsFragment {
     }
 
     private void loadNewTango() {
+        int goal = DataManager.getInstance().getTangoGoal();
+        boolean reviewFlag = TangoOperator.getInstance().study >= goal;
+        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
+        if (tango != null && temp.id == tango.id) {
+            loadNewTango(TangoManager.getInstance().nextTango(reviewFlag, DataManager.getInstance().getReviewFrequency()));
+        } else {
+            loadNewTango(temp);
+        }
+    }
+
+    private void loadNewTango(Tango newTango) {
         pronunciationFlag = false;
         writingFlag = false;
         meaningFlag = false;
@@ -261,15 +279,11 @@ public class HomeFragment extends xUtilsFragment {
         if (tango != null) {
             prevTango = tango;
             showPrevTango();
-        }
-        int goal = DataManager.getInstance().getTangoGoal();
-        boolean reviewFlag = TangoOperator.getInstance().study >= goal;
-        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
-        if (tango != null && temp.id == tango.id) {
-            tango = TangoManager.getInstance().nextTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
         } else {
-            tango = temp;
+            prevView.setText("");
         }
+
+        tango = newTango;
 
         WindowManager wm = (WindowManager) getContext().getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);

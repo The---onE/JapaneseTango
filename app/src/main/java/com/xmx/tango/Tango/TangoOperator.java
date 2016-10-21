@@ -15,6 +15,8 @@ public class TangoOperator {
     public int review;
     int todayConsecutive = 0;
 
+    private Tango prevTango;
+
     private static TangoOperator instance;
 
     public synchronized static TangoOperator getInstance() {
@@ -23,6 +25,7 @@ public class TangoOperator {
         }
         return instance;
     }
+
     private TangoOperator() {
         study = DataManager.getInstance().getTangoStudy();
         review = DataManager.getInstance().getTangoReview();
@@ -43,6 +46,7 @@ public class TangoOperator {
 
     public void remember(Tango tango) {
         if (tango != null && tango.id > 0) {
+            prevTango = tango;
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
@@ -83,6 +87,7 @@ public class TangoOperator {
 
     public void forget(Tango tango) {
         if (tango != null && tango.id > 0) {
+            prevTango = tango;
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + Constants.FORGET_SCORE));
             //"LastTime=" + new Date().getTime());
@@ -92,6 +97,7 @@ public class TangoOperator {
 
     public void rememberForever(Tango tango) {
         if (tango != null && tango.id > 0) {
+            prevTango = tango;
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
@@ -113,6 +119,15 @@ public class TangoOperator {
                     "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new OperateTangoEvent());
+        }
+    }
+
+    public void cancelOperate() {
+        if (prevTango != null && prevTango.id > 0) {
+            TangoEntityManager.getInstance().updateData(prevTango.id,
+                    "Score=" + prevTango.score,
+                    "Frequency=" + prevTango.frequency,
+                    "LastTime=" + prevTango.lastTime.getTime());
         }
     }
 
