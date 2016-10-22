@@ -119,6 +119,8 @@ public class HomeFragment extends xUtilsFragment {
         TangoOperator.getInstance().cancelOperate();
         tango = null;
         loadNewTango(prevTango);
+        countView.setText("今日复习：" + TangoOperator.getInstance().review +
+                "\n今日已记：" + TangoOperator.getInstance().study);
     }
 
     Random random = new Random();
