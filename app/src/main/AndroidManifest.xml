@@ -61,11 +61,13 @@
         </activity>
         <activity
             android:name=".Setting.SettingActivity"
-            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+        <!--android:name="com.xmx.tango.User.LoginActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name="com.xmx.tango.User.LoginActivity"
-            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.xmx.tango.User.RegisterActivity"
