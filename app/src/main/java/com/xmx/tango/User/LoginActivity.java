@@ -1,5 +1,6 @@
 package com.xmx.tango.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -8,11 +9,12 @@ import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.xmx.tango.Constants;
-import com.xmx.tango.MainActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.Tools.ActivityBase.BaseActivity;
 import com.xmx.tango.User.Callback.LoginCallback;
+import com.xmx.tango.User.RegisterActivity;
+import com.xmx.tango.User.UserConstants;
+import com.xmx.tango.User.UserManager;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
@@ -43,7 +45,9 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void success(AVObject user) {
                                     showToast(R.string.login_success);
-                                    startActivity(MainActivity.class);
+                                    //startActivity(MainActivity.class);
+                                    Intent i = new Intent();
+                                    setResult(RESULT_OK, i);
                                     finish();
                                 }
 
