@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
+import com.xmx.tango.Constants;
+import com.xmx.tango.MainActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.Tools.ActivityBase.BaseActivity;
 import com.xmx.tango.User.Callback.LoginCallback;
@@ -18,6 +20,7 @@ import com.xmx.tango.User.UserManager;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
+    public boolean mustFlag = false;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -45,7 +48,9 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void success(AVObject user) {
                                     showToast(R.string.login_success);
-                                    //startActivity(MainActivity.class);
+                                    if (mustFlag) {
+                                        startActivity(MainActivity.class);
+                                    }
                                     Intent i = new Intent();
                                     setResult(RESULT_OK, i);
                                     finish();
@@ -90,13 +95,17 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
-//            showToast(R.string.confirm_exit);
-//            mExitTime = System.currentTimeMillis();
-//        } else {
-//            finish();
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        if (mustFlag) {
+            if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
+                showToast(R.string.confirm_exit);
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
