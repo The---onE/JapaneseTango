@@ -2,14 +2,13 @@ package com.xmx.tango.Fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
+import com.xmx.tango.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.Tango.OperateTangoEvent;
 import com.xmx.tango.Tango.SearchTangoDialog;
@@ -21,8 +20,7 @@ import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tango.UpdateTangoDialog;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
-
-import net.gimite.jatts.JapaneseTextToSpeech;
+import com.xmx.tango.Tools.Utils.CSVUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,8 +28,9 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.Date;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +46,24 @@ public class TangoListFragment extends xUtilsFragment {
     private void onSearchClick(View view) {
         SearchTangoDialog dialog = new SearchTangoDialog(getContext());
         dialog.show();
+    }
+
+    @Event(value = R.id.btn_export)
+    private void onExportClick(View view) {
+        List<Tango> list = TangoManager.getInstance().getData();
+        String dir = android.os.Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
+        String filename = "/export.csv";
+        Collection<String> items = new ArrayList<>();
+        for (Tango tango : list) {
+            String res = tango.writing + "," + tango.pronunciation + "," + tango.meaning + ","
+                    + tango.tone + "," + tango.partOfSpeech + ",";
+            items.add(res);
+        }
+        if (CSVUtil.toCSV(items, dir + filename, "UTF-8")) {
+            showToast("成功导出至:" + dir + filename);
+        } else {
+            showToast("导出失败");
+        }
     }
 
     @Override
@@ -132,5 +149,6 @@ public class TangoListFragment extends xUtilsFragment {
     }
 
     @Subscribe
-    public void onEvent(OperateTangoEvent event) {}
+    public void onEvent(OperateTangoEvent event) {
+    }
 }

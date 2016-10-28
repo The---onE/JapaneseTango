@@ -14,9 +14,6 @@ import com.xmx.tango.MainActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.Tools.ActivityBase.BaseActivity;
 import com.xmx.tango.User.Callback.LoginCallback;
-import com.xmx.tango.User.RegisterActivity;
-import com.xmx.tango.User.UserConstants;
-import com.xmx.tango.User.UserManager;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
