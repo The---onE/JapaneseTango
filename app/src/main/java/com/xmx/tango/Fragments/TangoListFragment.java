@@ -55,9 +55,29 @@ public class TangoListFragment extends xUtilsFragment {
         String filename = "/export.csv";
         Collection<String> items = new ArrayList<>();
         for (Tango tango : list) {
-            String res = tango.writing + "," + tango.pronunciation + "," + tango.meaning + ","
-                    + tango.tone + "," + tango.partOfSpeech + ",";
-            items.add(res);
+            String strings[] = new String[]{
+                    tango.writing,
+                    tango.pronunciation,
+                    tango.meaning,
+                    String.valueOf(tango.tone),
+                    tango.partOfSpeech,
+                    tango.image,
+                    tango.voice,
+                    String.valueOf(tango.score),
+                    String.valueOf(tango.frequency),
+                    String.valueOf(tango.addTime.getTime()),
+                    String.valueOf(tango.lastTime.getTime()),
+                    tango.flags,
+                    String.valueOf(tango.delFlag),
+                    tango.type
+            };
+            StringBuffer sb = new StringBuffer();
+            sb.append(strings[0]);
+            for (int i = 1; i < strings.length; ++i) {
+                sb.append(",");
+                sb.append(strings[i]);
+            }
+            items.add(new String(sb));
         }
         if (CSVUtil.toCSV(items, dir + filename, "UTF-8")) {
             showToast("成功导出至:" + dir + filename);
