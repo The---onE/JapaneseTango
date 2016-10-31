@@ -50,4 +50,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile files('libs/android-jatts-0.0.2.jar')
+
+    //compile 'javax.servlet:javax.servlet-api:3.1.0'
+    ///compile 'com.sun.mail:javax.mail:1.5.6'
+    compile 'com.jcraft:jsch:0.1.54'
+    //compile 'org.dom4j:dom4j:2.0.0-RC1'
+    compile 'org.slf4j:slf4j-simple:1.7.21'
 }
