@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.xiaoleilu.hutool.lang.Conver;
 import com.xmx.tango.R;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoEntityManager;
@@ -23,6 +24,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,62 +68,69 @@ public class ImportFileFragment extends xUtilsFragment {
     @Event(value = R.id.btn_import_file)
     private void onImportFileClick(View view) {
         if (fileFlag) {
-            String type = typeView.getText().toString().trim();
-            try {
-                if (filePath.contains("primary:")) {
-                    final String[] split = filePath.split(":");
-                    final String fileType = split[0];
-                    filePath = android.os.Environment
-                            .getExternalStorageDirectory() + "/" + split[1];
-                }
-
-                InputStream is = new FileInputStream(filePath);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                String str = null;
-                while (true) {
-                    str = reader.readLine();
-                    if (str != null) {
-                        String[] strings = str.split(",");
-                        if (strings.length > 1) {
-                            Tango tango = new Tango();
-                            if (strings.length > 0) {
-                                tango.writing = strings[0];
-                                if (strings.length > 1) {
-                                    tango.pronunciation = strings[1];
-                                    if (strings.length > 2) {
-                                        tango.meaning = strings[2];
-                                        if (strings.length > 3) {
-                                            try {
-                                                tango.tone = Integer.parseInt(strings[3]);
-                                            } catch (Exception e) {
-                                                tango.tone = -1;
-                                            }
-                                            if (strings.length > 4) {
-                                                tango.partOfSpeech = strings[4];
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            tango.type = type;
-
-                            tango.addTime = new Date();
-                            TangoEntityManager.getInstance().insertData(tango);
-                        }
-                    } else {
-                        break;
-                    }
-                }
-                showToast("导入成功");
-                is.close();
-                EventBus.getDefault().post(new TangoListChangeEvent());
-            } catch (Exception e) {
-                filterException(e);
+            if (filePath.contains("primary:")) {
+                final String[] split = filePath.split(":");
+                final String fileType = split[0];
+                filePath = android.os.Environment
+                        .getExternalStorageDirectory() + "/" + split[1];
             }
+            parseCSV(filePath);
         } else {
             showToast("未选择文件");
         }
+    }
+
+    private void parseCSV(String filePath) {
+        try {
+            InputStream is = new FileInputStream(filePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            while (true) {
+                String str = reader.readLine();
+                if (str != null) {
+                    String[] strings = str.split(",");
+                    if (strings.length > 1) {
+                        makeTango(strings);
+                    }
+                } else {
+                    break;
+                }
+            }
+            showToast("导入成功");
+            is.close();
+            EventBus.getDefault().post(new TangoListChangeEvent());
+        } catch (Exception e) {
+            filterException(e);
+        }
+    }
+
+    private Tango makeTango(String[] strings) {
+        String type = typeView.getText().toString().trim();
+
+        Tango tango = new Tango();
+        try {
+            tango.writing = strings[0];
+            tango.pronunciation = strings[1];
+            tango.meaning = strings[2];
+            tango.tone = Conver.toInt(strings[3], -1);
+            tango.partOfSpeech = strings[4];
+            tango.image = strings[5];
+            tango.voice = strings[6];
+            tango.score = Conver.toInt(strings[7], 0);
+            tango.frequency = Conver.toInt(strings[8], 0);
+            tango.addTime = new Date(Conver.toLong(strings[9], 0L));
+            tango.lastTime = new Date(Conver.toLong(strings[10], 0L));
+            tango.flags = strings[11];
+            tango.delFlag = Conver.toInt(strings[12], 0);
+        } catch (IndexOutOfBoundsException e) {
+        } finally {
+            tango.type = type;
+            if (tango.addTime.getTime() == 0) {
+                tango.addTime = new Date();
+            }
+            TangoEntityManager.getInstance().insertData(tango);
+        }
+
+        return tango;
     }
 
     @Override
