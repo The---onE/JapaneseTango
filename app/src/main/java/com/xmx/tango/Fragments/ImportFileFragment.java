@@ -15,6 +15,7 @@ import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
+import com.xmx.tango.Tools.Utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ContentView;
@@ -121,9 +122,12 @@ public class ImportFileFragment extends xUtilsFragment {
             tango.lastTime = new Date(Conver.toLong(strings[10], 0L));
             tango.flags = strings[11];
             tango.delFlag = Conver.toInt(strings[12], 0);
+            tango.type = strings[13];
         } catch (IndexOutOfBoundsException e) {
         } finally {
-            tango.type = type;
+            if (StrUtil.isEmpty(tango.type)) {
+                tango.type = type;
+            }
             if (tango.addTime.getTime() == 0) {
                 tango.addTime = new Date();
             }

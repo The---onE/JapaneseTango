@@ -97,7 +97,7 @@ public class TangoManager {
 
         String array[] = new String[con.size()];
         array = con.toArray(array);
-        tangoList = manager.selectByCondition("addTime", false, array);
+        tangoList = manager.selectByCondition("ID", true, array);
 
         version++;
         return version;
