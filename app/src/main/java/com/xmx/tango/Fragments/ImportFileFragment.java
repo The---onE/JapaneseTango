@@ -125,7 +125,7 @@ public class ImportFileFragment extends xUtilsFragment {
             tango.type = strings[13];
         } catch (IndexOutOfBoundsException e) {
         } finally {
-            if (StrUtil.isEmpty(tango.type)) {
+            if (!StrUtil.isBlank(type)) {
                 tango.type = type;
             }
             if (tango.addTime.getTime() == 0) {

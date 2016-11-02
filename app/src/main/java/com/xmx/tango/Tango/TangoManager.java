@@ -8,7 +8,7 @@ import java.util.Random;
  * Created by The_onE on 2016/9/13.
  */
 public class TangoManager {
-    static final int SELECT_TANGO_LIMIT = 8;
+    private static final int SELECT_TANGO_LIMIT = 8;
 
     private static TangoManager instance;
 
@@ -64,8 +64,7 @@ public class TangoManager {
         t4.pronunciation = "よろしくおねがいもうしあげます";
         t4.meaning = "请多关照";
         t4.partOfSpeech = "惯用语";
-        tempTangos.add(t4
-        );
+        tempTangos.add(t4);
     }
 
     public List<Tango> getData() {
