@@ -17,6 +17,7 @@ import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
+import com.xmx.tango.Tools.NewThread;
 import com.xmx.tango.Tools.Utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,6 +35,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import bolts.Task;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,12 +119,17 @@ public class ImportFileFragment extends xUtilsFragment {
                     .setPositiveButton("导入", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            for (Tango t : tangoList) {
-                                TangoEntityManager.getInstance().insertData(t);
-                            }
-                            EventBus.getDefault().post(new TangoListChangeEvent());
-                            showToast("导入成功");
-                            EventBus.getDefault().post(new TangoListChangeEvent());
+                            showToast("正在导入，请稍后");
+                            new NewThread() {
+                                @Override
+                                public void process() {
+                                    for (Tango t : tangoList) {
+                                        TangoEntityManager.getInstance().insertData(t);
+                                    }
+                                    showToast("导入成功");
+                                    EventBus.getDefault().post(new TangoListChangeEvent());
+                                }
+                            }.start();
                         }
                     })
                     .setNegativeButton("取消", null)
