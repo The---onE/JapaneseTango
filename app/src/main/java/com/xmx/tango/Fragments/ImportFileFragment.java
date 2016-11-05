@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.xiaoleilu.hutool.lang.Conver;
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.ImportService;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
@@ -91,18 +92,22 @@ public class ImportFileFragment extends xUtilsFragment {
         try {
             InputStream is = new FileInputStream(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            List<String> tangoStrings = new ArrayList<>();
-            final List<Tango> tangoList = new ArrayList<>();
+            List<String> dialogStrings = new ArrayList<>();
+            //List<String> tangoStrings = new ArrayList<>();
+            final ArrayList<String> intentStrings = new ArrayList<>();
+            //final List<Tango> tangoList = new ArrayList<>();
             while (true) {
                 String str = reader.readLine();
                 if (str != null) {
                     String[] strings = str.split(",");
-                    if (strings.length > 1) {
-                        Tango tango = makeTango(strings);
-                        tangoList.add(tango);
-                        tangoStrings.add(tango.writing + ":" +
-                                tango.pronunciation + "|" +
-                                tango.meaning);
+                    if (strings.length >= 3) {
+                        intentStrings.add(str);
+                        dialogStrings.add(strings[0] + ":" + strings[1] + "|" + strings[2]);
+//                        Tango tango = makeTango(strings);
+//                        tangoList.add(tango);
+//                        tangoStrings.add(tango.writing + ":" +
+//                                tango.pronunciation + "|" +
+//                                tango.meaning);
                         //TangoEntityManager.getInstance().insertData(tango);
                     }
                 } else {
@@ -111,8 +116,8 @@ public class ImportFileFragment extends xUtilsFragment {
             }
             is.close();
              
-            String array[] = new String[tangoStrings.size()];
-            array = tangoStrings.toArray(array);
+            String array[] = new String[dialogStrings.size()];
+            array = dialogStrings.toArray(array);
             new AlertDialog.Builder(getContext())
                     .setTitle("识别出的単語")
                     .setItems(array, null)
@@ -120,16 +125,21 @@ public class ImportFileFragment extends xUtilsFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             showToast("正在导入，请稍后");
-                            new NewThread() {
-                                @Override
-                                public void process() {
-                                    for (Tango t : tangoList) {
-                                        TangoEntityManager.getInstance().insertData(t);
-                                    }
-                                    showToast("导入成功");
-                                    EventBus.getDefault().post(new TangoListChangeEvent());
-                                }
-                            }.start();
+//                            new NewThread() {
+//                                @Override
+//                                public void process() {
+//                                    for (Tango t : tangoList) {
+//                                        TangoEntityManager.getInstance().insertData(t);
+//                                    }
+//                                    showToast("导入成功");
+//                                    EventBus.getDefault().post(new TangoListChangeEvent());
+//                                }
+//                            }.start();
+                            Intent service = new Intent(getContext(), ImportService.class);
+                            service.putStringArrayListExtra("list", intentStrings);
+                            String type = typeView.getText().toString().trim();
+                            service.putExtra("type", type);
+                            getContext().startService(service);
                         }
                     })
                     .setNegativeButton("取消", null)
@@ -137,38 +147,6 @@ public class ImportFileFragment extends xUtilsFragment {
         } catch (Exception e) {
             filterException(e);
         }
-    }
-
-    private Tango makeTango(String[] strings) {
-        String type = typeView.getText().toString().trim();
-
-        Tango tango = new Tango();
-        try {
-            tango.writing = strings[0];
-            tango.pronunciation = strings[1];
-            tango.meaning = strings[2];
-            tango.tone = Conver.toInt(strings[3], -1);
-            tango.partOfSpeech = strings[4];
-            tango.image = strings[5];
-            tango.voice = strings[6];
-            tango.score = Conver.toInt(strings[7], 0);
-            tango.frequency = Conver.toInt(strings[8], 0);
-            tango.addTime = new Date(Conver.toLong(strings[9], 0L));
-            tango.lastTime = new Date(Conver.toLong(strings[10], 0L));
-            tango.flags = strings[11];
-            tango.delFlag = Conver.toInt(strings[12], 0);
-            tango.type = strings[13];
-        } catch (IndexOutOfBoundsException e) {
-        } finally {
-            if (!StrUtil.isBlank(type)) {
-                tango.type = type;
-            }
-            if (tango.addTime.getTime() == 0) {
-                tango.addTime = new Date();
-            }
-        }
-
-        return tango;
     }
 
     @Override

@@ -87,34 +87,9 @@
         <activity
             android:name="com.xmx.tango.Tools.PushMessage.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Message.PushItemMessageActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.QRCode.CreateQRCodeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.QRCode.ScanQRCodeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Data.SQL.SQLActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Data.Cloud.CloudActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Data.Sync.SyncActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.ShoppingCart.OrderCodeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name="com.xmx.tango.Services.MainService"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name="com.xmx.tango.Float.FloatService"
+            android:name="com.xmx.tango.Tango.ImportService"
             android:enabled="true"
             android:exported="true" />
     </application>
