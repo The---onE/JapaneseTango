@@ -310,4 +310,15 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         Cursor cursor = database.rawQuery("select * from " + tableName + " " + content + " order by " + order + " " + asc, null);
         return convertToEntities(cursor);
     }
+
+    //获取数据总条数
+    public int getCount() {
+        Cursor cursor = database.rawQuery("select COUNT(*) from " + tableName, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        return count;
+    }
 }

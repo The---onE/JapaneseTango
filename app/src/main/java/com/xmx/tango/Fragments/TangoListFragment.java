@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xmx.tango.Constants;
 import com.xmx.tango.R;
@@ -38,6 +39,9 @@ import java.util.List;
 @ContentView(R.layout.fragment_tango_list)
 public class TangoListFragment extends xUtilsFragment {
 
+    @ViewInject(R.id.tv_count)
+    TextView countView;
+
     @ViewInject(R.id.list_tango)
     ListView tangoList;
     TangoAdapter tangoAdapter;
@@ -48,8 +52,26 @@ public class TangoListFragment extends xUtilsFragment {
         dialog.show();
     }
 
-    @Event(value = R.id.btn_export)
+    @Event(value = R.id.btn_operation)
     private void onExportClick(View view) {
+        String[] items = new String[]{"导出"};
+        new AlertDialog.Builder(getContext())
+                .setTitle("操作")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case 0:
+                                exportTango();
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton("取消", null).show();
+    }
+
+    public void exportTango() {
         List<Tango> list = TangoManager.getInstance().getData();
         String dir = android.os.Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
         String filename = "/export.csv";
@@ -91,6 +113,8 @@ public class TangoListFragment extends xUtilsFragment {
         //TangoManager.getInstance().updateData(); //在SplashActivity中调用
         tangoAdapter = new TangoAdapter(getContext(), TangoManager.getInstance().getData());
         tangoList.setAdapter(tangoAdapter);
+        int count = TangoEntityManager.getInstance().getCount();
+        countView.setText("" + count + "/" + count);
 
         tangoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -160,7 +184,9 @@ public class TangoListFragment extends xUtilsFragment {
 
     private void updateTangoList() {
         TangoManager.getInstance().updateData();
-        tangoAdapter.updateList(TangoManager.getInstance().getData());
+        List<Tango> tangoList = TangoManager.getInstance().getData();
+        tangoAdapter.updateList(tangoList);
+        countView.setText("" + tangoList.size() + "/" + TangoEntityManager.getInstance().getCount());
     }
 
     @Subscribe
