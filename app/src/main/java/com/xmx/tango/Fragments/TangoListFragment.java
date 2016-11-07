@@ -54,7 +54,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_operation)
     private void onExportClick(View view) {
-        String[] items = new String[]{"导出"};
+        String[] items = new String[]{"导出", "排序"};
         new AlertDialog.Builder(getContext())
                 .setTitle("操作")
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -65,13 +65,16 @@ public class TangoListFragment extends xUtilsFragment {
                             case 0:
                                 exportTango();
                                 break;
+                            case 1:
+                                orderTango();
+                                break;
                         }
                     }
                 })
                 .setNegativeButton("取消", null).show();
     }
 
-    public void exportTango() {
+    private void exportTango() {
         List<Tango> list = TangoManager.getInstance().getData();
         String dir = android.os.Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
         String filename = "/export.csv";
@@ -106,6 +109,28 @@ public class TangoListFragment extends xUtilsFragment {
         } else {
             showToast("导出失败");
         }
+    }
+
+    private void orderTango() {
+        String[] items = new String[]{"ID", "分数", "添加时间", "上次时间"};
+        final String[] orders = new String[]{"ID", "Score", "AddTime", "LastTime"};
+        new AlertDialog.Builder(getContext())
+                .setTitle("操作")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (TangoManager.getInstance().order.equals(orders[i])) {
+                            TangoManager.getInstance().ascFlag = !TangoManager.getInstance().ascFlag;
+                        } else {
+                            TangoManager.getInstance().ascFlag = true;
+                            TangoManager.getInstance().order = orders[i];
+                        }
+
+                        EventBus.getDefault().post(new TangoListChangeEvent());
+                    }
+                })
+                .setNegativeButton("取消", null).show();
     }
 
     @Override

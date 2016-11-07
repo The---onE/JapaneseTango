@@ -18,6 +18,9 @@ public class TangoManager {
     public String partOfSpeech;
     public String type;
 
+    public String order = "ID";
+    public boolean ascFlag = true;
+
     public synchronized static TangoManager getInstance() {
         if (null == instance) {
             instance = new TangoManager();
@@ -96,7 +99,7 @@ public class TangoManager {
 
         String array[] = new String[con.size()];
         array = con.toArray(array);
-        tangoList = manager.selectByCondition("ID", true, array);
+        tangoList = manager.selectByCondition(order, ascFlag, array);
 
         version++;
         return version;
