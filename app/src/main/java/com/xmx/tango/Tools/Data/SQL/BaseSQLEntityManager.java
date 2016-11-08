@@ -5,10 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.xmx.tango.Constants;
+import com.xmx.tango.Tools.Utils.ExceptionUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
     protected SQLiteDatabase database = null;
@@ -115,6 +117,54 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
         }
         version++;
         return database.insert(tableName, null, entity.getContent());
+    }
+
+    //插入实体数据
+    public boolean insertData(List<Entity> entities) {
+        if (!checkDatabase()) {
+            return false;
+        }
+        boolean flag = false;
+        database.beginTransaction();
+        try {
+            for (Entity entity : entities) {
+                database.insert(tableName, null, entity.getContent());
+            }
+            database.setTransactionSuccessful();
+            flag = true;
+            version++;
+        } catch (Exception e) {
+            ExceptionUtil.filterException(e);
+        } finally {
+            database.endTransaction();
+        }
+        return flag;
+    }
+
+    //插入实体数据
+    public boolean insertData(List<Entity> entities, InsertCallback callback) {
+        if (!checkDatabase()) {
+            return false;
+        }
+        boolean flag = false;
+        database.beginTransaction();
+        try {
+            int index = 0;
+            for (Entity entity : entities) {
+                database.insert(tableName, null, entity.getContent());
+                index++;
+                callback.proceeding(index);
+            }
+            database.setTransactionSuccessful();
+            callback.success(index);
+            flag = true;
+            version++;
+        } catch (Exception e) {
+            ExceptionUtil.filterException(e);
+        } finally {
+            database.endTransaction();
+        }
+        return flag;
     }
 
     //删除数据

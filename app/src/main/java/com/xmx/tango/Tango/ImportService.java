@@ -5,12 +5,15 @@ import android.os.AsyncTask;
 
 import com.xiaoleilu.hutool.lang.Conver;
 import com.xmx.tango.MainActivity;
+import com.xmx.tango.Tools.Data.SQL.InsertCallback;
+import com.xmx.tango.Tools.Notification.NotificationUtils;
 import com.xmx.tango.Tools.ServiceBase.BaseService;
 import com.xmx.tango.Tools.Timer;
 import com.xmx.tango.Tools.Utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,15 +27,31 @@ public class ImportService extends BaseService {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                int total = tangoStrings.size();
-                int index = 0;
+                final int total = tangoStrings.size();
+                List<Tango> tangoList = new ArrayList<>();
                 for (String str: tangoStrings) {
-                    index++;
                     String[] strings = str.split(",");
                     Tango tango = makeTango(strings, type);
-                    TangoEntityManager.getInstance().insertData(tango);
-                    showForeground(MainActivity.class, "正在导入:" + index + "/" + total);
+                    tangoList.add(tango);
+                    //TangoEntityManager.getInstance().insertData(tango);
+                    //showForeground(MainActivity.class, "正在导入:" + index + "/" + total);
                 }
+                TangoEntityManager.getInstance().insertData(tangoList, new InsertCallback() {
+                    @Override
+                    public void proceeding(int index) {
+                        if (index % 100 == 0) {
+                            showForeground(MainActivity.class, "正在导入:" + index + "/" + total);
+                        }
+                    }
+
+                    @Override
+                    public void success(int total) {
+                        Intent intent = new Intent(ImportService.this, MainActivity.class);
+
+                        NotificationUtils.showNotification(getBaseContext(), intent, 0, "日词",
+                                "成功导入 " + total + " 条数据");
+                    }
+                });
                 return null;
             }
 
