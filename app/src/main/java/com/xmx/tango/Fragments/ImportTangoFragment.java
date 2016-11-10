@@ -99,6 +99,10 @@ public class ImportTangoFragment extends xUtilsFragment {
             t.pronunciation = pronunciation;
             t.meaning = meaning;
             match.add(writing + ":" + pronunciation + "|" + meaning);
+
+            t.type = type;
+            t.addTime = new Date();
+
             tangoList.add(t);
         }
         String array[] = new String[match.size()];
@@ -109,12 +113,7 @@ public class ImportTangoFragment extends xUtilsFragment {
                 .setPositiveButton("导入", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        for (Tango t : tangoList) {
-                            t.type = type;
-                            t.addTime = new Date();
-
-                            TangoEntityManager.getInstance().insertData(t);
-                        }
+                        TangoEntityManager.getInstance().insertData(tangoList);
                         EventBus.getDefault().post(new TangoListChangeEvent());
                         showToast("导入成功");
                     }
