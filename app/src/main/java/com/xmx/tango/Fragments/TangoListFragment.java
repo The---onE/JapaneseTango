@@ -2,6 +2,7 @@ package com.xmx.tango.Fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -31,6 +32,7 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,27 +77,63 @@ public class TangoListFragment extends xUtilsFragment {
     }
 
     private void exportTango() {
+        AlertDialog.Builder builder = new AlertDialog
+                .Builder(getContext());
+        builder.setMessage("要导出数据吗？");
+        builder.setTitle("提示");
+        builder.setPositiveButton("包含学习信息", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exportTango(true);
+            }
+        });
+        builder.setNegativeButton("仅导出単語", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exportTango(false);
+            }
+        });
+        builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void exportTango(boolean personalFlag) {
         List<Tango> list = TangoManager.getInstance().getData();
-        String dir = android.os.Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
+        String dir = Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
         String filename = "/export.csv";
         Collection<String> items = new ArrayList<>();
         for (Tango tango : list) {
             String strings[] = new String[]{
-                    tango.writing,
-                    tango.pronunciation,
-                    tango.meaning,
-                    String.valueOf(tango.tone),
-                    tango.partOfSpeech,
-                    tango.image,
-                    tango.voice,
-                    String.valueOf(tango.score),
-                    String.valueOf(tango.frequency),
-                    String.valueOf(tango.addTime.getTime()),
-                    String.valueOf(tango.lastTime.getTime()),
-                    tango.flags,
-                    String.valueOf(tango.delFlag),
-                    tango.type
+                    tango.writing, //0
+                    tango.pronunciation, //1
+                    tango.meaning, //2
+                    String.valueOf(tango.tone), //3
+                    tango.partOfSpeech, //4
+                    tango.image, //5
+                    tango.voice, // 6
+                    String.valueOf(tango.score), //7
+                    String.valueOf(tango.frequency), //8
+                    String.valueOf(tango.addTime.getTime()), //9
+                    String.valueOf(tango.lastTime.getTime()), //10
+                    tango.flags, //11
+                    String.valueOf(tango.delFlag), //12
+                    tango.type //13
             };
+            if (!personalFlag) {
+                strings[7] = "0"; //Score
+                strings[8] = "0"; //Frequency
+                strings[9] = "0"; //AddTime
+                strings[10] = "0"; //LastTime
+                strings[11] = ""; //Flags
+                strings[12] = "0"; //DelFlag
+                strings[13] = ""; //Type
+            }
             StringBuffer sb = new StringBuffer();
             sb.append(strings[0]);
             for (int i = 1; i < strings.length; ++i) {
