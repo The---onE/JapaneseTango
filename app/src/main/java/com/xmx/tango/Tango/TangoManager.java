@@ -111,17 +111,27 @@ public class TangoManager {
         return tangos;
     }
 
-    public Tango randomTango(boolean reviewFlag, int maxFrequency) {
+    public Tango randomTango(boolean reviewFlag, int maxFrequency, Tango prevTango) {
         List<Tango> tangos = getTangoList(reviewFlag, maxFrequency);
-        int size = tangos.size();
-        if (size > 0) {
+        Tango temp;
+        if (tangos.size() > 0) {
+            int size = tangos.size();
             index = random.nextInt(size);
-            return tangos.get(index);
+            temp = tangos.get(index);
+            if (prevTango != null && temp.id == prevTango.id) {
+                index = (++index) % size;
+                temp = tangos.get(index);
+            }
         } else {
             //TODO
             index = random.nextInt(tempTangos.size());
-            return tempTangos.get(index);
+            temp = tempTangos.get(index);
+            if (prevTango != null && temp.id == prevTango.id) {
+                index = (++index) % tempTangos.size();
+                temp = tempTangos.get(index);
+            }
         }
+        return temp;
     }
 
     public Tango nextTango(boolean reviewFlag, int maxFrequency) {

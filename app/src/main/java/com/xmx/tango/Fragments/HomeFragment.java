@@ -256,12 +256,9 @@ public class HomeFragment extends xUtilsFragment {
     private void loadNewTango() {
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
-        Tango temp = TangoManager.getInstance().randomTango(reviewFlag, DataManager.getInstance().getReviewFrequency());
-        if (tango != null && temp.id == tango.id) {
-            loadNewTango(TangoManager.getInstance().nextTango(reviewFlag, DataManager.getInstance().getReviewFrequency()));
-        } else {
-            loadNewTango(temp);
-        }
+        Tango temp = TangoManager.getInstance().randomTango(reviewFlag,
+                DataManager.getInstance().getReviewFrequency(), tango);
+        loadNewTango(temp);
     }
 
     private void loadNewTango(Tango newTango) {
