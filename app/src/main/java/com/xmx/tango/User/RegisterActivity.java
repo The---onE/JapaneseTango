@@ -15,6 +15,7 @@ public class RegisterActivity extends BaseTempActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register);
+        setTitle(R.string.register);
     }
 
     @Override

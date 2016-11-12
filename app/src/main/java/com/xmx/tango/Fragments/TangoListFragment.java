@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xmx.tango.Constants;
+import com.xmx.tango.Import.ImportFileActivity;
+import com.xmx.tango.Import.ImportTangoActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.Tango.OperateTangoEvent;
 import com.xmx.tango.Tango.SearchTangoDialog;
@@ -56,7 +58,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_operation)
     private void onExportClick(View view) {
-        String[] items = new String[]{"导出", "排序"};
+        String[] items = new String[]{"导出", "导入", "排序"};
         new AlertDialog.Builder(getContext())
                 .setTitle("操作")
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -68,6 +70,9 @@ public class TangoListFragment extends xUtilsFragment {
                                 exportTango();
                                 break;
                             case 1:
+                                importTango();
+                                break;
+                            case 2:
                                 orderTango();
                                 break;
                         }
@@ -100,7 +105,32 @@ public class TangoListFragment extends xUtilsFragment {
             }
         });
         builder.show();
+    }
 
+    private void importTango() {
+        AlertDialog.Builder builder = new AlertDialog
+                .Builder(getContext());
+        builder.setMessage("要导入数据吗？");
+        builder.setTitle("提示");
+        builder.setPositiveButton("文件导入", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(ImportFileActivity.class);
+            }
+        });
+        builder.setNegativeButton("文本导入", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(ImportTangoActivity.class);
+            }
+        });
+        builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void exportTango(boolean personalFlag) {

@@ -40,15 +40,15 @@ public class MainActivity extends BaseNavigationActivity {
         fragments.add(new HomeFragment());
         fragments.add(new TangoListFragment());
         fragments.add(new AddTangoFragment());
-        fragments.add(new ImportTangoFragment());
-        fragments.add(new ImportFileFragment());
+        //fragments.add(new ImportTangoFragment());
+        //fragments.add(new ImportFileFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
         titles.add("列表");
         titles.add("添加");
-        titles.add("导入");
-        titles.add("CSV导入");
+        //titles.add("导入");
+        //titles.add("CSV导入");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
@@ -127,12 +127,12 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_add_tango:
                 vp.setCurrentItem(2);
                 break;
-            case R.id.nav_import_tango:
-                vp.setCurrentItem(3);
-                break;
-            case R.id.nav_import_file:
-                vp.setCurrentItem(4);
-                break;
+//            case R.id.nav_import_tango:
+//                vp.setCurrentItem(3);
+//                break;
+//            case R.id.nav_import_file:
+//                vp.setCurrentItem(4);
+//                break;
             case R.id.nav_setting:
                 startActivity(SettingActivity.class);
                 break;
