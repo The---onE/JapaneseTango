@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.xmx.tango.Application;
 import com.xmx.tango.Constants;
 import com.xmx.tango.Tools.OperationLog.OperationLogEntityManager;
 
@@ -27,6 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         x.view().inject(this);
 
         TAG = this.getClass().getSimpleName();
+        Application.getInstance().addActivity(this);
+
         initView(savedInstanceState);
         setListener();
         processLogic(savedInstanceState);
