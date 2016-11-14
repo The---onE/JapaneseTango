@@ -58,7 +58,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_operation)
     private void onExportClick(View view) {
-        String[] items = new String[]{"导出", "导入", "排序"};
+        String[] items = new String[]{"导出", "导入", "删除"};
         new AlertDialog.Builder(getContext())
                 .setTitle("操作")
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -73,7 +73,7 @@ public class TangoListFragment extends xUtilsFragment {
                                 importTango();
                                 break;
                             case 2:
-                                orderTango();
+                                deleteTango();
                                 break;
                         }
                     }
@@ -133,6 +133,34 @@ public class TangoListFragment extends xUtilsFragment {
         builder.show();
     }
 
+    private void deleteTango() {
+        AlertDialog.Builder builder = new AlertDialog
+                .Builder(getContext());
+        builder.setMessage("确定要删除列出的数据吗？");
+        builder.setTitle("提示");
+        builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                List<Long> ids = new ArrayList<>();
+                List<Tango> tangoList = TangoManager.getInstance().getData();
+                for (Tango tango : tangoList) {
+                    ids.add(tango.id);
+                }
+                if (TangoEntityManager.getInstance().deleteByIds(ids)) {
+                    showToast("删除成功");
+                    EventBus.getDefault().post(new TangoListChangeEvent());
+                }
+            }
+        });
+        builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
+    }
+
     private void exportTango(boolean personalFlag) {
         List<Tango> list = TangoManager.getInstance().getData();
         String dir = Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
@@ -177,28 +205,6 @@ public class TangoListFragment extends xUtilsFragment {
         } else {
             showToast("导出失败");
         }
-    }
-
-    private void orderTango() {
-        String[] items = new String[]{"ID", "分数", "添加时间", "上次时间"};
-        final String[] orders = new String[]{"ID", "Score", "AddTime", "LastTime"};
-        new AlertDialog.Builder(getContext())
-                .setTitle("操作")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (TangoManager.getInstance().order.equals(orders[i])) {
-                            TangoManager.getInstance().ascFlag = !TangoManager.getInstance().ascFlag;
-                        } else {
-                            TangoManager.getInstance().ascFlag = true;
-                            TangoManager.getInstance().order = orders[i];
-                        }
-
-                        EventBus.getDefault().post(new TangoListChangeEvent());
-                    }
-                })
-                .setNegativeButton("取消", null).show();
     }
 
     @Override
