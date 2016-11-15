@@ -5,6 +5,7 @@ package com.xmx.tango;
  */
 public class Constants {
     public static final boolean EXCEPTION_DEBUG = true;
+    public static final boolean DEBUG_MODE = false;
 
     public static final String APP_ID = "vBb01A8F2LI63zJBqkQWiuWc-gzGzoHsz";
     public static final String APP_KEY = "tfMtJ1uRTmRre40QhxT46yVl";

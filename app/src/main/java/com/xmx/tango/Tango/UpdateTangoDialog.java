@@ -5,8 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xmx.tango.Constants;
 import com.xmx.tango.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +26,9 @@ public class UpdateTangoDialog extends Dialog {
     EditText partOfSpeechView;
     EditText typeView;
 
+    TextView idView;
+    TextView scoreView;
+
     public UpdateTangoDialog(Context context, Tango tango) {
         super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
         this.tango = tango;
@@ -40,6 +45,8 @@ public class UpdateTangoDialog extends Dialog {
         toneView = (EditText) findViewById(R.id.edit_tone);
         partOfSpeechView = (EditText) findViewById(R.id.edit_part_of_speech);
         typeView = (EditText) findViewById(R.id.edit_type);
+        idView = (TextView) findViewById(R.id.edit_id);
+        scoreView = (TextView) findViewById(R.id.edit_score);
 
         writingView.setText(tango.writing);
         pronunciationView.setText(tango.pronunciation);
@@ -47,6 +54,14 @@ public class UpdateTangoDialog extends Dialog {
         toneView.setText("" + tango.tone);
         partOfSpeechView.setText(tango.partOfSpeech);
         typeView.setText(tango.type);
+
+        if (Constants.DEBUG_MODE) {
+            idView.setText("" + tango.id);
+            scoreView.setText("" + tango.score);
+        } else {
+            idView.setVisibility(View.GONE);
+            scoreView.setVisibility(View.GONE);
+        }
 
         findViewById(R.id.btn_update).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +83,7 @@ public class UpdateTangoDialog extends Dialog {
                     try {
                         tone = Integer.parseInt(toneStr);
                     } catch (Exception e) {
-                        Toast.makeText(getContext(),"音调格式不合法", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "音调格式不合法", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }

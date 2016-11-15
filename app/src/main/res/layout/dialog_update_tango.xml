@@ -5,6 +5,14 @@
     android:orientation="vertical"
     tools:context="com.xmx.tango.Fragments.HomeFragment">
 
+    <TextView
+        android:id="@+id/edit_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="32sp" />
+
     <EditText
         android:id="@+id/edit_writing"
         android:layout_width="match_parent"
@@ -58,6 +66,14 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:hint="@string/type"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/edit_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:textSize="32sp" />
 
     <LinearLayout

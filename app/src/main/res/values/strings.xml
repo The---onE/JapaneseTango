@@ -95,12 +95,14 @@
     <string name="export">导出</string>
     <string name="sort">排序</string>
 
+    <string name="id">ID</string>
     <string name="writing">写法</string>
     <string name="pronunciation">发音</string>
     <string name="meaning">解释</string>
     <string name="tone">音调</string>
     <string name="type">类型</string>
     <string name="part_of_speech">词性</string>
+    <string name="score">分数</string>
 
     <string name="text">文本</string>
     <string name="format">格式</string>
