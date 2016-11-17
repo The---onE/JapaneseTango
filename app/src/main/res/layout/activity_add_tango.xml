@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xmx.tango.Tango.AddTangoActivity">
+
+    <include layout="@layout/tool_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edit_writing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/writing"
+                android:textSize="32sp" />
+
+            <EditText
+                android:id="@+id/edit_pronunciation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_writing"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/pronunciation"
+                android:textSize="32sp" />
+
+            <EditText
+                android:id="@+id/edit_meaning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_pronunciation"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/meaning"
+                android:textSize="32sp" />
+
+            <EditText
+                android:id="@+id/edit_tone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_meaning"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/tone"
+                android:inputType="number"
+                android:textSize="32sp" />
+
+            <EditText
+                android:id="@+id/edit_part_of_speech"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_tone"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/part_of_speech"
+                android:textSize="32sp" />
+
+            <EditText
+                android:id="@+id/edit_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_part_of_speech"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:hint="@string/type"
+                android:textSize="32sp" />
+
+            <Button
+                android:id="@+id/btn_add_tango"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_type"
+                android:layout_marginTop="50dp"
+                android:text="@string/add" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

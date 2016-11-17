@@ -14,6 +14,7 @@ import com.xmx.tango.Constants;
 import com.xmx.tango.Import.ImportFileActivity;
 import com.xmx.tango.Import.ImportTangoActivity;
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.AddTangoActivity;
 import com.xmx.tango.Tango.OperateTangoEvent;
 import com.xmx.tango.Tango.SearchTangoDialog;
 import com.xmx.tango.Tango.SpeakTangoManager;
@@ -34,7 +35,6 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +58,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_operation)
     private void onExportClick(View view) {
-        String[] items = new String[]{"导出", "导入", "删除"};
+        String[] items = new String[]{"添加", "导出", "导入", "删除"};
         new AlertDialog.Builder(getContext())
                 .setTitle("操作")
                 .setIcon(android.R.drawable.ic_dialog_info)
@@ -67,18 +67,25 @@ public class TangoListFragment extends xUtilsFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i) {
                             case 0:
-                                exportTango();
+                                addTango();
                                 break;
                             case 1:
-                                importTango();
+                                exportTango();
                                 break;
                             case 2:
+                                importTango();
+                                break;
+                            case 3:
                                 deleteTango();
                                 break;
                         }
                     }
                 })
                 .setNegativeButton("取消", null).show();
+    }
+
+    private void addTango() {
+        startActivity(AddTangoActivity.class);
     }
 
     private void exportTango() {

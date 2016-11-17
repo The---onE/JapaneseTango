@@ -11,10 +11,7 @@ import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.xmx.tango.Fragments.AddTangoFragment;
 import com.xmx.tango.Fragments.HomeFragment;
-import com.xmx.tango.Fragments.ImportFileFragment;
-import com.xmx.tango.Fragments.ImportTangoFragment;
 import com.xmx.tango.Fragments.TangoListFragment;
 import com.xmx.tango.Log.OperationLogActivity;
 import com.xmx.tango.Setting.SettingActivity;
@@ -39,16 +36,10 @@ public class MainActivity extends BaseNavigationActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
         fragments.add(new TangoListFragment());
-        fragments.add(new AddTangoFragment());
-        //fragments.add(new ImportTangoFragment());
-        //fragments.add(new ImportFileFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
         titles.add("列表");
-        titles.add("添加");
-        //titles.add("导入");
-        //titles.add("CSV导入");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
@@ -124,15 +115,6 @@ public class MainActivity extends BaseNavigationActivity {
             case R.id.nav_tango_list:
                 vp.setCurrentItem(1);
                 break;
-            case R.id.nav_add_tango:
-                vp.setCurrentItem(2);
-                break;
-//            case R.id.nav_import_tango:
-//                vp.setCurrentItem(3);
-//                break;
-//            case R.id.nav_import_file:
-//                vp.setCurrentItem(4);
-//                break;
             case R.id.nav_setting:
                 startActivity(SettingActivity.class);
                 break;

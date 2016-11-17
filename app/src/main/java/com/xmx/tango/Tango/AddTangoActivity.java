@@ -1,4 +1,4 @@
-package com.xmx.tango.Fragments;
+package com.xmx.tango.Tango;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,10 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.xmx.tango.R;
-import com.xmx.tango.Tango.Tango;
-import com.xmx.tango.Tango.TangoEntityManager;
-import com.xmx.tango.Tango.TangoListChangeEvent;
-import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
+import com.xmx.tango.Tools.ActivityBase.BaseTempActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ContentView;
@@ -21,8 +18,8 @@ import java.util.Date;
 /**
  * A simple {@link Fragment} subclass.
  */
-@ContentView(R.layout.fragment_add_tango)
-public class AddTangoFragment extends xUtilsFragment {
+@ContentView(R.layout.activity_add_tango)
+public class AddTangoActivity extends BaseTempActivity {
 
     @ViewInject(R.id.edit_writing)
     EditText writingView;
@@ -91,6 +88,16 @@ public class AddTangoFragment extends xUtilsFragment {
         showToast(R.string.add_success);
 
         EventBus.getDefault().post(new TangoListChangeEvent());
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void setListener() {
+
     }
 
     @Override

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.xmx.tango.Fragments.HomeFragment">
+    tools:context="com.xmx.tango.Import.ImportTangoActivity">
 
     <include layout="@layout/tool_bar" />
 
