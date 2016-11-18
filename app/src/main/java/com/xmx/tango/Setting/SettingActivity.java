@@ -11,9 +11,12 @@ import android.widget.TextView;
 
 import com.xmx.tango.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.LoadNewTangoEvent;
 import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tools.ActivityBase.BaseTempActivity;
 import com.xmx.tango.Tools.Data.DataManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by The_onE on 2016/9/17.
@@ -79,11 +82,12 @@ public class SettingActivity extends BaseTempActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String type = typeEdit.getText().toString().trim();
                                 DataManager.getInstance().setTangoType(type);
-                                showToast("更改成功");
                                 if (type.equals("")) {
                                     type = "全部";
                                 }
                                 typeView.setText(type);
+                                showToast("更改成功");
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
                             }
                         })
                         .setNegativeButton("取消", null).show();
@@ -116,6 +120,7 @@ public class SettingActivity extends BaseTempActivity {
                                 DataManager.getInstance().setTangoGoal(goal);
                                 showToast("更改成功");
                                 goalView.setText("" + goal);
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
                             }
                         })
                         .setNegativeButton("取消", null).show();
@@ -148,6 +153,7 @@ public class SettingActivity extends BaseTempActivity {
                                 DataManager.getInstance().setPronunciationTime(pronunciationTime);
                                 showToast("更改成功");
                                 pronunciationTimeView.setText("" + pronunciationTime);
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
                             }
                         })
                         .setNegativeButton("取消", null).show();
@@ -180,6 +186,7 @@ public class SettingActivity extends BaseTempActivity {
                                 DataManager.getInstance().setWritingTime(writingTime);
                                 showToast("更改成功");
                                 writingTimeView.setText("" + writingTime);
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
                             }
                         })
                         .setNegativeButton("取消", null).show();
@@ -212,6 +219,7 @@ public class SettingActivity extends BaseTempActivity {
                                 DataManager.getInstance().setMeaningTime(meaningTime);
                                 showToast("更改成功");
                                 meaningTimeView.setText("" + meaningTime);
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
                             }
                         })
                         .setNegativeButton("取消", null).show();
@@ -244,6 +252,7 @@ public class SettingActivity extends BaseTempActivity {
                                 DataManager.getInstance().setReviewFrequency(frequency);
                                 showToast("更改成功");
                                 frequencyView.setText("" + frequency);
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
                             }
                         })
                         .setNegativeButton("取消", null).show();

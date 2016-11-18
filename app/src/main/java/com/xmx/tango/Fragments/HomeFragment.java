@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.xmx.tango.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.Tango.LoadNewTangoEvent;
 import com.xmx.tango.Tango.SpeakTangoManager;
 import com.xmx.tango.Tango.Tango;
 import com.xmx.tango.Tango.TangoManager;
@@ -20,6 +21,8 @@ import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.tango.Tools.Timer;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -189,6 +192,9 @@ public class HomeFragment extends xUtilsFragment {
                 "\n今日已记：" + TangoOperator.getInstance().study);
 
         loadNewTango();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     private void checkAnswer() {
@@ -455,5 +461,10 @@ public class HomeFragment extends xUtilsFragment {
             meaningTimer.execute();
             meaningTimer.stop();
         }
+    }
+
+    @Subscribe
+    public void onEvent(LoadNewTangoEvent event) {
+        loadNewTango();
     }
 }
