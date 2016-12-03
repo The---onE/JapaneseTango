@@ -164,6 +164,13 @@ public class DataManager {
         setString("tango_type", type);
     }
 
+    public String getPartOfSpeech() {
+        return getString("tango_part_of_speech", "");
+    }
+    public void setPartOfSpeech(String part) {
+        setString("tango_part_of_speech", part);
+    }
+
     public String getTangoSpeaker() {
         return getString("tango_speaker", Constants.SPEAKERS[0]);
     }

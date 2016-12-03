@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 public class SettingActivity extends BaseTempActivity {
 
     TextView typeView;
+    TextView partView;
     TextView goalView;
     TextView pronunciationTimeView;
     TextView writingTimeView;
@@ -42,6 +43,13 @@ public class SettingActivity extends BaseTempActivity {
             type = "全部";
         }
         typeView.setText(type);
+
+        partView = getViewById(R.id.tv_part);
+        String part = DataManager.getInstance().getPartOfSpeech();
+        if (part.equals("")) {
+            part = "全部";
+        }
+        partView.setText(part);
 
         goalView = getViewById(R.id.tv_goal);
         goalView.setText("" + DataManager.getInstance().getTangoGoal());
@@ -86,6 +94,34 @@ public class SettingActivity extends BaseTempActivity {
                                     type = "全部";
                                 }
                                 typeView.setText(type);
+                                showToast("更改成功");
+                                EventBus.getDefault().post(new LoadNewTangoEvent());
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_part).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText partEdit = new EditText(getBaseContext());
+                partEdit.setTextColor(Color.BLACK);
+                partEdit.setTextSize(24);
+                partEdit.setText(DataManager.getInstance().getPartOfSpeech());
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("学习的単語词性")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(partEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String part = partEdit.getText().toString().trim();
+                                DataManager.getInstance().setPartOfSpeech(part);
+                                if (part.equals("")) {
+                                    part = "全部";
+                                }
+                                partView.setText(part);
                                 showToast("更改成功");
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
                             }

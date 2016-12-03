@@ -345,6 +345,7 @@ public class StrUtil {
     /**
      * 连接字符串
      *
+     * @param items     待连接的字符串数组
      * @param separator 分隔字符串
      * @return 格式化后的文本
      */
@@ -362,6 +363,7 @@ public class StrUtil {
     /**
      * 连接字符串
      *
+     * @param items     待连接的字符串列表
      * @param separator 分隔字符串
      * @return 格式化后的文本
      */

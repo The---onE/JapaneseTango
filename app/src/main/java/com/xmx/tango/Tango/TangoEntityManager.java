@@ -36,7 +36,12 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
 
         String type = DataManager.getInstance().getTangoType();
         if (!type.equals("")) {
-            conditions.add("Type = '" + type + "'");
+            conditions.add("Type like '%" + type + "%'");
+        }
+
+        String part = DataManager.getInstance().getPartOfSpeech();
+        if (!part.equals("")) {
+            conditions.add("PartOfSpeech like '%" + part + "%'");
         }
 
         if (maxFrequency >= 0) {
