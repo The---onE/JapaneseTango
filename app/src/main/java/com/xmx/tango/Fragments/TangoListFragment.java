@@ -26,6 +26,7 @@ import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tango.UpdateTangoDialog;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.tango.Tools.Utils.CSVUtil;
+import com.xmx.tango.Tools.Utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -199,13 +200,8 @@ public class TangoListFragment extends xUtilsFragment {
                 strings[12] = "0"; //DelFlag
                 strings[13] = ""; //Type
             }
-            StringBuffer sb = new StringBuffer();
-            sb.append(strings[0]);
-            for (int i = 1; i < strings.length; ++i) {
-                sb.append(",");
-                sb.append(strings[i]);
-            }
-            items.add(new String(sb));
+            String item = StrUtil.join(strings, ",");
+            items.add(item);
         }
         if (CSVUtil.toCSV(items, dir + filename, "UTF-8")) {
             showToast("成功导出至:" + dir + filename);

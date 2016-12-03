@@ -4,7 +4,9 @@ import android.database.Cursor;
 
 import com.xmx.tango.Tools.Data.DataManager;
 import com.xmx.tango.Tools.Data.SQL.BaseSQLEntityManager;
+import com.xmx.tango.Tools.Utils.StrUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,20 +32,15 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         if (!checkDatabase()) {
             return null;
         }
+        List<String> conditions = new ArrayList<>();
+
         String type = DataManager.getInstance().getTangoType();
-        String conStr;
         if (!type.equals("")) {
-            conStr = " where Type = '" + type + "'";
-        } else {
-            conStr = "";
+            conditions.add("Type = '" + type + "'");
         }
 
         if (maxFrequency >= 0) {
-            if (!conStr.equals("")) {
-                conStr += " and Frequency <= " + maxFrequency;
-            } else {
-                conStr = " where Frequency <= " + maxFrequency;
-            }
+            conditions.add("Frequency <= " + maxFrequency);
         }
 
         String reviewStr;
@@ -51,11 +48,13 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
             reviewStr = "Frequency desc, ";
         } else {
             reviewStr = "";
-            if (!conStr.equals("")) {
-                conStr += " and Frequency >= 0";
-            } else {
-                conStr = " where Frequency >= 0";
-            }
+            conditions.add("Frequency >= 0");
+        }
+
+        String conStr = "";
+        if (conditions.size() > 0) {
+            conStr = " where ";
+            conStr += StrUtil.join(conditions, " and ");
         }
 
         Cursor cursor = database.rawQuery("select * from " + tableName +
