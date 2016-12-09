@@ -3,9 +3,11 @@ package com.xmx.tango.Fragments;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +26,7 @@ import com.xmx.tango.Tango.TangoEntityManager;
 import com.xmx.tango.Tango.TangoListChangeEvent;
 import com.xmx.tango.Tango.TangoManager;
 import com.xmx.tango.Tango.UpdateTangoDialog;
+import com.xmx.tango.Tango.VerbDialog;
 import com.xmx.tango.Tools.FragmentBase.xUtilsFragment;
 import com.xmx.tango.Tools.Utils.CSVUtil;
 import com.xmx.tango.Tools.Utils.StrUtil;
@@ -50,6 +53,8 @@ public class TangoListFragment extends xUtilsFragment {
     @ViewInject(R.id.list_tango)
     ListView tangoList;
     TangoAdapter tangoAdapter;
+
+    boolean itemDoubleFlag = false;
 
     @Event(value = R.id.btn_search)
     private void onSearchClick(View view) {
@@ -221,10 +226,25 @@ public class TangoListFragment extends xUtilsFragment {
         tangoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Tango tango = (Tango) tangoAdapter.getItem(i);
-                String writing = tango.writing;
-                if (!writing.equals("")) {
-                    SpeakTangoManager.getInstance().speak(writing);
+                final Tango tango = (Tango) tangoAdapter.getItem(i);
+                if (itemDoubleFlag) { //双按
+                    itemDoubleFlag = false;
+                    String writing = tango.writing;
+                    if (!writing.equals("")) {
+                        SpeakTangoManager.getInstance().speak(writing);
+                    }
+                } else {
+                    itemDoubleFlag = true;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (itemDoubleFlag) { //超时未按下第二次
+                                //执行单按逻辑
+                                showVerbDialog(tango);
+                            }
+                            itemDoubleFlag = false;
+                        }
+                    }, ViewConfiguration.getDoubleTapTimeout());
                 }
             }
         });
@@ -289,6 +309,31 @@ public class TangoListFragment extends xUtilsFragment {
         List<Tango> tangoList = TangoManager.getInstance().getData();
         tangoAdapter.updateList(tangoList);
         countView.setText("" + tangoList.size() + "/" + TangoEntityManager.getInstance().getCount());
+    }
+
+    private void showVerbDialog(Tango tango) {
+        String part = tango.partOfSpeech;
+        if (!part.equals("")) {
+            if (part.contains(Constants.VERB_FLAG)) {
+                String verb = tango.writing;
+
+                int type = 0;
+                switch (tango.partOfSpeech) {
+                    case Constants.VERB1_FLAG:
+                        type = 1;
+                        break;
+                    case Constants.VERB2_FLAG:
+                        type = 2;
+                        break;
+                    case Constants.VERB3_FLAG:
+                        type = 3;
+                        break;
+                }
+
+                VerbDialog dialog = new VerbDialog(getContext(), verb, type);
+                dialog.show();
+            }
+        }
     }
 
     @Subscribe

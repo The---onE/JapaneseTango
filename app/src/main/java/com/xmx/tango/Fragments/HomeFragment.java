@@ -138,11 +138,8 @@ public class HomeFragment extends xUtilsFragment {
                         break;
                 }
 
-                verb = convertVerb(verb, type);
-                if (verb != null) {
-                    VerbDialog dialog = new VerbDialog(getContext(), verb, type);
-                    dialog.show();
-                }
+                VerbDialog dialog = new VerbDialog(getContext(), verb, type);
+                dialog.show();
             }
         }
     }
@@ -491,48 +488,6 @@ public class HomeFragment extends xUtilsFragment {
             meaningTimer.execute();
             meaningTimer.stop();
         }
-    }
-
-    //连用形转为辞书形
-    private String convertVerb(String verb, int type) {
-        final char[] src = new char[]{'い', 'き', 'ぎ', 'し', 'ち', 'に', 'び', 'み', 'り'};
-        final char[] des = new char[]{'う', 'く', 'ぐ', 'す', 'つ', 'ぬ', 'ぶ', 'む', 'る'};
-        int i = -1;
-        String temp = null;
-        switch (type) {
-            case 1:
-                i = verb.lastIndexOf("ます");
-                if (i > 0) {
-                    temp = verb.substring(0, i);
-                    char tail = temp.charAt(i - 1);
-                    for (int j = 0; j < src.length; ++j) {
-                        if (tail == src[j]) {
-                            temp = temp.substring(0, i - 1);
-                            temp = temp.concat("" + des[j]);
-                            break;
-                        }
-                    }
-                }
-                break;
-            case 2:
-                i = verb.lastIndexOf("ます");
-                if (i > 0) {
-                    temp = verb.substring(0, i);
-                    temp = temp.concat("る");
-                }
-                break;
-            case 3:
-                i = verb.lastIndexOf("ます");
-                if (i > 0) {
-                    temp = verb.substring(0, i);
-                    if (temp.charAt(i - 1) == 'し') {
-                        temp = temp.substring(0, i - 1);
-                        temp = temp.concat("する");
-                    }
-                }
-                break;
-        }
-        return temp;
     }
 
     @Subscribe

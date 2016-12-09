@@ -7,9 +7,6 @@ import android.widget.TextView;
 
 import com.xmx.tango.R;
 
-import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
-
 /**
  * Created by The_onE on 2016/9/21.
  */
@@ -32,7 +29,7 @@ public class VerbDialog extends Dialog {
 
     public VerbDialog(Context context, String verb, int type) {
         super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
-        this.verb = verb;
+        this.verb = convertVerb(verb, type);
         this.type = type;
     }
 
@@ -235,5 +232,38 @@ public class VerbDialog extends Dialog {
 
         TextView shiyibeidongView = (TextView) findViewById(R.id.tv_verb_shiyibeidong);
         shiyibeidongView.setText(shiyibeidong);
+    }
+
+    //ます形转为辞书形
+    private String convertVerb(String verb, int type) {
+        int i = verb.lastIndexOf("ます");
+        if (i > 0) {
+            String temp = verb.substring(0, i); //去掉ます
+            switch (type) {
+                case 1:
+                    if (i > 0) {
+                        char tail = temp.charAt(i - 1);
+                        for (int j = 0; j < iStatus.length; ++j) {
+                            if (tail == iStatus[j]) {
+                                temp = temp.substring(0, i - 1).concat("" + uStatus[j]);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    temp = temp.concat("る");
+                    break;
+                case 3:
+                    if (temp.charAt(i - 1) == 'し') {
+                        temp = temp.substring(0, i - 1);
+                        temp = temp.concat("する");
+                    }
+                    break;
+            }
+            return temp;
+        } else {
+            return verb;
+        }
     }
 }
