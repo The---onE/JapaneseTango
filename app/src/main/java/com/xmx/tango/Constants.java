@@ -59,4 +59,9 @@ public class Constants {
     public static int FORGOTTEN_SCORE(int source) {
         return source * 4 / 5;
     }
+
+    public static final String VERB_FLAG = "动";
+    public static final String VERB1_FLAG = "动1";
+    public static final String VERB2_FLAG = "动2";
+    public static final String VERB3_FLAG = "动3";
 }
