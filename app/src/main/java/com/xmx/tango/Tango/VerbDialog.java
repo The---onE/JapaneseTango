@@ -164,31 +164,61 @@ public class VerbDialog extends Dialog {
                 ta = s.concat("た");
                 break;
             case 3:
-                s = verb.substring(0, len - 2); //去掉する
-                //连用形
-                lianyong = s.concat("し");
-                //未然形
-                weiran = s.concat("し");
-                //意志形
-                yizhi = s.concat("しよう");
-                //命令形
-                mingling = s.concat("しろ");
-                //假定形
-                jiading = s.concat("すれば");
-                //可能态
-                keneng = s.concat("できる");
-                //使役态
-                shiyi = s.concat("させる");
-                //被动态
-                beidong = s.concat("される");
-                //自发态
-                zifa = s.concat("される");
-                //使役被动
-                shiyibeidong = s.concat("させられる");
-                //て形
-                te = s.concat("して");
-                //た形
-                ta = s.concat("した");
+                if (verb.lastIndexOf("する") == verb.length() - 2) {
+                    //サ变动词
+                    s = verb.substring(0, len - 2); //去掉する
+                    //连用形
+                    lianyong = s.concat("し");
+                    //未然形
+                    weiran = s.concat("し");
+                    //意志形
+                    yizhi = s.concat("しよう");
+                    //命令形
+                    mingling = s.concat("しろ");
+                    //假定形
+                    jiading = s.concat("すれば");
+                    //可能态
+                    keneng = s.concat("できる");
+                    //使役态
+                    shiyi = s.concat("させる");
+                    //被动态
+                    beidong = s.concat("される");
+                    //自发态
+                    zifa = s.concat("される");
+                    //使役被动
+                    shiyibeidong = s.concat("させられる");
+                    //て形
+                    te = s.concat("して");
+                    //た形
+                    ta = s.concat("した");
+                } else if (verb.lastIndexOf("くる") >= 0) {
+                    //カ变动词
+                    s = verb.substring(0, len - 2); //去掉くる
+                    //连用形
+                    lianyong = s.concat("き");
+                    //未然形
+                    weiran = s.concat("こ");
+                    //意志形
+                    yizhi = s.concat("こよう");
+                    //命令形
+                    mingling = s.concat("こい");
+                    //假定形
+                    jiading = s.concat("くれば");
+                    //可能态
+                    keneng = s.concat("こられる");
+                    //使役态
+                    shiyi = s.concat("こさせる");
+                    //被动态
+                    beidong = s.concat("こられる");
+                    //自发态
+                    zifa = s.concat("こられる");
+                    //使役被动
+                    shiyibeidong = s.concat("こさせられる");
+                    //て形
+                    te = s.concat("きて");
+                    //た形
+                    ta = s.concat("きた");
+                }
                 break;
             default:
                 return;
@@ -241,28 +271,34 @@ public class VerbDialog extends Dialog {
             String temp = verb.substring(0, i); //去掉ます
             switch (type) {
                 case 1:
-                    if (i > 0) {
-                        char tail = temp.charAt(i - 1);
-                        for (int j = 0; j < iStatus.length; ++j) {
-                            if (tail == iStatus[j]) {
-                                temp = temp.substring(0, i - 1).concat("" + uStatus[j]);
-                                break;
-                            }
+                    char tail = temp.charAt(i - 1);
+                    //五段动词将い段词尾变う段
+                    for (int j = 0; j < iStatus.length; ++j) {
+                        if (tail == iStatus[j]) {
+                            temp = temp.substring(0, i - 1).concat("" + uStatus[j]);
+                            break;
                         }
                     }
                     break;
                 case 2:
+                    //一段动词直接加る
                     temp = temp.concat("る");
                     break;
                 case 3:
                     if (temp.charAt(i - 1) == 'し') {
+                        //サ变动词，し变する
                         temp = temp.substring(0, i - 1);
                         temp = temp.concat("する");
+                    } else if (temp.charAt(i - 1) == 'き' || temp.charAt(i - 1) == '来') {
+                        //カ变动词，来(き) 变 来(く)る
+                        temp = temp.substring(0, i - 1);
+                        temp = temp.concat("くる");
                     }
                     break;
             }
             return temp;
         } else {
+            //不是ます形则直接返回
             return verb;
         }
     }
