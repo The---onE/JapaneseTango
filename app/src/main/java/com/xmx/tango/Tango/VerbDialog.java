@@ -16,7 +16,7 @@ public class VerbDialog extends Dialog {
     private String verb;
     private int type;
 
-    final char[] aStatus = new char[]{'あ', 'か', 'が', 'さ', 'た', 'な', 'ば', 'ま', 'ら'};
+    final char[] aStatus = new char[]{'わ', 'か', 'が', 'さ', 'た', 'な', 'ば', 'ま', 'ら'};
     final char[] iStatus = new char[]{'い', 'き', 'ぎ', 'し', 'ち', 'に', 'び', 'み', 'り'};
     final char[] uStatus = new char[]{'う', 'く', 'ぐ', 'す', 'つ', 'ぬ', 'ぶ', 'む', 'る'};
     final char[] eStatus = new char[]{'え', 'け', 'げ', 'せ', 'て', 'ね', 'べ', 'め', 'れ'};
@@ -26,6 +26,7 @@ public class VerbDialog extends Dialog {
     final char[] ideTail = new char[]{'ぐ'};
     final char[] tteTail = new char[]{'う', 'つ', 'る'};
     final char[] ndeTail = new char[]{'ぶ', 'ぬ', 'む'};
+    final char[] shiTail = new char[]{'す'};
 
     public VerbDialog(Context context, String verb, int type) {
         super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
@@ -111,6 +112,21 @@ public class VerbDialog extends Dialog {
                         break;
                     }
                 }
+                for (char t : shiTail) {
+                    if (tail == t) {
+                        te = s.concat("して");
+                        break;
+                    }
+                }
+                if (cishu.equals("行く")) {
+                    te = "行って";
+                }
+                if (cishu.equals("問う")) {
+                    te = "問うて";
+                }
+                if (cishu.equals("乞う")) {
+                    te = "乞うて";
+                }
                 //た形
                 for (char t : iteTail) {
                     if (tail == t) {
@@ -135,6 +151,21 @@ public class VerbDialog extends Dialog {
                         ta = s.concat("んだ");
                         break;
                     }
+                }
+                for (char t : shiTail) {
+                    if (tail == t) {
+                        ta = s.concat("した");
+                        break;
+                    }
+                }
+                if (cishu.equals("行く")) {
+                    ta = "行った";
+                }
+                if (cishu.equals("問う")) {
+                    ta = "問うた";
+                }
+                if (cishu.equals("乞う")) {
+                    ta = "乞うた";
                 }
                 break;
             case 2:
