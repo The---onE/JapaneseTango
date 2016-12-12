@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import com.xmx.tango.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by The_onE on 2016/9/21.
  */
@@ -16,17 +19,33 @@ public class VerbDialog extends Dialog {
     private String verb;
     private int type;
 
-    final char[] aStatus = new char[]{'わ', 'か', 'が', 'さ', 'た', 'な', 'ば', 'ま', 'ら'};
-    final char[] iStatus = new char[]{'い', 'き', 'ぎ', 'し', 'ち', 'に', 'び', 'み', 'り'};
-    final char[] uStatus = new char[]{'う', 'く', 'ぐ', 'す', 'つ', 'ぬ', 'ぶ', 'む', 'る'};
-    final char[] eStatus = new char[]{'え', 'け', 'げ', 'せ', 'て', 'ね', 'べ', 'め', 'れ'};
-    final char[] oStatus = new char[]{'お', 'こ', 'ご', 'そ', 'と', 'の', 'ぼ', 'も', 'ろ'};
+    static final char[] aStatus = new char[]{'わ', 'か', 'が', 'さ', 'た', 'な', 'ば', 'ま', 'ら'};
+    static final char[] iStatus = new char[]{'い', 'き', 'ぎ', 'し', 'ち', 'に', 'び', 'み', 'り'};
+    static final char[] uStatus = new char[]{'う', 'く', 'ぐ', 'す', 'つ', 'ぬ', 'ぶ', 'む', 'る'};
+    static final char[] eStatus = new char[]{'え', 'け', 'げ', 'せ', 'て', 'ね', 'べ', 'め', 'れ'};
+    static final char[] oStatus = new char[]{'お', 'こ', 'ご', 'そ', 'と', 'の', 'ぼ', 'も', 'ろ'};
 
-    final char[] iteTail = new char[]{'く'};
-    final char[] ideTail = new char[]{'ぐ'};
-    final char[] tteTail = new char[]{'う', 'つ', 'る'};
-    final char[] ndeTail = new char[]{'ぶ', 'ぬ', 'む'};
-    final char[] shiTail = new char[]{'す'};
+    static final Map<String, char[]> teOnbin = new HashMap<>();
+    static final Map<String, char[]> taOnbin = new HashMap<>();
+    static {
+        teOnbin.put("いて", new char[]{'く'});
+        taOnbin.put("いた", new char[]{'く'});
+
+        teOnbin.put("いて", new char[]{'く'});
+        taOnbin.put("いた", new char[]{'く'});
+
+        teOnbin.put("いで", new char[]{'ぐ'});
+        taOnbin.put("いだ", new char[]{'ぐ'});
+
+        teOnbin.put("って", new char[]{'う', 'つ', 'る'});
+        taOnbin.put("った", new char[]{'う', 'つ', 'る'});
+
+        teOnbin.put("んで", new char[]{'ぶ', 'ぬ', 'む'});
+        taOnbin.put("んだ", new char[]{'ぶ', 'ぬ', 'む'});
+
+        teOnbin.put("んで", new char[]{'す'});
+        taOnbin.put("んだ", new char[]{'す'});
+    }
 
     public VerbDialog(Context context, String verb, int type) {
         super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
@@ -88,33 +107,16 @@ public class VerbDialog extends Dialog {
                 shiyibeidong = s.concat("" + aStatus[row] + "される");
 
                 //て形
-                for (char t : iteTail) {
-                    if (tail == t) {
-                        te = s.concat("いて");
-                        break;
+                for (Map.Entry<String, char[]> entry : teOnbin.entrySet()) {
+                    boolean flag = false;
+                    for (char t : entry.getValue()) {
+                        if (tail == t) {
+                            te = s.concat(entry.getKey());
+                            flag = true;
+                            break;
+                        }
                     }
-                }
-                for (char t : ideTail) {
-                    if (tail == t) {
-                        te = s.concat("いで");
-                        break;
-                    }
-                }
-                for (char t : tteTail) {
-                    if (tail == t) {
-                        te = s.concat("って");
-                        break;
-                    }
-                }
-                for (char t : ndeTail) {
-                    if (tail == t) {
-                        te = s.concat("んで");
-                        break;
-                    }
-                }
-                for (char t : shiTail) {
-                    if (tail == t) {
-                        te = s.concat("して");
+                    if (flag) {
                         break;
                     }
                 }
@@ -128,33 +130,16 @@ public class VerbDialog extends Dialog {
                     te = "乞うて";
                 }
                 //た形
-                for (char t : iteTail) {
-                    if (tail == t) {
-                        ta = s.concat("いた");
-                        break;
+                for (Map.Entry<String, char[]> entry : taOnbin.entrySet()) {
+                    boolean flag = false;
+                    for (char t : entry.getValue()) {
+                        if (tail == t) {
+                            ta = s.concat(entry.getKey());
+                            flag = true;
+                            break;
+                        }
                     }
-                }
-                for (char t : ideTail) {
-                    if (tail == t) {
-                        ta = s.concat("いだ");
-                        break;
-                    }
-                }
-                for (char t : tteTail) {
-                    if (tail == t) {
-                        ta = s.concat("った");
-                        break;
-                    }
-                }
-                for (char t : ndeTail) {
-                    if (tail == t) {
-                        ta = s.concat("んだ");
-                        break;
-                    }
-                }
-                for (char t : shiTail) {
-                    if (tail == t) {
-                        ta = s.concat("した");
+                    if (flag) {
                         break;
                     }
                 }
@@ -331,6 +316,13 @@ public class VerbDialog extends Dialog {
         } else {
             //不是ます形则直接返回
             return verb;
+        }
+    }
+
+    @Override
+    public void show() {
+        if (type > 0) {
+            super.show();
         }
     }
 }
