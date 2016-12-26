@@ -76,6 +76,9 @@
             android:name="com.xmx.tango.Tango.AddTangoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.xmx.tango.Mission.MissionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.xmx.tango.Import.ImportFileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

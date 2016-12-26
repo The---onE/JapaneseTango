@@ -15,6 +15,7 @@ import com.xmx.tango.Fragments.HomeFragment;
 import com.xmx.tango.Fragments.TangoListFragment;
 import com.xmx.tango.Log.OperationLogActivity;
 import com.xmx.tango.Setting.SettingActivity;
+import com.xmx.tango.Mission.MissionActivity;
 import com.xmx.tango.Tools.ActivityBase.BaseNavigationActivity;
 import com.xmx.tango.Tools.PagerAdapter;
 import com.xmx.tango.User.Callback.AutoLoginCallback;
@@ -140,6 +141,9 @@ public class MainActivity extends BaseNavigationActivity {
 
         if (id == R.id.action_settings) {
             startActivity(SettingActivity.class);
+            return true;
+        } else if (id == R.id.action_mission) {
+            startActivity(MissionActivity.class);
             return true;
         }
 
