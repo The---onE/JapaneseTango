@@ -2,7 +2,6 @@ package com.xmx.tango.core.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 
 import com.xmx.tango.core.Constants;
