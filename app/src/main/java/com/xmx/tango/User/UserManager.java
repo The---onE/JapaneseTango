@@ -1,4 +1,4 @@
-package com.xmx.tango.User;
+package com.xmx.tango.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,12 +13,12 @@ import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
-import com.xmx.tango.Constants;
-import com.xmx.tango.Tools.PushMessage.ReceiveMessageActivity;
-import com.xmx.tango.User.Callback.AutoLoginCallback;
-import com.xmx.tango.User.Callback.LoginCallback;
-import com.xmx.tango.User.Callback.LogoutCallback;
-import com.xmx.tango.User.Callback.RegisterCallback;
+import com.xmx.tango.core.Constants;
+import com.xmx.tango.common.push.ReceiveMessageActivity;
+import com.xmx.tango.user.callback.AutoLoginCallback;
+import com.xmx.tango.user.callback.LoginCallback;
+import com.xmx.tango.user.callback.LogoutCallback;
+import com.xmx.tango.user.callback.RegisterCallback;
 
 import java.security.MessageDigest;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.xmx.tango.User;
+package com.xmx.tango.user;
 
 /**
  * Created by The_onE on 2016/7/3.

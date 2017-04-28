@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#E3EDCD"
-    tools:context="com.xmx.tango.Fragments.HomeFragment">
+    tools:context=".core.fragments.HomeFragment">
 
     <TextView
         android:id="@+id/tv_tango_count"

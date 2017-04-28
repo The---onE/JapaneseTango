@@ -1,4 +1,4 @@
-package com.xmx.tango.User.Callback;
+package com.xmx.tango.user.callback;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;

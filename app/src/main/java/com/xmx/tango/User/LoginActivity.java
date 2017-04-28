@@ -1,4 +1,4 @@
-package com.xmx.tango.User;
+package com.xmx.tango.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,11 @@ import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.xmx.tango.Constants;
-import com.xmx.tango.MainActivity;
+import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.activity.MainActivity;
 import com.xmx.tango.R;
-import com.xmx.tango.Tools.ActivityBase.BaseActivity;
-import com.xmx.tango.User.Callback.LoginCallback;
+import com.xmx.tango.base.activity.BaseActivity;
+import com.xmx.tango.user.callback.LoginCallback;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;

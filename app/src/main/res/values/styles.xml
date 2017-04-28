@@ -36,4 +36,10 @@
         <item name="android:paddingBottom">8dp</item>
     </style>
 
+    <style name="AppTheme.SplashBackground">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

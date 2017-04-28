@@ -14,7 +14,7 @@
 
     <!-- 基础模块 END -->
     <application
-        android:name="com.xmx.tango.Application"
+        android:name="com.xmx.tango.core.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,7 +35,7 @@
         <!-- 实时通信模块、推送 END -->
 
         <receiver
-            android:name="com.xmx.tango.Tools.PushMessage.ItemMessageReceiver"
+            android:name=".common.push.ItemMessageReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -46,13 +46,13 @@
         </receiver>
 
         <activity
-            android:name="com.xmx.tango.MainActivity"
+            android:name="com.xmx.tango.core.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Splash.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name="com.xmx.tango.core.activity.SplashActivity"
+            android:theme="@style/AppTheme.SplashBackground">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,48 +60,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Setting.SettingActivity"
+            android:name=".core.activity.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--<activity-->
         <!--android:name="com.xmx.tango.User.LoginActivity"-->
         <!--android:launchMode="singleTask"-->
         <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
-            android:name="com.xmx.tango.User.LoginActivity"
+            android:name="com.xmx.tango.user.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.User.RegisterActivity"
+            android:name="com.xmx.tango.user.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Tango.AddTangoActivity"
+            android:name=".module.tango.AddTangoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Mission.MissionActivity"
+            android:name=".module.mission.MissionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Import.ImportFileActivity"
+            android:name=".module.importtango.ImportFileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Import.ImportTangoActivity"
+            android:name=".module.importtango.ImportTangoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Log.OperationLogActivity"
+            android:name=".module.log.OperationLogActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.Tools.ChoosePhoto.AlbumActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Tools.ChoosePhoto.BigPhotoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Tools.ChoosePhoto.PhotoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.xmx.tango.Tools.PushMessage.ReceiveMessageActivity"
+            android:name=".common.push.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name="com.xmx.tango.Tango.ImportService"
+            android:name=".module.tango.ImportService"
             android:enabled="true"
             android:exported="true" />
     </application>

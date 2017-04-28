@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".Setting.SettingActivity">
+    tools:context=".core.activity.SettingActivity">
 
     <include layout="@layout/tool_bar" />
 

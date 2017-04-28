@@ -1,4 +1,4 @@
-package com.xmx.tango.User;
+package com.xmx.tango.user;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +7,8 @@ import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
 import com.xmx.tango.R;
-import com.xmx.tango.Tools.ActivityBase.BaseTempActivity;
-import com.xmx.tango.User.Callback.RegisterCallback;
+import com.xmx.tango.base.activity.BaseTempActivity;
+import com.xmx.tango.user.callback.RegisterCallback;
 
 public class RegisterActivity extends BaseTempActivity {
 
