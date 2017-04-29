@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E3EDCD"
     android:orientation="vertical"
     tools:context=".core.fragments.HomeFragment">
 
@@ -30,7 +31,7 @@
         android:id="@+id/tv_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <ListView
         android:id="@+id/list_tango"
