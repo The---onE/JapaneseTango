@@ -12,9 +12,10 @@ import com.xmx.tango.common.data.callback.InsertCallback;
 import com.xmx.tango.common.data.callback.SelectCallback;
 import com.xmx.tango.common.data.callback.UpdateCallback;
 import com.xmx.tango.common.data.DataConstants;
-import com.xmx.tango.user.callback.AutoLoginCallback;
-import com.xmx.tango.user.UserConstants;
-import com.xmx.tango.user.UserManager;
+import com.xmx.tango.common.user.UserData;
+import com.xmx.tango.common.user.callback.AutoLoginCallback;
+import com.xmx.tango.common.user.UserConstants;
+import com.xmx.tango.common.user.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,10 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 if (userField != null) {
-                    query.whereEqualTo(userField, user.getObjectId());
+                    query.whereEqualTo(userField, user.objectId);
                 }
                 if (conditions != null) {
                     for (String key : conditions.keySet()) {
@@ -106,10 +107,10 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 final AVObject object = entity.getContent(tableName);
                 if (userField != null) {
-                    object.put(userField, user.getObjectId());
+                    object.put(userField, user.objectId);
                 }
                 object.saveInBackground(new SaveCallback() {
                     @Override
@@ -152,7 +153,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 query.getInBackground(objectId, new GetCallback<AVObject>() {
                     @Override
@@ -205,7 +206,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
+            public void success(final UserData user) {
                 AVQuery<AVObject> query = new AVQuery<>(tableName);
                 query.getInBackground(objectId, new GetCallback<AVObject>() {
                     @Override

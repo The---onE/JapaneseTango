@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.core.fragments.HomeFragment;
 import com.xmx.tango.core.fragments.TangoListFragment;
 import com.xmx.tango.module.log.OperationLogActivity;
@@ -19,9 +19,9 @@ import com.xmx.tango.R;
 import com.xmx.tango.module.mission.MissionActivity;
 import com.xmx.tango.base.activity.BaseNavigationActivity;
 import com.xmx.tango.core.PagerAdapter;
-import com.xmx.tango.user.callback.AutoLoginCallback;
-import com.xmx.tango.user.UserConstants;
-import com.xmx.tango.user.UserManager;
+import com.xmx.tango.common.user.callback.AutoLoginCallback;
+import com.xmx.tango.common.user.UserConstants;
+import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.core.Constants;
 
 import java.util.ArrayList;
@@ -66,8 +66,8 @@ public class MainActivity extends BaseNavigationActivity {
 
         UserManager.getInstance().autoLogin(new AutoLoginCallback() {
             @Override
-            public void success(final AVObject user) {
-                login.setTitle(user.getString("nickname") + " 点击注销");
+            public void success(final UserData user) {
+                login.setTitle(user.nickname + " 点击注销");
             }
 
             @Override

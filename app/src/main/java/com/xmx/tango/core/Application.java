@@ -11,7 +11,7 @@ import com.xmx.tango.BuildConfig;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.common.push.ReceiveMessageActivity;
-import com.xmx.tango.user.UserManager;
+import com.xmx.tango.common.user.UserManager;
 
 import org.xutils.x;
 

@@ -9,6 +9,7 @@ import com.xmx.tango.common.data.callback.UpdateCallback;
 import com.xmx.tango.common.data.cloud.BaseCloudEntityManager;
 import com.xmx.tango.common.data.DataConstants;
 import com.xmx.tango.common.data.sql.BaseSQLEntityManager;
+import com.xmx.tango.common.user.UserData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,8 +102,8 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
 
             @Override
-            public void success(AVObject user, List<Entity> entities) {
-                switchAccount(user.getObjectId());
+            public void success(UserData user, List<Entity> entities) {
+                switchAccount(user.objectId);
                 for (Entity entity : entities) {
                     if (sqlManager.selectByCloudId(entity.getCloudId()) == null) {
                         sqlManager.insertData(entity);
@@ -131,8 +132,8 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         }
         cloudManager.insertToCloud(entity, new InsertCallback() {
             @Override
-            public void success(AVObject user, String objectId) {
-                switchAccount(user.getObjectId());
+            public void success(UserData user, String objectId) {
+                switchAccount(user.objectId);
                 entity.setCloudId(objectId);
                 sqlManager.insertData(entity);
                 callback.success(user, objectId);
@@ -158,8 +159,8 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         }
         cloudManager.deleteFromCloud(objectId, new DelCallback() {
             @Override
-            public void success(AVObject user) {
-                switchAccount(user.getObjectId());
+            public void success(UserData user) {
+                switchAccount(user.objectId);
                 sqlManager.deleteByCloudId(objectId);
                 callback.success(user);
             }
@@ -185,8 +186,8 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
         }
         cloudManager.updateToCloud(objectId, update, new UpdateCallback() {
             @Override
-            public void success(AVObject user) {
-                switchAccount(user.getObjectId());
+            public void success(UserData user) {
+                switchAccount(user.objectId);
                 List<String> strings = new ArrayList<>();
                 for (String key : update.keySet()) {
                     Object value = update.get(key);

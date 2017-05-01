@@ -3,7 +3,7 @@ package com.xmx.tango.base.activity;
 import android.content.Intent;
 
 import com.xmx.tango.core.activity.MainActivity;
-import com.xmx.tango.user.LoginActivity;
+import com.xmx.tango.module.user.LoginActivity;
 
 /**
  * Created by The_onE on 2016/10/8.

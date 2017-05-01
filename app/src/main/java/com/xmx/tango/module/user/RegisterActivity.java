@@ -1,5 +1,6 @@
-package com.xmx.tango.user;
+package com.xmx.tango.module.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,14 +9,20 @@ import android.widget.EditText;
 import com.avos.avoscloud.AVException;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
-import com.xmx.tango.user.callback.RegisterCallback;
+import com.xmx.tango.common.user.IUserManager;
+import com.xmx.tango.common.user.UserConstants;
+import com.xmx.tango.common.user.UserData;
+import com.xmx.tango.common.user.UserManager;
+import com.xmx.tango.common.user.callback.RegisterCallback;
+import com.xmx.tango.utils.ExceptionUtil;
 
 public class RegisterActivity extends BaseTempActivity {
+
+    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register);
-        setTitle(R.string.register);
     }
 
     @Override
@@ -51,24 +58,25 @@ public class RegisterActivity extends BaseTempActivity {
                 }
 
                 register.setEnabled(false);
-                UserManager.getInstance().register(username, password, nickname, new RegisterCallback() {
+                userManager.register(username, password, nickname, new RegisterCallback() {
                     @Override
-                    public void success() {
+                    public void success(UserData user) {
                         showToast(R.string.register_success);
+                        setResult(RESULT_OK, new Intent());
                         finish();
                     }
 
                     @Override
                     public void error(AVException e) {
                         showToast(R.string.network_error);
-                        filterException(e);
+                        ExceptionUtil.normalException(e, getBaseContext());
                         register.setEnabled(true);
                     }
 
                     @Override
                     public void error(int error) {
                         switch (error) {
-                            case UserConstants.USERNAME_ERROR:
+                            case UserConstants.USERNAME_EXIST:
                                 showToast(R.string.username_exist);
                                 register.setEnabled(true);
                                 break;

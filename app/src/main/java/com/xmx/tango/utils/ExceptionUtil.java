@@ -1,5 +1,8 @@
 package com.xmx.tango.utils;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.common.log.OperationLogEntityManager;
 
@@ -16,5 +19,46 @@ public class ExceptionUtil {
         } else {
             return true;
         }
+    }
+    /**
+     * 轻微异常处理，记录日志，不影响程序
+     *
+     * @param e       异常信息
+     * @param context 当前上下文
+     */
+    static public void normalException(Exception e, Context context) {
+        // 记录错误日志
+        OperationLogEntityManager.getInstance().addLog(e.toString());
+        // 在调试状态显示错误信息
+        if (Constants.EXCEPTION_DEBUG) {
+            // 打印异常堆栈跟踪
+            e.printStackTrace();
+            // 显示错误信息
+            Toast.makeText(context, "出现异常:" + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // 致命异常
+
+    /**
+     * 致命异常处理，记录日志，传递异常交由上层异常处理器处理
+     *
+     * @param e 异常信息
+     * @param context 当前上下文
+     */
+    void fatalError(Exception e, Context context) throws Exception {
+        // 记录错误日志
+        OperationLogEntityManager.getInstance().addLog(e.toString());
+        // 在调试状态显示错误信息
+        if (Constants.EXCEPTION_DEBUG) {
+            // 打印异常堆栈跟踪
+            e.printStackTrace();
+            // 显示错误信息
+            Toast.makeText(context, "致命异常:" + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+        // 传递异常，交由异常处理器处理
+        throw e;
     }
 }

@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseSplashActivity;
-import com.xmx.tango.user.callback.AutoLoginCallback;
-import com.xmx.tango.user.UserConstants;
-import com.xmx.tango.user.UserManager;
+import com.xmx.tango.common.user.callback.AutoLoginCallback;
+import com.xmx.tango.common.user.UserConstants;
+import com.xmx.tango.common.user.UserManager;
 
 public class SplashLoginActivity extends BaseSplashActivity {
     boolean loginFlag = false;
@@ -53,7 +53,7 @@ public class SplashLoginActivity extends BaseSplashActivity {
 
         UserManager.getInstance().autoLogin(new AutoLoginCallback() {
             @Override
-            public void success(AVObject user) {
+            public void success(UserData user) {
                 loginFlag = true;
                 if (timeFlag) {
                     startMainActivity();

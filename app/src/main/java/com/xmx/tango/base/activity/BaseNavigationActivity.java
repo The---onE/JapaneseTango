@@ -13,13 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
 import com.xmx.tango.R;
-import com.xmx.tango.user.callback.AutoLoginCallback;
-import com.xmx.tango.user.callback.LogoutCallback;
-import com.xmx.tango.user.LoginActivity;
-import com.xmx.tango.user.UserConstants;
-import com.xmx.tango.user.UserManager;
+import com.xmx.tango.common.user.UserData;
+import com.xmx.tango.common.user.callback.AutoLoginCallback;
+import com.xmx.tango.common.user.callback.LogoutCallback;
+import com.xmx.tango.common.user.UserConstants;
+import com.xmx.tango.common.user.UserManager;
+import com.xmx.tango.module.user.LoginActivity;
 
 /**
  * Created by The_onE on 2015/12/28.
@@ -83,7 +83,7 @@ public abstract class BaseNavigationActivity extends BaseActivity
                         public void onClick(DialogInterface dialogInterface, int i) {
                             UserManager.getInstance().logout(new LogoutCallback() {
                                 @Override
-                                public void logout(AVObject user) {
+                                public void logout(UserData user) {
                                     //SyncEntityManager.getInstance().getSQLManager().clearDatabase();
                                 }
                             });
@@ -115,8 +115,8 @@ public abstract class BaseNavigationActivity extends BaseActivity
             final MenuItem login = menu.findItem(R.id.nav_logout);
             UserManager.getInstance().autoLogin(new AutoLoginCallback() {
                 @Override
-                public void success(final AVObject user) {
-                    login.setTitle(user.getString("nickname") + " 点击注销");
+                public void success(final UserData user) {
+                    login.setTitle(user.nickname + " 点击注销");
                 }
 
                 @Override

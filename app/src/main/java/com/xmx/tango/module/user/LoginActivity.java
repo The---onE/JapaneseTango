@@ -1,5 +1,6 @@
-package com.xmx.tango.user;
+package com.xmx.tango.module.user;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,16 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.xmx.tango.core.Constants;
-import com.xmx.tango.core.activity.MainActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseActivity;
-import com.xmx.tango.user.callback.LoginCallback;
+import com.xmx.tango.common.user.IUserManager;
+import com.xmx.tango.common.user.UserConstants;
+import com.xmx.tango.common.user.UserData;
+import com.xmx.tango.common.user.UserManager;
+import com.xmx.tango.common.user.callback.LoginCallback;
+import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.activity.MainActivity;
+import com.xmx.tango.utils.ExceptionUtil;
 
 public class LoginActivity extends BaseActivity {
     private long mExitTime = 0;
     public boolean mustFlag = false;
+
+    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -40,10 +47,10 @@ public class LoginActivity extends BaseActivity {
                     showToast(R.string.password_empty);
                 } else {
                     login.setEnabled(false);
-                    UserManager.getInstance().login(username, password,
+                    userManager.login(username, password,
                             new LoginCallback() {
                                 @Override
-                                public void success(AVObject user) {
+                                public void success(UserData user) {
                                     showToast(R.string.login_success);
                                     if (mustFlag) {
                                         startActivity(MainActivity.class);
@@ -56,7 +63,7 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void error(AVException e) {
                                     showToast(R.string.network_error);
-                                    filterException(e);
+                                    ExceptionUtil.normalException(e, getBaseContext());
                                     login.setEnabled(true);
                                 }
 
@@ -82,7 +89,8 @@ public class LoginActivity extends BaseActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(RegisterActivity.class);
+                startActivityForResult(new Intent(LoginActivity.this, RegisterActivity.class),
+                        UserConstants.REGISTER_REQUEST_CODE);
             }
         });
     }
@@ -103,6 +111,18 @@ public class LoginActivity extends BaseActivity {
             }
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 若从注册页注册成功返回
+        if (requestCode == UserConstants.REGISTER_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                setResult(RESULT_OK, new Intent());
+                finish();
+            }
         }
     }
 }

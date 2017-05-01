@@ -67,10 +67,10 @@
         <!--android:launchMode="singleTask"-->
         <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
-            android:name="com.xmx.tango.user.LoginActivity"
+            android:name=".module.user.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.xmx.tango.user.RegisterActivity"
+            android:name=".module.user.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.tango.AddTangoActivity"
