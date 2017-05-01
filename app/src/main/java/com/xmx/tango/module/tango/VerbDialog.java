@@ -43,8 +43,8 @@ public class VerbDialog extends Dialog {
         teOnbin.put("んで", new char[]{'ぶ', 'ぬ', 'む'});
         taOnbin.put("んだ", new char[]{'ぶ', 'ぬ', 'む'});
 
-        teOnbin.put("んで", new char[]{'す'});
-        taOnbin.put("んだ", new char[]{'す'});
+        teOnbin.put("して", new char[]{'す'});
+        taOnbin.put("した", new char[]{'す'});
     }
 
     public VerbDialog(Context context, String verb, int type) {
