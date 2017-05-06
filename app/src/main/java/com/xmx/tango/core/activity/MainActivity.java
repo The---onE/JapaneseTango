@@ -26,6 +26,7 @@ import com.xmx.tango.common.user.callback.AutoLoginCallback;
 import com.xmx.tango.common.user.UserConstants;
 import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.core.Constants;
+import com.xmx.tango.module.tango.TangoService;
 import com.xmx.tango.utils.ExceptionUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -179,6 +180,9 @@ public class MainActivity extends BaseNavigationActivity {
 
         if (id == R.id.action_settings) {
             startActivity(SettingActivity.class);
+            return true;
+        } else if (id == R.id.action_open_service) {
+            startService(new Intent(this, TangoService.class));
             return true;
         } else if (id == R.id.action_mission) {
             startActivity(MissionActivity.class);
