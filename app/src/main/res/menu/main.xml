@@ -9,9 +9,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_open_service"
+        android:id="@+id/action_switch_service"
         android:orderInCategory="99"
-        android:title="@string/open_service"
+        android:title="@string/switch_service"
         app:showAsAction="never" />
 
     <item

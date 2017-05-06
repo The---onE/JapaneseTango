@@ -1,5 +1,7 @@
 package com.xmx.tango.core.activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -181,8 +183,8 @@ public class MainActivity extends BaseNavigationActivity {
         if (id == R.id.action_settings) {
             startActivity(SettingActivity.class);
             return true;
-        } else if (id == R.id.action_open_service) {
-            startService(new Intent(this, TangoService.class));
+        } else if (id == R.id.action_switch_service) {
+            switchService();
             return true;
         } else if (id == R.id.action_mission) {
             startActivity(MissionActivity.class);
@@ -190,6 +192,29 @@ public class MainActivity extends BaseNavigationActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    void switchService() {
+        ActivityManager manager =
+                (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        int defaultNum = 10000;
+        List<ActivityManager.RunningServiceInfo> runServiceList = manager
+                .getRunningServices(defaultNum);
+        boolean flag = false;
+        for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
+            if (runServiceInfo.service
+                    .getShortClassName().equals(".module.tango.TangoService")) {
+                Intent intent = new Intent();
+                intent.setComponent(runServiceInfo.service);
+                stopService(intent);
+                showToast("已关闭服务");
+                flag = true;
+            }
+        }
+        if (!flag) {
+            startService(new Intent(this, TangoService.class));
+            showToast("已开启服务");
+        }
     }
 
     @Subscribe

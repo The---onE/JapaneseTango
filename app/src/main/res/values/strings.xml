@@ -120,7 +120,7 @@
     <string name="test_text">测试文本</string>
     <string name="speak_test">音色测试</string>
 
-    <string name="open_service">开启服务</string>
+    <string name="switch_service">开启/关闭服务</string>
 
     <string name="mission_mode">任务模式</string>
 
