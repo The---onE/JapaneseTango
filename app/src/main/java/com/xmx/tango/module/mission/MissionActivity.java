@@ -1,5 +1,6 @@
 package com.xmx.tango.module.mission;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -233,16 +234,24 @@ public class MissionActivity extends BaseTempActivity {
         }
     }
 
-
     private void checkAnswer() {
         if (pronunciationFlag && writingFlag && meaningFlag) {
             answerButton.setVisibility(View.GONE);
         }
     }
 
+    private void showTextView(TextView tv) {
+        tv.setVisibility(View.VISIBLE);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(tv, "alpha", 0f, 1f); // 渐入效果
+        animator.setDuration(300);
+        animator.start();
+    }
+
     private void showPronunciation() {
-        pronunciationView.setVisibility(View.VISIBLE);
-        toneView.setVisibility(View.VISIBLE);
+        //pronunciationView.setVisibility(View.VISIBLE);
+        showTextView(pronunciationView);
+        //toneView.setVisibility(View.VISIBLE);
+        showTextView(toneView);
         pronunciationFlag = true;
     }
 
@@ -254,7 +263,8 @@ public class MissionActivity extends BaseTempActivity {
     }
 
     private void showWriting() {
-        writingView.setVisibility(View.VISIBLE);
+        //writingView.setVisibility(View.VISIBLE);
+        showTextView(writingView);
         writingFlag = true;
     }
 
@@ -266,8 +276,10 @@ public class MissionActivity extends BaseTempActivity {
     }
 
     private void showMeaning() {
-        partView.setVisibility(View.VISIBLE);
-        meaningView.setVisibility(View.VISIBLE);
+        //partView.setVisibility(View.VISIBLE);
+        showTextView(partView);
+        //meaningView.setVisibility(View.VISIBLE);
+        showTextView(meaningView);
         meaningFlag = true;
     }
 
