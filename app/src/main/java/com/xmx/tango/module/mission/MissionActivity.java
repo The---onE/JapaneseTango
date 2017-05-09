@@ -86,6 +86,8 @@ public class MissionActivity extends BaseTempActivity {
     private Button forgetButton;
     @ViewInject(R.id.btn_answer)
     private Button answerButton;
+    @ViewInject(R.id.line_answer)
+    private View answerLine;
 
     @Event(value = R.id.btn_remember)
     private void onRememberClick(View view) {
@@ -236,7 +238,12 @@ public class MissionActivity extends BaseTempActivity {
 
     private void checkAnswer() {
         if (pronunciationFlag && writingFlag && meaningFlag) {
-            answerButton.setVisibility(View.GONE);
+            //answerButton.setVisibility(View.GONE);
+            answerLine.setVisibility(View.GONE);
+            answerButton.setEnabled(false);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(answerButton, "alpha", 1f, 0f); // 渐出效果
+            animator.setDuration(300);
+            animator.start();
         }
     }
 
@@ -320,7 +327,12 @@ public class MissionActivity extends BaseTempActivity {
         pronunciationFlag = false;
         writingFlag = false;
         meaningFlag = false;
-        answerButton.setVisibility(View.VISIBLE);
+        //answerButton.setVisibility(View.VISIBLE);
+        answerLine.setVisibility(View.VISIBLE);
+        answerButton.setEnabled(true);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(answerButton, "alpha", 0f, 1f); // 渐入效果
+        animator.setDuration(300);
+        animator.start();
         new Timer() {
             @Override
             public void timer() {
