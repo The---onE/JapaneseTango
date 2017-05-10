@@ -116,6 +116,10 @@ public class TangoManager {
         return version;
     }
 
+    public List<Tango> getWaitingList() {
+        return waitingList;
+    }
+
     /**
      * 更新待选列表
      *
@@ -139,6 +143,30 @@ public class TangoManager {
         waitingList = TangoEntityManager.getInstance()
                 .selectTangoScoreAsc(limit, reviewFlag, maxFrequency);
         return waitingList;
+    }
+
+    /**
+     * 在待选列表中添加单语
+     *
+     * @param tango 待添加单语
+     */
+    public void addToWaitingList(Tango tango) {
+        for (Tango t : waitingList) {
+            if (t.id == tango.id) {
+                // 若待选列表中已存在则不添加
+                return;
+            }
+        }
+        waitingList.add(tango);
+    }
+
+    /**
+     * 在待选列表中删除单语
+     *
+     * @param tango 待删除单语
+     */
+    public void removeFromWaitingList(Tango tango) {
+        waitingList.remove(tango);
     }
 
     /**

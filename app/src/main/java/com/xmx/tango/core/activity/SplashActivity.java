@@ -103,7 +103,7 @@ public class SplashActivity extends BaseSplashActivity {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
-                        showToast("请在侧边栏中选择登录");
+                        //showToast("请在侧边栏中选择登录");
                         break;
                     case UserConstants.USERNAME_ERROR:
                         showToast("请在侧边栏中选择登录");

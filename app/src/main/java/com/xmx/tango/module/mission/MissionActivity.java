@@ -152,8 +152,10 @@ public class MissionActivity extends BaseTempActivity {
         TangoOperator.getInstance().cancelOperate();
         tango = null;
         loadNewTango(prevTango);
-        countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study);
+        TangoManager.getInstance().addToWaitingList(tango);
+        int count = TangoManager.getInstance().getWaitingList().size();
+        countView.setText("任务剩余：" + count +
+                "\n任务已记：" + (TANGO_LIMIT - count));
     }
 
     Random random = new Random();
@@ -173,16 +175,23 @@ public class MissionActivity extends BaseTempActivity {
                 switch (operation) {
                     case REMEMBER:
                         TangoOperator.getInstance().remember(tango);
+                        TangoManager.getInstance().removeFromWaitingList(tango);
                         break;
                     case FORGET:
                         TangoOperator.getInstance().forget(tango);
                         break;
                     case REMEMBER_FOREVER:
                         TangoOperator.getInstance().rememberForever(tango);
+                        TangoManager.getInstance().removeFromWaitingList(tango);
                         break;
                 }
-                countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                        "\n今日已记：" + TangoOperator.getInstance().study);
+                int count = TangoManager.getInstance().getWaitingList().size();
+                if (count <= 0) {
+                    showToast("任务完成！");
+                    finish();
+                }
+                countView.setText("任务剩余：" + count +
+                        "\n任务已记：" + (TANGO_LIMIT - count));
 
                 loadNew();
                 return true;
@@ -228,13 +237,14 @@ public class MissionActivity extends BaseTempActivity {
             }
         });
 
-        countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study);
-
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
         TangoManager.getInstance().updateWaitingList(reviewFlag,
                 DataManager.getInstance().getReviewFrequency(), TANGO_LIMIT);
+
+        int count = TangoManager.getInstance().getWaitingList().size();
+        countView.setText("任务剩余：" + count +
+                "\n任务已记：" + (TANGO_LIMIT - count));
 
         loadNewTango();
         if (!EventBus.getDefault().isRegistered(this)) {
