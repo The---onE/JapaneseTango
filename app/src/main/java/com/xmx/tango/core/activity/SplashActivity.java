@@ -58,7 +58,7 @@ public class SplashActivity extends BaseSplashActivity {
             }
         };
         timer.start(Constants.SPLASH_TIME, true);
-        TangoManager.getInstance().updateData();
+        TangoManager.getInstance().updateTangoList();
         Date last = new Date(DataManager.getInstance().getForgetLastTime());
         Date now = new Date();
         if (!isSameDate(now, last)) {
@@ -67,7 +67,7 @@ public class SplashActivity extends BaseSplashActivity {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     try {
-                        List<Tango> tangoList = TangoManager.getInstance().getData();
+                        List<Tango> tangoList = TangoManager.getInstance().getTangoList();
                         for (int i = 0; i < tangoList.size(); i++) {
                             Tango tango = tangoList.get(i);
                             if (tango.score > 0) {

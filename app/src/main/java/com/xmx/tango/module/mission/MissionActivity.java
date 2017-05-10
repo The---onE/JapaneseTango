@@ -39,6 +39,7 @@ public class MissionActivity extends BaseTempActivity {
     Tango tango;
     Tango prevTango;
     int prevOperate;
+    static final int TANGO_LIMIT = 20;
 
     Timer pronunciationTimer = new Timer() {
         @Override
@@ -230,6 +231,11 @@ public class MissionActivity extends BaseTempActivity {
         countView.setText("今日复习：" + TangoOperator.getInstance().review +
                 "\n今日已记：" + TangoOperator.getInstance().study);
 
+        int goal = DataManager.getInstance().getTangoGoal();
+        boolean reviewFlag = TangoOperator.getInstance().study >= goal;
+        TangoManager.getInstance().updateWaitingList(reviewFlag,
+                DataManager.getInstance().getReviewFrequency(), TANGO_LIMIT);
+
         loadNewTango();
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -319,7 +325,7 @@ public class MissionActivity extends BaseTempActivity {
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
         Tango temp = TangoManager.getInstance().randomTango(reviewFlag,
-                DataManager.getInstance().getReviewFrequency(), tango);
+                DataManager.getInstance().getReviewFrequency(), tango, true);
         loadNewTango(temp);
     }
 

@@ -155,7 +155,7 @@ public class TangoListFragment extends xUtilsFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 List<Long> ids = new ArrayList<>();
-                List<Tango> tangoList = TangoManager.getInstance().getData();
+                List<Tango> tangoList = TangoManager.getInstance().getTangoList();
                 for (Tango tango : tangoList) {
                     ids.add(tango.id);
                 }
@@ -175,7 +175,7 @@ public class TangoListFragment extends xUtilsFragment {
     }
 
     private void exportTango(boolean personalFlag) {
-        List<Tango> list = TangoManager.getInstance().getData();
+        List<Tango> list = TangoManager.getInstance().getTangoList();
         String dir = Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
         String filename = "/export.csv";
         Collection<String> items = new ArrayList<>();
@@ -217,8 +217,8 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        //TangoManager.getInstance().updateData(); //在SplashActivity中调用
-        tangoAdapter = new TangoAdapter(getContext(), TangoManager.getInstance().getData());
+        //TangoManager.getInstance().updateTangoList(); //在SplashActivity中调用
+        tangoAdapter = new TangoAdapter(getContext(), TangoManager.getInstance().getTangoList());
         tangoList.setAdapter(tangoAdapter);
         int count = TangoEntityManager.getInstance().getCount();
         countView.setText("" + count + "/" + count);
@@ -305,8 +305,8 @@ public class TangoListFragment extends xUtilsFragment {
     }
 
     private void updateTangoList() {
-        TangoManager.getInstance().updateData();
-        List<Tango> tangoList = TangoManager.getInstance().getData();
+        TangoManager.getInstance().updateTangoList();
+        List<Tango> tangoList = TangoManager.getInstance().getTangoList();
         tangoAdapter.updateList(tangoList);
         countView.setText("" + tangoList.size() + "/" + TangoEntityManager.getInstance().getCount());
     }

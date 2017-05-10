@@ -46,7 +46,7 @@ public class TangoService extends BaseService {
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
         Tango temp = TangoManager.getInstance().randomTango(reviewFlag,
-                DataManager.getInstance().getReviewFrequency(), tango);
+                DataManager.getInstance().getReviewFrequency(), tango, false);
         loadNewTango(temp);
     }
 

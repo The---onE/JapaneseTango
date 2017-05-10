@@ -8,16 +8,18 @@ import java.util.Random;
  * Created by The_onE on 2016/9/13.
  */
 public class TangoManager {
-    private static final int SELECT_TANGO_LIMIT = 8;
+    private static final int DEFAULT_LIMIT = 8; // 默认待选单语列表数量
 
     private static TangoManager instance;
 
+    // 展示列表筛选条件
     public String writing;
     public String pronunciation;
     public String meaning;
     public String partOfSpeech;
     public String type;
 
+    // 更新列表排序条件
     public String order = "ID";
     public boolean ascFlag = true;
 
@@ -29,13 +31,17 @@ public class TangoManager {
     }
 
     //long tangoVersion = 0;
-    long version = System.currentTimeMillis();
-    List<Tango> tangoList = new ArrayList<>();
-    Random random = new Random();
+    private long version = System.currentTimeMillis(); // 当前版本
+    private List<Tango> tangoList = new ArrayList<>(); // 用于显示的单语列表
+    private List<Tango> waitingList = new ArrayList<>(); // 待选单语列表
+    private Random random = new Random();
 
-    int index = 0;
-    List<Tango> tempTangos = new ArrayList<>();
+    private int index = 0; // 当前选择的单语在待选列表中的索引
+    private List<Tango> tempTangos = new ArrayList<>(); // 待选列表中没有单语时显示的临时单语
 
+    /**
+     * 初始化临时列表
+     */
     private TangoManager() {
         Tango t1 = new Tango();
         t1.id = -1;
@@ -70,11 +76,16 @@ public class TangoManager {
         tempTangos.add(t4);
     }
 
-    public List<Tango> getData() {
+    public List<Tango> getTangoList() {
         return tangoList;
     }
 
-    public long updateData() {
+    /**
+     * 从数据库获取用于展示的符合筛选条件的单语数据
+     *
+     * @return 当前版本
+     */
+    public long updateTangoList() {
         TangoEntityManager manager = TangoEntityManager.getInstance();
         //tangoVersion = manager.getVersion();
 
@@ -105,25 +116,58 @@ public class TangoManager {
         return version;
     }
 
-    public List<Tango> getTangoList(boolean reviewFlag, int maxFrequency) {
-        List<Tango> tangos = TangoEntityManager.getInstance()
-                .selectTangoScoreAsc(SELECT_TANGO_LIMIT, reviewFlag, maxFrequency);
-        return tangos;
+    /**
+     * 更新待选列表
+     *
+     * @param reviewFlag   是否为复习状态
+     * @param maxFrequency 复习频率上限
+     * @return 待选列表
+     */
+    public List<Tango> updateWaitingList(boolean reviewFlag, int maxFrequency) {
+        return updateWaitingList(reviewFlag, maxFrequency, DEFAULT_LIMIT);
     }
 
-    public Tango randomTango(boolean reviewFlag, int maxFrequency, Tango prevTango) {
-        List<Tango> tangos = getTangoList(reviewFlag, maxFrequency);
+    /**
+     * 更新待选列表
+     *
+     * @param reviewFlag   是否为复习状态
+     * @param maxFrequency 复习频率上限
+     * @param limit        选取单语上限
+     * @return 待选列表
+     */
+    public List<Tango> updateWaitingList(boolean reviewFlag, int maxFrequency, int limit) {
+        waitingList = TangoEntityManager.getInstance()
+                .selectTangoScoreAsc(limit, reviewFlag, maxFrequency);
+        return waitingList;
+    }
+
+    /**
+     * 随机选取单语
+     *
+     * @param reviewFlag   是否为复习状态
+     * @param maxFrequency 复习频率上限
+     * @param prevTango    上一个单语
+     * @param missionFlag  是否为任务模式
+     * @return 随机选取的单语
+     */
+    public Tango randomTango(boolean reviewFlag, int maxFrequency, Tango prevTango,
+                             boolean missionFlag) {
+        if (!missionFlag) {
+            // 非任务模式每次刷新列表
+            updateWaitingList(reviewFlag, maxFrequency);
+        }
         Tango temp;
-        if (tangos.size() > 0) {
-            int size = tangos.size();
+        if (waitingList.size() > 0) {
+            // 从待选列表随机选取
+            int size = waitingList.size();
             index = random.nextInt(size);
-            temp = tangos.get(index);
+            temp = waitingList.get(index);
             if (prevTango != null && temp.id == prevTango.id) {
                 index = (++index) % size;
-                temp = tangos.get(index);
+                temp = waitingList.get(index);
             }
         } else {
-            //TODO
+            //TODO 待选列表没有符合条件的单语
             index = random.nextInt(tempTangos.size());
             temp = tempTangos.get(index);
             if (prevTango != null && temp.id == prevTango.id) {
@@ -134,16 +178,16 @@ public class TangoManager {
         return temp;
     }
 
-    public Tango nextTango(boolean reviewFlag, int maxFrequency) {
-        List<Tango> tangos = getTangoList(reviewFlag, maxFrequency);
-        int size = tangos.size();
-        if (size > 0) {
-            index = (++index) % size;
-            return tangos.get(index);
-        } else {
-            //TODO
-            index = (++index) % tempTangos.size();
-            return tempTangos.get(index);
-        }
-    }
+//    public Tango nextTango(boolean reviewFlag, int maxFrequency) {
+//        List<Tango> tangos = getTangoList(reviewFlag, maxFrequency);
+//        int size = tangos.size();
+//        if (size > 0) {
+//            index = (++index) % size;
+//            return tangos.get(index);
+//        } else {
+//            //TODO
+//            index = (++index) % tempTangos.size();
+//            return tempTangos.get(index);
+//        }
+//    }
 }
