@@ -177,4 +177,11 @@ public class DataManager {
     public void setTangoSpeaker(String speaker) {
         setString("tango_speaker", speaker);
     }
+
+    public int getMissionCount() {
+        return getInt("mission_count", Constants.MISSION_COUNT);
+    }
+    public void setMissionCount(int count) {
+        setInt("mission_count", count);
+    }
 }

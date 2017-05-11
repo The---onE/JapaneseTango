@@ -51,6 +51,8 @@ public class Constants {
     public static final int REVIEW_FREQUENCY = 5;
     public static final int TODAY_CONSECUTIVE_REVIEW_MAX = 10;
 
+    public static final int MISSION_COUNT = 20;
+
     public static final int INTERVAL_TIME_MIN = 500;
     public static final int NEW_TANGO_DELAY = 1000;
 

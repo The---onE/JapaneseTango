@@ -39,7 +39,6 @@ public class MissionActivity extends BaseTempActivity {
     Tango tango;
     Tango prevTango;
     int prevOperate;
-    static final int TANGO_LIMIT = 20;
 
     Timer pronunciationTimer = new Timer() {
         @Override
@@ -155,7 +154,7 @@ public class MissionActivity extends BaseTempActivity {
         TangoManager.getInstance().addToWaitingList(tango);
         int count = TangoManager.getInstance().getWaitingList().size();
         countView.setText("任务剩余：" + count +
-                "\n任务已记：" + (TANGO_LIMIT - count));
+                "\n任务已记：" + (DataManager.getInstance().getMissionCount() - count));
     }
 
     Random random = new Random();
@@ -188,10 +187,11 @@ public class MissionActivity extends BaseTempActivity {
                 int count = TangoManager.getInstance().getWaitingList().size();
                 if (count <= 0) {
                     showToast("任务完成！");
+                    EventBus.getDefault().post(new LoadNewTangoEvent());
                     finish();
                 }
                 countView.setText("任务剩余：" + count +
-                        "\n任务已记：" + (TANGO_LIMIT - count));
+                        "\n任务已记：" + (DataManager.getInstance().getMissionCount() - count));
 
                 loadNew();
                 return true;
@@ -240,11 +240,12 @@ public class MissionActivity extends BaseTempActivity {
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
         TangoManager.getInstance().updateWaitingList(reviewFlag,
-                DataManager.getInstance().getReviewFrequency(), TANGO_LIMIT);
+                DataManager.getInstance().getReviewFrequency(),
+                DataManager.getInstance().getMissionCount());
 
         int count = TangoManager.getInstance().getWaitingList().size();
         countView.setText("任务剩余：" + count +
-                "\n任务已记：" + (TANGO_LIMIT - count));
+                "\n任务已记：" + (DataManager.getInstance().getMissionCount() - count));
 
         loadNewTango();
         if (!EventBus.getDefault().isRegistered(this)) {

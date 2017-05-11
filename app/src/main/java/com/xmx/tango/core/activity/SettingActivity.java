@@ -30,6 +30,7 @@ public class SettingActivity extends BaseTempActivity {
     TextView writingTimeView;
     TextView meaningTimeView;
     TextView frequencyView;
+    TextView missionView;
     TextView speakView;
     EditText testView;
 
@@ -65,6 +66,9 @@ public class SettingActivity extends BaseTempActivity {
 
         frequencyView = getViewById(R.id.tv_frequency);
         frequencyView.setText("" + DataManager.getInstance().getReviewFrequency());
+
+        missionView = getViewById(R.id.tv_mission_count);
+        missionView.setText("" + DataManager.getInstance().getMissionCount());
 
         speakView = getViewById(R.id.tv_speaker);
         speakView.setText(DataManager.getInstance().getTangoSpeaker());
@@ -289,6 +293,38 @@ public class SettingActivity extends BaseTempActivity {
                                 showToast("更改成功");
                                 frequencyView.setText("" + frequency);
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_mission_count).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText missionEdit = new EditText(getBaseContext());
+                missionEdit.setTextColor(Color.BLACK);
+                missionEdit.setTextSize(24);
+                missionEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                missionEdit.setText("" + DataManager.getInstance().getMissionCount());
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("任务模式単語数")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(missionEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String missionString = missionEdit.getText().toString();
+                                int mission = 0;
+                                if (!missionString.equals("")) {
+                                    mission = Integer.parseInt(missionString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
+                                }
+                                DataManager.getInstance().setMissionCount(mission);
+                                showToast("更改成功");
+                                missionView.setText("" + mission);
                             }
                         })
                         .setNegativeButton("取消", null).show();
