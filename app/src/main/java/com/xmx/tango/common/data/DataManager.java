@@ -122,6 +122,13 @@ public class DataManager {
         setInt("tango_review", review);
     }
 
+    public int getTodayMission() {
+        return getInt("today_mission", 0);
+    }
+    public void setTodayMission(int mission) {
+        setInt("today_mission", mission);
+    }
+
     public int getTangoGoal() {
         return getInt("tango_goal", Constants.DEFAULT_GOAL);
     }

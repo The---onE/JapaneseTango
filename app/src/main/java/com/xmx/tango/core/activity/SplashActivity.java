@@ -63,6 +63,7 @@ public class SplashActivity extends BaseSplashActivity {
         Date now = new Date();
         if (!isSameDate(now, last)) {
             DataManager.getInstance().setForgetLastTime(now.getTime());
+            DataManager.getInstance().setTodayMission(0);
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {

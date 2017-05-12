@@ -189,6 +189,8 @@ public class MissionActivity extends BaseTempActivity {
                 int count = TangoManager.getInstance().getWaitingList().size();
                 if (count <= 0) {
                     showToast("任务完成！");
+                    DataManager.getInstance()
+                            .setTodayMission(DataManager.getInstance().getTodayMission()+1);
                     finish();
                 }
                 countView.setText("任务剩余：" + count +

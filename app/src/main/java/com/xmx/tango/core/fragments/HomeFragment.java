@@ -153,7 +153,8 @@ public class HomeFragment extends xUtilsFragment {
         tango = null;
         loadNewTango(prevTango);
         countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study);
+                "\n今日已记：" + TangoOperator.getInstance().study +
+                "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
     }
 
     Random random = new Random();
@@ -182,7 +183,8 @@ public class HomeFragment extends xUtilsFragment {
                         break;
                 }
                 countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                        "\n今日已记：" + TangoOperator.getInstance().study);
+                        "\n今日已记：" + TangoOperator.getInstance().study +
+                        "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
 
                 loadNew();
                 return true;
@@ -219,7 +221,8 @@ public class HomeFragment extends xUtilsFragment {
         });
 
         countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study);
+                "\n今日已记：" + TangoOperator.getInstance().study +
+                "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
 
         loadNewTango();
         if (!EventBus.getDefault().isRegistered(this)) {
@@ -513,6 +516,14 @@ public class HomeFragment extends xUtilsFragment {
             meaningTimer.execute();
             meaningTimer.stop();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        countView.setText("今日复习：" + TangoOperator.getInstance().review +
+                "\n今日已记：" + TangoOperator.getInstance().study +
+                "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
     }
 
     @Subscribe
