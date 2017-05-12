@@ -2,9 +2,11 @@ package com.xmx.tango.module.mission;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -187,7 +189,6 @@ public class MissionActivity extends BaseTempActivity {
                 int count = TangoManager.getInstance().getWaitingList().size();
                 if (count <= 0) {
                     showToast("任务完成！");
-                    EventBus.getDefault().post(new LoadNewTangoEvent());
                     finish();
                 }
                 countView.setText("任务剩余：" + count +
@@ -251,6 +252,34 @@ public class MissionActivity extends BaseTempActivity {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("任务还未完成，确认要退出吗？")
+                .setTitle("提示")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().post(new LoadNewTangoEvent());
     }
 
     private void checkAnswer() {
