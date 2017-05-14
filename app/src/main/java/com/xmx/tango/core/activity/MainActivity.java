@@ -28,6 +28,7 @@ import com.xmx.tango.common.user.callback.AutoLoginCallback;
 import com.xmx.tango.common.user.UserConstants;
 import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.core.Constants;
+import com.xmx.tango.module.tango.ChooseTangoEvent;
 import com.xmx.tango.module.tango.TangoService;
 import com.xmx.tango.utils.ExceptionUtil;
 
@@ -220,5 +221,10 @@ public class MainActivity extends BaseNavigationActivity {
     @Subscribe
     public void onEvent(LoginEvent event) {
         checkLogin();
+    }
+
+    @Subscribe
+    public void onEvent(ChooseTangoEvent event) {
+        vp.setCurrentItem(1);
     }
 }

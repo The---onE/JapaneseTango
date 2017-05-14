@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.module.tango.ChooseTangoEvent;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
@@ -155,6 +156,12 @@ public class HomeFragment extends xUtilsFragment {
         countView.setText("今日复习：" + TangoOperator.getInstance().review +
                 "\n今日已记：" + TangoOperator.getInstance().study +
                 "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
+    }
+
+    @Event(value = R.id.layout_tango, type = View.OnLongClickListener.class)
+    private boolean onTangoLongClick(View view) {
+        EventBus.getDefault().post(new ChooseTangoEvent(tango));
+        return true;
     }
 
     Random random = new Random();
