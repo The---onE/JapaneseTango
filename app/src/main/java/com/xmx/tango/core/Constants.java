@@ -66,4 +66,6 @@ public class Constants {
     public static final String VERB1_FLAG = "动1";
     public static final String VERB2_FLAG = "动2";
     public static final String VERB3_FLAG = "动3";
+
+    public static final String JAPANESE_FONT = "AxisstdExtralight.otf";
 }

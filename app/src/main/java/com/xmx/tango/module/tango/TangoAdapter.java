@@ -1,6 +1,8 @@
 package com.xmx.tango.module.tango;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,12 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             holder.meaning = (TextView) convertView.findViewById(R.id.item_meaning);
             holder.part = (TextView) convertView.findViewById(R.id.item_part);
             holder.time = (TextView) convertView.findViewById(R.id.item_time);
+
+            AssetManager mgr = mContext.getAssets();
+            Typeface tf = Typeface.createFromAsset(mgr, Constants.JAPANESE_FONT);
+            holder.pronunciation.setTypeface(tf);
+            holder.writing.setTypeface(tf);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

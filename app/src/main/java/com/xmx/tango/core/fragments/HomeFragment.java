@@ -2,7 +2,9 @@ package com.xmx.tango.core.fragments;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.MotionEvent;
@@ -164,6 +166,12 @@ public class HomeFragment extends xUtilsFragment {
         return true;
     }
 
+    @Event(value = R.id.tv_tango_writing, type = View.OnLongClickListener.class)
+    private boolean onTangoWritingLongClick(View view) {
+        EventBus.getDefault().post(new ChooseTangoEvent(tango));
+        return true;
+    }
+
     Random random = new Random();
 
     private boolean operateFlag = true;
@@ -174,6 +182,7 @@ public class HomeFragment extends xUtilsFragment {
     private boolean operateTango(final int operation) {
         if (operateFlag) {
             operateFlag = false;
+
             rememberButton.setBackgroundColor(Color.LTGRAY);
             forgetButton.setBackgroundColor(Color.LTGRAY);
             prevOperate = operation;
@@ -206,6 +215,8 @@ public class HomeFragment extends xUtilsFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        setJapaneseFont();
+
         rememberButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -531,6 +542,14 @@ public class HomeFragment extends xUtilsFragment {
         countView.setText("今日复习：" + TangoOperator.getInstance().review +
                 "\n今日已记：" + TangoOperator.getInstance().study +
                 "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
+    }
+
+    private void setJapaneseFont() {
+        AssetManager mgr = getContext().getAssets();
+        Typeface tf = Typeface.createFromAsset(mgr, Constants.JAPANESE_FONT);
+        pronunciationView.setTypeface(tf);
+        writingView.setTypeface(tf);
+
     }
 
     @Subscribe
