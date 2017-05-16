@@ -40,7 +40,7 @@ public class TangoOperator {
             review = 0;
             DataManager.getInstance().setTangoReview(0);
 
-            DataManager.getInstance().setReviewFrequency(Constants.REVIEW_FREQUENCY);
+            DataManager.getInstance().setReviewFrequency(TangoConstants.REVIEW_FREQUENCY);
 
             DataManager.getInstance().setResetLastTime(now.getTime());
         }
@@ -67,12 +67,12 @@ public class TangoOperator {
                     }
                 } else { //学习
                     study++;
-                    frequency = Constants.REVIEW_FREQUENCY;
+                    frequency = TangoConstants.REVIEW_FREQUENCY;
                     DataManager.getInstance().setTangoStudy(study);
                 }
             } else if (study >= goal) {
                 todayConsecutive++;
-                if (todayConsecutive > Constants.TODAY_CONSECUTIVE_REVIEW_MAX) {
+                if (todayConsecutive > TangoConstants.TODAY_CONSECUTIVE_REVIEW_MAX) {
                     todayConsecutive = 0;
                     int frequencyMax = DataManager.getInstance().getReviewFrequency();
                     frequencyMax--;
@@ -80,8 +80,8 @@ public class TangoOperator {
                 }
             }
 
-            int score = Constants.REMEMBER_SCORE - (study + review) / Constants.TIRED_COEFFICIENT;
-            score = Math.max(score, Constants.REMEMBER_MIN_SCORE);
+            int score = TangoConstants.REMEMBER_SCORE - (study + review) / TangoConstants.TIRED_COEFFICIENT;
+            score = Math.max(score, TangoConstants.REMEMBER_MIN_SCORE);
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + score),
                     "Frequency=" + frequency,
@@ -97,7 +97,7 @@ public class TangoOperator {
             prevReview = review;
 
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + Constants.FORGET_SCORE));
+                    "Score=" + (tango.score + TangoConstants.FORGET_SCORE));
             //"LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new OperateTangoEvent());
         }
@@ -126,7 +126,7 @@ public class TangoOperator {
             frequency = -1;
 
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + Constants.REMEMBER_FOREVER_SCORE),
+                    "Score=" + (tango.score + TangoConstants.REMEMBER_FOREVER_SCORE),
                     "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new OperateTangoEvent());

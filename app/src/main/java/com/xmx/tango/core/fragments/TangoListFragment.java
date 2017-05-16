@@ -23,6 +23,7 @@ import com.xmx.tango.module.tango.SearchTangoDialog;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoAdapter;
+import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
 import com.xmx.tango.module.tango.TangoListChangeEvent;
 import com.xmx.tango.module.tango.TangoManager;
@@ -315,18 +316,18 @@ public class TangoListFragment extends xUtilsFragment {
     private void showVerbDialog(Tango tango) {
         String part = tango.partOfSpeech;
         if (!part.equals("")) {
-            if (part.contains(Constants.VERB_FLAG)) {
+            if (part.contains(TangoConstants.VERB_FLAG)) {
                 String verb = tango.writing;
 
                 int type = 0;
                 switch (tango.partOfSpeech) {
-                    case Constants.VERB1_FLAG:
+                    case TangoConstants.VERB1_FLAG:
                         type = 1;
                         break;
-                    case Constants.VERB2_FLAG:
+                    case TangoConstants.VERB2_FLAG:
                         type = 2;
                         break;
-                    case Constants.VERB3_FLAG:
+                    case TangoConstants.VERB3_FLAG:
                         type = 3;
                         break;
                 }

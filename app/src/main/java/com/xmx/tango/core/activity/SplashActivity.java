@@ -14,6 +14,7 @@ import com.xmx.tango.common.user.callback.AutoLoginCallback;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
 import com.xmx.tango.module.tango.TangoListChangeEvent;
 import com.xmx.tango.module.tango.TangoManager;
@@ -72,7 +73,7 @@ public class SplashActivity extends BaseSplashActivity {
                         for (int i = 0; i < tangoList.size(); i++) {
                             Tango tango = tangoList.get(i);
                             if (tango.score > 0) {
-                                int newScore = Constants.FORGOTTEN_SCORE(tango.score);
+                                int newScore = TangoConstants.FORGOTTEN_SCORE(tango.score);
                                 if (newScore <= 0) {
                                     newScore = 1;
                                 }

@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.data.DataManager;
+import com.xmx.tango.module.tango.TangoConstants;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -337,11 +337,11 @@ public class SettingActivity extends BaseTempActivity {
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("朗读音色")
                         .setIcon(android.R.drawable.ic_dialog_info)
-                        .setItems(Constants.SPEAKERS, new DialogInterface.OnClickListener() {
+                        .setItems(TangoConstants.SPEAKERS, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                DataManager.getInstance().setTangoSpeaker(Constants.SPEAKERS[i]);
-                                speakView.setText(Constants.SPEAKERS[i]);
+                                DataManager.getInstance().setTangoSpeaker(TangoConstants.SPEAKERS[i]);
+                                speakView.setText(TangoConstants.SPEAKERS[i]);
                             }
                         })
                         .setNegativeButton("取消", null).show();

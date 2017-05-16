@@ -48,7 +48,7 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             holder.time = (TextView) convertView.findViewById(R.id.item_time);
 
             AssetManager mgr = mContext.getAssets();
-            Typeface tf = Typeface.createFromAsset(mgr, Constants.JAPANESE_FONT);
+            Typeface tf = Typeface.createFromAsset(mgr, TangoConstants.JAPANESE_FONT);
             holder.pronunciation.setTypeface(tf);
             holder.writing.setTypeface(tf);
 
@@ -62,8 +62,8 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             holder.writing.setText(tango.writing);
 
             holder.pronunciation.setText(tango.pronunciation);
-            if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
-                holder.tone.setText(Constants.TONES[tango.tone]);
+            if (tango.tone >= 0 && tango.tone < TangoConstants.TONES.length) {
+                holder.tone.setText(TangoConstants.TONES[tango.tone]);
             } else {
                 holder.tone.setText("");
             }

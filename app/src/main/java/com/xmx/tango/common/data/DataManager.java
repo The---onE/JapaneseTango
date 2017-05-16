@@ -3,7 +3,7 @@ package com.xmx.tango.common.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.module.tango.TangoConstants;
 
 /**
  * Created by The_onE on 2016/2/21.
@@ -130,14 +130,14 @@ public class DataManager {
     }
 
     public int getTangoGoal() {
-        return getInt("tango_goal", Constants.DEFAULT_GOAL);
+        return getInt("tango_goal", TangoConstants.DEFAULT_GOAL);
     }
     public void setTangoGoal(int goal) {
         setInt("tango_goal", goal);
     }
 
     public int getReviewFrequency() {
-        return getInt("review_frequency", Constants.REVIEW_FREQUENCY);
+        return getInt("review_frequency", TangoConstants.REVIEW_FREQUENCY);
     }
     public void setReviewFrequency(int frequency) {
         setInt("review_frequency", frequency);
@@ -179,14 +179,14 @@ public class DataManager {
     }
 
     public String getTangoSpeaker() {
-        return getString("tango_speaker", Constants.SPEAKERS[0]);
+        return getString("tango_speaker", TangoConstants.SPEAKERS[0]);
     }
     public void setTangoSpeaker(String speaker) {
         setString("tango_speaker", speaker);
     }
 
     public int getMissionCount() {
-        return getInt("mission_count", Constants.MISSION_COUNT);
+        return getInt("mission_count", TangoConstants.MISSION_COUNT);
     }
     public void setMissionCount(int count) {
         setInt("mission_count", count);

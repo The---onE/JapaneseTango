@@ -13,12 +13,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.tango.ChooseTangoEvent;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
 import com.xmx.tango.module.tango.TangoOperator;
 import com.xmx.tango.module.tango.VerbDialog;
@@ -128,18 +128,18 @@ public class HomeFragment extends xUtilsFragment {
     private void onPartClick(View view) {
         String part = partView.getText().toString();
         if (!part.equals("")) {
-            if (part.contains(Constants.VERB_FLAG)) {
+            if (part.contains(TangoConstants.VERB_FLAG)) {
                 String verb = tango.writing;
 
                 int type = 0;
                 switch (tango.partOfSpeech) {
-                    case Constants.VERB1_FLAG:
+                    case TangoConstants.VERB1_FLAG:
                         type = 1;
                         break;
-                    case Constants.VERB2_FLAG:
+                    case TangoConstants.VERB2_FLAG:
                         type = 2;
                         break;
-                    case Constants.VERB3_FLAG:
+                    case TangoConstants.VERB3_FLAG:
                         type = 3;
                         break;
                 }
@@ -319,7 +319,7 @@ public class HomeFragment extends xUtilsFragment {
                 public void timer() {
                     loadNewTango();
                 }
-            }.start(Constants.NEW_TANGO_DELAY, true);
+            }.start(TangoConstants.NEW_TANGO_DELAY, true);
         }
     }
 
@@ -352,7 +352,7 @@ public class HomeFragment extends xUtilsFragment {
                 rememberButton.setBackgroundColor(Color.TRANSPARENT);
                 forgetButton.setBackgroundColor(Color.TRANSPARENT);
             }
-        }.start(Constants.INTERVAL_TIME_MIN, true);
+        }.start(TangoConstants.INTERVAL_TIME_MIN, true);
 
         if (tango != null) {
             prevTango = tango;
@@ -368,13 +368,13 @@ public class HomeFragment extends xUtilsFragment {
         int width = wm.getDefaultDisplay().getWidth();
         int textSize = 0;
 
-        textSize = Constants.DEFAULT_PRONUNCIATION_TEXT_SIZE;
+        textSize = TangoConstants.DEFAULT_PRONUNCIATION_TEXT_SIZE;
         pronunciationView.setTextSize(textSize);
         pronunciationView.setText(tango.pronunciation);
         pronunciationView.setVisibility(View.INVISIBLE);
         toneView.setTextSize(textSize);
-        if (tango.tone >= 0 && tango.tone < Constants.TONES.length) {
-            toneView.setText(Constants.TONES[tango.tone]);
+        if (tango.tone >= 0 && tango.tone < TangoConstants.TONES.length) {
+            toneView.setText(TangoConstants.TONES[tango.tone]);
         } else {
             toneView.setText("");
         }
@@ -387,7 +387,7 @@ public class HomeFragment extends xUtilsFragment {
             pronunciationLength = measureWidth(pronunciationView) + measureWidth(toneView);
         }
 
-        textSize = Constants.DEFAULT_WRITING_TEXT_SIZE;
+        textSize = TangoConstants.DEFAULT_WRITING_TEXT_SIZE;
         writingView.setTextSize(textSize);
         writingView.setText(tango.writing);
         writingView.setVisibility(View.INVISIBLE);
@@ -398,7 +398,7 @@ public class HomeFragment extends xUtilsFragment {
             writingLength = measureWidth(writingView);
         }
 
-        textSize = Constants.DEFAULT_MEANING_TEXT_SIZE;
+        textSize = TangoConstants.DEFAULT_MEANING_TEXT_SIZE;
         partView.setTextSize(textSize);
         if (!tango.partOfSpeech.equals("")) {
             partView.setText("[" + tango.partOfSpeech + "]");
@@ -406,7 +406,7 @@ public class HomeFragment extends xUtilsFragment {
             partView.setText("");
         }
         partView.setVisibility(View.INVISIBLE);
-        meaningView.setTextSize(Constants.DEFAULT_MEANING_TEXT_SIZE);
+        meaningView.setTextSize(TangoConstants.DEFAULT_MEANING_TEXT_SIZE);
         meaningView.setText(tango.meaning);
         meaningView.setVisibility(View.INVISIBLE);
         float meaningLength = measureWidth(meaningView) + measureWidth(partView);
@@ -546,7 +546,7 @@ public class HomeFragment extends xUtilsFragment {
 
     private void setJapaneseFont() {
         AssetManager mgr = getContext().getAssets();
-        Typeface tf = Typeface.createFromAsset(mgr, Constants.JAPANESE_FONT);
+        Typeface tf = Typeface.createFromAsset(mgr, TangoConstants.JAPANESE_FONT);
         pronunciationView.setTypeface(tf);
         writingView.setTypeface(tf);
 
