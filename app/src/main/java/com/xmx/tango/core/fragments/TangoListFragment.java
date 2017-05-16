@@ -18,6 +18,7 @@ import com.xmx.tango.module.importtango.ImportTangoActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.module.tango.AddTangoActivity;
 import com.xmx.tango.module.tango.ChooseTangoEvent;
+import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
 import com.xmx.tango.module.tango.OperateTangoEvent;
 import com.xmx.tango.module.tango.SearchTangoDialog;
 import com.xmx.tango.module.tango.SpeakTangoManager;
@@ -350,7 +351,7 @@ public class TangoListFragment extends xUtilsFragment {
     @Subscribe
     public void onEvent(ChooseTangoEvent event) {
         int i = 0;
-        for (Tango t: TangoManager.getInstance().getTangoList()) {
+        for (Tango t : TangoManager.getInstance().getTangoList()) {
             if (t.id == event.tango.id) {
                 break;
             }
@@ -359,5 +360,10 @@ public class TangoListFragment extends xUtilsFragment {
         if (i < TangoManager.getInstance().getTangoList().size()) {
             tangoList.setSelection(i);
         }
+    }
+
+    @Subscribe
+    public void onEvent(JapaneseFontChangeEvent event) {
+        tangoAdapter.notifyDataSetChanged();
     }
 }

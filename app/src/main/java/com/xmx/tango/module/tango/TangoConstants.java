@@ -1,5 +1,9 @@
 package com.xmx.tango.module.tango;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by The_onE on 2017/5/16.
  */
@@ -37,5 +41,12 @@ public class TangoConstants {
     public static final String VERB2_FLAG = "动2";
     public static final String VERB3_FLAG = "动3";
 
-    public static final String JAPANESE_FONT = "AxisstdExtralight.otf";
+    public static final Map<String, String> JAPANESE_FONT_MAP = new LinkedHashMap<>();
+
+    static {
+        JAPANESE_FONT_MAP.put("默认", null);
+        JAPANESE_FONT_MAP.put("Axisstd Extra Light", "AxisstdExtraLight.otf");
+        JAPANESE_FONT_MAP.put("遊びメモ書き", "AsobiMemogaki-Regular-1-01.ttf");
+        JAPANESE_FONT_MAP.put("GN-こはるいろサンレイ", "GN-Koharuiro_Sunray.ttf");
+    }
 }

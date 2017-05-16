@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.base.activity.BaseTempActivity;
@@ -17,6 +18,8 @@ import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.tango.TangoConstants;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Set;
 
 /**
  * Created by The_onE on 2016/9/17.
@@ -31,6 +34,7 @@ public class SettingActivity extends BaseTempActivity {
     TextView meaningTimeView;
     TextView frequencyView;
     TextView missionView;
+    TextView japaneseFontView;
     TextView speakView;
     EditText testView;
 
@@ -69,6 +73,9 @@ public class SettingActivity extends BaseTempActivity {
 
         missionView = getViewById(R.id.tv_mission_count);
         missionView.setText("" + DataManager.getInstance().getMissionCount());
+
+        japaneseFontView = getViewById(R.id.tv_japanese_font);
+        japaneseFontView.setText("" + DataManager.getInstance().getJapaneseFontTitle());
 
         speakView = getViewById(R.id.tv_speaker);
         speakView.setText(DataManager.getInstance().getTangoSpeaker());
@@ -328,6 +335,27 @@ public class SettingActivity extends BaseTempActivity {
                             }
                         })
                         .setNegativeButton("取消", null).show();
+            }
+        });
+
+        getViewById(R.id.layout_japanese_font).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Set<String> keySet = TangoConstants.JAPANESE_FONT_MAP.keySet();
+                final String keyArray[] = keySet.toArray(new String[keySet.size()]);
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("类型")
+                        .setItems(keyArray,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        DataManager.getInstance().setJapaneseFontTitle(keyArray[i]);
+                                        japaneseFontView.setText(keyArray[i]);
+                                        EventBus.getDefault().post(new JapaneseFontChangeEvent());
+                                    }
+                                })
+                        .setNegativeButton("取消", null)
+                        .show();
             }
         });
 

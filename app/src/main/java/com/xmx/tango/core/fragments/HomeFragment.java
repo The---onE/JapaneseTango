@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.xmx.tango.R;
 import com.xmx.tango.module.tango.ChooseTangoEvent;
+import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
@@ -546,14 +547,26 @@ public class HomeFragment extends xUtilsFragment {
 
     private void setJapaneseFont() {
         AssetManager mgr = getContext().getAssets();
-        Typeface tf = Typeface.createFromAsset(mgr, TangoConstants.JAPANESE_FONT);
+        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String font = null;
+        if (title != null) {
+            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        }
+        Typeface tf = Typeface.DEFAULT;
+        if (font != null) {
+            tf = Typeface.createFromAsset(mgr, font);
+        }
         pronunciationView.setTypeface(tf);
         writingView.setTypeface(tf);
-
     }
 
     @Subscribe
     public void onEvent(LoadNewTangoEvent event) {
         loadNewTango();
+    }
+
+    @Subscribe
+    public void onEvent(JapaneseFontChangeEvent event) {
+        setJapaneseFont();
     }
 }

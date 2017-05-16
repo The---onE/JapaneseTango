@@ -191,4 +191,11 @@ public class DataManager {
     public void setMissionCount(int count) {
         setInt("mission_count", count);
     }
+
+    public String getJapaneseFontTitle() {
+        return getString("japanese_font_title", "默认");
+    }
+    public void setJapaneseFontTitle(String fontTitle) {
+        setString("japanese_font_title", fontTitle);
+    }
 }

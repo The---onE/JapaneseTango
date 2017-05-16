@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.common.data.BaseEntityAdapter;
@@ -47,17 +48,26 @@ public class TangoAdapter extends BaseEntityAdapter<Tango> {
             holder.part = (TextView) convertView.findViewById(R.id.item_part);
             holder.time = (TextView) convertView.findViewById(R.id.item_time);
 
-            AssetManager mgr = mContext.getAssets();
-            Typeface tf = Typeface.createFromAsset(mgr, TangoConstants.JAPANESE_FONT);
-            holder.pronunciation.setTypeface(tf);
-            holder.writing.setTypeface(tf);
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         if (position < mData.size()) {
+            // 设置字体
+            AssetManager mgr = mContext.getAssets();
+            String title = DataManager.getInstance().getJapaneseFontTitle();
+            String font = null;
+            if (title != null) {
+                font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+            }
+            Typeface tf = Typeface.DEFAULT;
+            if (font != null) {
+                tf = Typeface.createFromAsset(mgr, font);
+            }
+            holder.pronunciation.setTypeface(tf);
+            holder.writing.setTypeface(tf);
+            // 设置内容
             Tango tango = mData.get(position);
             holder.writing.setText(tango.writing);
 

@@ -3,7 +3,9 @@ package com.xmx.tango.module.mission;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
@@ -190,7 +193,7 @@ public class MissionActivity extends BaseTempActivity {
                 if (count <= 0) {
                     showToast("任务完成！");
                     DataManager.getInstance()
-                            .setTodayMission(DataManager.getInstance().getTodayMission()+1);
+                            .setTodayMission(DataManager.getInstance().getTodayMission() + 1);
                     finish();
                 }
                 countView.setText("任务剩余：" + count +
@@ -219,6 +222,8 @@ public class MissionActivity extends BaseTempActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        setJapaneseFont();
+
         rememberButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -572,8 +577,28 @@ public class MissionActivity extends BaseTempActivity {
         }
     }
 
+    private void setJapaneseFont() {
+        AssetManager mgr = getAssets();
+        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String font = null;
+        if (title != null) {
+            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        }
+        Typeface tf = Typeface.DEFAULT;
+        if (font != null) {
+            tf = Typeface.createFromAsset(mgr, font);
+        }
+        pronunciationView.setTypeface(tf);
+        writingView.setTypeface(tf);
+    }
+
     @Subscribe
     public void onEvent(LoadNewTangoEvent event) {
         loadNewTango();
+    }
+
+    @Subscribe
+    public void onEvent(JapaneseFontChangeEvent event) {
+        setJapaneseFont();
     }
 }
