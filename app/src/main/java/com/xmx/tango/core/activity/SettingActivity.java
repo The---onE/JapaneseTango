@@ -1,7 +1,9 @@
 package com.xmx.tango.core.activity;
 
 import android.content.DialogInterface;
+import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -76,6 +78,17 @@ public class SettingActivity extends BaseTempActivity {
 
         japaneseFontView = getViewById(R.id.tv_japanese_font);
         japaneseFontView.setText("" + DataManager.getInstance().getJapaneseFontTitle());
+        AssetManager mgr = getAssets();
+        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String font = null;
+        if (title != null) {
+            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        }
+        Typeface tf = Typeface.DEFAULT;
+        if (font != null) {
+            tf = Typeface.createFromAsset(mgr, font);
+        }
+        japaneseFontView.setTypeface(tf);
 
         speakView = getViewById(R.id.tv_speaker);
         speakView.setText(DataManager.getInstance().getTangoSpeaker());
@@ -351,6 +364,14 @@ public class SettingActivity extends BaseTempActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         DataManager.getInstance().setJapaneseFontTitle(keyArray[i]);
                                         japaneseFontView.setText(keyArray[i]);
+                                        AssetManager mgr = getAssets();
+                                        String font = TangoConstants.
+                                                JAPANESE_FONT_MAP.get(keyArray[i]);
+                                        Typeface tf = Typeface.DEFAULT;
+                                        if (font != null) {
+                                            tf = Typeface.createFromAsset(mgr, font);
+                                        }
+                                        japaneseFontView.setTypeface(tf);
                                         EventBus.getDefault().post(new JapaneseFontChangeEvent());
                                     }
                                 })
