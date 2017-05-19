@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.module.setting.JapaneseFontDialog;
 import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
 import com.xmx.tango.module.tango.LoadNewTangoEvent;
 import com.xmx.tango.module.tango.SpeakTangoManager;
@@ -20,6 +21,7 @@ import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.tango.TangoConstants;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Set;
 
@@ -354,29 +356,9 @@ public class SettingActivity extends BaseTempActivity {
         getViewById(R.id.layout_japanese_font).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Set<String> keySet = TangoConstants.JAPANESE_FONT_MAP.keySet();
-                final String keyArray[] = keySet.toArray(new String[keySet.size()]);
-                new AlertDialog.Builder(SettingActivity.this)
-                        .setTitle("类型")
-                        .setItems(keyArray,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        DataManager.getInstance().setJapaneseFontTitle(keyArray[i]);
-                                        japaneseFontView.setText(keyArray[i]);
-                                        AssetManager mgr = getAssets();
-                                        String font = TangoConstants.
-                                                JAPANESE_FONT_MAP.get(keyArray[i]);
-                                        Typeface tf = Typeface.DEFAULT;
-                                        if (font != null) {
-                                            tf = Typeface.createFromAsset(mgr, font);
-                                        }
-                                        japaneseFontView.setTypeface(tf);
-                                        EventBus.getDefault().post(new JapaneseFontChangeEvent());
-                                    }
-                                })
-                        .setNegativeButton("取消", null)
-                        .show();
+                JapaneseFontDialog dialog = new JapaneseFontDialog();
+                dialog.initDialog(SettingActivity.this);
+                dialog.show(getFragmentManager(), "JAPANESE_FONT");
             }
         });
 
@@ -408,6 +390,19 @@ public class SettingActivity extends BaseTempActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
+    }
 
+    @Subscribe
+    public void onEvent(JapaneseFontChangeEvent event) {
+        AssetManager mgr = getAssets();
+        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        Typeface tf = Typeface.DEFAULT;
+        if (font != null) {
+            tf = Typeface.createFromAsset(mgr, font);
+        }
+        japaneseFontView.setText(title);
+        japaneseFontView.setTypeface(tf);
     }
 }
