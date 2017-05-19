@@ -1,13 +1,14 @@
 package com.xmx.tango.module.tango;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.xmx.tango.base.dialog.BaseDialog;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 
@@ -16,7 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 /**
  * Created by The_onE on 2016/9/15.
  */
-public class UpdateTangoDialog extends Dialog {
+public class UpdateTangoDialog extends BaseDialog {
     Tango tango;
 
     EditText writingView;
@@ -29,24 +30,26 @@ public class UpdateTangoDialog extends Dialog {
     TextView idView;
     TextView scoreView;
 
-    public UpdateTangoDialog(Context context, Tango tango) {
-        super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
+    public void initDialog(Context context, Tango tango) {
+        super.initDialog(context);
         this.tango = tango;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_update_tango);
+    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.dialog_update_tango, container);
+    }
 
-        writingView = (EditText) findViewById(R.id.edit_writing);
-        pronunciationView = (EditText) findViewById(R.id.edit_pronunciation);
-        meaningView = (EditText) findViewById(R.id.edit_meaning);
-        toneView = (EditText) findViewById(R.id.edit_tone);
-        partOfSpeechView = (EditText) findViewById(R.id.edit_part_of_speech);
-        typeView = (EditText) findViewById(R.id.edit_type);
-        idView = (TextView) findViewById(R.id.edit_id);
-        scoreView = (TextView) findViewById(R.id.edit_score);
+    @Override
+    protected void initView(View view, Bundle savedInstanceState) {
+        writingView = (EditText) view.findViewById(R.id.edit_writing);
+        pronunciationView = (EditText) view.findViewById(R.id.edit_pronunciation);
+        meaningView = (EditText) view.findViewById(R.id.edit_meaning);
+        toneView = (EditText) view.findViewById(R.id.edit_tone);
+        partOfSpeechView = (EditText) view.findViewById(R.id.edit_part_of_speech);
+        typeView = (EditText) view.findViewById(R.id.edit_type);
+        idView = (TextView) view.findViewById(R.id.edit_id);
+        scoreView = (TextView) view.findViewById(R.id.edit_score);
 
         writingView.setText(tango.writing);
         pronunciationView.setText(tango.pronunciation);
@@ -62,8 +65,11 @@ public class UpdateTangoDialog extends Dialog {
             idView.setVisibility(View.GONE);
             scoreView.setVisibility(View.GONE);
         }
+    }
 
-        findViewById(R.id.btn_update).setOnClickListener(new View.OnClickListener() {
+    @Override
+    protected void setListener(View view) {
+        view.findViewById(R.id.btn_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String writing = writingView.getText().toString();
@@ -74,7 +80,7 @@ public class UpdateTangoDialog extends Dialog {
                 String type = typeView.getText().toString();
 
                 if (writing.equals("") && pronunciation.equals("")) {
-                    Toast.makeText(getContext(), R.string.add_error, Toast.LENGTH_SHORT).show();
+                    showToast(R.string.add_error);
                     return;
                 }
 
@@ -83,7 +89,7 @@ public class UpdateTangoDialog extends Dialog {
                     try {
                         tone = Integer.parseInt(toneStr);
                     } catch (Exception e) {
-                        Toast.makeText(getContext(), "音调格式不合法", Toast.LENGTH_SHORT).show();
+                        showToast("音调格式不合法");
                         return;
                     }
                 }
@@ -102,11 +108,16 @@ public class UpdateTangoDialog extends Dialog {
             }
         });
 
-        findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
         });
+    }
+
+    @Override
+    protected void processLogic(View view, Bundle savedInstanceState) {
+
     }
 }

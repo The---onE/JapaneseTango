@@ -61,8 +61,9 @@ public class TangoListFragment extends xUtilsFragment {
 
     @Event(value = R.id.btn_search)
     private void onSearchClick(View view) {
-        SearchTangoDialog dialog = new SearchTangoDialog(getContext());
-        dialog.show();
+        SearchTangoDialog dialog = new SearchTangoDialog();
+        dialog.initDialog(getContext());
+        dialog.show(getActivity().getFragmentManager(), "SEARCH_TANGO");
     }
 
     @Event(value = R.id.btn_operation)
@@ -264,8 +265,9 @@ public class TangoListFragment extends xUtilsFragment {
                 builder.setPositiveButton("编辑", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        UpdateTangoDialog dialog = new UpdateTangoDialog(getContext(), tango);
-                        dialog.show();
+                        UpdateTangoDialog dialog = new UpdateTangoDialog();
+                        dialog.initDialog(getContext(), tango);
+                        dialog.show(getActivity().getFragmentManager(), "UPDATE_TANGO");
                     }
                 });
                 builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
@@ -333,8 +335,9 @@ public class TangoListFragment extends xUtilsFragment {
                         break;
                 }
 
-                VerbDialog dialog = new VerbDialog(getContext(), verb, type);
-                dialog.show();
+                VerbDialog dialog = new VerbDialog();
+                dialog.initDialog(getContext(), verb, type);
+                dialog.show(getActivity().getFragmentManager(), "VERB");
             }
         }
     }

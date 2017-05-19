@@ -145,8 +145,9 @@ public class MissionActivity extends BaseTempActivity {
                         break;
                 }
 
-                VerbDialog dialog = new VerbDialog(this, verb, type);
-                dialog.show();
+                VerbDialog dialog = new VerbDialog();
+                dialog.initDialog(this, verb, type);
+                dialog.show(getFragmentManager(), "VERB");
             }
         }
     }

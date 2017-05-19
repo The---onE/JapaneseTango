@@ -145,8 +145,9 @@ public class HomeFragment extends xUtilsFragment {
                         break;
                 }
 
-                VerbDialog dialog = new VerbDialog(getContext(), verb, type);
-                dialog.show();
+                VerbDialog dialog = new VerbDialog();
+                dialog.initDialog(getContext(), verb, type);
+                dialog.show(getActivity().getFragmentManager(), "VERB");
             }
         }
     }

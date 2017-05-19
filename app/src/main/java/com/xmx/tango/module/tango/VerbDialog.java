@@ -1,11 +1,15 @@
 package com.xmx.tango.module.tango;
 
-import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
+import com.xmx.tango.base.dialog.BaseDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +18,11 @@ import java.util.Map;
  * Created by The_onE on 2016/9/21.
  */
 
-public class VerbDialog extends Dialog {
+public class VerbDialog extends BaseDialog {
 
     private String verb;
     private int type;
+    private static final float TEXT_SIZE = 28;
 
     static final char[] aStatus = new char[]{'わ', 'か', 'が', 'さ', 'た', 'な', 'ば', 'ま', 'ら'};
     static final char[] iStatus = new char[]{'い', 'き', 'ぎ', 'し', 'ち', 'に', 'び', 'み', 'り'};
@@ -47,17 +52,65 @@ public class VerbDialog extends Dialog {
         taOnbin.put("した", new char[]{'す'});
     }
 
-    public VerbDialog(Context context, String verb, int type) {
-        super(context, android.R.style.Theme_Holo_Light_Dialog_NoActionBar);
+    public void initDialog(Context context, String verb, int type) {
+        super.initDialog(context);
         this.verb = convertVerb(verb, type);
         this.type = type;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_verb);
+    //ます形转为辞书形
+    private String convertVerb(String verb, int type) {
+        int i = verb.lastIndexOf("ます");
+        if (i > 0) {
+            String temp = verb.substring(0, i); //去掉ます
+            switch (type) {
+                case 1:
+                    char tail = temp.charAt(i - 1);
+                    //五段动词将い段词尾变う段
+                    for (int j = 0; j < iStatus.length; ++j) {
+                        if (tail == iStatus[j]) {
+                            temp = temp.substring(0, i - 1).concat("" + uStatus[j]);
+                            break;
+                        }
+                    }
+                    break;
+                case 2:
+                    //一段动词直接加る
+                    temp = temp.concat("る");
+                    break;
+                case 3:
+                    if (temp.charAt(i - 1) == 'し') {
+                        //サ变动词，し变する
+                        temp = temp.substring(0, i - 1);
+                        temp = temp.concat("する");
+                    } else if (temp.charAt(i - 1) == 'き' || temp.charAt(i - 1) == '来') {
+                        //カ变动词，来(き) 变 来(く)る
+                        temp = temp.substring(0, i - 1);
+                        temp = temp.concat("くる");
+                    }
+                    break;
+            }
+            return temp;
+        } else {
+            //不是ます形则直接返回
+            return verb;
+        }
+    }
 
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        if (type > 0) {
+            super.show(manager, tag);
+        }
+    }
+
+    @Override
+    protected View getContentView(LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(R.layout.dialog_verb, container);
+    }
+
+    @Override
+    protected void initView(View view, Bundle savedInstanceState) {
         String cishu = verb;
         String lianyong = verb;
         String te = verb;
@@ -239,90 +292,66 @@ public class VerbDialog extends Dialog {
             default:
                 return;
         }
-
-        TextView cishuView = (TextView) findViewById(R.id.tv_verb_cishu);
+        TextView cishuView = (TextView) view.findViewById(R.id.tv_verb_cishu);
         cishuView.setText(cishu);
+        cishuView.setTextSize(TEXT_SIZE);
 
-        TextView lianyongView = (TextView) findViewById(R.id.tv_verb_lianyong);
+        TextView lianyongView = (TextView) view.findViewById(R.id.tv_verb_lianyong);
         lianyongView.setText(lianyong);
+        lianyongView.setTextSize(TEXT_SIZE);
 
-        TextView teView = (TextView) findViewById(R.id.tv_verb_te);
+        TextView teView = (TextView) view.findViewById(R.id.tv_verb_te);
         teView.setText(te);
+        teView.setTextSize(TEXT_SIZE);
 
-        TextView taView = (TextView) findViewById(R.id.tv_verb_ta);
+        TextView taView = (TextView) view.findViewById(R.id.tv_verb_ta);
         taView.setText(ta);
+        taView.setTextSize(TEXT_SIZE);
 
-        TextView weiranView = (TextView) findViewById(R.id.tv_verb_weiran);
+        TextView weiranView = (TextView) view.findViewById(R.id.tv_verb_weiran);
         weiranView.setText(weiran);
+        weiranView.setTextSize(TEXT_SIZE);
 
-        TextView yizhiView = (TextView) findViewById(R.id.tv_verb_yizhi);
+        TextView yizhiView = (TextView) view.findViewById(R.id.tv_verb_yizhi);
         yizhiView.setText(yizhi);
+        yizhiView.setTextSize(TEXT_SIZE);
 
-        TextView minglingView = (TextView) findViewById(R.id.tv_verb_mingling);
+        TextView minglingView = (TextView) view.findViewById(R.id.tv_verb_mingling);
         minglingView.setText(mingling);
+        minglingView.setTextSize(TEXT_SIZE);
 
-        TextView jiadingView = (TextView) findViewById(R.id.tv_verb_jiading);
+        TextView jiadingView = (TextView) view.findViewById(R.id.tv_verb_jiading);
         jiadingView.setText(jiading);
+        jiadingView.setTextSize(TEXT_SIZE);
 
-        TextView kenengView = (TextView) findViewById(R.id.tv_verb_keneng);
+        TextView kenengView = (TextView) view.findViewById(R.id.tv_verb_keneng);
         kenengView.setText(keneng);
+        kenengView.setTextSize(TEXT_SIZE);
 
-        TextView shiyiView = (TextView) findViewById(R.id.tv_verb_shiyi);
+        TextView shiyiView = (TextView) view.findViewById(R.id.tv_verb_shiyi);
         shiyiView.setText(shiyi);
+        shiyiView.setTextSize(TEXT_SIZE);
 
-        TextView beidongView = (TextView) findViewById(R.id.tv_verb_beidong);
+        TextView beidongView = (TextView) view.findViewById(R.id.tv_verb_beidong);
         beidongView.setText(beidong);
+        beidongView.setTextSize(TEXT_SIZE);
 
-        TextView zifaView = (TextView) findViewById(R.id.tv_verb_zifa);
+        TextView zifaView = (TextView) view.findViewById(R.id.tv_verb_zifa);
         zifaView.setText(zifa);
+        zifaView.setTextSize(TEXT_SIZE);
 
-        TextView shiyibeidongView = (TextView) findViewById(R.id.tv_verb_shiyibeidong);
+        TextView shiyibeidongView = (TextView) view.findViewById(R.id.tv_verb_shiyibeidong);
         shiyibeidongView.setText(shiyibeidong);
-    }
-
-    //ます形转为辞书形
-    private String convertVerb(String verb, int type) {
-        int i = verb.lastIndexOf("ます");
-        if (i > 0) {
-            String temp = verb.substring(0, i); //去掉ます
-            switch (type) {
-                case 1:
-                    char tail = temp.charAt(i - 1);
-                    //五段动词将い段词尾变う段
-                    for (int j = 0; j < iStatus.length; ++j) {
-                        if (tail == iStatus[j]) {
-                            temp = temp.substring(0, i - 1).concat("" + uStatus[j]);
-                            break;
-                        }
-                    }
-                    break;
-                case 2:
-                    //一段动词直接加る
-                    temp = temp.concat("る");
-                    break;
-                case 3:
-                    if (temp.charAt(i - 1) == 'し') {
-                        //サ变动词，し变する
-                        temp = temp.substring(0, i - 1);
-                        temp = temp.concat("する");
-                    } else if (temp.charAt(i - 1) == 'き' || temp.charAt(i - 1) == '来') {
-                        //カ变动词，来(き) 变 来(く)る
-                        temp = temp.substring(0, i - 1);
-                        temp = temp.concat("くる");
-                    }
-                    break;
-            }
-            return temp;
-        } else {
-            //不是ます形则直接返回
-            return verb;
-        }
+        shiyibeidongView.setTextSize(TEXT_SIZE);
     }
 
     @Override
-    public void show() {
-        if (type > 0) {
-            super.show();
-        }
+    protected void setListener(View view) {
+
+    }
+
+    @Override
+    protected void processLogic(View view, Bundle savedInstanceState) {
+
     }
 }
