@@ -79,7 +79,7 @@ public class SettingActivity extends BaseTempActivity {
         missionView.setText("" + DataManager.getInstance().getMissionCount());
 
         japaneseFontView = getViewById(R.id.tv_japanese_font);
-        japaneseFontView.setText("" + DataManager.getInstance().getJapaneseFontTitle());
+        japaneseFontView.setText("あいうえお 日本語");
         AssetManager mgr = getAssets();
         String title = DataManager.getInstance().getJapaneseFontTitle();
         String font = null;
@@ -402,7 +402,6 @@ public class SettingActivity extends BaseTempActivity {
         if (font != null) {
             tf = Typeface.createFromAsset(mgr, font);
         }
-        japaneseFontView.setText(title);
         japaneseFontView.setTypeface(tf);
     }
 }

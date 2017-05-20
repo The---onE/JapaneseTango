@@ -60,7 +60,7 @@ public class JapaneseFontDialog extends BaseDialog {
             public View getView(int i, View view, ViewGroup viewGroup) {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_japanese_font, null);
                 TextView fontView = (TextView) view.findViewById(R.id.item_font);
-                fontView.setText(keyArray[i]);
+                fontView.setText("あいうえお 日本語");
                 AssetManager mgr = mContext.getAssets();
                 String font = TangoConstants.
                         JAPANESE_FONT_MAP.get(keyArray[i]);
@@ -80,7 +80,6 @@ public class JapaneseFontDialog extends BaseDialog {
         fontList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String title = keyArray[i];
                 DataManager.getInstance().setJapaneseFontTitle(keyArray[i]);
                 EventBus.getDefault().post(new JapaneseFontChangeEvent());
                 dismiss();
