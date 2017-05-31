@@ -1,4 +1,4 @@
-package com.xmx.tango.module.test;
+package com.xmx.tango.module.keyboard;
 
 import android.content.Context;
 import android.graphics.Canvas;

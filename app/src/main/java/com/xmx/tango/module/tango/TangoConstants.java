@@ -30,6 +30,8 @@ public class TangoConstants {
     public static final int INTERVAL_TIME_MIN = 500;
     public static final int NEW_TANGO_DELAY = 1000;
 
+    public static final int SHOW_ANSWER_DELAY = 2000;
+
     public static final int DEFAULT_GOAL = 30;
 
     public static int FORGOTTEN_SCORE(int source) {

@@ -1,5 +1,8 @@
 package com.xmx.tango.module.test;
 
+import android.animation.ObjectAnimator;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,14 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
+import com.xmx.tango.common.data.DataManager;
+import com.xmx.tango.module.keyboard.FlickView;
+import com.xmx.tango.module.keyboard.KeyboardConstants;
+import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoConstants;
+import com.xmx.tango.module.tango.TangoManager;
+import com.xmx.tango.module.tango.TangoOperator;
+import com.xmx.tango.utils.Timer;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +38,10 @@ public class TestActivity extends BaseTempActivity {
 
     @ViewInject(R.id.edit_test)
     private EditText testEdit;
+    @ViewInject(R.id.text_writing)
+    private TextView writingView;
+    @ViewInject(R.id.text_meaning)
+    private TextView meaningView;
 
     @ViewInject(R.id.btn_10)
     private Button btn10;
@@ -38,12 +53,16 @@ public class TestActivity extends BaseTempActivity {
     private Button btn13;
     @ViewInject(R.id.btn_14)
     private Button btn14;
+    @ViewInject(R.id.btn_20)
+    private Button btn20;
     @ViewInject(R.id.btn_21)
     private Button btn21;
     @ViewInject(R.id.btn_22)
     private Button btn22;
     @ViewInject(R.id.btn_23)
     private Button btn23;
+    @ViewInject(R.id.btn_24)
+    private Button btn24;
     @ViewInject(R.id.btn_31)
     private Button btn31;
     @ViewInject(R.id.btn_32)
@@ -67,51 +86,10 @@ public class TestActivity extends BaseTempActivity {
     private float startX;
     private float startY;
 
-    static final private String[] kanaArray = new String[]{
-            "あ", "い", "う", "え", "お",
-            "か", "き", "く", "け", "こ",
-            "さ", "し", "す", "せ", "そ",
-            "た", "ち", "つ", "て", "と",
-            "な", "に", "ぬ", "ね", "の",
-            "は", "ひ", "ふ", "へ", "ほ",
-            "ま", "み", "む", "め", "も",
-            "や", "い", "ゆ", "え", "よ",
-            "ら", "り", "る", "れ", "ろ",
-            "わ", "を", "ん", "々", " ",
-
-            "ぁ", "ぃ", "ぅ", "ぇ", "ぉ",
-            "が", "ぎ", "ぐ", "げ", "ご",
-            "ざ", "じ", "ず", "ぜ", "ぞ",
-            "だ", "ぢ", "づ", "で", "ど",
-            "な", "に", "ぬ", "ね", "の",
-            "ば", "び", "ぶ", "べ", "ぼ",
-            "ま", "み", "む", "め", "も",
-            "ゃ", "ぃ", "ゅ", "ぇ", "ょ",
-            "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
-            "わ", "ゐ", "っ", "ゑ", " ",
-
-            "ア", "イ", "ウ", "エ", "オ",
-            "カ", "キ", "ク", "ケ", "コ",
-            "サ", "シ", "ス", "セ", "ソ",
-            "タ", "チ", "ツ", "テ", "ト",
-            "ナ", "ニ", "ヌ", "ネ", "ノ",
-            "ハ", "ヒ", "フ", "ヘ", "ホ",
-            "マ", "ミ", "ム", "メ", "モ",
-            "ヤ", "イ", "ユ", "エ", "ヨ",
-            "ラ", "リ", "ル", "レ", "ロ",
-            "ワ", "ヲ", "ン", "ー", " ",
-
-            "ァ", "ィ", "ゥ", "ェ", "ォ",
-            "ガ", "ギ", "グ", "ゲ", "ゴ",
-            "ザ", "ジ", "ズ", "ゼ", "ゾ",
-            "ダ", "ヂ", "ヅ", "デ", "ド",
-            "ナ", "ニ", "ヴ", "ネ", "ノ",
-            "バ", "ビ", "ブ", "ベ", "ボ",
-            "マ", "ミ", "ム", "メ", "モ",
-            "ャ", "ヵ", "ュ", "ヶ", "ョ",
-            "パ", "ピ", "プ", "ペ", "ポ",
-            "ワ", "ヰ", "ッ", "ヱ", " ",
-    };
+    Tango tango;
+    Tango prevTango;
+    boolean hintFlag = false;
+    boolean writingFlag = false;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -131,6 +109,7 @@ public class TestActivity extends BaseTempActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
         updateButton();
+        setJapaneseFont();
     }
 
     @Override
@@ -138,7 +117,14 @@ public class TestActivity extends BaseTempActivity {
         btn10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showAnswer();
+            }
+        });
 
+        btn20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWriting();
             }
         });
 
@@ -159,6 +145,15 @@ public class TestActivity extends BaseTempActivity {
                 Editable s = testEdit.getText();
                 s.clear();
                 return true;
+            }
+        });
+
+        btn24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int i = testEdit.getSelectionStart();
+                Editable s = testEdit.getText();
+                s.insert(i, " ");
             }
         });
 
@@ -196,8 +191,8 @@ public class TestActivity extends BaseTempActivity {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             int index = buttons.get(view);
-                            index += voicing * 10;
-                            index += kata * 20;
+                            index += voicing * KeyboardConstants.VOICING_LINES;
+                            index += kata * KeyboardConstants.KATA_LINES;
                             int base = (index - 1) * 5;
                             x = motionEvent.getRawX();
                             resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -206,11 +201,11 @@ public class TestActivity extends BaseTempActivity {
                             }
                             y = motionEvent.getRawY() - statusHeight;
                             flickView.show(x, y, new String[]{
-                                    kanaArray[base],
-                                    kanaArray[base + 1],
-                                    kanaArray[base + 2],
-                                    kanaArray[base + 3],
-                                    kanaArray[base + 4]
+                                    KeyboardConstants.kanaArray[base],
+                                    KeyboardConstants.kanaArray[base + 1],
+                                    KeyboardConstants.kanaArray[base + 2],
+                                    KeyboardConstants.kanaArray[base + 3],
+                                    KeyboardConstants.kanaArray[base + 4]
                             });
 
                             startBase = base;
@@ -229,26 +224,27 @@ public class TestActivity extends BaseTempActivity {
                             if (x < startX - FlickView.HALF_WIDTH) {
                                 if (startY - FlickView.HALF_HEIGHT < y &&
                                         y < startY + FlickView.HALF_HEIGHT) {
-                                    result = kanaArray[startBase + 1];
+                                    result = KeyboardConstants.kanaArray[startBase + 1];
                                 }
                             } else if (x > startX + FlickView.HALF_WIDTH) {
                                 if (startY - FlickView.HALF_HEIGHT < y &&
                                         y < startY + FlickView.HALF_HEIGHT) {
-                                    result = kanaArray[startBase + 3];
+                                    result = KeyboardConstants.kanaArray[startBase + 3];
                                 }
                             } else {
                                 if (y < startY - FlickView.HALF_HEIGHT) {
-                                    result = kanaArray[startBase + 2];
+                                    result = KeyboardConstants.kanaArray[startBase + 2];
                                 } else if (y > startY + FlickView.HALF_HEIGHT) {
-                                    result = kanaArray[startBase + 4];
+                                    result = KeyboardConstants.kanaArray[startBase + 4];
                                 } else {
-                                    result = kanaArray[startBase];
+                                    result = KeyboardConstants.kanaArray[startBase];
                                 }
                             }
                             if (result != null && !result.trim().equals("")) {
                                 int i = testEdit.getSelectionStart();
                                 Editable s = testEdit.getText();
                                 s.insert(i, result);
+                                checkAnswer();
                             }
                             break;
                     }
@@ -258,18 +254,99 @@ public class TestActivity extends BaseTempActivity {
         }
     }
 
+
+    private void showTextView(TextView tv) {
+        tv.setVisibility(View.VISIBLE);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(tv, "alpha", 0f, 1f); // 渐入效果
+        animator.setDuration(300);
+        animator.start();
+    }
+
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        loadNewTango();
+    }
 
+    private void loadNewTango() {
+        prevTango = tango;
+        tango = TangoManager.getInstance().randomTango(true,
+                DataManager.getInstance().getReviewFrequency(), prevTango, false);
+        meaningView.setText(tango.meaning);
+        writingView.setText(tango.writing);
+        meaningView.setVisibility(View.INVISIBLE);
+        writingView.setVisibility(View.INVISIBLE);
+        showTextView(meaningView);
+        hintFlag = false;
+        writingFlag = false;
+        testEdit.setText("");
+        testEdit.setEnabled(true);
+    }
+
+    private void showAnswer() {
+        TangoOperator.getInstance().wrong(tango);
+        testEdit.setText(tango.pronunciation);
+        testEdit.setEnabled(false);
+        if (!writingFlag) {
+            showTextView(writingView);
+        }
+        new Timer() {
+            @Override
+            public void timer() {
+                loadNewTango();
+            }
+        }.start(TangoConstants.SHOW_ANSWER_DELAY, true);
+    }
+
+    private void showWriting() {
+        if (!writingFlag) {
+            showTextView(writingView);
+            writingFlag = true;
+        }
+        hintFlag = true;
+    }
+
+    private void checkAnswer() {
+        if (testEdit.getText().toString().equals(tango.pronunciation)) {
+            if (!hintFlag) {
+                TangoOperator.getInstance().rightWithoutHint(tango);
+            } else {
+                TangoOperator.getInstance().rightWithHint(tango);
+            }
+            if (!writingFlag) {
+                showTextView(writingView);
+            }
+            testEdit.setEnabled(false);
+            new Timer() {
+                @Override
+                public void timer() {
+                    loadNewTango();
+                }
+            }.start(TangoConstants.NEW_TANGO_DELAY, true);
+        }
     }
 
     private void updateButton() {
         for (Button b : buttons.keySet()) {
             int index = buttons.get(b);
-            index += voicing * 10;
-            index += kata * 20;
+            index += voicing * KeyboardConstants.VOICING_LINES;
+            index += kata * KeyboardConstants.KATA_LINES;
             int base = (index - 1) * 5;
-            b.setText(kanaArray[base]);
+            b.setText(KeyboardConstants.kanaArray[base]);
         }
+    }
+
+    private void setJapaneseFont() {
+        AssetManager mgr = getAssets();
+        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String font = null;
+        if (title != null) {
+            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        }
+        Typeface tf = Typeface.DEFAULT;
+        if (font != null) {
+            tf = Typeface.createFromAsset(mgr, font);
+        }
+        testEdit.setTypeface(tf);
+        writingView.setTypeface(tf);
     }
 }

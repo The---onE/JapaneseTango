@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.mission.MissionActivity">
+    tools:context=".module.test.TestActivity">
 
     <include layout="@layout/tool_bar" />
 
@@ -14,10 +14,30 @@
 
         <EditText
             android:id="@+id/edit_test"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="50dp" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:hint="仮名を入力します"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/text_writing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_test"
+            android:layout_centerHorizontal="true"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/text_meaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_writing"
+            android:layout_centerHorizontal="true"
+            android:textSize="42sp" />
 
         <Button
             android:id="@+id/btn_10"
@@ -26,7 +46,17 @@
             android:layout_alignTop="@+id/layout_keyboard"
             android:layout_toLeftOf="@+id/layout_keyboard"
             android:background="@null"
-            android:text="答\n案"
+            android:text="答案"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_10"
+            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="提示"
             android:textSize="20sp" />
 
         <Button
@@ -37,6 +67,16 @@
             android:layout_toRightOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="后退"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_14"
+            android:layout_toRightOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="空格"
             android:textSize="20sp" />
 
         <GridLayout

@@ -133,6 +133,62 @@ public class TangoOperator {
         }
     }
 
+    public void rightWithoutHint(Tango tango) {
+        if (tango != null && tango.id > 0) {
+            prevTango = tango;
+            prevStudy = study;
+            prevReview = review;
+
+            Date last = tango.lastTime;
+            Date now = new Date();
+            if (!isSameDate(now, last)) {
+                if (last.getTime() > 0) { //复习
+                    review++;
+                    DataManager.getInstance().setTangoReview(review);
+                }
+            }
+
+            TangoEntityManager.getInstance().updateData(tango.id,
+                    "Score=" + (tango.score + TangoConstants.REMEMBER_SCORE * 2),
+                    "LastTime=" + new Date().getTime());
+            EventBus.getDefault().post(new OperateTangoEvent());
+        }
+    }
+
+    public void rightWithHint(Tango tango) {
+        if (tango != null && tango.id > 0) {
+            prevTango = tango;
+            prevStudy = study;
+            prevReview = review;
+
+            Date last = tango.lastTime;
+            Date now = new Date();
+            if (!isSameDate(now, last)) {
+                if (last.getTime() > 0) { //复习
+                    review++;
+                    DataManager.getInstance().setTangoReview(review);
+                }
+            }
+
+            TangoEntityManager.getInstance().updateData(tango.id,
+                    "Score=" + (tango.score + TangoConstants.REMEMBER_SCORE),
+                    "LastTime=" + new Date().getTime());
+            EventBus.getDefault().post(new OperateTangoEvent());
+        }
+    }
+
+    public void wrong(Tango tango) {
+        if (tango != null && tango.id > 0) {
+            prevTango = tango;
+            prevStudy = study;
+            prevReview = review;
+
+            TangoEntityManager.getInstance().updateData(tango.id,
+                    "Score=" + (tango.score + TangoConstants.FORGET_SCORE / 2));
+            EventBus.getDefault().post(new OperateTangoEvent());
+        }
+    }
+
     public void cancelOperate() {
         if (prevTango != null && prevTango.id > 0) {
             TangoEntityManager.getInstance().updateData(prevTango.id,
