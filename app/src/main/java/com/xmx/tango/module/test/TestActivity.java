@@ -2,6 +2,7 @@ package com.xmx.tango.module.test;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,16 @@ public class TestActivity extends BaseTempActivity {
     @ViewInject(R.id.edit_test)
     private EditText testEdit;
 
+    @ViewInject(R.id.btn_10)
+    private Button btn10;
     @ViewInject(R.id.btn_11)
     private Button btn11;
     @ViewInject(R.id.btn_12)
     private Button btn12;
     @ViewInject(R.id.btn_13)
     private Button btn13;
+    @ViewInject(R.id.btn_14)
+    private Button btn14;
     @ViewInject(R.id.btn_21)
     private Button btn21;
     @ViewInject(R.id.btn_22)
@@ -58,7 +63,11 @@ public class TestActivity extends BaseTempActivity {
     private int voicing = 0;
     private int kata = 0;
 
-    private String[] kanaArray = new String[]{
+    private int startBase;
+    private float startX;
+    private float startY;
+
+    static final private String[] kanaArray = new String[]{
             "あ", "い", "う", "え", "お",
             "か", "き", "く", "け", "こ",
             "さ", "し", "す", "せ", "そ",
@@ -101,7 +110,7 @@ public class TestActivity extends BaseTempActivity {
             "マ", "ミ", "ム", "メ", "モ",
             "ャ", "ヵ", "ュ", "ヶ", "ョ",
             "パ", "ピ", "プ", "ペ", "ポ",
-            "わ", "ヰ", "ッ", "ヱ", " ",
+            "ワ", "ヰ", "ッ", "ヱ", " ",
     };
 
     @Override
@@ -126,6 +135,33 @@ public class TestActivity extends BaseTempActivity {
 
     @Override
     protected void setListener() {
+        btn10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btn14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Editable s = testEdit.getText();
+                int index = testEdit.getSelectionStart();
+                if (s.length() > 0) {
+                    s.delete(index - 1, index);
+                }
+            }
+        });
+
+        btn14.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Editable s = testEdit.getText();
+                s.clear();
+                return true;
+            }
+        });
+
         btn41.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,19 +190,21 @@ public class TestActivity extends BaseTempActivity {
             b.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+                    int statusHeight = 0;
+                    int resourceId;
+                    float x, y;
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             int index = buttons.get(view);
                             index += voicing * 10;
                             index += kata * 20;
                             int base = (index - 1) * 5;
-                            float x = motionEvent.getRawX();
-                            int statusHeight = 0;
-                            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+                            x = motionEvent.getRawX();
+                            resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
                             if (resourceId > 0) {
                                 statusHeight = getResources().getDimensionPixelSize(resourceId);
                             }
-                            float y = motionEvent.getRawY() - statusHeight;
+                            y = motionEvent.getRawY() - statusHeight;
                             flickView.show(x, y, new String[]{
                                     kanaArray[base],
                                     kanaArray[base + 1],
@@ -174,9 +212,44 @@ public class TestActivity extends BaseTempActivity {
                                     kanaArray[base + 3],
                                     kanaArray[base + 4]
                             });
+
+                            startBase = base;
+                            startX = x;
+                            startY = y;
                             break;
                         case MotionEvent.ACTION_UP:
                             flickView.remove();
+                            x = motionEvent.getRawX();
+                            resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+                            if (resourceId > 0) {
+                                statusHeight = getResources().getDimensionPixelSize(resourceId);
+                            }
+                            y = motionEvent.getRawY() - statusHeight;
+                            String result = null;
+                            if (x < startX - FlickView.HALF_WIDTH) {
+                                if (startY - FlickView.HALF_HEIGHT < y &&
+                                        y < startY + FlickView.HALF_HEIGHT) {
+                                    result = kanaArray[startBase + 1];
+                                }
+                            } else if (x > startX + FlickView.HALF_WIDTH) {
+                                if (startY - FlickView.HALF_HEIGHT < y &&
+                                        y < startY + FlickView.HALF_HEIGHT) {
+                                    result = kanaArray[startBase + 3];
+                                }
+                            } else {
+                                if (y < startY - FlickView.HALF_HEIGHT) {
+                                    result = kanaArray[startBase + 2];
+                                } else if (y > startY + FlickView.HALF_HEIGHT) {
+                                    result = kanaArray[startBase + 4];
+                                } else {
+                                    result = kanaArray[startBase];
+                                }
+                            }
+                            if (result != null && !result.trim().equals("")) {
+                                int i = testEdit.getSelectionStart();
+                                Editable s = testEdit.getText();
+                                s.insert(i, result);
+                            }
                             break;
                     }
                     return false;

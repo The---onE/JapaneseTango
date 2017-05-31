@@ -11,10 +11,10 @@ import android.view.View;
  */
 
 public class FlickView extends View {
-    private static final float BLOCK_WIDTH = 200;
-    private static final float BLOCK_HEIGHT = 200;
-    private static final float HALF_WIDTH = BLOCK_WIDTH / 2;
-    private static final float HALF_HEIGHT = BLOCK_HEIGHT / 2;
+    public static final float BLOCK_WIDTH = 200;
+    public static final float BLOCK_HEIGHT = 200;
+    public static final float HALF_WIDTH = BLOCK_WIDTH / 2;
+    public static final float HALF_HEIGHT = BLOCK_HEIGHT / 2;
 
     private static final float TEXT_SIZE = 80;
 
