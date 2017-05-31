@@ -79,6 +79,9 @@
             android:name=".module.mission.MissionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".module.test.TestActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".module.importtango.ImportFileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

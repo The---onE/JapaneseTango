@@ -2,6 +2,7 @@ package com.xmx.tango.core;
 
 import android.content.Context;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.xmx.tango.common.log.OperationLogEntityManager;
@@ -53,8 +54,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             return false;
         }
 
-        ex.printStackTrace();
-        OperationLogEntityManager.getInstance().addLog("" + ex);
+        Log.e("Error:", Log.getStackTraceString(ex));
+        //e.printStackTrace();
+        OperationLogEntityManager.getInstance().addLog("" + ex + Log.getStackTraceString(ex));
 
         new Thread() {
             @Override

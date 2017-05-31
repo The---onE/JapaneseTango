@@ -123,5 +123,6 @@
     <string name="switch_service">开启/关闭服务</string>
 
     <string name="mission_mode">任务模式</string>
+    <string name="test_mode">测试模式</string>
 
 </resources>

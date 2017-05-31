@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_test"
+        android:orderInCategory="97"
+        android:title="@string/test_mode"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_mission"
         android:orderInCategory="98"
         android:title="@string/mission_mode"

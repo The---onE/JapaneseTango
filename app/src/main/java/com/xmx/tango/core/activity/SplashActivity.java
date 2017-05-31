@@ -81,11 +81,16 @@ public class SplashActivity extends BaseSplashActivity {
                                         "Score=" + newScore);
                             }
                         }
-                        EventBus.getDefault().post(new TangoListChangeEvent());
                     } catch (Exception e) {
                         filterException(e);
                     }
                     return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    EventBus.getDefault().post(new TangoListChangeEvent());
                 }
             }.execute();
         }
