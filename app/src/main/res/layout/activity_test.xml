@@ -43,41 +43,41 @@
             android:id="@+id/btn_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/layout_keyboard"
+            android:layout_above="@+id/btn_20"
             android:layout_toLeftOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="答案"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/btn_20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_10"
+            android:layout_alignBottom="@+id/layout_keyboard"
             android:layout_toLeftOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="提示"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/btn_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/layout_keyboard"
+            android:layout_above="@+id/btn_24"
             android:layout_toRightOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="后退"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/btn_24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_14"
+            android:layout_alignBottom="@+id/layout_keyboard"
             android:layout_toRightOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="空格"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <GridLayout
             android:id="@+id/layout_keyboard"

@@ -1,6 +1,7 @@
 package com.xmx.tango.module.test;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -90,6 +92,7 @@ public class TestActivity extends BaseTempActivity {
     Tango prevTango;
     boolean hintFlag = false;
     boolean writingFlag = false;
+    boolean enableFlag = false;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -114,27 +117,46 @@ public class TestActivity extends BaseTempActivity {
 
     @Override
     protected void setListener() {
+        testEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                hideSoftInput(view);
+            }
+        });
+        testEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideSoftInput(view);
+            }
+        });
+
         btn10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAnswer();
+                if (enableFlag) {
+                    showAnswer();
+                }
             }
         });
 
         btn20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showWriting();
+                if (enableFlag) {
+                    showWriting();
+                }
             }
         });
 
         btn14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Editable s = testEdit.getText();
-                int index = testEdit.getSelectionStart();
-                if (s.length() > 0) {
-                    s.delete(index - 1, index);
+                if (enableFlag) {
+                    Editable s = testEdit.getText();
+                    int index = testEdit.getSelectionStart();
+                    if (index > 0) {
+                        s.delete(index - 1, index);
+                    }
                 }
             }
         });
@@ -142,8 +164,10 @@ public class TestActivity extends BaseTempActivity {
         btn14.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Editable s = testEdit.getText();
-                s.clear();
+                if (enableFlag) {
+                    Editable s = testEdit.getText();
+                    s.clear();
+                }
                 return true;
             }
         });
@@ -151,9 +175,11 @@ public class TestActivity extends BaseTempActivity {
         btn24.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int i = testEdit.getSelectionStart();
-                Editable s = testEdit.getText();
-                s.insert(i, " ");
+                if (enableFlag) {
+                    int i = testEdit.getSelectionStart();
+                    Editable s = testEdit.getText();
+                    s.insert(i, " ");
+                }
             }
         });
 
@@ -185,68 +211,70 @@ public class TestActivity extends BaseTempActivity {
             b.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    int statusHeight = 0;
-                    int resourceId;
-                    float x, y;
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            int index = buttons.get(view);
-                            index += voicing * KeyboardConstants.VOICING_LINES;
-                            index += kata * KeyboardConstants.KATA_LINES;
-                            int base = (index - 1) * 5;
-                            x = motionEvent.getRawX();
-                            resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-                            if (resourceId > 0) {
-                                statusHeight = getResources().getDimensionPixelSize(resourceId);
-                            }
-                            y = motionEvent.getRawY() - statusHeight;
-                            flickView.show(x, y, new String[]{
-                                    KeyboardConstants.kanaArray[base],
-                                    KeyboardConstants.kanaArray[base + 1],
-                                    KeyboardConstants.kanaArray[base + 2],
-                                    KeyboardConstants.kanaArray[base + 3],
-                                    KeyboardConstants.kanaArray[base + 4]
-                            });
+                    if (enableFlag) {
+                        int statusHeight = 0;
+                        int resourceId;
+                        float x, y;
+                        switch (motionEvent.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                int index = buttons.get(view);
+                                index += voicing * KeyboardConstants.VOICING_LINES;
+                                index += kata * KeyboardConstants.KATA_LINES;
+                                int base = (index - 1) * 5;
+                                x = motionEvent.getRawX();
+                                resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+                                if (resourceId > 0) {
+                                    statusHeight = getResources().getDimensionPixelSize(resourceId);
+                                }
+                                y = motionEvent.getRawY() - statusHeight;
+                                flickView.show(x, y, new String[]{
+                                        KeyboardConstants.kanaArray[base],
+                                        KeyboardConstants.kanaArray[base + 1],
+                                        KeyboardConstants.kanaArray[base + 2],
+                                        KeyboardConstants.kanaArray[base + 3],
+                                        KeyboardConstants.kanaArray[base + 4]
+                                });
 
-                            startBase = base;
-                            startX = x;
-                            startY = y;
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            flickView.remove();
-                            x = motionEvent.getRawX();
-                            resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-                            if (resourceId > 0) {
-                                statusHeight = getResources().getDimensionPixelSize(resourceId);
-                            }
-                            y = motionEvent.getRawY() - statusHeight;
-                            String result = null;
-                            if (x < startX - FlickView.HALF_WIDTH) {
-                                if (startY - FlickView.HALF_HEIGHT < y &&
-                                        y < startY + FlickView.HALF_HEIGHT) {
-                                    result = KeyboardConstants.kanaArray[startBase + 1];
+                                startBase = base;
+                                startX = x;
+                                startY = y;
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                flickView.remove();
+                                x = motionEvent.getRawX();
+                                resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+                                if (resourceId > 0) {
+                                    statusHeight = getResources().getDimensionPixelSize(resourceId);
                                 }
-                            } else if (x > startX + FlickView.HALF_WIDTH) {
-                                if (startY - FlickView.HALF_HEIGHT < y &&
-                                        y < startY + FlickView.HALF_HEIGHT) {
-                                    result = KeyboardConstants.kanaArray[startBase + 3];
-                                }
-                            } else {
-                                if (y < startY - FlickView.HALF_HEIGHT) {
-                                    result = KeyboardConstants.kanaArray[startBase + 2];
-                                } else if (y > startY + FlickView.HALF_HEIGHT) {
-                                    result = KeyboardConstants.kanaArray[startBase + 4];
+                                y = motionEvent.getRawY() - statusHeight;
+                                String result = null;
+                                if (x < startX - FlickView.HALF_WIDTH) {
+                                    if (startY - FlickView.HALF_HEIGHT < y &&
+                                            y < startY + FlickView.HALF_HEIGHT) {
+                                        result = KeyboardConstants.kanaArray[startBase + 1];
+                                    }
+                                } else if (x > startX + FlickView.HALF_WIDTH) {
+                                    if (startY - FlickView.HALF_HEIGHT < y &&
+                                            y < startY + FlickView.HALF_HEIGHT) {
+                                        result = KeyboardConstants.kanaArray[startBase + 3];
+                                    }
                                 } else {
-                                    result = KeyboardConstants.kanaArray[startBase];
+                                    if (y < startY - FlickView.HALF_HEIGHT) {
+                                        result = KeyboardConstants.kanaArray[startBase + 2];
+                                    } else if (y > startY + FlickView.HALF_HEIGHT) {
+                                        result = KeyboardConstants.kanaArray[startBase + 4];
+                                    } else {
+                                        result = KeyboardConstants.kanaArray[startBase];
+                                    }
                                 }
-                            }
-                            if (result != null && !result.trim().equals("")) {
-                                int i = testEdit.getSelectionStart();
-                                Editable s = testEdit.getText();
-                                s.insert(i, result);
-                                checkAnswer();
-                            }
-                            break;
+                                if (result != null && !result.trim().equals("")) {
+                                    int i = testEdit.getSelectionStart();
+                                    Editable s = testEdit.getText();
+                                    s.insert(i, result);
+                                    checkAnswer();
+                                }
+                                break;
+                        }
                     }
                     return false;
                 }
@@ -280,6 +308,7 @@ public class TestActivity extends BaseTempActivity {
         writingFlag = false;
         testEdit.setText("");
         testEdit.setEnabled(true);
+        enableFlag = true;
     }
 
     private void showAnswer() {
@@ -289,6 +318,7 @@ public class TestActivity extends BaseTempActivity {
         if (!writingFlag) {
             showTextView(writingView);
         }
+        enableFlag = false;
         new Timer() {
             @Override
             public void timer() {
@@ -316,6 +346,7 @@ public class TestActivity extends BaseTempActivity {
                 showTextView(writingView);
             }
             testEdit.setEnabled(false);
+            enableFlag = false;
             new Timer() {
                 @Override
                 public void timer() {
@@ -348,5 +379,11 @@ public class TestActivity extends BaseTempActivity {
         }
         testEdit.setTypeface(tf);
         writingView.setTypeface(tf);
+    }
+
+    private void hideSoftInput(View view) {
+        InputMethodManager imm
+                = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
