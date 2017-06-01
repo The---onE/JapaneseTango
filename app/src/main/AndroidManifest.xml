@@ -49,9 +49,11 @@
             android:name="com.xmx.tango.core.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.xmx.tango.core.activity.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.SplashBackground">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +63,8 @@
         </activity>
         <activity
             android:name=".core.activity.SettingActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <!--<activity-->
         <!--android:name="com.xmx.tango.User.LoginActivity"-->
         <!--android:launchMode="singleTask"-->
@@ -77,9 +80,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.mission.MissionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.test.TestActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.importtango.ImportFileActivity"

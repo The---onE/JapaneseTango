@@ -141,15 +141,31 @@ public class TangoOperator {
 
             Date last = tango.lastTime;
             Date now = new Date();
+            int frequency = tango.frequency;
             if (!isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
                 }
+                if (frequency > 0) {
+                    frequency -= 2;
+                    if (frequency < 0) {
+                        frequency = 0;
+                    }
+                }
+            } else {
+                todayConsecutive++;
+                if (todayConsecutive > TangoConstants.TODAY_CONSECUTIVE_REVIEW_MAX) {
+                    todayConsecutive = 0;
+                    int frequencyMax = DataManager.getInstance().getReviewFrequency();
+                    frequencyMax--;
+                    DataManager.getInstance().setReviewFrequency(frequencyMax);
+                }
             }
 
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + TangoConstants.REMEMBER_SCORE * 2),
+                    "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new OperateTangoEvent());
         }
@@ -163,15 +179,20 @@ public class TangoOperator {
 
             Date last = tango.lastTime;
             Date now = new Date();
+            int frequency = tango.frequency;
             if (!isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
                 }
+                if (frequency > 0) {
+                    frequency--;
+                }
             }
 
             TangoEntityManager.getInstance().updateData(tango.id,
                     "Score=" + (tango.score + TangoConstants.REMEMBER_SCORE),
+                    "Frequency=" + frequency,
                     "LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new OperateTangoEvent());
         }

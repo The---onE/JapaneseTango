@@ -157,6 +157,7 @@ public class TestActivity extends BaseTempActivity {
                     if (index > 0) {
                         s.delete(index - 1, index);
                     }
+                    checkAnswer();
                 }
             }
         });
@@ -179,6 +180,7 @@ public class TestActivity extends BaseTempActivity {
                     int i = testEdit.getSelectionStart();
                     Editable s = testEdit.getText();
                     s.insert(i, " ");
+                    checkAnswer();
                 }
             }
         });
