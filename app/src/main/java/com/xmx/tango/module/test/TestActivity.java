@@ -46,26 +46,18 @@ public class TestActivity extends BaseTempActivity {
     @ViewInject(R.id.text_meaning)
     private TextView meaningView;
 
-    @ViewInject(R.id.btn_10)
-    private Button btn10;
     @ViewInject(R.id.btn_11)
     private Button btn11;
     @ViewInject(R.id.btn_12)
     private Button btn12;
     @ViewInject(R.id.btn_13)
     private Button btn13;
-    @ViewInject(R.id.btn_14)
-    private Button btn14;
-    @ViewInject(R.id.btn_20)
-    private Button btn20;
     @ViewInject(R.id.btn_21)
     private Button btn21;
     @ViewInject(R.id.btn_22)
     private Button btn22;
     @ViewInject(R.id.btn_23)
     private Button btn23;
-    @ViewInject(R.id.btn_24)
-    private Button btn24;
     @ViewInject(R.id.btn_31)
     private Button btn31;
     @ViewInject(R.id.btn_32)
@@ -78,6 +70,19 @@ public class TestActivity extends BaseTempActivity {
     private Button btn42;
     @ViewInject(R.id.btn_43)
     private Button btn43;
+
+    @ViewInject(R.id.btn_answer)
+    private Button btnAnswer;
+    @ViewInject(R.id.btn_backspace)
+    private Button btnBackspace;
+    @ViewInject(R.id.btn_hint)
+    private Button btnHint;
+    @ViewInject(R.id.btn_space)
+    private Button btnSpace;
+    @ViewInject(R.id.btn_masu)
+    private Button btnMasu;
+    @ViewInject(R.id.btn_keyboard)
+    private Button btnKeyboard;
 
     Map<Button, Integer> buttons = new HashMap<>();
     FlickView flickView;
@@ -131,7 +136,7 @@ public class TestActivity extends BaseTempActivity {
             }
         });
 
-        btn10.setOnClickListener(new View.OnClickListener() {
+        btnAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (enableFlag) {
@@ -140,7 +145,7 @@ public class TestActivity extends BaseTempActivity {
             }
         });
 
-        btn20.setOnClickListener(new View.OnClickListener() {
+        btnHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (enableFlag) {
@@ -149,7 +154,7 @@ public class TestActivity extends BaseTempActivity {
             }
         });
 
-        btn14.setOnClickListener(new View.OnClickListener() {
+        btnBackspace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (enableFlag) {
@@ -163,7 +168,7 @@ public class TestActivity extends BaseTempActivity {
             }
         });
 
-        btn14.setOnLongClickListener(new View.OnLongClickListener() {
+        btnBackspace.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 if (enableFlag) {
@@ -174,7 +179,7 @@ public class TestActivity extends BaseTempActivity {
             }
         });
 
-        btn24.setOnClickListener(new View.OnClickListener() {
+        btnSpace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (enableFlag) {
@@ -183,6 +188,27 @@ public class TestActivity extends BaseTempActivity {
                     s.insert(i, " ");
                     checkAnswer();
                 }
+            }
+        });
+
+        btnMasu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (enableFlag) {
+                    int i = testEdit.getSelectionStart();
+                    Editable s = testEdit.getText();
+                    s.insert(i, "ます");
+                    checkAnswer();
+                }
+            }
+        });
+
+        btnKeyboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager imm
+                        = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(testEdit, 0);
             }
         });
 

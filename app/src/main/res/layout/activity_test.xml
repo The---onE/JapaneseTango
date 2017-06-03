@@ -40,17 +40,27 @@
             android:textSize="42sp" />
 
         <Button
-            android:id="@+id/btn_10"
+            android:id="@+id/btn_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_20"
+            android:layout_above="@+id/btn_answer"
+            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="键盘"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_hint"
             android:layout_toLeftOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="答案"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_20"
+            android:id="@+id/btn_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/layout_keyboard"
@@ -60,17 +70,27 @@
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_14"
+            android:id="@+id/btn_masu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_24"
+            android:layout_above="@+id/btn_backspace"
+            android:layout_toRightOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="ます"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_space"
             android:layout_toRightOf="@+id/layout_keyboard"
             android:background="@null"
             android:text="后退"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_24"
+            android:id="@+id/btn_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/layout_keyboard"
