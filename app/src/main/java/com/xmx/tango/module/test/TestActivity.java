@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -298,13 +299,52 @@ public class TestActivity extends BaseTempActivity {
     }
 
     private void loadNewTango() {
+        WindowManager wm = (WindowManager) getApplicationContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int textSize;
+        float length;
+
         prevTango = tango;
         tango = TangoManager.getInstance().randomTango(true,
                 DataManager.getInstance().getReviewFrequency(), prevTango, false);
-        meaningView.setText(tango.meaning);
-        writingView.setText(tango.writing);
+        int count = 0;
+        while (tango.meaning.trim().equals("")) {
+            tango = TangoManager.getInstance().randomTango(true,
+                    DataManager.getInstance().getReviewFrequency(), prevTango, false);
+            count++;
+            if (count > 100) {
+                showToast("没有符合条件的测试");
+                finish();
+            }
+        }
+
+        textSize = TangoConstants.DEFAULT_TEST_MEANING_TEXT_SIZE;
+        if (!tango.partOfSpeech.equals("")) {
+            meaningView.setText("[" + tango.partOfSpeech + "]" + tango.meaning);
+        } else {
+            meaningView.setText(tango.meaning);
+        }
+        meaningView.setTextSize(textSize);
         meaningView.setVisibility(View.INVISIBLE);
+        length= measureWidth(meaningView);
+        while (length > width) {
+            textSize -= 1;
+            meaningView.setTextSize(textSize);
+            length = measureWidth(meaningView);
+        }
+
+        textSize = TangoConstants.DEFAULT_TEST_WRITING_TEXT_SIZE;
+        writingView.setText(tango.writing);
+        writingView.setTextSize(textSize);
         writingView.setVisibility(View.INVISIBLE);
+        length= measureWidth(writingView);
+        while (length > width) {
+            textSize -= 1;
+            writingView.setTextSize(textSize);
+            length = measureWidth(writingView);
+        }
+
         showTextView(meaningView);
         hintFlag = false;
         writingFlag = false;
@@ -387,5 +427,9 @@ public class TestActivity extends BaseTempActivity {
         InputMethodManager imm
                 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private float measureWidth(TextView textView) {
+        return textView.getPaint().measureText(textView.getText().toString());
     }
 }
