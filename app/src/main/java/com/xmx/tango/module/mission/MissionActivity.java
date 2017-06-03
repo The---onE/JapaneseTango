@@ -45,6 +45,8 @@ public class MissionActivity extends BaseTempActivity {
     Tango prevTango;
     int prevOperate;
 
+    int totalTango;
+
     Timer pronunciationTimer = new Timer() {
         @Override
         public void timer() {
@@ -160,7 +162,7 @@ public class MissionActivity extends BaseTempActivity {
         TangoManager.getInstance().addToWaitingList(tango);
         int count = TangoManager.getInstance().getWaitingList().size();
         countView.setText("任务剩余：" + count +
-                "\n任务已记：" + (DataManager.getInstance().getMissionCount() - count));
+                "\n任务已记：" + (totalTango - count));
     }
 
     Random random = new Random();
@@ -198,7 +200,7 @@ public class MissionActivity extends BaseTempActivity {
                     finish();
                 }
                 countView.setText("任务剩余：" + count +
-                        "\n任务已记：" + (DataManager.getInstance().getMissionCount() - count));
+                        "\n任务已记：" + (totalTango - count));
 
                 loadNew();
                 return true;
@@ -218,12 +220,6 @@ public class MissionActivity extends BaseTempActivity {
 
     @Override
     protected void setListener() {
-
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-        setJapaneseFont();
 
         rememberButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -245,6 +241,11 @@ public class MissionActivity extends BaseTempActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
+        setJapaneseFont();
 
         int goal = DataManager.getInstance().getTangoGoal();
         boolean reviewFlag = TangoOperator.getInstance().study >= goal;
@@ -253,8 +254,13 @@ public class MissionActivity extends BaseTempActivity {
                 DataManager.getInstance().getMissionCount());
 
         int count = TangoManager.getInstance().getWaitingList().size();
+        if (count <= 0) {
+            showToast("没有符合条件的任务");
+            finish();
+        }
+        totalTango = count;
         countView.setText("任务剩余：" + count +
-                "\n任务已记：" + (DataManager.getInstance().getMissionCount() - count));
+                "\n任务已记：" + (totalTango - count));
 
         loadNewTango();
         if (!EventBus.getDefault().isRegistered(this)) {
