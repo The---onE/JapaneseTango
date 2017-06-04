@@ -26,6 +26,7 @@ import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
 import com.xmx.tango.module.tango.TangoOperator;
 import com.xmx.tango.utils.Timer;
+import com.xmx.tango.utils.VibratorUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -296,10 +297,12 @@ public class TestActivity extends BaseTempActivity {
                                         result = KeyboardConstants.kanaArray[startBase];
                                     }
                                 }
+
                                 if (result != null && !result.trim().equals("")) {
                                     int i = testEdit.getSelectionStart();
                                     Editable s = testEdit.getText();
                                     s.insert(i, result);
+                                    VibratorUtil.vibrate(TestActivity.this, 50);
                                     checkAnswer();
                                 }
                                 break;
@@ -310,7 +313,6 @@ public class TestActivity extends BaseTempActivity {
             });
         }
     }
-
 
     private void showTextView(TextView tv) {
         tv.setVisibility(View.VISIBLE);
@@ -353,7 +355,7 @@ public class TestActivity extends BaseTempActivity {
         }
         meaningView.setTextSize(textSize);
         meaningView.setVisibility(View.INVISIBLE);
-        length= measureWidth(meaningView);
+        length = measureWidth(meaningView);
         while (length > width) {
             textSize -= 1;
             meaningView.setTextSize(textSize);
@@ -364,7 +366,7 @@ public class TestActivity extends BaseTempActivity {
         writingView.setText(tango.writing);
         writingView.setTextSize(textSize);
         writingView.setVisibility(View.INVISIBLE);
-        length= measureWidth(writingView);
+        length = measureWidth(writingView);
         while (length > width) {
             textSize -= 1;
             writingView.setTextSize(textSize);
@@ -415,6 +417,7 @@ public class TestActivity extends BaseTempActivity {
             }
             testEdit.setEnabled(false);
             enableFlag = false;
+            VibratorUtil.vibrate(TestActivity.this, 200);
             new Timer() {
                 @Override
                 public void timer() {
