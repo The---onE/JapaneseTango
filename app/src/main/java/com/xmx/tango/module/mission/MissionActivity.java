@@ -27,6 +27,7 @@ import com.xmx.tango.module.tango.VerbDialog;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.utils.Timer;
+import com.xmx.tango.utils.VibratorUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -183,13 +184,25 @@ public class MissionActivity extends BaseTempActivity {
                     case REMEMBER:
                         TangoOperator.getInstance().remember(tango);
                         TangoManager.getInstance().removeFromWaitingList(tango);
+                        if (DataManager.getInstance().getVibratorStatus()) {
+                            VibratorUtil.vibrate(MissionActivity.this,
+                                    TangoConstants.REMEMBER_VIBRATE_TIME);
+                        }
                         break;
                     case FORGET:
                         TangoOperator.getInstance().forget(tango);
+                        if (DataManager.getInstance().getVibratorStatus()) {
+                            VibratorUtil.vibrate(MissionActivity.this,
+                                    TangoConstants.FORGET_VIBRATE_TIME);
+                        }
                         break;
                     case REMEMBER_FOREVER:
                         TangoOperator.getInstance().rememberForever(tango);
                         TangoManager.getInstance().removeFromWaitingList(tango);
+                        if (DataManager.getInstance().getVibratorStatus()) {
+                            VibratorUtil.vibrate(MissionActivity.this,
+                                    TangoConstants.REMEMBER_FOREVER_VIBRATE_TIME);
+                        }
                         break;
                 }
                 int count = TangoManager.getInstance().getWaitingList().size();

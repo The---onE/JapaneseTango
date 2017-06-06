@@ -41,6 +41,7 @@ public class SettingActivity extends BaseTempActivity {
     TextView japaneseFontView;
     TextView speakView;
     EditText testView;
+    TextView vibratorView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -96,6 +97,10 @@ public class SettingActivity extends BaseTempActivity {
         speakView.setText(DataManager.getInstance().getTangoSpeaker());
 
         testView = getViewById(R.id.edit_speak);
+
+        vibratorView = getViewById(R.id.tv_vibrator);
+        boolean vibratorFlag = DataManager.getInstance().getVibratorStatus();
+        vibratorView.setText(vibratorFlag ? "开启" : "关闭");
     }
 
     @Override
@@ -384,6 +389,16 @@ public class SettingActivity extends BaseTempActivity {
             public void onClick(View view) {
                 String text = testView.getText().toString();
                 SpeakTangoManager.getInstance().speak(text);
+            }
+        });
+
+        getViewById(R.id.layout_vibrator).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean vibratorFlag = DataManager.getInstance().getVibratorStatus();
+                vibratorFlag = !vibratorFlag;
+                DataManager.getInstance().setVibratorStatus(vibratorFlag);
+                vibratorView.setText(vibratorFlag ? "开启" : "关闭");
             }
         });
     }

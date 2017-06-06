@@ -80,6 +80,16 @@ public class DataManager {
         editor.apply();
     }
 
+    protected boolean getBoolean(String key, boolean def) {
+        return mData.getBoolean(key, def);
+    }
+
+    protected void setBoolean(String key, boolean value) {
+        SharedPreferences.Editor editor = mData.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
     protected String getString(String key) {
         return mData.getString(key, "");
     }
@@ -197,5 +207,12 @@ public class DataManager {
     }
     public void setJapaneseFontTitle(String fontTitle) {
         setString("japanese_font_title", fontTitle);
+    }
+
+    public boolean getVibratorStatus() {
+        return getBoolean("vibrator", true);
+    }
+    public void setVibratorStatus(boolean flag) {
+        setBoolean("vibrator", flag);
     }
 }

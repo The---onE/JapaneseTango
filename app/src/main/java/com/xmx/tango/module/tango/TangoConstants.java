@@ -37,6 +37,12 @@ public class TangoConstants {
 
     public static final int DEFAULT_GOAL = 30;
 
+    public static final int KEYBOARD_INPUT_VIBRATE_TIME = 50;
+    public static final int TEST_RIGHT_VIBRATE_TIME = 200;
+    public static final int REMEMBER_VIBRATE_TIME = 100;
+    public static final int REMEMBER_FOREVER_VIBRATE_TIME = 200;
+    public static final int FORGET_VIBRATE_TIME = 100;
+
     public static int FORGOTTEN_SCORE(int source) {
         return source * 4 / 5;
     }

@@ -25,7 +25,9 @@ import com.xmx.tango.module.tango.TangoOperator;
 import com.xmx.tango.module.tango.VerbDialog;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.base.fragment.xUtilsFragment;
+import com.xmx.tango.module.test.TestActivity;
 import com.xmx.tango.utils.Timer;
+import com.xmx.tango.utils.VibratorUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -192,12 +194,24 @@ public class HomeFragment extends xUtilsFragment {
                 switch (operation) {
                     case REMEMBER:
                         TangoOperator.getInstance().remember(tango);
+                        if (DataManager.getInstance().getVibratorStatus()) {
+                            VibratorUtil.vibrate(getContext(),
+                                    TangoConstants.REMEMBER_VIBRATE_TIME);
+                        }
                         break;
                     case FORGET:
                         TangoOperator.getInstance().forget(tango);
+                        if (DataManager.getInstance().getVibratorStatus()) {
+                            VibratorUtil.vibrate(getContext(),
+                                    TangoConstants.FORGET_VIBRATE_TIME);
+                        }
                         break;
                     case REMEMBER_FOREVER:
                         TangoOperator.getInstance().rememberForever(tango);
+                        if (DataManager.getInstance().getVibratorStatus()) {
+                            VibratorUtil.vibrate(getContext(),
+                                    TangoConstants.REMEMBER_FOREVER_VIBRATE_TIME);
+                        }
                         break;
                 }
                 countView.setText("今日复习：" + TangoOperator.getInstance().review +

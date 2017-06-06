@@ -164,6 +164,10 @@ public class TestActivity extends BaseTempActivity {
                     if (index > 0) {
                         s.delete(index - 1, index);
                     }
+                    if (DataManager.getInstance().getVibratorStatus()) {
+                        VibratorUtil.vibrate(TestActivity.this,
+                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                    }
                     checkAnswer();
                 }
             }
@@ -187,6 +191,10 @@ public class TestActivity extends BaseTempActivity {
                     int i = testEdit.getSelectionStart();
                     Editable s = testEdit.getText();
                     s.insert(i, " ");
+                    if (DataManager.getInstance().getVibratorStatus()) {
+                        VibratorUtil.vibrate(TestActivity.this,
+                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                    }
                     checkAnswer();
                 }
             }
@@ -199,6 +207,10 @@ public class TestActivity extends BaseTempActivity {
                     int i = testEdit.getSelectionStart();
                     Editable s = testEdit.getText();
                     s.insert(i, "ます");
+                    if (DataManager.getInstance().getVibratorStatus()) {
+                        VibratorUtil.vibrate(TestActivity.this,
+                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                    }
                     checkAnswer();
                 }
             }
@@ -302,7 +314,10 @@ public class TestActivity extends BaseTempActivity {
                                     int i = testEdit.getSelectionStart();
                                     Editable s = testEdit.getText();
                                     s.insert(i, result);
-                                    VibratorUtil.vibrate(TestActivity.this, 50);
+                                    if (DataManager.getInstance().getVibratorStatus()) {
+                                        VibratorUtil.vibrate(TestActivity.this,
+                                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                                    }
                                     checkAnswer();
                                 }
                                 break;
@@ -417,7 +432,10 @@ public class TestActivity extends BaseTempActivity {
             }
             testEdit.setEnabled(false);
             enableFlag = false;
-            VibratorUtil.vibrate(TestActivity.this, 200);
+            if (DataManager.getInstance().getVibratorStatus()) {
+                VibratorUtil.vibrate(TestActivity.this,
+                        TangoConstants.TEST_RIGHT_VIBRATE_TIME);
+            }
             new Timer() {
                 @Override
                 public void timer() {

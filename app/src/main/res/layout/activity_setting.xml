@@ -210,11 +210,6 @@
                 android:layout_height="1px"
                 android:background="@android:color/darker_gray" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
             <LinearLayout
                 android:id="@+id/layout_japanese_font"
                 android:layout_width="match_parent"
@@ -274,6 +269,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/speak_test" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:id="@+id/layout_vibrator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="震动："
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:id="@+id/tv_vibrator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <View
