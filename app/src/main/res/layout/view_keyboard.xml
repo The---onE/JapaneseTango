@@ -1,0 +1,81 @@
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:columnCount="3"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btn_11"
+        android:background="@null"
+        android:text="あ"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_12"
+        android:background="@null"
+        android:text="か"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_13"
+        android:background="@null"
+        android:text="さ"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_21"
+        android:background="@null"
+        android:text="た"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_22"
+        android:background="@null"
+        android:text="な"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_23"
+        android:background="@null"
+        android:text="は"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_31"
+        android:background="@null"
+        android:text="ま"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_32"
+        android:background="@null"
+        android:text="や"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_33"
+        android:background="@null"
+        android:text="ら"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_41"
+        android:background="@null"
+        android:text="清/浊"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/btn_42"
+        android:background="@null"
+        android:text="わ"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/btn_43"
+        android:background="@null"
+        android:text="平/片"
+        android:textSize="28sp" />
+
+</GridLayout>
