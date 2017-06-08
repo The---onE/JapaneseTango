@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,8 @@ public class KeyboardView extends GridLayout {
     private FlickView flickView;
     InputCallback inputCallback;
 
-    private int kanaSize = 40;
+    private int kanaSize = 30;
+    private int switchSize = 24;
 
     private int voicing = 0;
     private int kata = 0;
@@ -45,14 +47,14 @@ public class KeyboardView extends GridLayout {
         View.inflate(context, R.layout.view_keyboard, this);
         mContext = context;
 
-        GridLayout.Spec rowSpec, columnSpec;
-        GridLayout.LayoutParams layoutParams;
+        Spec rowSpec, columnSpec;
+        LayoutParams layoutParams;
 
         for (int i = 1; i <= KeyboardConstants.VOICING_LINES; ++i) {
             Button button = new Button(context);
             int base = (i - 1) * 5;
             button.setText(KeyboardConstants.kanaArray[base]);
-            button.setTextSize(kanaSize);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, kanaSize);
             button.setBackgroundColor(Color.TRANSPARENT);
             button.setOnTouchListener(new OnTouchListener() {
                 @Override
@@ -139,14 +141,14 @@ public class KeyboardView extends GridLayout {
                 column = 1;
             }
             columnSpec = GridLayout.spec(column);
-            layoutParams = new GridLayout.LayoutParams(rowSpec, columnSpec);
+            layoutParams = new LayoutParams(rowSpec, columnSpec);
             this.addView(button, layoutParams);
             buttons.put(button, i);
         }
 
         Button btnVoicing = new Button(context);
         btnVoicing.setText("清/浊");
-        btnVoicing.setTextSize(28);
+        btnVoicing.setTextSize(TypedValue.COMPLEX_UNIT_SP, switchSize);
         btnVoicing.setBackgroundColor(Color.TRANSPARENT);
         btnVoicing.setOnClickListener(new OnClickListener() {
             @Override
@@ -161,12 +163,12 @@ public class KeyboardView extends GridLayout {
         });
         rowSpec = GridLayout.spec(3);
         columnSpec = GridLayout.spec(0);
-        layoutParams = new GridLayout.LayoutParams(rowSpec, columnSpec);
+        layoutParams = new LayoutParams(rowSpec, columnSpec);
         this.addView(btnVoicing, layoutParams);
 
         Button btnKata = new Button(context);
         btnKata.setText("平/片");
-        btnKata.setTextSize(28);
+        btnKata.setTextSize(TypedValue.COMPLEX_UNIT_SP, switchSize);
         btnKata.setBackgroundColor(Color.TRANSPARENT);
         btnKata.setOnClickListener(new OnClickListener() {
             @Override
@@ -181,7 +183,7 @@ public class KeyboardView extends GridLayout {
         });
         rowSpec = GridLayout.spec(3);
         columnSpec = GridLayout.spec(2);
-        layoutParams = new GridLayout.LayoutParams(rowSpec, columnSpec);
+        layoutParams = new LayoutParams(rowSpec, columnSpec);
         this.addView(btnKata, layoutParams);
     }
 
