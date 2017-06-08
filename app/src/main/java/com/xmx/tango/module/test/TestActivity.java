@@ -7,9 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -19,8 +17,8 @@ import android.widget.TextView;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.data.DataManager;
-import com.xmx.tango.module.keyboard.FlickView;
-import com.xmx.tango.module.keyboard.KeyboardConstants;
+import com.xmx.tango.module.keyboard.InputCallback;
+import com.xmx.tango.module.keyboard.KeyboardView;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
@@ -30,9 +28,6 @@ import com.xmx.tango.utils.VibratorUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,31 +42,6 @@ public class TestActivity extends BaseTempActivity {
     @ViewInject(R.id.text_meaning)
     private TextView meaningView;
 
-    @ViewInject(R.id.btn_11)
-    private Button btn11;
-    @ViewInject(R.id.btn_12)
-    private Button btn12;
-    @ViewInject(R.id.btn_13)
-    private Button btn13;
-    @ViewInject(R.id.btn_21)
-    private Button btn21;
-    @ViewInject(R.id.btn_22)
-    private Button btn22;
-    @ViewInject(R.id.btn_23)
-    private Button btn23;
-    @ViewInject(R.id.btn_31)
-    private Button btn31;
-    @ViewInject(R.id.btn_32)
-    private Button btn32;
-    @ViewInject(R.id.btn_33)
-    private Button btn33;
-    @ViewInject(R.id.btn_41)
-    private Button btn41;
-    @ViewInject(R.id.btn_42)
-    private Button btn42;
-    @ViewInject(R.id.btn_43)
-    private Button btn43;
-
     @ViewInject(R.id.btn_answer)
     private Button btnAnswer;
     @ViewInject(R.id.btn_backspace)
@@ -85,15 +55,8 @@ public class TestActivity extends BaseTempActivity {
     @ViewInject(R.id.btn_keyboard)
     private Button btnKeyboard;
 
-    Map<Button, Integer> buttons = new HashMap<>();
-    FlickView flickView;
-
-    private int voicing = 0;
-    private int kata = 0;
-
-    private int startBase;
-    private float startX;
-    private float startY;
+    @ViewInject(R.id.layout_keyboard)
+    private KeyboardView keyboardView;
 
     Tango tango;
     Tango prevTango;
@@ -103,22 +66,13 @@ public class TestActivity extends BaseTempActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        buttons.put(btn11, 1);
-        buttons.put(btn12, 2);
-        buttons.put(btn13, 3);
-        buttons.put(btn21, 4);
-        buttons.put(btn22, 5);
-        buttons.put(btn23, 6);
-        buttons.put(btn31, 7);
-        buttons.put(btn32, 8);
-        buttons.put(btn33, 9);
-        buttons.put(btn42, 10);
+        keyboardView.init(new InputCallback() {
+            @Override
+            public void input(String result) {
+                inputToEdit(result);
+            }
+        });
 
-        flickView = new FlickView(this);
-        addContentView(flickView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-
-        updateButton();
         setJapaneseFont();
     }
 
@@ -177,8 +131,7 @@ public class TestActivity extends BaseTempActivity {
             @Override
             public boolean onLongClick(View view) {
                 if (enableFlag) {
-                    Editable s = testEdit.getText();
-                    s.clear();
+                    testEdit.getText().clear();
                 }
                 return true;
             }
@@ -188,14 +141,7 @@ public class TestActivity extends BaseTempActivity {
             @Override
             public void onClick(View view) {
                 if (enableFlag) {
-                    int i = testEdit.getSelectionStart();
-                    Editable s = testEdit.getText();
-                    s.insert(i, " ");
-                    if (DataManager.getInstance().getVibratorStatus()) {
-                        VibratorUtil.vibrate(TestActivity.this,
-                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
-                    }
-                    checkAnswer();
+                    inputToEdit(" ");
                 }
             }
         });
@@ -204,14 +150,7 @@ public class TestActivity extends BaseTempActivity {
             @Override
             public void onClick(View view) {
                 if (enableFlag) {
-                    int i = testEdit.getSelectionStart();
-                    Editable s = testEdit.getText();
-                    s.insert(i, "ます");
-                    if (DataManager.getInstance().getVibratorStatus()) {
-                        VibratorUtil.vibrate(TestActivity.this,
-                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
-                    }
-                    checkAnswer();
+                    inputToEdit("ます");
                 }
             }
         });
@@ -224,109 +163,6 @@ public class TestActivity extends BaseTempActivity {
                 imm.showSoftInput(testEdit, 0);
             }
         });
-
-        btn41.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (voicing == 0) {
-                    voicing = 1;
-                } else {
-                    voicing = 0;
-                }
-                updateButton();
-            }
-        });
-
-        btn43.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (kata == 0) {
-                    kata = 1;
-                } else {
-                    kata = 0;
-                }
-                updateButton();
-            }
-        });
-
-        for (Button b : buttons.keySet()) {
-            b.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (enableFlag) {
-                        int statusHeight = 0;
-                        int resourceId;
-                        float x, y;
-                        switch (motionEvent.getAction()) {
-                            case MotionEvent.ACTION_DOWN:
-                                int index = buttons.get(view);
-                                index += voicing * KeyboardConstants.VOICING_LINES;
-                                index += kata * KeyboardConstants.KATA_LINES;
-                                int base = (index - 1) * 5;
-                                x = motionEvent.getRawX();
-                                resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-                                if (resourceId > 0) {
-                                    statusHeight = getResources().getDimensionPixelSize(resourceId);
-                                }
-                                y = motionEvent.getRawY() - statusHeight;
-                                flickView.show(x, y, new String[]{
-                                        KeyboardConstants.kanaArray[base],
-                                        KeyboardConstants.kanaArray[base + 1],
-                                        KeyboardConstants.kanaArray[base + 2],
-                                        KeyboardConstants.kanaArray[base + 3],
-                                        KeyboardConstants.kanaArray[base + 4]
-                                });
-
-                                startBase = base;
-                                startX = x;
-                                startY = y;
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                flickView.remove();
-                                x = motionEvent.getRawX();
-                                resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-                                if (resourceId > 0) {
-                                    statusHeight = getResources().getDimensionPixelSize(resourceId);
-                                }
-                                y = motionEvent.getRawY() - statusHeight;
-                                String result = null;
-                                if (x < startX - FlickView.HALF_WIDTH) {
-                                    if (startY - FlickView.HALF_HEIGHT < y &&
-                                            y < startY + FlickView.HALF_HEIGHT) {
-                                        result = KeyboardConstants.kanaArray[startBase + 1];
-                                    }
-                                } else if (x > startX + FlickView.HALF_WIDTH) {
-                                    if (startY - FlickView.HALF_HEIGHT < y &&
-                                            y < startY + FlickView.HALF_HEIGHT) {
-                                        result = KeyboardConstants.kanaArray[startBase + 3];
-                                    }
-                                } else {
-                                    if (y < startY - FlickView.HALF_HEIGHT) {
-                                        result = KeyboardConstants.kanaArray[startBase + 2];
-                                    } else if (y > startY + FlickView.HALF_HEIGHT) {
-                                        result = KeyboardConstants.kanaArray[startBase + 4];
-                                    } else {
-                                        result = KeyboardConstants.kanaArray[startBase];
-                                    }
-                                }
-
-                                if (result != null && !result.trim().equals("")) {
-                                    int i = testEdit.getSelectionStart();
-                                    Editable s = testEdit.getText();
-                                    s.insert(i, result);
-                                    if (DataManager.getInstance().getVibratorStatus()) {
-                                        VibratorUtil.vibrate(TestActivity.this,
-                                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
-                                    }
-                                    checkAnswer();
-                                }
-                                break;
-                        }
-                    }
-                    return false;
-                }
-            });
-        }
     }
 
     private void showTextView(TextView tv) {
@@ -394,6 +230,7 @@ public class TestActivity extends BaseTempActivity {
         testEdit.setText("");
         testEdit.setEnabled(true);
         enableFlag = true;
+        keyboardView.enable();
     }
 
     private void showAnswer() {
@@ -404,6 +241,7 @@ public class TestActivity extends BaseTempActivity {
             showTextView(writingView);
         }
         enableFlag = false;
+        keyboardView.disable();
         new Timer() {
             @Override
             public void timer() {
@@ -432,6 +270,7 @@ public class TestActivity extends BaseTempActivity {
             }
             testEdit.setEnabled(false);
             enableFlag = false;
+            keyboardView.disable();
             if (DataManager.getInstance().getVibratorStatus()) {
                 VibratorUtil.vibrate(TestActivity.this,
                         TangoConstants.TEST_RIGHT_VIBRATE_TIME);
@@ -442,16 +281,6 @@ public class TestActivity extends BaseTempActivity {
                     loadNewTango();
                 }
             }.start(TangoConstants.NEW_TANGO_DELAY, true);
-        }
-    }
-
-    private void updateButton() {
-        for (Button b : buttons.keySet()) {
-            int index = buttons.get(b);
-            index += voicing * KeyboardConstants.VOICING_LINES;
-            index += kata * KeyboardConstants.KATA_LINES;
-            int base = (index - 1) * 5;
-            b.setText(KeyboardConstants.kanaArray[base]);
         }
     }
 
@@ -478,5 +307,16 @@ public class TestActivity extends BaseTempActivity {
 
     private float measureWidth(TextView textView) {
         return textView.getPaint().measureText(textView.getText().toString());
+    }
+
+    private void inputToEdit(String re) {
+        int i = testEdit.getSelectionStart();
+        Editable s = testEdit.getText();
+        s.insert(i, re);
+        if (DataManager.getInstance().getVibratorStatus()) {
+            VibratorUtil.vibrate(TestActivity.this,
+                    TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+        }
+        checkAnswer();
     }
 }

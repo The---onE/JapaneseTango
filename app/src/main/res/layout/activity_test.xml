@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_answer"
-            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:layout_alignParentLeft="true"
             android:background="@null"
             android:text="键盘"
             android:textSize="30sp" />
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_hint"
-            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:layout_alignParentLeft="true"
             android:background="@null"
             android:text="答案"
             android:textSize="30sp" />
@@ -63,8 +63,8 @@
             android:id="@+id/btn_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/layout_keyboard"
-            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
             android:background="@null"
             android:text="提示"
             android:textSize="30sp" />
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_backspace"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_alignParentRight="true"
             android:background="@null"
             android:text="ます"
             android:textSize="30sp" />
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_space"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_alignParentRight="true"
             android:background="@null"
             android:text="后退"
             android:textSize="30sp" />
@@ -93,15 +93,18 @@
             android:id="@+id/btn_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/layout_keyboard"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:background="@null"
             android:text="空格"
             android:textSize="30sp" />
 
-        <include
+        <com.xmx.tango.module.keyboard.KeyboardView
             android:id="@+id/layout_keyboard"
-            layout="@layout/view_keyboard" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
