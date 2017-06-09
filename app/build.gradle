@@ -60,4 +60,6 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.7.21'
 
     compile 'com.xiaoleilu:hutool:2.15.17'
+
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
 }
