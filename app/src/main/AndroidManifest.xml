@@ -93,6 +93,9 @@
             android:name=".module.importtango.ImportTangoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".module.importtango.ImportNetActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".module.log.OperationLogActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

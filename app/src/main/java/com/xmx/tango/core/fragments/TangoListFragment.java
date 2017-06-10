@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.module.importtango.ImportFileActivity;
+import com.xmx.tango.module.importtango.ImportNetActivity;
 import com.xmx.tango.module.importtango.ImportTangoActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.module.tango.AddTangoActivity;
@@ -135,10 +136,16 @@ public class TangoListFragment extends xUtilsFragment {
                 startActivity(ImportFileActivity.class);
             }
         });
-        builder.setNegativeButton("文本导入", new DialogInterface.OnClickListener() {
+//        builder.setNegativeButton("文本导入", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                startActivity(ImportTangoActivity.class);
+//            }
+//        });
+        builder.setNegativeButton("网络导入", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(ImportTangoActivity.class);
+                startActivity(ImportNetActivity.class);
             }
         });
         builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
