@@ -1,4 +1,4 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.speaker;
 
 import android.content.Context;
 import android.speech.tts.TextToSpeech;

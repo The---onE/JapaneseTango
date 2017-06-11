@@ -1,4 +1,4 @@
-package com.xmx.tango.module.importtango;
+package com.xmx.tango.module.import_;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
-import com.xmx.tango.module.tango.ImportService;
 import com.xmx.tango.base.activity.BaseTempActivity;
 
 import org.xutils.view.annotation.ContentView;

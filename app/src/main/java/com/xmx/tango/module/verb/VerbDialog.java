@@ -1,4 +1,4 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.verb;
 
 import android.app.FragmentManager;
 import android.content.Context;

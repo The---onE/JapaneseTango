@@ -76,7 +76,7 @@
             android:name=".module.user.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.tango.AddTangoActivity"
+            android:name=".module.crud.AddTangoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.mission.MissionActivity"
@@ -87,13 +87,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.importtango.ImportFileActivity"
+            android:name=".module.import_.ImportFileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.importtango.ImportTangoActivity"
+            android:name=".module.import_.ImportTangoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.importtango.ImportNetActivity"
+            android:name=".module.import_.ImportNetActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.log.OperationLogActivity"
@@ -103,11 +103,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".module.tango.ImportService"
+            android:name=".module.import_.ImportService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".module.tango.TangoService"
+            android:name=".module.service.TangoService"
             android:enabled="true"
             android:exported="true" />
     </application>

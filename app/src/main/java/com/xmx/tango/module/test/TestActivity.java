@@ -22,7 +22,7 @@ import com.xmx.tango.module.keyboard.KeyboardView;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
-import com.xmx.tango.module.tango.TangoOperator;
+import com.xmx.tango.module.operate.TangoOperator;
 import com.xmx.tango.utils.Timer;
 import com.xmx.tango.utils.VibratorUtil;
 

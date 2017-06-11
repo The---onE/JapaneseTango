@@ -1,4 +1,4 @@
-package com.xmx.tango.module.importtango;
+package com.xmx.tango.module.import_;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.net.HttpGetCallback;
 import com.xmx.tango.common.net.HttpManager;
 import com.xmx.tango.module.net.NetConstants;
-import com.xmx.tango.module.tango.ImportService;
 import com.xmx.tango.utils.ExceptionUtil;
 import com.xmx.tango.utils.JSONUtil;
 

@@ -16,7 +16,7 @@ import com.xmx.tango.R;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
-import com.xmx.tango.module.tango.TangoListChangeEvent;
+import com.xmx.tango.module.crud.TangoListChangeEvent;
 import com.xmx.tango.module.tango.TangoManager;
 import com.xmx.tango.base.activity.BaseSplashActivity;
 import com.xmx.tango.common.data.DataManager;

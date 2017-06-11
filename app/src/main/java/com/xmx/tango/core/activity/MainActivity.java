@@ -28,8 +28,8 @@ import com.xmx.tango.common.user.callback.AutoLoginCallback;
 import com.xmx.tango.common.user.UserConstants;
 import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.core.Constants;
-import com.xmx.tango.module.tango.ChooseTangoEvent;
-import com.xmx.tango.module.tango.TangoService;
+import com.xmx.tango.module.crud.ChooseTangoEvent;
+import com.xmx.tango.module.service.TangoService;
 import com.xmx.tango.module.test.TestActivity;
 import com.xmx.tango.utils.ExceptionUtil;
 

@@ -1,4 +1,4 @@
-package com.xmx.tango.module.setting;
+package com.xmx.tango.module.font;
 
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.xmx.tango.R;
 import com.xmx.tango.base.dialog.BaseDialog;
 import com.xmx.tango.common.data.DataManager;
-import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
 import com.xmx.tango.module.tango.TangoConstants;
 
 import org.greenrobot.eventbus.EventBus;

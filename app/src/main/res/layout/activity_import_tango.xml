@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.importtango.ImportTangoActivity">
+    tools:context=".module.import_.ImportTangoActivity">
 
     <include layout="@layout/tool_bar" />
 

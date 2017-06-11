@@ -1,4 +1,4 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.crud;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.dialog.BaseDialog;
+import com.xmx.tango.module.tango.TangoManager;
 
 import org.greenrobot.eventbus.EventBus;
 

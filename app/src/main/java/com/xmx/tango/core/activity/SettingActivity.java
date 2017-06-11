@@ -12,18 +12,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
-import com.xmx.tango.module.setting.JapaneseFontDialog;
-import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
-import com.xmx.tango.module.tango.LoadNewTangoEvent;
-import com.xmx.tango.module.tango.SpeakTangoManager;
+import com.xmx.tango.module.font.JapaneseFontDialog;
+import com.xmx.tango.module.font.JapaneseFontChangeEvent;
+import com.xmx.tango.module.operate.LoadNewTangoEvent;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.tango.TangoConstants;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.Set;
 
 /**
  * Created by The_onE on 2016/9/17.

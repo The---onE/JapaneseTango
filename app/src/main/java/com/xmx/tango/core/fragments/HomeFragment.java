@@ -14,18 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
-import com.xmx.tango.module.tango.ChooseTangoEvent;
-import com.xmx.tango.module.tango.JapaneseFontChangeEvent;
-import com.xmx.tango.module.tango.LoadNewTangoEvent;
-import com.xmx.tango.module.tango.SpeakTangoManager;
+import com.xmx.tango.module.crud.ChooseTangoEvent;
+import com.xmx.tango.module.font.JapaneseFontChangeEvent;
+import com.xmx.tango.module.operate.LoadNewTangoEvent;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
-import com.xmx.tango.module.tango.TangoOperator;
-import com.xmx.tango.module.tango.VerbDialog;
+import com.xmx.tango.module.operate.TangoOperator;
+import com.xmx.tango.module.verb.VerbDialog;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.base.fragment.xUtilsFragment;
-import com.xmx.tango.module.test.TestActivity;
 import com.xmx.tango.utils.Timer;
 import com.xmx.tango.utils.VibratorUtil;
 

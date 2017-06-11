@@ -1,23 +1,15 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.service;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 
-import com.xiaoleilu.hutool.lang.Conver;
 import com.xmx.tango.base.service.BaseService;
 import com.xmx.tango.common.data.DataManager;
-import com.xmx.tango.common.data.sql.InsertCallback;
-import com.xmx.tango.common.notification.NotificationUtils;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.core.activity.MainActivity;
-import com.xmx.tango.utils.StrUtil;
+import com.xmx.tango.module.operate.TangoOperator;
+import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoManager;
 import com.xmx.tango.utils.Timer;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class TangoService extends BaseService {
 

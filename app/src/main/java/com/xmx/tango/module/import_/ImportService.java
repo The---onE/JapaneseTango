@@ -1,4 +1,4 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.import_;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,6 +8,9 @@ import com.xmx.tango.core.activity.MainActivity;
 import com.xmx.tango.common.data.sql.InsertCallback;
 import com.xmx.tango.common.notification.NotificationUtils;
 import com.xmx.tango.base.service.BaseService;
+import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoEntityManager;
+import com.xmx.tango.module.crud.TangoListChangeEvent;
 import com.xmx.tango.utils.StrUtil;
 
 import org.greenrobot.eventbus.EventBus;

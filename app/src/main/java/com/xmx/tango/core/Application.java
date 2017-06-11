@@ -8,7 +8,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xmx.tango.BuildConfig;
-import com.xmx.tango.module.tango.SpeakTangoManager;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.common.push.ReceiveMessageActivity;
 import com.xmx.tango.common.user.UserManager;

@@ -1,4 +1,4 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.crud;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
+import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoEntityManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ContentView;

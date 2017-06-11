@@ -1,7 +1,10 @@
-package com.xmx.tango.module.tango;
+package com.xmx.tango.module.operate;
 
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.common.data.DataManager;
+import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoConstants;
+import com.xmx.tango.module.tango.TangoEntityManager;
 
 import org.greenrobot.eventbus.EventBus;
 
