@@ -52,6 +52,8 @@ public class TestActivity extends BaseTempActivity {
     private Button btnSpace;
     @ViewInject(R.id.btn_masu)
     private Button btnMasu;
+    @ViewInject(R.id.btn_slash)
+    private Button btnSlash;
     @ViewInject(R.id.btn_keyboard)
     private Button btnKeyboard;
 
@@ -151,6 +153,15 @@ public class TestActivity extends BaseTempActivity {
             public void onClick(View view) {
                 if (enableFlag) {
                     inputToEdit("ます");
+                }
+            }
+        });
+
+        btnSlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (enableFlag) {
+                    inputToEdit("/");
                 }
             }
         });
