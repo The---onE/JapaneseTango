@@ -99,8 +99,21 @@ public class TangoOperator {
             prevStudy = study;
             prevReview = review;
 
+            Date last = tango.lastTime;
+            Date now = new Date();
+            int frequency = tango.frequency;
+            if (!isSameDate(now, last)) {
+                if (last.getTime() > 0) { //复习
+                    frequency++;
+                    if (frequency > TangoConstants.REVIEW_FREQUENCY) {
+                        frequency = TangoConstants.REVIEW_FREQUENCY;
+                    }
+                }
+            }
+
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + TangoConstants.FORGET_SCORE));
+                    "Score=" + (tango.score + TangoConstants.FORGET_SCORE),
+                    "Frequency=" + frequency);
             //"LastTime=" + new Date().getTime());
             EventBus.getDefault().post(new OperateTangoEvent());
         }
@@ -207,8 +220,21 @@ public class TangoOperator {
             prevStudy = study;
             prevReview = review;
 
+            Date last = tango.lastTime;
+            Date now = new Date();
+            int frequency = tango.frequency;
+            if (!isSameDate(now, last)) {
+                if (last.getTime() > 0) { //复习
+                    frequency++;
+                    if (frequency > TangoConstants.REVIEW_FREQUENCY) {
+                        frequency = TangoConstants.REVIEW_FREQUENCY;
+                    }
+                }
+            }
+
             TangoEntityManager.getInstance().updateData(tango.id,
-                    "Score=" + (tango.score + TangoConstants.FORGET_SCORE / 2));
+                    "Score=" + (tango.score + TangoConstants.FORGET_SCORE / 2),
+                    "Frequency=" + frequency);
             EventBus.getDefault().post(new OperateTangoEvent());
         }
     }
