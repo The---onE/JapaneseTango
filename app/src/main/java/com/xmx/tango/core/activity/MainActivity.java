@@ -19,6 +19,7 @@ import com.xmx.tango.common.user.LoginEvent;
 import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.core.fragments.HomeFragment;
 import com.xmx.tango.core.fragments.TangoListFragment;
+import com.xmx.tango.module.calendar.CalendarActivity;
 import com.xmx.tango.module.log.OperationLogActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.module.mission.MissionActivity;
@@ -193,6 +194,9 @@ public class MainActivity extends BaseNavigationActivity {
             return true;
         } else if (id == R.id.action_test) {
             startActivity(TestActivity.class);
+            return true;
+        } else if (id == R.id.action_check_in) {
+            startActivity(CalendarActivity.class);
             return true;
         }
 

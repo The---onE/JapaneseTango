@@ -62,4 +62,6 @@ dependencies {
     compile 'com.xiaoleilu:hutool:2.15.17'
 
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
+
+    compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'
 }

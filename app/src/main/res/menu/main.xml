@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_check_in"
+       android:orderInCategory="96"
+        android:title="@string/check_in"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_test"
         android:orderInCategory="97"
         android:title="@string/test_mode"

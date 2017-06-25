@@ -101,6 +101,9 @@
         <activity
             android:name=".common.push.ReceiveMessageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.calendar.CalendarActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".module.import_.ImportService"

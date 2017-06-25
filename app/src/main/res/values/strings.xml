@@ -125,4 +125,6 @@
     <string name="mission_mode">任务模式</string>
     <string name="test_mode">测试模式</string>
 
+    <string name="check_in">打卡签到</string>
+
 </resources>
