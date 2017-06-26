@@ -2,6 +2,8 @@ package com.xmx.tango.module.operate;
 
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.common.data.DataManager;
+import com.xmx.tango.module.calendar.DateData;
+import com.xmx.tango.module.calendar.DateDataEntityManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
@@ -37,7 +39,45 @@ public class TangoOperator {
 
         Date last = new Date(DataManager.getInstance().getResetLastTime());
         Date now = new Date();
-        if (!isSameDate(now, last)) {
+        if (!Constants.isSameDate(now, last)) {
+            if (last.getTime() > 0) {
+                // 更新上次签到日数据
+                DateData dateData = DateDataEntityManager.getInstance()
+                        .selectLatest("addTime", false,
+                                "Year=" + (last.getYear() + 1900),
+                                "Month=" + (last.getMonth() + 1),
+                                "Date=" + last.getDate());
+                if (dateData != null) {
+                    DateDataEntityManager.getInstance().updateData(dateData.id,
+                            "Study=" + study,
+                            "Review=" + review);
+                } else {
+                    dateData = new DateData();
+                    dateData.year = last.getYear() + 1900;
+                    dateData.month = last.getMonth() + 1;
+                    dateData.date = last.getDate();
+                    dateData.checkIn = 1;
+                    dateData.study = study;
+                    dateData.review = review;
+                    dateData.addTime = now;
+                    DateDataEntityManager.getInstance().insertData(dateData);
+                }
+            }
+            // 今天打卡签到
+            DateData todayData = DateDataEntityManager.getInstance()
+                    .selectLatest("addTime", false,
+                            "Year=" + (now.getYear() + 1900),
+                            "Month=" + (now.getMonth() + 1),
+                            "Date=" + now.getDate());
+            if (todayData == null) {
+                todayData = new DateData();
+                todayData.year = now.getYear() + 1900;
+                todayData.month = now.getMonth() + 1;
+                todayData.date = now.getDate();
+                todayData.checkIn = 1;
+                todayData.addTime = now;
+                DateDataEntityManager.getInstance().insertData(todayData);
+            }
             study = 0;
             DataManager.getInstance().setTangoStudy(0);
             review = 0;
@@ -59,7 +99,7 @@ public class TangoOperator {
             Date now = new Date();
             int frequency = tango.frequency;
             int goal = DataManager.getInstance().getTangoGoal();
-            if (!isSameDate(now, last)) {
+            if (!Constants.isSameDate(now, last)) {
                 todayConsecutive = 0;
                 if (last.getTime() > 0) { //复习
                     review++;
@@ -102,7 +142,7 @@ public class TangoOperator {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            if (!isSameDate(now, last)) {
+            if (!Constants.isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     frequency++;
                     if (frequency > TangoConstants.REVIEW_FREQUENCY) {
@@ -128,7 +168,7 @@ public class TangoOperator {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            if (!isSameDate(now, last)) {
+            if (!Constants.isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
@@ -158,7 +198,7 @@ public class TangoOperator {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            if (!isSameDate(now, last)) {
+            if (!Constants.isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
@@ -196,7 +236,7 @@ public class TangoOperator {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            if (!isSameDate(now, last)) {
+            if (!Constants.isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     review++;
                     DataManager.getInstance().setTangoReview(review);
@@ -223,7 +263,7 @@ public class TangoOperator {
             Date last = tango.lastTime;
             Date now = new Date();
             int frequency = tango.frequency;
-            if (!isSameDate(now, last)) {
+            if (!Constants.isSameDate(now, last)) {
                 if (last.getTime() > 0) { //复习
                     frequency++;
                     if (frequency > TangoConstants.REVIEW_FREQUENCY) {
@@ -249,10 +289,5 @@ public class TangoOperator {
             study = prevStudy;
             review = prevReview;
         }
-    }
-
-    private boolean isSameDate(Date now, Date last) {
-        return now.getTime() - last.getTime() < Constants.DAY_TIME
-                && now.getDate() == last.getDate();
     }
 }

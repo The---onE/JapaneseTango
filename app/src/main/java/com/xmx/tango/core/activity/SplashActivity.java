@@ -13,6 +13,8 @@ import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.common.user.callback.AutoLoginCallback;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
+import com.xmx.tango.module.calendar.DateData;
+import com.xmx.tango.module.calendar.DateDataEntityManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
@@ -62,7 +64,44 @@ public class SplashActivity extends BaseSplashActivity {
         TangoManager.getInstance().updateTangoList();
         Date last = new Date(DataManager.getInstance().getForgetLastTime());
         Date now = new Date();
-        if (!isSameDate(now, last)) {
+        if (!Constants.isSameDate(now, last)) {
+            if (last.getTime() > 0) {
+                // 更新上次签到日数据
+                DateData dateData = DateDataEntityManager.getInstance()
+                        .selectLatest("addTime", false,
+                                "Year=" + (last.getYear() + 1900),
+                                "Month=" + (last.getMonth() + 1),
+                                "Date=" + last.getDate());
+                if (dateData != null) {
+                    DateDataEntityManager.getInstance().updateData(dateData.id,
+                            "Mission=" + DataManager.getInstance().getTodayMission());
+                } else {
+                    dateData = new DateData();
+                    dateData.year = last.getYear() + 1900;
+                    dateData.month = last.getMonth() + 1;
+                    dateData.date = last.getDate();
+                    dateData.checkIn = 1;
+                    dateData.mission = DataManager.getInstance().getTodayMission();
+                    dateData.addTime = now;
+                    DateDataEntityManager.getInstance().insertData(dateData);
+                }
+            }
+            // 今天打卡签到
+            DateData todayData = DateDataEntityManager.getInstance()
+                    .selectLatest("addTime", false,
+                            "Year=" + (now.getYear() + 1900),
+                            "Month=" + (now.getMonth() + 1),
+                            "Date=" + now.getDate());
+            if (todayData == null) {
+                todayData = new DateData();
+                todayData.year = now.getYear() + 1900;
+                todayData.month = now.getMonth() + 1;
+                todayData.date = now.getDate();
+                todayData.checkIn = 1;
+                todayData.addTime = now;
+                DateDataEntityManager.getInstance().insertData(todayData);
+            }
+
             DataManager.getInstance().setForgetLastTime(now.getTime());
             DataManager.getInstance().setTodayMission(0);
             new AsyncTask<Void, Void, Void>() {
@@ -121,10 +160,5 @@ public class SplashActivity extends BaseSplashActivity {
                 }
             }
         });
-    }
-
-    boolean isSameDate(Date now, Date last) {
-        return now.getTime() - last.getTime() < Constants.DAY_TIME
-                && now.getDate() == last.getDate();
     }
 }
