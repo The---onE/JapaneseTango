@@ -5,8 +5,6 @@ import android.speech.tts.TextToSpeech;
 
 import com.xmx.tango.common.data.DataManager;
 
-import net.gimite.jatts.JapaneseTextToSpeech;
-
 import java.util.HashMap;
 
 /**
