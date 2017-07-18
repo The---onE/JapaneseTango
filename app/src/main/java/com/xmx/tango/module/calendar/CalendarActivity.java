@@ -49,8 +49,8 @@ public class CalendarActivity extends BaseTempActivity {
             checkIn.add(key);
             map.put(key, item);
             if (item.date != now.getDate()
-                    || item.month != now.getMonth()+1
-                    || item.year != now.getYear()+1900) {
+                    || item.month != now.getMonth() + 1
+                    || item.year != now.getYear() + 1900) {
                 info.add(key);
             }
         }
@@ -63,32 +63,40 @@ public class CalendarActivity extends BaseTempActivity {
             @Override
             public void drawDecorBG(Canvas canvas, Rect rect, Paint paint, String data) {
                 super.drawDecorBG(canvas, rect, paint, data);
-                paint.setColor(Color.GREEN);
-                canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2F, paint);
+                if (map.containsKey(data)) {
+                    paint.setColor(Color.GREEN);
+                    canvas.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2F, paint);
+                }
             }
 
             @Override
             public void drawDecorL(Canvas canvas, Rect rect, Paint paint, String data) {
                 super.drawDecorL(canvas, rect, paint, data);
-                DateData dateData = map.get(data);
-                paint.setTextSize(20);
-                canvas.drawText("学" + dateData.study, rect.centerX(), rect.centerY(), paint);
+                if (map.containsKey(data)) {
+                    DateData dateData = map.get(data);
+                    paint.setTextSize(20);
+                    canvas.drawText("学" + dateData.study, rect.centerX(), rect.centerY(), paint);
+                }
             }
 
             @Override
             public void drawDecorT(Canvas canvas, Rect rect, Paint paint, String data) {
                 super.drawDecorT(canvas, rect, paint, data);
-                DateData dateData = map.get(data);
-                paint.setTextSize(20);
-                canvas.drawText("任" + dateData.mission, rect.centerX(), rect.centerY(), paint);
+                if (map.containsKey(data)) {
+                    DateData dateData = map.get(data);
+                    paint.setTextSize(20);
+                    canvas.drawText("任" + dateData.mission, rect.centerX(), rect.centerY(), paint);
+                }
             }
 
             @Override
             public void drawDecorR(Canvas canvas, Rect rect, Paint paint, String data) {
                 super.drawDecorR(canvas, rect, paint, data);
-                DateData dateData = map.get(data);
-                paint.setTextSize(20);
-                canvas.drawText("复" + dateData.review, rect.centerX(), rect.centerY(), paint);
+                if (map.containsKey(data)) {
+                    DateData dateData = map.get(data);
+                    paint.setTextSize(20);
+                    canvas.drawText("复" + dateData.review, rect.centerX(), rect.centerY(), paint);
+                }
             }
         });
     }
