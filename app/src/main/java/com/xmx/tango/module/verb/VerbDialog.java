@@ -2,6 +2,8 @@ package com.xmx.tango.module.verb;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +12,12 @@ import android.widget.TextView;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.dialog.BaseDialog;
+import com.xmx.tango.common.data.DataManager;
+import com.xmx.tango.module.tango.TangoConstants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +29,7 @@ public class VerbDialog extends BaseDialog {
     private String verb;
     private int type;
     private static final float TEXT_SIZE = 28;
+    private List<TextView> textViews = new ArrayList<>();
 
     static final char[] aStatus = new char[]{'わ', 'か', 'が', 'さ', 'た', 'な', 'ば', 'ま', 'ら'};
     static final char[] iStatus = new char[]{'い', 'き', 'ぎ', 'し', 'ち', 'に', 'び', 'み', 'り'};
@@ -32,6 +39,7 @@ public class VerbDialog extends BaseDialog {
 
     static final Map<String, char[]> teOnbin = new HashMap<>();
     static final Map<String, char[]> taOnbin = new HashMap<>();
+
     static {
         teOnbin.put("いて", new char[]{'く'});
         taOnbin.put("いた", new char[]{'く'});
@@ -294,55 +302,71 @@ public class VerbDialog extends BaseDialog {
         }
         TextView cishuView = (TextView) view.findViewById(R.id.tv_verb_cishu);
         cishuView.setText(cishu);
-        cishuView.setTextSize(TEXT_SIZE);
+        textViews.add(cishuView);
 
         TextView lianyongView = (TextView) view.findViewById(R.id.tv_verb_lianyong);
         lianyongView.setText(lianyong);
-        lianyongView.setTextSize(TEXT_SIZE);
+        textViews.add(lianyongView);
 
         TextView teView = (TextView) view.findViewById(R.id.tv_verb_te);
         teView.setText(te);
-        teView.setTextSize(TEXT_SIZE);
+        textViews.add(teView);
 
         TextView taView = (TextView) view.findViewById(R.id.tv_verb_ta);
         taView.setText(ta);
-        taView.setTextSize(TEXT_SIZE);
+        textViews.add(taView);
 
         TextView weiranView = (TextView) view.findViewById(R.id.tv_verb_weiran);
         weiranView.setText(weiran);
-        weiranView.setTextSize(TEXT_SIZE);
+        textViews.add(weiranView);
 
         TextView yizhiView = (TextView) view.findViewById(R.id.tv_verb_yizhi);
         yizhiView.setText(yizhi);
-        yizhiView.setTextSize(TEXT_SIZE);
+        textViews.add(yizhiView);
 
         TextView minglingView = (TextView) view.findViewById(R.id.tv_verb_mingling);
         minglingView.setText(mingling);
-        minglingView.setTextSize(TEXT_SIZE);
+        textViews.add(minglingView);
 
         TextView jiadingView = (TextView) view.findViewById(R.id.tv_verb_jiading);
         jiadingView.setText(jiading);
-        jiadingView.setTextSize(TEXT_SIZE);
+        textViews.add(jiadingView);
 
         TextView kenengView = (TextView) view.findViewById(R.id.tv_verb_keneng);
         kenengView.setText(keneng);
-        kenengView.setTextSize(TEXT_SIZE);
+        textViews.add(kenengView);
 
         TextView shiyiView = (TextView) view.findViewById(R.id.tv_verb_shiyi);
         shiyiView.setText(shiyi);
-        shiyiView.setTextSize(TEXT_SIZE);
+        textViews.add(shiyiView);
 
         TextView beidongView = (TextView) view.findViewById(R.id.tv_verb_beidong);
         beidongView.setText(beidong);
-        beidongView.setTextSize(TEXT_SIZE);
+        textViews.add(beidongView);
 
         TextView zifaView = (TextView) view.findViewById(R.id.tv_verb_zifa);
         zifaView.setText(zifa);
-        zifaView.setTextSize(TEXT_SIZE);
+        textViews.add(zifaView);
 
         TextView shiyibeidongView = (TextView) view.findViewById(R.id.tv_verb_shiyibeidong);
         shiyibeidongView.setText(shiyibeidong);
-        shiyibeidongView.setTextSize(TEXT_SIZE);
+        textViews.add(shiyibeidongView);
+
+        for (TextView tv : textViews) {
+            tv.setTextSize(TEXT_SIZE);
+            
+            AssetManager mgr = mContext.getAssets();
+            String title = DataManager.getInstance().getJapaneseFontTitle();
+            String font = null;
+            if (title != null) {
+                font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+            }
+            Typeface tf = Typeface.DEFAULT;
+            if (font != null) {
+                tf = Typeface.createFromAsset(mgr, font);
+            }
+            tv.setTypeface(tf);
+        }
     }
 
     @Override
