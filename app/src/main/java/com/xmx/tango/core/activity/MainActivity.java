@@ -212,7 +212,7 @@ public class MainActivity extends BaseNavigationActivity {
         boolean flag = false;
         for (ActivityManager.RunningServiceInfo runServiceInfo : runServiceList) {
             if (runServiceInfo.service
-                    .getShortClassName().equals(".module.tango.TangoService")) {
+                    .getShortClassName().equals(".module.service.TangoService")) {
                 Intent intent = new Intent();
                 intent.setComponent(runServiceInfo.service);
                 stopService(intent);
