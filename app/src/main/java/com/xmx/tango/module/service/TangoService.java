@@ -16,7 +16,6 @@ public class TangoService extends BaseService {
     Timer timer;
     Tango tango;
     Tango prevTango;
-    static final long DURATION = 5 * Constants.SECOND_TIME;
 
     @Override
     protected void processLogic(Intent intent) {
@@ -26,7 +25,7 @@ public class TangoService extends BaseService {
                 loadNewTango();
             }
         };
-        timer.start(DURATION);
+        timer.start(DataManager.getInstance().getServiceInterval());
     }
 
     @Override

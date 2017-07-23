@@ -40,6 +40,7 @@ public class SettingActivity extends BaseTempActivity {
     TextView speakView;
     EditText testView;
     TextView vibratorView;
+    TextView serviceIntervalView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -99,6 +100,9 @@ public class SettingActivity extends BaseTempActivity {
         vibratorView = getViewById(R.id.tv_vibrator);
         boolean vibratorFlag = DataManager.getInstance().getVibratorStatus();
         vibratorView.setText(vibratorFlag ? "开启" : "关闭");
+
+        serviceIntervalView = getViewById(R.id.tv_service_interval);
+        serviceIntervalView.setText("" + DataManager.getInstance().getServiceInterval());
     }
 
     @Override
@@ -397,6 +401,38 @@ public class SettingActivity extends BaseTempActivity {
                 vibratorFlag = !vibratorFlag;
                 DataManager.getInstance().setVibratorStatus(vibratorFlag);
                 vibratorView.setText(vibratorFlag ? "开启" : "关闭");
+            }
+        });
+
+        getViewById(R.id.layout_service_interval).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText serviceIntervalEdit = new EditText(getBaseContext());
+                serviceIntervalEdit.setTextColor(Color.BLACK);
+                serviceIntervalEdit.setTextSize(24);
+                serviceIntervalEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                serviceIntervalEdit.setText("" + DataManager.getInstance().getServiceInterval());
+                new AlertDialog.Builder(SettingActivity.this)
+                        .setTitle("服务换词间隔(ms)")
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setView(serviceIntervalEdit)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String serviceIntervalString = serviceIntervalEdit.getText().toString();
+                                int serviceInterval = 0;
+                                if (!serviceIntervalString.equals("")) {
+                                    serviceInterval = Integer.parseInt(serviceIntervalString);
+                                } else {
+                                    showToast("更改失败");
+                                    return;
+                                }
+                                DataManager.getInstance().setServiceInterval(serviceInterval);
+                                showToast("更改成功");
+                                serviceIntervalView.setText("" + serviceInterval);
+                            }
+                        })
+                        .setNegativeButton("取消", null).show();
             }
         });
     }

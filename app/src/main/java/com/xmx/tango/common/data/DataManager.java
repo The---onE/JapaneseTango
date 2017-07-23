@@ -215,4 +215,12 @@ public class DataManager {
     public void setVibratorStatus(boolean flag) {
         setBoolean("vibrator", flag);
     }
+
+    public int getServiceInterval() {
+        return getInt("service_interval", 5000);
+    }
+    public void setServiceInterval(int count) {
+        setInt("service_interval", count);
+    }
+
 }

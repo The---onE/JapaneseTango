@@ -300,6 +300,30 @@
                 android:layout_height="1px"
                 android:background="@android:color/darker_gray" />
 
+            <LinearLayout
+                android:id="@+id/layout_service_interval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务换词间隔(ms)："
+                    android:textSize="32sp" />
+
+                <TextView
+                    android:id="@+id/tv_service_interval"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@android:color/darker_gray" />
+
         </LinearLayout>
 
     </ScrollView>
