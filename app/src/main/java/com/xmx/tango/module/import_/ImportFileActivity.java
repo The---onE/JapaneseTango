@@ -80,7 +80,7 @@ public class ImportFileActivity extends BaseTempActivity {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             List<String> dialogStrings = new ArrayList<>();
             //List<String> tangoStrings = new ArrayList<>();
-            final ArrayList<String> intentStrings = new ArrayList<>();
+            ArrayList<String> intentStrings = new ArrayList<>();
             //final List<Tango> tangoList = new ArrayList<>();
             while (true) {
                 String str = reader.readLine();
@@ -101,35 +101,9 @@ public class ImportFileActivity extends BaseTempActivity {
                 }
             }
             is.close();
-             
-            String array[] = new String[dialogStrings.size()];
-            array = dialogStrings.toArray(array);
-            new AlertDialog.Builder(ImportFileActivity.this)
-                    .setTitle("识别出的単語")
-                    .setItems(array, null)
-                    .setPositiveButton("导入", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            showToast("正在导入，请稍后");
-//                            new NewThread() {
-//                                @Override
-//                                public void process() {
-//                                    for (Tango t : tangoList) {
-//                                        TangoEntityManager.getInstance().insertData(t);
-//                                    }
-//                                    showToast("导入成功");
-//                                    EventBus.getDefault().post(new TangoListChangeEvent());
-//                                }
-//                            }.start();
-                            Intent service = new Intent(ImportFileActivity.this, ImportService.class);
-                            service.putStringArrayListExtra("list", intentStrings);
-                            String type = typeView.getText().toString().trim();
-                            service.putExtra("type", type);
-                            startService(service);
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .show();
+
+            String type = typeView.getText().toString().trim();
+            ImportUtil.showDialog(dialogStrings, intentStrings, type, ImportFileActivity.this);
         } catch (Exception e) {
             filterException(e);
         }

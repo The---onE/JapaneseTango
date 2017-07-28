@@ -65,24 +65,9 @@ public class ImportNetActivity extends BaseTempActivity {
                                         dialogStrings.add(strings[0] + ":" + strings[1] + "|" + strings[2]);
                                     }
                                 }
-                                String array[] = new String[dialogStrings.size()];
-                                array = dialogStrings.toArray(array);
-                                new AlertDialog.Builder(ImportNetActivity.this)
-                                        .setTitle("识别出的単語")
-                                        .setItems(array, null)
-                                        .setPositiveButton("导入", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                showToast("正在导入，请稍后");
-                                                Intent service = new Intent(ImportNetActivity.this, ImportService.class);
-                                                service.putStringArrayListExtra("list", intentStrings);
-                                                String type = typeView.getText().toString().trim();
-                                                service.putExtra("type", type);
-                                                startService(service);
-                                            }
-                                        })
-                                        .setNegativeButton("取消", null)
-                                        .show();
+                                String type = typeView.getText().toString().trim();
+                                ImportUtil.showDialog(dialogStrings, intentStrings, type,
+                                        ImportNetActivity.this);
                                 break;
                             case JSONUtil.STATUS_ERROR:
                                 showToast((String) map.get(JSONUtil.RESPONSE_PROMPT));
