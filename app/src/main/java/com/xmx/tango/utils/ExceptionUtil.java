@@ -4,23 +4,16 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.xmx.tango.core.Constants;
 import com.xmx.tango.common.log.OperationLogEntityManager;
+import com.xmx.tango.core.Constants;
+
 
 /**
  * Created by The_onE on 2016/11/7.
+ * 异常处理类
  */
 
 public class ExceptionUtil {
-    public static boolean filterException(Exception e) {
-        if (e != null && Constants.EXCEPTION_DEBUG) {
-            e.printStackTrace();
-            OperationLogEntityManager.getInstance().addLog("" + e);
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     /**
      * 轻微异常处理，记录日志，不影响程序
@@ -50,7 +43,7 @@ public class ExceptionUtil {
      * @param e       异常信息
      * @param context 当前上下文
      */
-    void fatalError(Exception e, Context context) throws Exception {
+    static public void fatalError(Exception e, Context context) throws Exception {
         // 记录错误日志
         OperationLogEntityManager.getInstance().addLog(e.toString());
         // 在调试状态显示错误信息

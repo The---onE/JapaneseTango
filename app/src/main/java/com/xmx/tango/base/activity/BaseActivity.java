@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.xmx.tango.core.Application;
 import com.xmx.tango.core.Constants;
 import com.xmx.tango.common.log.OperationLogEntityManager;
+import com.xmx.tango.utils.ExceptionUtil;
 
 import org.xutils.x;
 
@@ -66,15 +67,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onViewCreated() {
     }
 
-    protected boolean filterException(Exception e) {
-        if (e != null && Constants.EXCEPTION_DEBUG) {
-            e.printStackTrace();
-            showToast(e.getMessage());
-            OperationLogEntityManager.getInstance().addLog(e.getMessage());
-            return false;
-        } else {
-            return true;
-        }
+    protected void filterException(Exception e) {
+        ExceptionUtil.normalException(e, this);
     }
 
     protected void showToast(String str) {
