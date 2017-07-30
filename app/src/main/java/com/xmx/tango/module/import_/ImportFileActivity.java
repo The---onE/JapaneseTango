@@ -68,11 +68,11 @@ public class ImportFileActivity extends BaseTempActivity {
                 filePath = android.os.Environment
                         .getExternalStorageDirectory() + "/" + split[1];
             }
-            if (filePath.contains("external_files")) {
+            if (filePath.startsWith("/external_files/")) {
                 filePath = filePath.replaceAll("^/external_files", android.os.Environment
                         .getExternalStorageDirectory().toString());
             }
-            if (filePath.contains("external")) {
+            if (filePath.startsWith("/external/")) {
                 filePath = filePath.replaceAll("^/external", android.os.Environment
                         .getExternalStorageDirectory().toString());
             }
