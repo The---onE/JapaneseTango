@@ -68,6 +68,14 @@ public class ImportFileActivity extends BaseTempActivity {
                 filePath = android.os.Environment
                         .getExternalStorageDirectory() + "/" + split[1];
             }
+            if (filePath.contains("external_files")) {
+                filePath = filePath.replaceAll("^/external_files", android.os.Environment
+                        .getExternalStorageDirectory().toString());
+            }
+            if (filePath.contains("external")) {
+                filePath = filePath.replaceAll("^/external", android.os.Environment
+                        .getExternalStorageDirectory().toString());
+            }
             parseCSV(filePath);
         } else {
             showToast("未选择文件");
@@ -77,6 +85,7 @@ public class ImportFileActivity extends BaseTempActivity {
     private void parseCSV(String filePath) {
         try {
             InputStream is = new FileInputStream(filePath);
+            //InputStream is = getAssets().open(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             List<String> dialogStrings = new ArrayList<>();
             //List<String> tangoStrings = new ArrayList<>();
