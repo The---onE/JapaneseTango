@@ -33,6 +33,7 @@ import java.util.List;
 public class SplashActivity extends BaseSplashActivity {
 
     Timer timer;
+    boolean readyFlag = false;
 
     private IUserManager userManager = UserManager.getInstance();
 
@@ -46,8 +47,10 @@ public class SplashActivity extends BaseSplashActivity {
         getViewById(R.id.btn_skip).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timer.stop();
-                timer.execute();
+                if (readyFlag) {
+                    timer.stop();
+                    timer.execute();
+                }
             }
         });
     }
@@ -122,6 +125,8 @@ public class SplashActivity extends BaseSplashActivity {
                         }
                     } catch (Exception e) {
                         filterException(e);
+                    } finally {
+                        readyFlag = true;
                     }
                     return null;
                 }
@@ -132,6 +137,8 @@ public class SplashActivity extends BaseSplashActivity {
                     EventBus.getDefault().post(new TangoListChangeEvent());
                 }
             }.execute();
+        } else {
+            readyFlag = true;
         }
         // 使用设备保存的数据自动登录
         userManager.autoLogin(new AutoLoginCallback() {
