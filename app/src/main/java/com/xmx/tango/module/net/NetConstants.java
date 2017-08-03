@@ -8,5 +8,6 @@ public class NetConstants {
     public static final String SERVER_URL = "http://139.224.9.86/JapaneseTango";
 
     public static final String TANGO_LIST_URL = SERVER_URL + "/ListTango";
+    public static final String TANGO_ENTITY_LIST_URL = SERVER_URL + "/ListTangoEntity";
 
 }

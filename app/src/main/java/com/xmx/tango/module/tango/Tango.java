@@ -6,6 +6,7 @@ import android.database.Cursor;
 import com.xmx.tango.common.data.sql.ISQLEntity;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by The_onE on 2016/9/13.
@@ -90,4 +91,18 @@ public class Tango implements ISQLEntity {
 
         return entity;
     }
+
+    public static Tango convertFromJson(Map<String, Object> map) {
+        Tango entity = new Tango();
+        entity.id = (long) map.get("id");
+        entity.writing = (String) map.get("writing");
+        entity.pronunciation = (String) map.get("pronunciation");
+        entity.meaning = (String) map.get("meaning");
+        entity.tone = (int) map.get("tone");
+        entity.partOfSpeech = (String) map.get("partOfSpeech");
+
+        return entity;
+    }
+
+
 }
