@@ -2,6 +2,8 @@ package com.xmx.tango.module.tango;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.xmx.tango.common.data.sql.ISQLEntity;
 
@@ -11,7 +13,7 @@ import java.util.Map;
 /**
  * Created by The_onE on 2016/9/13.
  */
-public class Tango implements ISQLEntity {
+public class Tango implements ISQLEntity, Parcelable {
     public long id = -1;
     public String writing = "";
     public String pronunciation = "";
@@ -27,6 +29,10 @@ public class Tango implements ISQLEntity {
     public String flags = "";
     public int delFlag = 0;
     public String type = "";
+
+    public Tango() {
+
+    }
 
     @Override
     public String tableFields() {
@@ -105,4 +111,53 @@ public class Tango implements ISQLEntity {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    protected Tango(Parcel in) {
+        id = in.readLong();
+        writing = in.readString();
+        pronunciation = in.readString();
+        meaning = in.readString();
+        tone = in.readInt();
+        partOfSpeech = in.readString();
+        image = in.readString();
+        voice = in.readString();
+        score = in.readInt();
+        frequency = in.readInt();
+        flags = in.readString();
+        delFlag = in.readInt();
+        type = in.readString();
+    }
+
+    public static final Creator<Tango> CREATOR = new Creator<Tango>() {
+        @Override
+        public Tango createFromParcel(Parcel in) {
+            return new Tango(in);
+        }
+
+        @Override
+        public Tango[] newArray(int size) {
+            return new Tango[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(writing);
+        parcel.writeString(pronunciation);
+        parcel.writeString(meaning);
+        parcel.writeInt(tone);
+        parcel.writeString(partOfSpeech);
+        parcel.writeString(image);
+        parcel.writeString(voice);
+        parcel.writeInt(score);
+        parcel.writeInt(frequency);
+        parcel.writeString(flags);
+        parcel.writeInt(delFlag);
+        parcel.writeString(type);
+    }
 }
