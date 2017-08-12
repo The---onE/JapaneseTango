@@ -33,7 +33,9 @@ import java.util.List;
 public class SplashActivity extends BaseSplashActivity {
 
     Timer timer;
-    boolean readyFlag = false;
+    boolean readyFlag = false; // 数据库是否已更新完毕
+    boolean timeFlag = false; // 是否已过自动跳转时间
+    boolean skipFlag = false; // 是否已跳转
 
     private IUserManager userManager = UserManager.getInstance();
 
@@ -47,10 +49,7 @@ public class SplashActivity extends BaseSplashActivity {
         getViewById(R.id.btn_skip).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (readyFlag) {
-                    timer.stop();
-                    timer.execute();
-                }
+                skip();
             }
         });
     }
@@ -60,10 +59,12 @@ public class SplashActivity extends BaseSplashActivity {
         timer = new Timer() {
             @Override
             public void timer() {
-                startMainActivity();
+                timeFlag = true;
+                skip();
             }
         };
         timer.start(Constants.SPLASH_TIME, true);
+
         TangoManager.getInstance().updateTangoList();
         Date last = new Date(DataManager.getInstance().getForgetLastTime());
         Date now = new Date();
@@ -127,6 +128,9 @@ public class SplashActivity extends BaseSplashActivity {
                         filterException(e);
                     } finally {
                         readyFlag = true;
+                        if (timeFlag) {
+                            skip();
+                        }
                     }
                     return null;
                 }
@@ -167,5 +171,12 @@ public class SplashActivity extends BaseSplashActivity {
                 }
             }
         });
+    }
+
+    private void skip() {
+        if (!skipFlag && readyFlag) {
+            startMainActivity();
+            skipFlag = true;
+        }
     }
 }
