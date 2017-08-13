@@ -14,6 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@color/transparent"
-        android:text="@string/skip"/>
+        android:text="@string/skip"
+        android:visibility="gone" />
 
 </RelativeLayout>

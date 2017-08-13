@@ -3,6 +3,7 @@ package com.xmx.tango.core.activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.avos.avoscloud.AVException;
 import com.xmx.tango.common.user.IUserManager;
@@ -37,16 +38,19 @@ public class SplashActivity extends BaseSplashActivity {
     boolean timeFlag = false; // 是否已过自动跳转时间
     boolean skipFlag = false; // 是否已跳转
 
+    Button btnSkip;
+
     private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_splash);
+        btnSkip = getViewById(R.id.btn_skip);
     }
 
     @Override
     protected void setListener() {
-        getViewById(R.id.btn_skip).setOnClickListener(new View.OnClickListener() {
+        btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 skip();
@@ -127,7 +131,7 @@ public class SplashActivity extends BaseSplashActivity {
                     } catch (Exception e) {
                         filterException(e);
                     } finally {
-                        readyFlag = true;
+                        ready();
                         if (timeFlag) {
                             skip();
                         }
@@ -142,7 +146,7 @@ public class SplashActivity extends BaseSplashActivity {
                 }
             }.execute();
         } else {
-            readyFlag = true;
+            ready();
         }
         // 使用设备保存的数据自动登录
         userManager.autoLogin(new AutoLoginCallback() {
@@ -178,5 +182,10 @@ public class SplashActivity extends BaseSplashActivity {
             startMainActivity();
             skipFlag = true;
         }
+    }
+
+    private void ready() {
+        readyFlag = true;
+        btnSkip.setVisibility(View.VISIBLE);
     }
 }
