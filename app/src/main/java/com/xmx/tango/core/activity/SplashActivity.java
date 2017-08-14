@@ -130,11 +130,6 @@ public class SplashActivity extends BaseSplashActivity {
                         }
                     } catch (Exception e) {
                         filterException(e);
-                    } finally {
-                        ready();
-                        if (timeFlag) {
-                            skip();
-                        }
                     }
                     return null;
                 }
@@ -142,6 +137,10 @@ public class SplashActivity extends BaseSplashActivity {
                 @Override
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
+                    ready();
+                    if (timeFlag) {
+                        skip();
+                    }
                     EventBus.getDefault().post(new TangoListChangeEvent());
                 }
             }.execute();
