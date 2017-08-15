@@ -14,10 +14,8 @@ import com.xmx.tango.common.net.HttpGetCallback;
 import com.xmx.tango.common.net.HttpManager;
 import com.xmx.tango.module.net.NetConstants;
 import com.xmx.tango.module.tango.Tango;
-import com.xmx.tango.module.tango.TangoEntityManager;
 import com.xmx.tango.utils.ExceptionUtil;
 import com.xmx.tango.utils.JSONUtil;
-import com.xmx.tango.utils.StrUtil;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -65,14 +63,22 @@ public class ImportNetEntityActivity extends BaseTempActivity {
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 List<Object> entities = (List<Object>)
                                                         map.get(JSONUtil.RESPONSE_ENTITIES);
-                                                List<Tango> tangoList = new ArrayList<>();
+                                                ArrayList<Tango> tangoList = new ArrayList<>();
                                                 for (final Object item : entities) {
                                                     Tango t = Tango
                                                             .convertFromJson((Map<String, Object>) item);
                                                     tangoList.add(t);
-                                                    TangoEntityManager.getInstance()
-                                                            .insertData(tangoList);
+//                                                    TangoEntityManager.getInstance()
+//                                                            .insertData(tangoList);
                                                 }
+                                                showToast("正在导入，请稍后");
+                                                Intent service = new
+                                                        Intent(ImportNetEntityActivity.this,
+                                                        ImportEntityService.class);
+                                                service.putParcelableArrayListExtra("list",
+                                                        tangoList);
+                                                service.putExtra("type", type);
+                                                startService(service);
                                             }
                                         })
                                         .setNegativeButton("取消", null)
