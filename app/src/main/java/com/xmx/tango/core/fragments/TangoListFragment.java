@@ -19,6 +19,7 @@ import com.xmx.tango.R;
 import com.xmx.tango.module.crud.AddTangoActivity;
 import com.xmx.tango.module.crud.ChooseTangoEvent;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
+import com.xmx.tango.module.import_.ImportNetEntityActivity;
 import com.xmx.tango.module.operate.OperateTangoEvent;
 import com.xmx.tango.module.crud.SearchTangoDialog;
 import com.xmx.tango.module.speaker.SpeakTangoManager;
@@ -144,7 +145,8 @@ public class TangoListFragment extends xUtilsFragment {
         builder.setNegativeButton("网络导入", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(ImportNetActivity.class);
+//                startActivity(ImportNetActivity.class);
+                startActivity(ImportNetEntityActivity.class);
             }
         });
         builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
