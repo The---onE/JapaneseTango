@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
+import com.xmx.tango.module.tango.Tango;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -85,24 +86,21 @@ public class ImportFileActivity extends BaseTempActivity {
     private void parseCSV(String filePath) {
         try {
             InputStream is = new FileInputStream(filePath);
-            //InputStream is = getAssets().open(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             List<String> dialogStrings = new ArrayList<>();
-            //List<String> tangoStrings = new ArrayList<>();
-            ArrayList<String> intentStrings = new ArrayList<>();
-            //final List<Tango> tangoList = new ArrayList<>();
+//            ArrayList<String> intentStrings = new ArrayList<>();
+            ArrayList<Tango> tangoList = new ArrayList<>();
+
+            String type = typeView.getText().toString().trim();
             while (true) {
                 String str = reader.readLine();
                 if (str != null) {
                     String[] strings = str.split(",");
                     if (strings.length >= 3) {
-                        intentStrings.add(str);
+//                        intentStrings.add(str);
                         dialogStrings.add(strings[0] + ":" + strings[1] + "|" + strings[2]);
-//                        Tango tango = makeTango(strings);
-//                        tangoList.add(tango);
-//                        tangoStrings.add(tango.writing + ":" +
-//                                tango.pronunciation + "|" +
-//                                tango.meaning);
+                        Tango tango = ImportUtil.makeTango(strings, type);
+                        tangoList.add(tango);
                         //TangoEntityManager.getInstance().insertData(tango);
                     }
                 } else {
@@ -110,9 +108,7 @@ public class ImportFileActivity extends BaseTempActivity {
                 }
             }
             is.close();
-
-            String type = typeView.getText().toString().trim();
-            ImportUtil.showDialog(dialogStrings, intentStrings, type, ImportFileActivity.this);
+            ImportUtil.showDialog(dialogStrings, tangoList, type, ImportFileActivity.this);
         } catch (Exception e) {
             filterException(e);
         }

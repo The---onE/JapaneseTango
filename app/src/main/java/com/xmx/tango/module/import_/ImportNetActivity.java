@@ -13,6 +13,7 @@ import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.net.HttpGetCallback;
 import com.xmx.tango.common.net.HttpManager;
 import com.xmx.tango.module.net.NetConstants;
+import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.utils.ExceptionUtil;
 import com.xmx.tango.utils.JSONUtil;
 
@@ -56,17 +57,18 @@ public class ImportNetActivity extends BaseTempActivity {
                                 showToast((String) map.get(JSONUtil.RESPONSE_PROMPT));
                                 List<Object> entities = (List<Object>) map.get(JSONUtil.RESPONSE_ENTITIES);
                                 List<String> dialogStrings = new ArrayList<>();
-                                final ArrayList<String> intentStrings = new ArrayList<>();
+                                ArrayList<Tango> tangoList = new ArrayList<>();
+                                String type = typeView.getText().toString().trim();
                                 for (Object item : entities) {
                                     String str = item.toString();
                                     String[] strings = str.split(",");
                                     if (strings.length >= 3) {
-                                        intentStrings.add(str);
                                         dialogStrings.add(strings[0] + ":" + strings[1] + "|" + strings[2]);
+                                        Tango tango = ImportUtil.makeTango(strings, type);
+                                        tangoList.add(tango);
                                     }
                                 }
-                                String type = typeView.getText().toString().trim();
-                                ImportUtil.showDialog(dialogStrings, intentStrings, type,
+                                ImportUtil.showDialog(dialogStrings, tangoList, type,
                                         ImportNetActivity.this);
                                 break;
                             case JSONUtil.STATUS_ERROR:
