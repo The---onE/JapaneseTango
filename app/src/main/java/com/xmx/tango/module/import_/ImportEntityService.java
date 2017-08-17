@@ -62,34 +62,4 @@ public class ImportEntityService extends BaseService {
     protected void setForeground(Intent intent) {
         showForeground(MainActivity.class, "正在导入");
     }
-
-    private Tango makeTango(String[] strings, String type) {
-        Tango tango = new Tango();
-        try {
-            tango.writing = strings[0];
-            tango.pronunciation = strings[1];
-            tango.meaning = strings[2];
-            tango.tone = Conver.toInt(strings[3], -1);
-            tango.partOfSpeech = strings[4];
-            tango.image = strings[5];
-            tango.voice = strings[6];
-            tango.score = Conver.toInt(strings[7], 0);
-            tango.frequency = Conver.toInt(strings[8], 0);
-            tango.addTime = new Date(Conver.toLong(strings[9], 0L));
-            tango.lastTime = new Date(Conver.toLong(strings[10], 0L));
-            tango.flags = strings[11];
-            tango.delFlag = Conver.toInt(strings[12], 0);
-            tango.type = strings[13];
-        } catch (IndexOutOfBoundsException e) {
-        } finally {
-            if (!StrUtil.isBlank(type)) {
-                tango.type = type;
-            }
-            if (tango.addTime.getTime() == 0) {
-                tango.addTime = new Date();
-            }
-        }
-
-        return tango;
-    }
 }

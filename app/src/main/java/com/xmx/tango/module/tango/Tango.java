@@ -130,6 +130,8 @@ public class Tango implements ISQLEntity, Parcelable {
         flags = in.readString();
         delFlag = in.readInt();
         type = in.readString();
+        addTime = new Date(in.readLong());
+        lastTime = new Date(in.readLong());
     }
 
     public static final Creator<Tango> CREATOR = new Creator<Tango>() {
@@ -159,5 +161,7 @@ public class Tango implements ISQLEntity, Parcelable {
         parcel.writeString(flags);
         parcel.writeInt(delFlag);
         parcel.writeString(type);
+        parcel.writeLong(addTime.getTime());
+        parcel.writeLong(lastTime.getTime());
     }
 }
