@@ -88,8 +88,8 @@ public class ImportFileActivity extends BaseTempActivity {
             InputStream is = new FileInputStream(filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             List<String> dialogStrings = new ArrayList<>();
-//            ArrayList<String> intentStrings = new ArrayList<>();
-            ArrayList<Tango> tangoList = new ArrayList<>();
+            ArrayList<String> intentStrings = new ArrayList<>();
+//            ArrayList<Tango> tangoList = new ArrayList<>();
 
             String type = typeView.getText().toString().trim();
             while (true) {
@@ -97,10 +97,10 @@ public class ImportFileActivity extends BaseTempActivity {
                 if (str != null) {
                     String[] strings = str.split(",");
                     if (strings.length >= 3) {
-//                        intentStrings.add(str);
+                        intentStrings.add(str);
                         dialogStrings.add(strings[0] + ":" + strings[1] + "|" + strings[2]);
-                        Tango tango = ImportUtil.makeTango(strings, type);
-                        tangoList.add(tango);
+//                        Tango tango = ImportUtil.makeTango(strings, type);
+//                        tangoList.add(tango);
                         //TangoEntityManager.getInstance().insertData(tango);
                     }
                 } else {
@@ -108,7 +108,7 @@ public class ImportFileActivity extends BaseTempActivity {
                 }
             }
             is.close();
-            ImportUtil.showDialog(dialogStrings, tangoList, type, ImportFileActivity.this);
+            ImportUtil.showDialog(dialogStrings, intentStrings, type, ImportFileActivity.this);
         } catch (Exception e) {
             filterException(e);
         }

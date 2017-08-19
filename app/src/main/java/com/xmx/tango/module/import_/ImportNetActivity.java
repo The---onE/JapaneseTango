@@ -57,18 +57,17 @@ public class ImportNetActivity extends BaseTempActivity {
                                 showToast((String) map.get(JSONUtil.RESPONSE_PROMPT));
                                 List<Object> entities = (List<Object>) map.get(JSONUtil.RESPONSE_ENTITIES);
                                 List<String> dialogStrings = new ArrayList<>();
-                                ArrayList<Tango> tangoList = new ArrayList<>();
+                                ArrayList<String> intentStrings = new ArrayList<>();
                                 String type = typeView.getText().toString().trim();
                                 for (Object item : entities) {
                                     String str = item.toString();
                                     String[] strings = str.split(",");
                                     if (strings.length >= 3) {
+                                        intentStrings.add(str);
                                         dialogStrings.add(strings[0] + ":" + strings[1] + "|" + strings[2]);
-                                        Tango tango = ImportUtil.makeTango(strings, type);
-                                        tangoList.add(tango);
                                     }
                                 }
-                                ImportUtil.showDialog(dialogStrings, tangoList, type,
+                                ImportUtil.showDialog(dialogStrings, intentStrings, type,
                                         ImportNetActivity.this);
                                 break;
                             case JSONUtil.STATUS_ERROR:

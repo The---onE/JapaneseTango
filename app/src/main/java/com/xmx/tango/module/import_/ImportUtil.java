@@ -19,8 +19,8 @@ import java.util.List;
 
 public class ImportUtil {
     public static void showDialog(List<String> dialogStrings,
-//                                  final ArrayList<String> intentStrings,
-                                  final ArrayList<Tango> tangoList,
+                                  final ArrayList<String> intentStrings,
+//                                  final ArrayList<Tango> tangoList,
                                   final String type,
                                   final Context context) {
         String array[] = new String[dialogStrings.size()];
@@ -45,6 +45,11 @@ public class ImportUtil {
 //                        Intent service = new Intent(context, ImportService.class);
 //                        service.putStringArrayListExtra("list", intentStrings);
                         Intent service = new Intent(context, ImportEntityService.class);
+                        ArrayList<Tango> tangoList = new ArrayList<>();
+                        for (String str : intentStrings) {
+                            String[] strings = str.split(",");
+                            tangoList.add(makeTango(strings, type));
+                        }
                         service.putParcelableArrayListExtra("list", tangoList);
                         service.putExtra("type", type);
                         context.startService(service);
