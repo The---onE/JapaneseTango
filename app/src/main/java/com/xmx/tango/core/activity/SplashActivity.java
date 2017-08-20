@@ -69,6 +69,13 @@ public class SplashActivity extends BaseSplashActivity {
         };
         timer.start(Constants.SPLASH_TIME, true);
 
+        DataManager dm = DataManager.getInstance();
+        TangoManager.getInstance().writing = dm.getSearchValue("writing");
+        TangoManager.getInstance().pronunciation = dm.getSearchValue("pronunciation");
+        TangoManager.getInstance().meaning = dm.getSearchValue("meaning");
+        TangoManager.getInstance().partOfSpeech = dm.getSearchValue("partOfSpeech");
+        TangoManager.getInstance().type = dm.getSearchValue("type");
+
         TangoManager.getInstance().updateTangoList();
         Date last = new Date(DataManager.getInstance().getForgetLastTime());
         Date now = new Date();

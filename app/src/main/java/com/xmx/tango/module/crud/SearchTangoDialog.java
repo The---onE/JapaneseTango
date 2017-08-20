@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.dialog.BaseDialog;
+import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.tango.TangoManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -90,6 +91,13 @@ public class SearchTangoDialog extends BaseDialog {
                 TangoManager.getInstance().meaning = meaning;
                 TangoManager.getInstance().partOfSpeech = partOfSpeech;
                 TangoManager.getInstance().type = type;
+
+                DataManager dm = DataManager.getInstance();
+                dm.setSearchValue("writing", writing);
+                dm.setSearchValue("pronunciation", pronunciation);
+                dm.setSearchValue("meaning", meaning);
+                dm.setSearchValue("partOfSpeech", partOfSpeech);
+                dm.setSearchValue("type", type);
 
                 EventBus.getDefault().post(new TangoListChangeEvent());
                 dismiss();

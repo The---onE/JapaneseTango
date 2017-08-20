@@ -223,4 +223,11 @@ public class DataManager {
         setInt("service_interval", count);
     }
 
+    public String getSearchValue(String key) {
+        return getString("s_" + key);
+    }
+    public void setSearchValue(String key, String value) {
+        setString("s_" + key, value);
+    }
+
 }
