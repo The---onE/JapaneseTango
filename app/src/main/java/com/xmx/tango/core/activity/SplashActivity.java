@@ -1,7 +1,15 @@
 package com.xmx.tango.core.activity;
 
+import android.Manifest;
+import android.app.AppOpsManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 
@@ -40,6 +48,8 @@ public class SplashActivity extends BaseSplashActivity {
 
     Button btnSkip;
 
+    private final int WRITE_SD_REQUEST = 1;
+
     private IUserManager userManager = UserManager.getInstance();
 
     @Override
@@ -60,6 +70,11 @@ public class SplashActivity extends BaseSplashActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+
+        checkLocalPhonePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST);
+        checkOpsPermission(AppOpsManager.OPSTR_WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST);
+
         timer = new Timer() {
             @Override
             public void timer() {
@@ -181,6 +196,17 @@ public class SplashActivity extends BaseSplashActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case WRITE_SD_REQUEST:
+                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    showToast("您拒绝了读写手机存储的权限，某些功能会导致程序出错，请手动允许该权限！");
+                }
+        }
     }
 
     private void skip() {

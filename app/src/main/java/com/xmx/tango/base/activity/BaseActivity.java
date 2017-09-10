@@ -1,8 +1,14 @@
 package com.xmx.tango.base.activity;
 
+import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -98,5 +104,41 @@ public abstract class BaseActivity extends AppCompatActivity {
             intent.putExtra(objs[i], objs[++i]);
         }
         startActivity(intent);
+    }
+
+
+    /**
+     * 检查系统是否授予权限
+     * @param permission 需要的权限 Manifest.permission.权限名
+     * @param requestId 请求ID
+     */
+    public void checkLocalPhonePermission(String permission, int requestId) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            // 是否已授权
+            int permissionFlag = ActivityCompat.checkSelfPermission(this, permission);
+            if (permissionFlag != PackageManager.PERMISSION_GRANTED) {
+                // 若未授权则请求授权
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestId);
+            }
+        }
+    }
+
+    /**
+     * 检查定制系统(小米)是否授予权限
+     * @param opsPermission 定制系统权限名 AppOpsManager.权限名
+     * @param permission 需要的权限 Manifest.permission.权限名
+     * @param requestId 请求ID
+     */
+    public void checkOpsPermission(String opsPermission, String permission, int requestId) {
+        if (Build.VERSION.SDK_INT >= 19) {
+            AppOpsManager appOpsManager = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+            // 是否已授权
+            int permissionFlag = appOpsManager
+                    .checkOp(opsPermission, Binder.getCallingUid(), getPackageName());
+            if (permissionFlag != AppOpsManager.MODE_ALLOWED) {
+                // 若未授权则请求授权
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestId);
+            }
+        }
     }
 }
