@@ -22,6 +22,15 @@
                 android:layout_height="wrap_content"
                 android:textSize="30sp" />
 
+            <TextView
+                android:id="@+id/text_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_sentence"
+                android:layout_centerHorizontal="true"
+                android:text="@string/loading"
+                android:textSize="36sp" />
+
             <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/layout_sentence"
@@ -37,12 +46,12 @@
 
             <TextView
                 android:id="@+id/text_hint"
-                android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layout_sentence"
-                android:textSize="20sp"
-                android:gravity="center" />
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:textSize="20sp" />
 
         </RelativeLayout>
     </ScrollView>

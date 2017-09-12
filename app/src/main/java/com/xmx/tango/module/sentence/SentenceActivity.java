@@ -35,6 +35,8 @@ public class SentenceActivity extends BaseTempActivity {
     private TextView sentenceView;
     @ViewInject(R.id.text_hint)
     private TextView hintView;
+    @ViewInject(R.id.text_loading)
+    private TextView loadingView;
     @ViewInject(R.id.layout_sentence)
     private FlexboxLayout sentenceLayout;
 
@@ -58,6 +60,8 @@ public class SentenceActivity extends BaseTempActivity {
             protected void onPostExecute(List<Token> tokens) {
                 super.onPostExecute(tokens);
                 tokenList = tokens;
+
+                loadingView.setVisibility(View.GONE);
 
                 for (Token token : tokens) {
                     View v = View.inflate(SentenceActivity.this, R.layout.item_sentence, null);
