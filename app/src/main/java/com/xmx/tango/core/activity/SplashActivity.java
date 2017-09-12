@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.calendar.DateData;
 import com.xmx.tango.module.calendar.DateDataEntityManager;
+import com.xmx.tango.module.sentence.SentenceUtil;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
@@ -196,6 +198,14 @@ public class SplashActivity extends BaseSplashActivity {
                 }
             }
         });
+
+        // 初始化分词工具
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SentenceUtil.init();
+            }
+        }).start();
     }
 
     @Override

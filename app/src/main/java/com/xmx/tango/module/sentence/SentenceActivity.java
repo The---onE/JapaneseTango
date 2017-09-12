@@ -40,13 +40,6 @@ public class SentenceActivity extends BaseTempActivity {
 
     List<Token> tokenList;
 
-    String hiragana = "ぁあぃいぅうぇえぉおかがきぎくぐけげこご" +
-            "さざしじすずせぜそぞただちぢっつづてでとどなにぬねの" +
-            "はばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんヴヵヶ";
-    String katakana = "ァアィイゥウェエォオカガキギクグケゲコゴ" +
-            "サザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノ" +
-            "ハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ";
-
     @Override
     protected void initView(Bundle savedInstanceState) {
         final String sentence = getIntent().getStringExtra("sentence");
@@ -58,8 +51,7 @@ public class SentenceActivity extends BaseTempActivity {
         new AsyncTask<Void, Void, List<Token>>() {
             @Override
             protected List<Token> doInBackground(Void... voids) {
-                Tokenizer tokenizer = new Tokenizer();
-                return tokenizer.tokenize(sentence);
+                return SentenceUtil.analyzeSentence(sentence);
             }
 
             @Override
@@ -80,7 +72,7 @@ public class SentenceActivity extends BaseTempActivity {
                     String reading = token.getReading();
                     String surface = token.getSurface();
                     if (!"*".equals(reading) && !reading.equals(surface)) {
-                        String hiraReading = convertKana(reading);
+                        String hiraReading = SentenceUtil.convertKana(reading);
                         if (!hiraReading.equals(surface)) {
                             readingItem.setText(hiraReading);
                         } else {
@@ -114,15 +106,4 @@ public class SentenceActivity extends BaseTempActivity {
 
     }
 
-    private String convertKana(String tango) {
-        StringBuilder sb = new StringBuilder(tango);
-        for (int i = 0; i < sb.length(); ++i) {
-            char c = sb.charAt(i);
-            int index = katakana.indexOf(c);
-            if (index > 0) {
-                sb.replace(i, i + 1, "" + hiragana.charAt(index));
-            }
-        }
-        return sb.toString();
-    }
 }
