@@ -107,6 +107,9 @@
         <activity
             android:name=".module.calendar.CalendarActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.sentence.SentenceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".module.import_.ImportService"

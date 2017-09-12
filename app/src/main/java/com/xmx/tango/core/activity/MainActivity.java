@@ -18,6 +18,7 @@ import com.xmx.tango.common.user.IUserManager;
 import com.xmx.tango.common.user.LoginEvent;
 import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.core.fragments.HomeFragment;
+import com.xmx.tango.core.fragments.SentenceFragment;
 import com.xmx.tango.core.fragments.TangoListFragment;
 import com.xmx.tango.module.calendar.CalendarActivity;
 import com.xmx.tango.module.log.OperationLogActivity;
@@ -56,10 +57,12 @@ public class MainActivity extends BaseNavigationActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new HomeFragment());
         fragments.add(new TangoListFragment());
+        fragments.add(new SentenceFragment());
 
         List<String> titles = new ArrayList<>();
         titles.add("首页");
-        titles.add("列表");
+        titles.add("单词");
+        titles.add("句子");
 
         PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
 
@@ -159,6 +162,9 @@ public class MainActivity extends BaseNavigationActivity {
                 break;
             case R.id.nav_tango_list:
                 vp.setCurrentItem(1);
+                break;
+            case R.id.nav_sentence:
+                vp.setCurrentItem(2);
                 break;
             case R.id.nav_setting:
                 startActivity(SettingActivity.class);
