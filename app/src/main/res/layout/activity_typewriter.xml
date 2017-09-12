@@ -1,0 +1,101 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".module.test.TypewriterActivity">
+
+    <include layout="@layout/tool_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E3EDCD">
+
+        <EditText
+            android:id="@+id/edit_typewriter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:hint="仮名を入力します"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btn_kuromoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_copy"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="分词"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_keyboard"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="复制"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="键盘"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_masu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_backspace"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="ます"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_space"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="后退"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btn_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/layout_keyboard"
+            android:background="@null"
+            android:text="空格"
+            android:textSize="30sp" />
+
+        <com.xmx.tango.module.keyboard.KeyboardView
+            android:id="@+id/layout_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

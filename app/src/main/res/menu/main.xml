@@ -4,20 +4,26 @@
 
     <item
         android:id="@+id/action_check_in"
-       android:orderInCategory="96"
+        android:orderInCategory="95"
         android:title="@string/check_in"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_test"
-        android:orderInCategory="97"
+        android:orderInCategory="96"
         android:title="@string/test_mode"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_mission"
-        android:orderInCategory="98"
+        android:orderInCategory="97"
         android:title="@string/mission_mode"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_typewriter"
+        android:orderInCategory="98"
+        android:title="@string/typewriter"
         app:showAsAction="never" />
 
     <item

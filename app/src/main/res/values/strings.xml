@@ -127,6 +127,8 @@
 
     <string name="check_in">打卡签到</string>
 
+    <string name="typewriter">写字板</string>
+
     <string name="kuromoji">分析句子</string>
 
 </resources>

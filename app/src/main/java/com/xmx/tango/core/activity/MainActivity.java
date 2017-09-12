@@ -33,6 +33,7 @@ import com.xmx.tango.core.Constants;
 import com.xmx.tango.module.crud.ChooseTangoEvent;
 import com.xmx.tango.module.service.TangoService;
 import com.xmx.tango.module.test.TestActivity;
+import com.xmx.tango.module.test.TypewriterActivity;
 import com.xmx.tango.utils.ExceptionUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -194,6 +195,9 @@ public class MainActivity extends BaseNavigationActivity {
             return true;
         } else if (id == R.id.action_switch_service) {
             switchService();
+            return true;
+        } else if (id == R.id.action_typewriter) {
+            startActivity(TypewriterActivity.class);
             return true;
         } else if (id == R.id.action_mission) {
             startActivity(MissionActivity.class);

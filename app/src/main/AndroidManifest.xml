@@ -87,6 +87,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".module.test.TypewriterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".module.import_.ImportFileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
