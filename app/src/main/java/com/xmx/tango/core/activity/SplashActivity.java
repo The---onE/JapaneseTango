@@ -73,10 +73,17 @@ public class SplashActivity extends BaseSplashActivity {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
 
-        checkLocalPhonePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST);
-        checkOpsPermission(AppOpsManager.OPSTR_WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST);
+        if (checkLocalPhonePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST)) {
+            if (checkOpsPermission(AppOpsManager.OPSTR_WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST)) {
+                init();
+            }
+        }
 
+
+    }
+
+    private void init() {
         timer = new Timer() {
             @Override
             public void timer() {
@@ -215,6 +222,8 @@ public class SplashActivity extends BaseSplashActivity {
             case WRITE_SD_REQUEST:
                 if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     showToast("您拒绝了读写手机存储的权限，某些功能会导致程序出错，请手动允许该权限！");
+                } else {
+                    init();
                 }
         }
     }
