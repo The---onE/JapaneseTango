@@ -71,7 +71,18 @@ public class SentenceActivity extends BaseTempActivity {
                     final TextView hintItem = (TextView) v.findViewById(R.id.text_hint);
                     writingItem.setText(token.getSurface());
                     partItem.setText(token.getPartOfSpeechLevel1());
-                    hintItem.setText(token.getAllFeatures());
+//                    hintItem.setText(token.getAllFeatures());
+                    String s = token.getSurface() + "\n" +
+                            "词性:" + token.getPartOfSpeechLevel1() + "\n" +
+                            "词性细分1:" + token.getPartOfSpeechLevel2() + "\n" +
+                            "词性细分2:" + token.getPartOfSpeechLevel3() + "\n" +
+                            "词性细分3:" + token.getPartOfSpeechLevel4() + "\n" +
+                            "活用型:" + token.getConjugationType() + "\n" +
+                            "活用形:" + token.getConjugationForm() + "\n" +
+                            "基本形:" + token.getBaseForm() + "\n" +
+                            "读法:" + token.getReading() + "\n" +
+                            "发音:" + token.getPronunciation() + "\n";
+                    hintItem.setText(s);
 
                     String reading = token.getReading();
                     String surface = token.getSurface();
