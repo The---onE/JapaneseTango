@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.module.crud.TangoListChangeEvent;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoEntityManager;
 import com.xmx.tango.utils.Timer;
@@ -49,6 +50,12 @@ public class SentenceActivity extends BaseTempActivity {
             finish();
         }
         sentenceView.setText(sentence);
+        sentenceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SpeakTangoManager.getInstance().speak(sentence);
+            }
+        });
 
         new AsyncTask<Void, Void, List<Token>>() {
             @Override

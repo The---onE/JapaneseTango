@@ -17,6 +17,7 @@ import android.widget.SimpleExpandableListAdapter;
 import com.xmx.tango.R;
 import com.xmx.tango.base.fragment.xUtilsFragment;
 import com.xmx.tango.module.sentence.SentenceActivity;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -77,6 +78,13 @@ public class SentenceFragment extends xUtilsFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 startSentenceActivity(getContext(), sentences.get(i));
+            }
+        });
+        sentenceList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SpeakTangoManager.getInstance().speak(sentences.get(i));
+                return true;
             }
         });
     }
