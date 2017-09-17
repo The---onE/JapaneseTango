@@ -56,10 +56,8 @@ public class TangoConstants {
 
     static {
         JAPANESE_FONT_MAP.put("默认", null);
-        JAPANESE_FONT_MAP.put("Axisstd Extra Light", "AxisstdExtraLight.otf");
-        JAPANESE_FONT_MAP.put("遊びメモ書き", "AsobiMemogaki-Regular-1-01.ttf");
-        JAPANESE_FONT_MAP.put("GN-こはるいろサンレイ", "GN-Koharuiro_Sunray.ttf");
-        JAPANESE_FONT_MAP.put("GN-KillGothic-U-KanaO", "GN-KillGothic-U-KanaO.ttf");
-        JAPANESE_FONT_MAP.put("GN-Kin-iro_SansSerif", "GN-Kin-iro_SansSerif.ttf");
+        JAPANESE_FONT_MAP.put("A-OTF 毎日新聞", "A-OTF-MNewsMPro-Light.otf");
+        JAPANESE_FONT_MAP.put("A-OTF くもやじ", "A-OTF-KumoyaStd-Regular.otf");
+        JAPANESE_FONT_MAP.put("京円", "京円.ttf");
     }
 }

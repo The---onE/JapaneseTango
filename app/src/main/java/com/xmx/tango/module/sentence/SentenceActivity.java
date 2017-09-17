@@ -1,5 +1,7 @@
 package com.xmx.tango.module.sentence;
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +14,11 @@ import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.google.android.flexbox.FlexboxLayout;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
+import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.crud.TangoListChangeEvent;
 import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
+import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
 import com.xmx.tango.utils.Timer;
 
@@ -42,6 +46,7 @@ public class SentenceActivity extends BaseTempActivity {
     private FlexboxLayout sentenceLayout;
 
     List<Token> tokenList;
+    Typeface typeface;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -73,22 +78,25 @@ public class SentenceActivity extends BaseTempActivity {
                 for (Token token : tokens) {
                     View v = View.inflate(SentenceActivity.this, R.layout.item_sentence, null);
                     TextView writingItem = (TextView) v.findViewById(R.id.text_writing);
+                    writingItem.setTypeface(typeface);
                     TextView readingItem = (TextView) v.findViewById(R.id.text_reading);
+                    readingItem.setTypeface(typeface);
                     TextView partItem = (TextView) v.findViewById(R.id.text_part);
+                    partItem.setTypeface(typeface);
                     final TextView hintItem = (TextView) v.findViewById(R.id.text_hint);
                     writingItem.setText(token.getSurface());
                     partItem.setText(token.getPartOfSpeechLevel1());
 //                    hintItem.setText(token.getAllFeatures());
                     String s = token.getSurface() + "\n" +
-                            "词性:" + token.getPartOfSpeechLevel1() + "\n" +
-                            "词性细分1:" + token.getPartOfSpeechLevel2() + "\n" +
-                            "词性细分2:" + token.getPartOfSpeechLevel3() + "\n" +
-                            "词性细分3:" + token.getPartOfSpeechLevel4() + "\n" +
+                            "品詞:" + token.getPartOfSpeechLevel1() + "\n" +
+                            "品詞細分1:" + token.getPartOfSpeechLevel2() + "\n" +
+                            "品詞細分2:" + token.getPartOfSpeechLevel3() + "\n" +
+                            "品詞細分3:" + token.getPartOfSpeechLevel4() + "\n" +
                             "活用型:" + token.getConjugationType() + "\n" +
                             "活用形:" + token.getConjugationForm() + "\n" +
                             "基本形:" + token.getBaseForm() + "\n" +
-                            "读法:" + token.getReading() + "\n" +
-                            "发音:" + token.getPronunciation() + "\n";
+                            "読み:" + token.getReading() + "\n" +
+                            "発音:" + token.getPronunciation() + "\n";
                     hintItem.setText(s);
 
                     String reading = token.getReading();
@@ -125,7 +133,22 @@ public class SentenceActivity extends BaseTempActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
+        setJapaneseFont();
+    }
 
+    private void setJapaneseFont() {
+        AssetManager mgr = getAssets();
+        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String font = null;
+        if (title != null) {
+            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        }
+        typeface = Typeface.DEFAULT;
+        if (font != null) {
+            typeface = Typeface.createFromAsset(mgr, font);
+        }
+        sentenceView.setTypeface(typeface);
+        hintView.setTypeface(typeface);
     }
 
 }
