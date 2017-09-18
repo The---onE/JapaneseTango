@@ -6,28 +6,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
 import com.google.android.flexbox.FlexboxLayout;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.data.DataManager;
-import com.xmx.tango.module.crud.TangoListChangeEvent;
 import com.xmx.tango.module.speaker.SpeakTangoManager;
-import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
-import com.xmx.tango.module.tango.TangoEntityManager;
-import com.xmx.tango.utils.Timer;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,7 +67,7 @@ public class SentenceActivity extends BaseTempActivity {
                 loadingView.setVisibility(View.GONE);
 
                 for (Token token : tokens) {
-                    View v = View.inflate(SentenceActivity.this, R.layout.item_sentence, null);
+                    View v = View.inflate(SentenceActivity.this, R.layout.item_sentence_tango, null);
                     TextView writingItem = (TextView) v.findViewById(R.id.text_writing);
                     writingItem.setTypeface(typeface);
                     TextView readingItem = (TextView) v.findViewById(R.id.text_reading);
