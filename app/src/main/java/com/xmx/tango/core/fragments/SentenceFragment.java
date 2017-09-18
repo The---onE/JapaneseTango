@@ -42,9 +42,50 @@ public class SentenceFragment extends xUtilsFragment {
     @ViewInject(R.id.list_sentence)
     private ListView sentenceList;
 
-    private BaseAdapter adapter;
+    private SentenceAdapter adapter;
     private List<String> sentences = new ArrayList<>();
     private Typeface typeface;
+
+    private class SentenceAdapter extends BaseAdapter {
+        class ViewHolder {
+            TextView textView;
+        }
+
+        @Override
+        public int getCount() {
+            return sentences.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return sentences.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            final ViewHolder holder;
+            if (view == null) {
+                view = LayoutInflater.from(getContext()).inflate(R.layout.item_sentence, null);
+                holder = new ViewHolder();
+                holder.textView = (TextView) view.findViewById(R.id.item_sentence);
+
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+            holder.textView.setText(sentences.get(i));
+            if (typeface != null) {
+                holder.textView.setTypeface(typeface);
+            }
+
+            return view;
+        }
+    }
 
     @Event(value = R.id.btn_kuromoji)
     private void onKuromojiClick(View view) {
@@ -80,33 +121,7 @@ public class SentenceFragment extends xUtilsFragment {
 //        adapter = new ArrayAdapter<String>(getContext(),
 //                android.R.layout.simple_list_item_1, sentences);
         setJapaneseFont();
-        adapter = new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return sentences.size();
-            }
-
-            @Override
-            public Object getItem(int i) {
-                return sentences.get(i);
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return i;
-            }
-
-            @Override
-            public View getView(int i, View view, ViewGroup viewGroup) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.item_sentence, null);
-                TextView textView = (TextView) view.findViewById(R.id.item_sentence);
-                textView.setText(sentences.get(i));
-                if (typeface != null) {
-                    textView.setTypeface(typeface);
-                }
-                return view;
-            }
-        };
+        adapter = new SentenceAdapter();
         sentenceList.setAdapter(adapter);
         sentenceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
