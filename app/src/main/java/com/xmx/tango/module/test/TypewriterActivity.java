@@ -135,11 +135,19 @@ public class TypewriterActivity extends BaseTempActivity {
         btnCopy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 String text = typewriterEdit.getText().toString();
-                ClipData clipData = ClipData.newPlainText("label", text); //文本型数据 clipData 的构造方法。
-                cmb.setPrimaryClip(clipData);
-                showToast("已复制到剪切板");
+                if (text.trim().length() > 0) {
+                    ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clipData = ClipData.newPlainText("label", text); //文本型数据 clipData 的构造方法。
+                    cmb.setPrimaryClip(clipData);
+                    if (DataManager.getInstance().getVibratorStatus()) {
+                        VibratorUtil.vibrate(TypewriterActivity.this,
+                                TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                    }
+                    showToast("已复制到剪切板");
+                } else {
+                    showToast("请输入内容");
+                }
             }
         });
 

@@ -93,6 +93,8 @@ public class KeyboardView extends GridLayout {
                                 startY = y;
                                 break;
                             case MotionEvent.ACTION_UP:
+                            case MotionEvent.ACTION_CANCEL:
+                            case MotionEvent.ACTION_OUTSIDE:
                                 flickView.remove();
                                 x = motionEvent.getRawX();
                                 resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
