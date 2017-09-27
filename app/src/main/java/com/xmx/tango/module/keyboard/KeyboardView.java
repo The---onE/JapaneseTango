@@ -14,6 +14,10 @@ import android.widget.GridLayout;
 import android.widget.Toast;
 
 import com.xmx.tango.R;
+import com.xmx.tango.common.data.DataManager;
+import com.xmx.tango.module.tango.TangoConstants;
+import com.xmx.tango.module.test.TypewriterActivity;
+import com.xmx.tango.utils.VibratorUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +33,8 @@ public class KeyboardView extends GridLayout {
     private FlickView flickView;
     InputCallback inputCallback;
 
-    private int kanaSize = 30;
-    private int switchSize = 24;
+    private final static int KANA_SIZE = 30;
+    private final static int SWITCH_SIZE = 24;
 
     private int voicing = 0;
     private int kata = 0;
@@ -54,7 +58,7 @@ public class KeyboardView extends GridLayout {
             Button button = new Button(context);
             int base = (i - 1) * 5;
             button.setText(KeyboardConstants.kanaArray[base]);
-            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, kanaSize);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, KANA_SIZE);
             button.setBackgroundColor(Color.TRANSPARENT);
             button.setOnTouchListener(new OnTouchListener() {
                 @Override
@@ -150,7 +154,7 @@ public class KeyboardView extends GridLayout {
 
         Button btnVoicing = new Button(context);
         btnVoicing.setText("清/浊");
-        btnVoicing.setTextSize(TypedValue.COMPLEX_UNIT_SP, switchSize);
+        btnVoicing.setTextSize(TypedValue.COMPLEX_UNIT_SP, SWITCH_SIZE);
         btnVoicing.setBackgroundColor(Color.TRANSPARENT);
         btnVoicing.setOnClickListener(new OnClickListener() {
             @Override
@@ -161,6 +165,9 @@ public class KeyboardView extends GridLayout {
                     voicing = 0;
                 }
                 updateButton();
+                if (DataManager.getInstance().getVibratorStatus()) {
+                    VibratorUtil.vibrate(mContext, TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                }
             }
         });
         rowSpec = GridLayout.spec(3);
@@ -170,7 +177,7 @@ public class KeyboardView extends GridLayout {
 
         Button btnKata = new Button(context);
         btnKata.setText("平/片");
-        btnKata.setTextSize(TypedValue.COMPLEX_UNIT_SP, switchSize);
+        btnKata.setTextSize(TypedValue.COMPLEX_UNIT_SP, SWITCH_SIZE);
         btnKata.setBackgroundColor(Color.TRANSPARENT);
         btnKata.setOnClickListener(new OnClickListener() {
             @Override
@@ -181,6 +188,9 @@ public class KeyboardView extends GridLayout {
                     kata = 0;
                 }
                 updateButton();
+                if (DataManager.getInstance().getVibratorStatus()) {
+                    VibratorUtil.vibrate(mContext, TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME);
+                }
             }
         });
         rowSpec = GridLayout.spec(3);
