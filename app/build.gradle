@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.xmx.tango"
@@ -36,10 +38,10 @@ dependencies {
     //avoscloud-push 为推送与实时聊天需要的包
     compile('cn.leancloud.android:avoscloud-push:v3.+@aar') { transitive = true }
     //avoscloud-statistics 为 LeanCloud 统计包
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:design:25.4.0'
+    compile 'com.android.support:support-v4:25.4.0'
+    compile 'com.android.support:multidex:1.0.2'
     compile 'org.xutils:xutils:3.3.36'
     compile ('cn.leancloud.android:avoscloud-sdk:v3.+')
     compile ('cn.leancloud.android:avoscloud-statistics:v3.+')
@@ -68,4 +70,13 @@ dependencies {
     compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'
 
     compile 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
 }
