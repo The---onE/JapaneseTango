@@ -13,7 +13,7 @@
         android:background="#E3EDCD">
 
         <EditText
-            android:id="@+id/edit_test"
+            android:id="@+id/testEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -24,100 +24,100 @@
             android:textSize="28sp" />
 
         <TextView
-            android:id="@+id/text_writing"
+            android:id="@+id/writingView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/edit_test"
+            android:layout_below="@id/testEdit"
             android:layout_centerHorizontal="true"
             android:textSize="36sp" />
 
         <TextView
-            android:id="@+id/text_meaning"
+            android:id="@+id/meaningView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_writing"
+            android:layout_below="@+id/writingView"
             android:layout_centerHorizontal="true"
             android:textSize="42sp" />
 
         <Button
-            android:id="@+id/btn_keyboard"
+            android:id="@+id/btnKeyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_answer"
+            android:layout_above="@+id/btnAnswer"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:layout_toLeftOf="@+id/keyboardView"
             android:background="@null"
             android:text="键盘"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_answer"
+            android:id="@+id/btnAnswer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_hint"
+            android:layout_above="@+id/btnHint"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:layout_toLeftOf="@+id/keyboardView"
             android:background="@null"
             android:text="答案"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_hint"
+            android:id="@+id/btnHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/layout_keyboard"
+            android:layout_toLeftOf="@+id/keyboardView"
             android:background="@null"
             android:text="提示"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_slash"
+            android:id="@+id/btnSlash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_masu"
+            android:layout_above="@+id/btnMasu"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_toRightOf="@+id/keyboardView"
             android:background="@null"
             android:text="/"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_masu"
+            android:id="@+id/btnMasu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_backspace"
+            android:layout_above="@+id/btnBackspace"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_toRightOf="@+id/keyboardView"
             android:background="@null"
             android:text="ます"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_backspace"
+            android:id="@+id/btnBackspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btn_space"
+            android:layout_above="@+id/btnSpace"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_toRightOf="@+id/keyboardView"
             android:background="@null"
             android:text="后退"
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/btn_space"
+            android:id="@+id/btnSpace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/layout_keyboard"
+            android:layout_toRightOf="@+id/keyboardView"
             android:background="@null"
             android:text="空格"
             android:textSize="30sp" />
 
         <com.xmx.tango.module.keyboard.KeyboardView
-            android:id="@+id/layout_keyboard"
+            android:id="@+id/keyboardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.xmx.tango.R;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
 import com.xmx.tango.module.operate.LoadNewTangoEvent;
-import com.xmx.tango.module.speaker.SpeakTangoManager;
+import com.xmx.tango.module.speaker.speakTangoManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
@@ -116,7 +116,7 @@ public class MissionActivity extends BaseTempActivity {
     private void onWritingClick(View view) {
         String writing = writingView.getText().toString();
         if (!writing.equals("")) {
-            SpeakTangoManager.getInstance().speak(writing);
+            speakTangoManager.INSTANCE.speak(MissionActivity.this, writing);
         }
     }
 
@@ -124,7 +124,7 @@ public class MissionActivity extends BaseTempActivity {
     private void onPronunciationClick(View view) {
         String pronunciation = pronunciationView.getText().toString();
         if (!pronunciation.equals("")) {
-            SpeakTangoManager.getInstance().speak(pronunciation);
+            speakTangoManager.INSTANCE.speak(MissionActivity.this, pronunciation);
         }
     }
 

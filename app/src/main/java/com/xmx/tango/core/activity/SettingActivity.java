@@ -15,7 +15,7 @@ import com.xmx.tango.R;
 import com.xmx.tango.module.font.JapaneseFontDialog;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
 import com.xmx.tango.module.operate.LoadNewTangoEvent;
-import com.xmx.tango.module.speaker.SpeakTangoManager;
+import com.xmx.tango.module.speaker.speakTangoManager;
 import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.tango.TangoConstants;
@@ -390,7 +390,7 @@ public class SettingActivity extends BaseTempActivity {
             @Override
             public void onClick(View view) {
                 String text = testView.getText().toString();
-                SpeakTangoManager.getInstance().speak(text);
+                speakTangoManager.INSTANCE.speak(SettingActivity.this, text);
             }
         });
 

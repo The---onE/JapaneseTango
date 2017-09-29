@@ -30,18 +30,18 @@ public class TangoConstants {
 
     public static final int MISSION_COUNT = 20;
 
-    public static final int INTERVAL_TIME_MIN = 500;
-    public static final int NEW_TANGO_DELAY = 1000;
+    public static final long INTERVAL_TIME_MIN = 500;
+    public static final long NEW_TANGO_DELAY = 1000;
 
-    public static final int SHOW_ANSWER_DELAY = 2000;
+    public static final long SHOW_ANSWER_DELAY = 2000;
 
     public static final int DEFAULT_GOAL = 30;
 
-    public static final int KEYBOARD_INPUT_VIBRATE_TIME = 50;
-    public static final int TEST_RIGHT_VIBRATE_TIME = 200;
-    public static final int REMEMBER_VIBRATE_TIME = 100;
-    public static final int REMEMBER_FOREVER_VIBRATE_TIME = 200;
-    public static final int FORGET_VIBRATE_TIME = 100;
+    public static final long KEYBOARD_INPUT_VIBRATE_TIME = 50;
+    public static final long TEST_RIGHT_VIBRATE_TIME = 200;
+    public static final long REMEMBER_VIBRATE_TIME = 100;
+    public static final long REMEMBER_FOREVER_VIBRATE_TIME = 200;
+    public static final long FORGET_VIBRATE_TIME = 100;
 
     public static int FORGOTTEN_SCORE(int source) {
         return source * 4 / 5;
