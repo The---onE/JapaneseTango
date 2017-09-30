@@ -17,7 +17,7 @@ import com.xmx.tango.R;
 import com.xmx.tango.module.crud.ChooseTangoEvent;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
 import com.xmx.tango.module.operate.LoadNewTangoEvent;
-import com.xmx.tango.module.speaker.speakTangoManager;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoManager;
@@ -114,7 +114,7 @@ public class HomeFragment extends xUtilsFragment {
     private void onWritingClick(View view) {
         String writing = writingView.getText().toString();
         if (!writing.equals("")) {
-            speakTangoManager.INSTANCE.speak(getContext(), writing);
+            SpeakTangoManager.INSTANCE.speak(getContext(), writing);
         }
     }
 
@@ -122,7 +122,7 @@ public class HomeFragment extends xUtilsFragment {
     private void onPronunciationClick(View view) {
         String pronunciation = pronunciationView.getText().toString();
         if (!pronunciation.equals("")) {
-            speakTangoManager.INSTANCE.speak(getContext(), pronunciation);
+            SpeakTangoManager.INSTANCE.speak(getContext(), pronunciation);
         }
     }
 

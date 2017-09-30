@@ -19,7 +19,7 @@ import com.xmx.tango.base.fragment.xUtilsFragment;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
 import com.xmx.tango.module.sentence.SentenceActivity;
-import com.xmx.tango.module.speaker.speakTangoManager;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.TangoConstants;
 
 import org.greenrobot.eventbus.EventBus;
@@ -132,7 +132,7 @@ public class SentenceFragment extends xUtilsFragment {
         sentenceList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                speakTangoManager.INSTANCE.speak(getContext(), sentences.get(i));
+                SpeakTangoManager.INSTANCE.speak(getContext(), sentences.get(i));
                 return true;
             }
         });

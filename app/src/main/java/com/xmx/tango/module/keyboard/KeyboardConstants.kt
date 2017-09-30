@@ -1,11 +1,13 @@
-package com.xmx.tango.module.keyboard;
+package com.xmx.tango.module.keyboard
 
 /**
  * Created by The_onE on 2017/6/1.
+ * 假名键盘常量
  */
-
-public class KeyboardConstants {
-    static final public String[] kanaArray = new String[]{
+object KeyboardConstants {
+    // 假名表
+    val KANA_ARRAY = arrayOf(
+            // 平假名清音
             "あ", "い", "う", "え", "お",
             "か", "き", "く", "け", "こ",
             "さ", "し", "す", "せ", "そ",
@@ -16,7 +18,7 @@ public class KeyboardConstants {
             "や", "い", "ゆ", "え", "よ",
             "ら", "り", "る", "れ", "ろ",
             "わ", "を", "ん", "っ", " ",
-
+            // 平假名浊音
             "ぁ", "ぃ", "ぅ", "ぇ", "ぉ",
             "が", "ぎ", "ぐ", "げ", "ご",
             "ざ", "じ", "ず", "ぜ", "ぞ",
@@ -27,7 +29,7 @@ public class KeyboardConstants {
             "ゃ", "ぃ", "ゅ", "ぇ", "ょ",
             "ぱ", "ぴ", "ぷ", "ぺ", "ぽ",
             "わ", "ゐ", "々", "ゑ", " ",
-
+            // 片假名清音
             "ア", "イ", "ウ", "エ", "オ",
             "カ", "キ", "ク", "ケ", "コ",
             "サ", "シ", "ス", "セ", "ソ",
@@ -38,7 +40,7 @@ public class KeyboardConstants {
             "ヤ", "イ", "ユ", "エ", "ヨ",
             "ラ", "リ", "ル", "レ", "ロ",
             "ワ", "ー", "ン", "ッ", " ",
-
+            // 片假名浊音
             "ァ", "ィ", "ゥ", "ェ", "ォ",
             "ガ", "ギ", "グ", "ゲ", "ゴ",
             "ザ", "ジ", "ズ", "ゼ", "ゾ",
@@ -48,9 +50,8 @@ public class KeyboardConstants {
             "マ", "ミ", "ム", "メ", "モ",
             "ャ", "ヵ", "ュ", "ヶ", "ョ",
             "パ", "ピ", "プ", "ペ", "ポ",
-            "ワ", "ヰ", "ヲ", "ヱ", " ",
-    };
+            "ワ", "ヰ", "ヲ", "ヱ", " ")
 
-    public static final int VOICING_LINES = 10;
-    public static final int KATA_LINES = 20;
+    val VOICING_LINES = 10 // 切换浊音跳过行数
+    val KATA_LINES = 20 // 切换片假名跳过行数
 }

@@ -20,7 +20,7 @@ import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.calendar.DateData;
 import com.xmx.tango.module.calendar.DateDataEntityManager;
-import com.xmx.tango.module.sentence.sentenceUtil;
+import com.xmx.tango.module.sentence.SentenceUtil;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
@@ -205,7 +205,7 @@ public class SplashActivity extends BaseSplashActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                sentenceUtil.INSTANCE.init();
+                SentenceUtil.INSTANCE.init();
             }
         }).start();
     }

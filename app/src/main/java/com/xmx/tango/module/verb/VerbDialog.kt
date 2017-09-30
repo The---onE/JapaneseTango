@@ -21,7 +21,7 @@ import java.util.HashMap
  * Created by The_onE on 2016/9/21.
  * 动词变形对话框
  */
-class VerbDialog() : BaseDialog() {
+class VerbDialog : BaseDialog() {
 
     private var verb: String? = null // 动词原型，辞书形
     private var type: Int = 0 // 1：五段动词 2：一段动词 3：特殊动词
@@ -118,9 +118,8 @@ class VerbDialog() : BaseDialog() {
         }
     }
 
-    override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View {
-        return inflater.inflate(R.layout.dialog_verb, container)
-    }
+    override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View =
+            inflater.inflate(R.layout.dialog_verb, container)
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         verb?.apply {

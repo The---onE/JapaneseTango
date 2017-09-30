@@ -11,7 +11,7 @@ import com.atilika.kuromoji.ipadic.Token
 import com.xmx.tango.R
 import com.xmx.tango.base.activity.BaseTempActivity
 import com.xmx.tango.common.data.DataManager
-import com.xmx.tango.module.speaker.speakTangoManager
+import com.xmx.tango.module.speaker.SpeakTangoManager
 import com.xmx.tango.module.tango.TangoConstants
 import com.xmx.tango.utils.StrUtil
 import com.xmx.tango.utils.VibratorUtil
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_sentence.*
  */
 class SentenceActivity : BaseTempActivity() {
 
-    private var tokenList: List<Token> = ArrayList<Token>() // 句子成分列表
+    private var tokenList: List<Token> = ArrayList() // 句子成分列表
     private var typeface: Typeface? = null // 日文字体
     private var task: AsyncTask<Void, Void, List<Token>>? = null // 分词任务
 
@@ -36,15 +36,13 @@ class SentenceActivity : BaseTempActivity() {
         }
         sentenceView.text = sentence
         // 点击句子朗读
-        sentenceView.setOnClickListener { speakTangoManager.speak(this@SentenceActivity, sentence) }
+        sentenceView.setOnClickListener { SpeakTangoManager.speak(this@SentenceActivity, sentence) }
 
         // 开始分词任务
         task = @SuppressLint("StaticFieldLeak")
         object : AsyncTask<Void, Void, List<Token>>() {
-            override fun doInBackground(vararg voids: Void): List<Token> {
-                // 调用分词工具分词
-                return sentenceUtil.analyzeSentence(sentence)
-            }
+            override fun doInBackground(vararg voids: Void): List<Token> =
+                    SentenceUtil.analyzeSentence(sentence) // 调用分词工具分词
 
             override fun onPostExecute(tokens: List<Token>) {
                 super.onPostExecute(tokens)
@@ -67,7 +65,7 @@ class SentenceActivity : BaseTempActivity() {
                     if ("*" != reading && reading != surface) {
                         // 若读法与写法不同（写法中含有汉字）
                         // 将片假名转换为平假名
-                        val hiraReading = sentenceUtil.convertKana(reading)
+                        val hiraReading = SentenceUtil.convertKana(reading)
                         if (hiraReading != surface) {
                             readingItem.text = hiraReading
                         } else {
@@ -150,7 +148,7 @@ class SentenceActivity : BaseTempActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // 中断分词任务
-        task?.cancel(true);
+        task?.cancel(true)
     }
 
 }

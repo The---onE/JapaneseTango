@@ -21,7 +21,7 @@ import com.xmx.tango.module.font.JapaneseFontChangeEvent;
 import com.xmx.tango.module.import_.ImportNetEntityActivity;
 import com.xmx.tango.module.operate.OperateTangoEvent;
 import com.xmx.tango.module.crud.SearchTangoDialog;
-import com.xmx.tango.module.speaker.speakTangoManager;
+import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoAdapter;
 import com.xmx.tango.module.tango.TangoConstants;
@@ -242,7 +242,7 @@ public class TangoListFragment extends xUtilsFragment {
                     itemDoubleFlag = false;
                     String writing = tango.writing;
                     if (!writing.equals("")) {
-                        speakTangoManager.INSTANCE.speak(getContext(), writing);
+                        SpeakTangoManager.INSTANCE.speak(getContext(), writing);
                     }
                 } else {
                     itemDoubleFlag = true;

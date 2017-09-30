@@ -12,7 +12,6 @@ import com.xmx.tango.R
 
 import com.xmx.tango.base.activity.BaseTempActivity
 import com.xmx.tango.common.data.DataManager
-import com.xmx.tango.module.keyboard.InputCallback
 import com.xmx.tango.module.tango.Tango
 import com.xmx.tango.module.tango.TangoConstants
 import com.xmx.tango.module.tango.TangoManager
@@ -37,11 +36,7 @@ class TestActivity : BaseTempActivity() {
         setContentView(R.layout.activity_test)
 
         // 初始化假名键盘
-        keyboardView.init(object : InputCallback() {
-            override fun input(result: String) {
-                inputToEdit(result)
-            }
-        })
+        keyboardView.init { result -> inputToEdit(result) }
         // 设置日语字体
         setJapaneseFont()
     }
@@ -156,7 +151,7 @@ class TestActivity : BaseTempActivity() {
 
         // 设置解释
         var textSize = TangoConstants.DEFAULT_TEST_MEANING_TEXT_SIZE// 文字大小
-        if (tango?.partOfSpeech?.isNotBlank() ?: false) {
+        if (tango?.partOfSpeech?.isNotBlank() == true) {
             // 设置词性
             meaningView.text = "[${tango?.partOfSpeech}]${tango?.meaning}"
         } else {
@@ -293,9 +288,8 @@ class TestActivity : BaseTempActivity() {
      * @param textView 文本框
      * @return 文本框宽度
      */
-    private fun measureWidth(textView: TextView): Float {
-        return textView.paint.measureText(textView.text.toString())
-    }
+    private fun measureWidth(textView: TextView): Float =
+            textView.paint.measureText(textView.text.toString())
 
     /**
      * 在编辑框中插入文字

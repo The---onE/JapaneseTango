@@ -1,7 +1,5 @@
 package com.xmx.tango.module.test
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -12,7 +10,6 @@ import com.xmx.tango.R
 
 import com.xmx.tango.base.activity.BaseTempActivity
 import com.xmx.tango.common.data.DataManager
-import com.xmx.tango.module.keyboard.InputCallback
 import com.xmx.tango.module.sentence.SentenceActivity
 import com.xmx.tango.module.tango.TangoConstants
 import com.xmx.tango.utils.StrUtil
@@ -29,11 +26,7 @@ class TypewriterActivity : BaseTempActivity() {
         setContentView(R.layout.activity_typewriter)
 
         // 初始化假名键盘
-        keyboardView.init(object : InputCallback() {
-            override fun input(result: String) {
-                inputToEdit(result)
-            }
-        })
+        keyboardView.init { result -> inputToEdit(result) }
         keyboardView.enable()
         // 设置日文字体
         setJapaneseFont()
