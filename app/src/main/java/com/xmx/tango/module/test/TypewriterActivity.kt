@@ -15,6 +15,7 @@ import com.xmx.tango.common.data.DataManager
 import com.xmx.tango.module.keyboard.InputCallback
 import com.xmx.tango.module.sentence.SentenceActivity
 import com.xmx.tango.module.tango.TangoConstants
+import com.xmx.tango.utils.StrUtil
 import com.xmx.tango.utils.VibratorUtil
 import kotlinx.android.synthetic.main.activity_typewriter.*
 
@@ -74,9 +75,7 @@ class TypewriterActivity : BaseTempActivity() {
         btnCopy.setOnClickListener {
             val text = typewriterEdit.text.toString()
             if (text.isNotBlank()) {
-                val cmb = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clipData = ClipData.newPlainText("label", text) //文本型数据 clipData 的构造方法。
-                cmb.primaryClip = clipData
+                StrUtil.copyToClipboard(this@TypewriterActivity, text)
                 // 震动提示
                 if (DataManager.getInstance().vibratorStatus) {
                     VibratorUtil.vibrate(this@TypewriterActivity,

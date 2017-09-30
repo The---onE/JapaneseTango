@@ -1,8 +1,12 @@
 package com.xmx.tango.utils;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.xmx.tango.common.data.DataManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -415,6 +419,17 @@ public class StrUtil {
      */
     public static void showLog(String tag, int i) {
         Log.e(tag, "" + i);
+    }
+
+    /**
+     * 复制到剪贴板
+     * @param context 当前上下文
+     * @param text 要复制的内容
+     */
+    public static void copyToClipboard(Context context, String text) {
+        ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("label", text); //文本型数据 clipData 的构造方法。
+        cmb.setPrimaryClip(clipData);
     }
 }
 

@@ -2,15 +2,10 @@ package com.xmx.tango.core.activity;
 
 import android.Manifest;
 import android.app.AppOpsManager;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,7 +20,7 @@ import com.xmx.tango.core.Constants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.calendar.DateData;
 import com.xmx.tango.module.calendar.DateDataEntityManager;
-import com.xmx.tango.module.sentence.SentenceUtil;
+import com.xmx.tango.module.sentence.sentenceUtil;
 import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.module.tango.TangoConstants;
 import com.xmx.tango.module.tango.TangoEntityManager;
@@ -210,7 +205,7 @@ public class SplashActivity extends BaseSplashActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SentenceUtil.init();
+                sentenceUtil.INSTANCE.init();
             }
         }).start();
     }
