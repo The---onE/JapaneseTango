@@ -11,7 +11,7 @@ import java.util.HashMap
  * Created by The_onE on 2016/9/20.
  * 日语TTS管理器
  */
-object speakTangoManager {
+object SpeakTangoManager {
 
     /**
      * 朗读字符串

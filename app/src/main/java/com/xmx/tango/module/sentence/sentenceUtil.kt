@@ -8,7 +8,7 @@ import com.atilika.kuromoji.ipadic.Tokenizer
  * 句子分词工具
  */
 
-object sentenceUtil {
+object SentenceUtil {
     // 分词工具
     private var tokenizer: Tokenizer? = null
 
@@ -47,7 +47,7 @@ object sentenceUtil {
      */
     fun convertKana(tango: String): String {
         val sb = StringBuilder(tango)
-        for (i in 0..sb.length - 1) {
+        for (i in 0 until sb.length) {
             val c = sb[i]
             val index = katakana.indexOf(c)
             if (index > 0) {

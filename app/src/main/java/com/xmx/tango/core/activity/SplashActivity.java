@@ -1,6 +1,7 @@
 package com.xmx.tango.core.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -74,10 +75,9 @@ public class SplashActivity extends BaseSplashActivity {
                 init();
             }
         }
-
-
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void init() {
         timer = new Timer() {
             @Override
@@ -101,39 +101,39 @@ public class SplashActivity extends BaseSplashActivity {
         if (!Constants.isSameDate(now, last)) {
             if (last.getTime() > 0) {
                 // 更新上次签到日数据
-                DateData dateData = DateDataEntityManager.getInstance()
+                DateData dateData = DateDataEntityManager.INSTANCE
                         .selectLatest("addTime", false,
                                 "Year=" + (last.getYear() + 1900),
                                 "Month=" + (last.getMonth() + 1),
                                 "Date=" + last.getDate());
                 if (dateData != null) {
-                    DateDataEntityManager.getInstance().updateData(dateData.id,
+                    DateDataEntityManager.INSTANCE.updateData(dateData.getId(),
                             "Mission=" + DataManager.getInstance().getTodayMission());
                 } else {
                     dateData = new DateData();
-                    dateData.year = last.getYear() + 1900;
-                    dateData.month = last.getMonth() + 1;
-                    dateData.date = last.getDate();
-                    dateData.checkIn = 1;
-                    dateData.mission = DataManager.getInstance().getTodayMission();
-                    dateData.addTime = now;
-                    DateDataEntityManager.getInstance().insertData(dateData);
+                    dateData.setYear(last.getYear() + 1900);
+                    dateData.setMonth(last.getMonth() + 1);
+                    dateData.setDate(last.getDate());
+                    dateData.setCheckIn(1);
+                    dateData.setMission(DataManager.getInstance().getTodayMission());
+                    dateData.setAddTime(now);
+                    DateDataEntityManager.INSTANCE.insertData(dateData);
                 }
             }
             // 今天打卡签到
-            DateData todayData = DateDataEntityManager.getInstance()
+            DateData todayData = DateDataEntityManager.INSTANCE
                     .selectLatest("addTime", false,
                             "Year=" + (now.getYear() + 1900),
                             "Month=" + (now.getMonth() + 1),
                             "Date=" + now.getDate());
             if (todayData == null) {
                 todayData = new DateData();
-                todayData.year = now.getYear() + 1900;
-                todayData.month = now.getMonth() + 1;
-                todayData.date = now.getDate();
-                todayData.checkIn = 1;
-                todayData.addTime = now;
-                DateDataEntityManager.getInstance().insertData(todayData);
+                todayData.setYear(now.getYear() + 1900);
+                todayData.setMonth(now.getMonth() + 1);
+                todayData.setDate(now.getDate());
+                todayData.setCheckIn(1);
+                todayData.setAddTime(now);
+                DateDataEntityManager.INSTANCE.insertData(todayData);
             }
 
             DataManager.getInstance().setForgetLastTime(now.getTime());

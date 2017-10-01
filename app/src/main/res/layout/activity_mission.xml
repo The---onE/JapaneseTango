@@ -13,7 +13,7 @@
         android:background="#E3EDCD">
 
         <TextView
-            android:id="@+id/tv_tango_count"
+            android:id="@+id/countView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -21,7 +21,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/tv_tango_prev"
+            android:id="@+id/prevView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -43,20 +43,20 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_tango_pronunciation"
+                    android:id="@+id/pronunciationView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="36sp" />
 
                 <TextView
-                    android:id="@+id/tv_tango_tone"
+                    android:id="@+id/toneView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="36sp" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_tango_writing"
+                android:id="@+id/writingView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -70,13 +70,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_tango_part"
+                    android:id="@+id/partView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="36sp" />
 
                 <TextView
-                    android:id="@+id/tv_tango_meaning"
+                    android:id="@+id/meaningView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="36sp" />
@@ -92,13 +92,13 @@
             android:orientation="vertical">
 
             <View
-                android:id="@+id/line_answer"
+                android:id="@+id/answerLine"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@android:color/darker_gray" />
 
             <Button
-                android:id="@+id/btn_answer"
+                android:id="@+id/answerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -118,7 +118,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_remember"
+                    android:id="@+id/rememberButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -133,7 +133,7 @@
                     android:background="@android:color/darker_gray" />
 
                 <Button
-                    android:id="@+id/btn_forget"
+                    android:id="@+id/forgetButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
