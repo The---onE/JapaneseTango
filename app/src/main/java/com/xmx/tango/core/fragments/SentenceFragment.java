@@ -18,6 +18,7 @@ import com.xmx.tango.R;
 import com.xmx.tango.base.fragment.xUtilsFragment;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
+import com.xmx.tango.module.sentence.LrcParser;
 import com.xmx.tango.module.sentence.SentenceActivity;
 import com.xmx.tango.module.speaker.SpeakTangoManager;
 import com.xmx.tango.module.tango.TangoConstants;
@@ -28,8 +29,14 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,20 +102,6 @@ public class SentenceFragment extends xUtilsFragment {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        sentences.add("春の魔法に陽射しは変わって");
-        sentences.add("人も街も明るめに着替えた");
-        sentences.add("風に誘われ気づけば知らずに");
-        sentences.add("僕は口ずさんでいた");
-        sentences.add("遠い昔の記憶の彼方に");
-        sentences.add("忘れかけてた２人のfavorite song");
-        sentences.add("なぜこの曲が浮かんだのだろう？");
-        sentences.add("突然に");
-        sentences.add("愛しさは");
-        sentences.add("いつも　ずっと前から");
-        sentences.add("準備してる");
-        sentences.add("ノイズだらけのRadioが");
-        sentences.add("聴こえて来たんだ");
-        sentences.add("歳月（とき）を超え…");
         sentences.add("君はメロディー　メロディー");
         sentences.add("懐かしいハーモニー　ハーモニー");
         sentences.add("好きだよと言えず抑えていた胸の痛み");
@@ -118,8 +111,22 @@ public class SentenceFragment extends xUtilsFragment {
         sentences.add("輝いた日々が");
         sentences.add("蘇（よみがえ）るよ");
 
-//        adapter = new ArrayAdapter<String>(getContext(),
-//                android.R.layout.simple_list_item_1, sentences);
+        try {
+            InputStream is = getActivity().getAssets().open("lrc.lrc");
+            LrcParser.LrcInfo info = LrcParser.INSTANCE.parser(is);
+            sentences.clear();
+            if (info.getInfo() != null) {
+                for (Map.Entry<Long, String> entry : info.getInfo().entrySet()) {
+                    String text = entry.getValue();
+                    if (text != null && text.trim().length() > 0) {
+                        sentences.add(text);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            filterException(e);
+        }
+
         setJapaneseFont();
         adapter = new SentenceAdapter();
         sentenceList.setAdapter(adapter);
