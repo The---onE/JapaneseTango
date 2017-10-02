@@ -1,8 +1,10 @@
 package com.xmx.tango.core.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,6 +32,8 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,6 +56,8 @@ public class SentenceFragment extends xUtilsFragment {
     private SentenceAdapter adapter;
     private List<String> sentences = new ArrayList<>();
     private Typeface typeface;
+
+    private static final int CHOOSE_FILE_RESULT = 1;
 
     private class SentenceAdapter extends BaseAdapter {
         class ViewHolder {
@@ -98,6 +104,69 @@ public class SentenceFragment extends xUtilsFragment {
     private void onKuromojiClick(View view) {
         String sentence = editSentence.getText().toString();
         startSentenceActivity(sentence);
+    }
+
+    @Event(value = R.id.btn_choose_file)
+    private void onChooseFileClick(View view) {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, CHOOSE_FILE_RESULT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CHOOSE_FILE_RESULT && resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            if (uri != null) {
+                String filePath = uri.getPath();
+                if (filePath.contains("primary:")) {
+                    final String[] split = filePath.split(":");
+                    final String fileType = split[0];
+                    filePath = android.os.Environment
+                            .getExternalStorageDirectory() + "/" + split[1];
+                }
+                if (filePath.startsWith("/external_files/")) {
+                    filePath = filePath.replaceAll("^/external_files", android.os.Environment
+                            .getExternalStorageDirectory().toString());
+                }
+                if (filePath.startsWith("/external/")) {
+                    filePath = filePath.replaceAll("^/external", android.os.Environment
+                            .getExternalStorageDirectory().toString());
+                }
+
+                try {
+                    String prefix = filePath.substring(filePath.lastIndexOf(".") + 1);
+                    if ("txt".equals(prefix)) {
+                        InputStream is = new FileInputStream(filePath);
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                        sentences.clear();
+                        String text;
+                        while ((text = reader.readLine()) != null) {
+                            sentences.add(text);
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else if ("lrc".equals(prefix)) {
+                        InputStream is = new FileInputStream(filePath);
+                        LrcParser.LrcInfo info = LrcParser.INSTANCE.parser(is);
+                        sentences.clear();
+                        if (info.getInfo() != null) {
+                            for (Map.Entry<Long, String> entry : info.getInfo().entrySet()) {
+                                String text = entry.getValue();
+                                if (text != null && text.trim().length() > 0) {
+                                    sentences.add(text);
+                                }
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        showToast("暂不支持该类型文件的解析");
+                    }
+                } catch (Exception e) {
+                    filterException(e);
+                }
+            }
+        }
     }
 
     @Override

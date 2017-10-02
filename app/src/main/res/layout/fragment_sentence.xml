@@ -5,13 +5,19 @@
     android:background="#E3EDCD"
     tools:context=".core.fragments.SentenceFragment">
 
+    <Button
+        android:id="@+id/btn_choose_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="@string/choose_file" />
+
     <ListView
         android:id="@+id/list_sentence"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/edit_sentence">
-
-    </ListView>
+        android:layout_above="@+id/edit_sentence"
+        android:layout_below="@+id/btn_choose_file" />
 
     <EditText
         android:id="@+id/edit_sentence"
