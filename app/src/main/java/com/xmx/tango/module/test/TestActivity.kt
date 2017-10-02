@@ -1,7 +1,9 @@
 package com.xmx.tango.module.test
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Point
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
@@ -125,11 +127,14 @@ class TestActivity : BaseTempActivity() {
     /**
      * 加载新单语
      */
+    @SuppressLint("SetTextI18n")
     private fun loadNewTango() {
         // 获取文本宽度
         val wm = applicationContext
                 .getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val width = wm.defaultDisplay.width
+        val p = Point()
+        wm.defaultDisplay.getSize(p)
+        val width = p.x
         var length: Float // 文字宽度
 
         prevTango = tango // 保存当前单语

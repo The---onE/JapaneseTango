@@ -21,8 +21,8 @@ class DateData : ISQLEntity {
     var review = 0
     var mission = 0
     var addTime: Date = Date(0)
-    var flags = ""
-    var delFlag = 0
+    private var flags = ""
+    private var delFlag = 0
 
     override fun tableFields(): String {
         return "ID integer not null primary key autoincrement, " +

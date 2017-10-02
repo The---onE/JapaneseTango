@@ -4,14 +4,13 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Point
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.TextView
 
 import com.xmx.tango.R
@@ -213,7 +212,9 @@ class MissionActivity : BaseTempActivity() {
                 MotionEvent.ACTION_UP -> {
                     val wm = applicationContext
                             .getSystemService(Context.WINDOW_SERVICE) as WindowManager
-                    val h = wm.defaultDisplay.height
+                    val p = Point()
+                    wm.defaultDisplay.getSize(p)
+                    val h = p.y
                     val y = h - motionEvent.rawY
                     // 向上滑动超过屏幕高度1/3，永久记住单语
                     if (y > h / 3) {
@@ -418,10 +419,11 @@ class MissionActivity : BaseTempActivity() {
         // 测量屏幕宽度用于调整文字大小
         val wm = applicationContext
                 .getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val width = wm.defaultDisplay.width
-        var textSize = 0
+        val p = Point()
+        wm.defaultDisplay.getSize(p)
+        val width = p.x
         // 处理发音
-        textSize = TangoConstants.DEFAULT_PRONUNCIATION_TEXT_SIZE
+        var textSize = TangoConstants.DEFAULT_PRONUNCIATION_TEXT_SIZE
         pronunciationView.textSize = textSize.toFloat()
         pronunciationView.text = newTango.pronunciation
         pronunciationView.visibility = View.INVISIBLE
@@ -611,8 +613,8 @@ class MissionActivity : BaseTempActivity() {
             tf = Typeface.createFromAsset(mgr, font)
         }
         // 为日文设置字体
-        pronunciationView!!.typeface = tf
-        writingView!!.typeface = tf
+        pronunciationView.typeface = tf
+        writingView.typeface = tf
     }
 
     /**
