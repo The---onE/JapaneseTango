@@ -32,13 +32,9 @@ object LrcParser {
      * @throws IOException
      */
     @Throws(IOException::class)
-    fun parser(inputStream: InputStream): LrcInfo {
+    fun parser(reader: BufferedReader): LrcInfo {
         val lrcInfo = LrcInfo()
         val maps = TreeMap<Long, String>() // 歌词与时间的映射
-
-        // 三层包装
-        val inr = InputStreamReader(inputStream)
-        val reader = BufferedReader(inr)
         // 一行一行的读，每读一行，解析一行
         var line: String? = reader.readLine()
         while (line != null) {
@@ -102,6 +98,8 @@ object LrcParser {
                             val currentContent = content[content.size - 1]
                             // 设置时间点和内容的映射
                             currentContent?.apply { maps.put(currentTime, this) }
+                        } else {
+                            maps.put(currentTime, "")
                         }
                     }
                 }

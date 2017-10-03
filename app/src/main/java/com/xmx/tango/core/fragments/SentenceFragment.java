@@ -31,16 +31,15 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,7 +82,7 @@ public class SentenceFragment extends xUtilsFragment {
         public View getView(int i, View view, ViewGroup viewGroup) {
             final ViewHolder holder;
             if (view == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.item_sentence, null);
+                view = LayoutInflater.from(getContext()).inflate(R.layout.item_sentence, viewGroup, false);
                 holder = new ViewHolder();
                 holder.textView = (TextView) view.findViewById(R.id.item_sentence);
 
@@ -138,29 +137,38 @@ public class SentenceFragment extends xUtilsFragment {
                 try {
                     String prefix = filePath.substring(filePath.lastIndexOf(".") + 1);
                     if ("txt".equals(prefix)) {
+                        String charset = charsetDetect(filePath);
                         InputStream is = new FileInputStream(filePath);
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                        InputStreamReader isr = new InputStreamReader(is, charset);
+                        BufferedReader reader = new BufferedReader(isr);
                         sentences.clear();
                         String text;
                         while ((text = reader.readLine()) != null) {
                             sentences.add(text);
                         }
                         adapter.notifyDataSetChanged();
+                        sentenceList.smoothScrollToPosition(0);
+                        showToast("打开成功");
                     } else if ("lrc".equals(prefix)) {
+                        String charset = charsetDetect(filePath);
                         InputStream is = new FileInputStream(filePath);
-                        LrcParser.LrcInfo info = LrcParser.INSTANCE.parser(is);
+                        InputStreamReader isr = new InputStreamReader(is, charset);
+                        BufferedReader reader = new BufferedReader(isr);
+                        LrcParser.LrcInfo info = LrcParser.INSTANCE.parser(reader);
                         sentences.clear();
                         if (info.getInfo() != null) {
                             for (Map.Entry<Long, String> entry : info.getInfo().entrySet()) {
                                 String text = entry.getValue();
-                                if (text != null && text.trim().length() > 0) {
+                                if (text != null) {
                                     sentences.add(text);
                                 }
                             }
                         }
                         adapter.notifyDataSetChanged();
+                        sentenceList.smoothScrollToPosition(0);
+                        showToast("打开成功");
                     } else {
-                        showToast("暂不支持该类型文件的解析");
+                        showToast("暂不支持打开该类型文件");
                     }
                 } catch (Exception e) {
                     filterException(e);
@@ -182,12 +190,14 @@ public class SentenceFragment extends xUtilsFragment {
 
         try {
             InputStream is = getActivity().getAssets().open("lrc.lrc");
-            LrcParser.LrcInfo info = LrcParser.INSTANCE.parser(is);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+            LrcParser.LrcInfo info = LrcParser.INSTANCE.parser(reader);
             sentences.clear();
             if (info.getInfo() != null) {
                 for (Map.Entry<Long, String> entry : info.getInfo().entrySet()) {
                     String text = entry.getValue();
-                    if (text != null && text.trim().length() > 0) {
+                    if (text != null) {
                         sentences.add(text);
                     }
                 }
@@ -235,6 +245,29 @@ public class SentenceFragment extends xUtilsFragment {
         if (font != null) {
             typeface = Typeface.createFromAsset(mgr, font);
         }
+    }
+
+    public String charsetDetect(String path) throws IOException {
+        BufferedInputStream bin = new BufferedInputStream(new FileInputStream(path));
+        int p = (bin.read() << 8) + bin.read();
+        bin.close();
+        String code;
+
+        switch (p) {
+            case 0xefbb:
+                code = "UTF-8";
+                break;
+            case 0xfffe:
+                code = "Unicode";
+                break;
+            case 0xfeff:
+                code = "UTF-16BE";
+                break;
+            default:
+                code = "GBK";
+        }
+
+        return code;
     }
 
     @Subscribe
