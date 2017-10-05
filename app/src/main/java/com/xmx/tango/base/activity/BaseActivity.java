@@ -74,7 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void filterException(Exception e) {
-        ExceptionUtil.normalException(e, this);
+        ExceptionUtil.INSTANCE.normalException(e, this);
     }
 
     protected void showToast(String str) {

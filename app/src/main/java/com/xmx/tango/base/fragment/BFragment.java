@@ -15,7 +15,7 @@ import com.xmx.tango.utils.ExceptionUtil;
 public abstract class BFragment extends Fragment {
 
     protected void filterException(Exception e) {
-        ExceptionUtil.normalException(e, getContext());
+        ExceptionUtil.INSTANCE.normalException(e, getContext());
     }
 
     protected void showToast(String str) {

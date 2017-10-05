@@ -163,7 +163,7 @@ public class FileUtil {
 
         //来源为文件夹，目标为文件
         if (src.isDirectory() && dest.isFile()) {
-            throw new IOException(StrUtil.format("Can not move directory [{}] to file [{}]", src, dest));
+            throw new IOException(StrUtil.INSTANCE.format("Can not move directory [{}] to file [{}]", src, dest));
         }
 
         //来源为文件，目标为文件夹
@@ -177,7 +177,7 @@ public class FileUtil {
                 copy(src, dest, isOverride);
                 src.delete();
             } catch (Exception e) {
-                throw new IOException(StrUtil.format("Move [{}] to [{}] failed!", src, dest), e);
+                throw new IOException(StrUtil.INSTANCE.format("Move [{}] to [{}] failed!", src, dest), e);
             }
 
         }
@@ -193,7 +193,7 @@ public class FileUtil {
      */
     public static String getAbsolutePath(String path, Class<?> baseClass) {
         if (path == null) {
-            path = StrUtil.EMPTY;
+            path = StrUtil.INSTANCE.getEMPTY();
         }
         if (baseClass == null) {
             return getAbsolutePath(path);
@@ -209,13 +209,13 @@ public class FileUtil {
      */
     public static String getAbsolutePath(String pathBaseClassLoader) {
         if (pathBaseClassLoader == null) {
-            pathBaseClassLoader = StrUtil.EMPTY;
+            pathBaseClassLoader = StrUtil.INSTANCE.getEMPTY();
         }
 
         ClassLoader classLoader = ClassUtil.getClassLoader();
         URL url = classLoader.getResource(pathBaseClassLoader);
         if (url == null) {
-            return classLoader.getResource(StrUtil.EMPTY).getPath() + pathBaseClassLoader;
+            return classLoader.getResource(StrUtil.INSTANCE.getEMPTY()).getPath() + pathBaseClassLoader;
         }
         return url.getPath();
     }
@@ -386,13 +386,13 @@ public class FileUtil {
         if (fileName == null) {
             return null;
         }
-        int index = fileName.lastIndexOf(StrUtil.DOT);
+        int index = fileName.lastIndexOf(StrUtil.INSTANCE.getDOT());
         if (index == -1) {
-            return StrUtil.EMPTY;
+            return StrUtil.INSTANCE.getEMPTY();
         } else {
             String ext = fileName.substring(index + 1);
             //扩展名中不能包含路径相关的符号
-            return (ext.contains(String.valueOf(UNIX_SEPARATOR)) || ext.contains(String.valueOf(WINDOWS_SEPARATOR))) ? StrUtil.EMPTY : ext;
+            return (ext.contains(String.valueOf(UNIX_SEPARATOR)) || ext.contains(String.valueOf(WINDOWS_SEPARATOR))) ? StrUtil.INSTANCE.getEMPTY() : ext;
         }
     }
 

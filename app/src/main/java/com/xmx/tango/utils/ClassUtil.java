@@ -82,7 +82,7 @@ public class ClassUtil {
      * @return
      */
     public static Set<Class<?>> scanPackage(String packageName, ClassFilter classFilter) {
-        if (StrUtil.isBlank(packageName))
+        if (StrUtil.INSTANCE.isBlank(packageName))
             throw new NullPointerException("packageName can't be blank!");
         packageName = getWellFormedPackageName(packageName);
 
@@ -126,7 +126,7 @@ public class ClassUtil {
      * @return
      */
     public static Set<String> getClassPathResources() {
-        return getClassPaths(StrUtil.EMPTY);
+        return getClassPaths(StrUtil.INSTANCE.getEMPTY());
     }
 
     /**
@@ -136,7 +136,7 @@ public class ClassUtil {
      * @return
      */
     public static Set<String> getClassPaths(String packageName) {
-        String packagePath = packageName.replace(StrUtil.DOT, StrUtil.SLASH);
+        String packagePath = packageName.replace(StrUtil.INSTANCE.getDOT(), StrUtil.INSTANCE.getSLASH());
         Enumeration<URL> resources;
         try {
             resources = Thread.currentThread().getContextClassLoader().getResources(packagePath);
@@ -327,7 +327,7 @@ public class ClassUtil {
      * @return
      */
     private static String getWellFormedPackageName(String packageName) {
-        return packageName.lastIndexOf(StrUtil.DOT) != packageName.length() - 1 ? packageName + StrUtil.DOT : packageName;
+        return packageName.lastIndexOf(StrUtil.INSTANCE.getDOT()) != packageName.length() - 1 ? packageName + StrUtil.INSTANCE.getDOT() : packageName;
     }
 
     /**
@@ -344,7 +344,7 @@ public class ClassUtil {
         int index = path.lastIndexOf(JAR_PATH_EXT);
         if (index != -1) {
             path = path.substring(0, index + JAR_FILE_EXT.length());
-            path = StrUtil.removePrefix(path, PATH_FILE_PRE);
+            path = StrUtil.INSTANCE.removePrefix(path, PATH_FILE_PRE);
             processJarFile(new File(path), packageName, classFilter, classes);
         } else {
             fillClasses(new File(path), packageName, classFilter, classes);
@@ -392,10 +392,10 @@ public class ClassUtil {
      * @param classes
      */
     private static void processClassFile(File file, String packageName, ClassFilter classFilter, Set<Class<?>> classes) {
-        final String filePathWithDot = file.getAbsolutePath().replace(File.separator, StrUtil.DOT);
+        final String filePathWithDot = file.getAbsolutePath().replace(File.separator, StrUtil.INSTANCE.getDOT());
         int subIndex = -1;
         if ((subIndex = filePathWithDot.indexOf(packageName)) != -1) {
-            final String className = filePathWithDot.substring(subIndex).replace(CLASS_EXT, StrUtil.EMPTY);
+            final String className = filePathWithDot.substring(subIndex).replace(CLASS_EXT, StrUtil.INSTANCE.getEMPTY());
             fillClass(className, packageName, classes, classFilter);
         }
     }
@@ -412,7 +412,7 @@ public class ClassUtil {
         try {
             for (JarEntry entry : Collections.list(new JarFile(file).entries())) {
                 if (isClass(entry.getName())) {
-                    final String className = entry.getName().replace(StrUtil.SLASH, StrUtil.DOT).replace(CLASS_EXT, StrUtil.EMPTY);
+                    final String className = entry.getName().replace(StrUtil.INSTANCE.getSLASH(), StrUtil.INSTANCE.getDOT()).replace(CLASS_EXT, StrUtil.INSTANCE.getEMPTY());
                     fillClass(className, packageName, classes, classFilter);
                 }
             }

@@ -216,7 +216,7 @@ public class TangoListFragment extends xUtilsFragment {
                 strings[12] = "0"; //DelFlag
                 strings[13] = ""; //Type
             }
-            String item = StrUtil.join(strings, ",");
+            String item = StrUtil.INSTANCE.join(strings, ",");
             items.add(item);
         }
         if (CSVUtil.toCSV(items, dir + filename, "UTF-8")) {

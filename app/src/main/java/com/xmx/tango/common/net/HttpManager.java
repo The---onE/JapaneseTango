@@ -41,7 +41,7 @@ public class HttpManager {
 
             list.add(key + "=" + value);
         }
-        return url + "?" + StrUtil.join(list, "&");
+        return url + "?" + StrUtil.INSTANCE.join(list, "&");
     }
 
     public void get(final String url, final Map<String, String> params,

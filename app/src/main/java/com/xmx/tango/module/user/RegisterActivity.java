@@ -69,7 +69,7 @@ public class RegisterActivity extends BaseTempActivity {
                     @Override
                     public void error(AVException e) {
                         showToast(R.string.network_error);
-                        ExceptionUtil.normalException(e, getBaseContext());
+                        ExceptionUtil.INSTANCE.normalException(e, getBaseContext());
                         register.setEnabled(true);
                     }
 

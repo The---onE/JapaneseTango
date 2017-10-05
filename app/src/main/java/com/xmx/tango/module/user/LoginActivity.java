@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity {
                                 @Override
                                 public void error(AVException e) {
                                     showToast(R.string.network_error);
-                                    ExceptionUtil.normalException(e, getBaseContext());
+                                    ExceptionUtil.INSTANCE.normalException(e, getBaseContext());
                                     login.setEnabled(true);
                                 }
 

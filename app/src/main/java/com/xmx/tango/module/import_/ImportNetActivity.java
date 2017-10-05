@@ -78,7 +78,7 @@ public class ImportNetActivity extends BaseTempActivity {
                                 break;
                         }
                     } catch (Exception e) {
-                        ExceptionUtil.normalException(e, ImportNetActivity.this);
+                        ExceptionUtil.INSTANCE.normalException(e, ImportNetActivity.this);
                         showToast("数据异常");
                     }
                 } else {

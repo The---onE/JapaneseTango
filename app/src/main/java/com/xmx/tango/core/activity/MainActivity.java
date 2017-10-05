@@ -130,7 +130,7 @@ public class MainActivity extends BaseNavigationActivity {
 
             @Override
             public void error(AVException e) {
-                ExceptionUtil.normalException(e, getBaseContext());
+                ExceptionUtil.INSTANCE.normalException(e, getBaseContext());
             }
         });
     }

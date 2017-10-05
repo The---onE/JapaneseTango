@@ -59,7 +59,7 @@ public class TangoEntityManager extends BaseSQLEntityManager<Tango> {
         String conStr = "";
         if (conditions.size() > 0) {
             conStr = " where ";
-            conStr += StrUtil.join(conditions, " and ");
+            conStr += StrUtil.INSTANCE.join(conditions, " and ");
         }
 
         Cursor cursor = database.rawQuery("select * from " + tableName +

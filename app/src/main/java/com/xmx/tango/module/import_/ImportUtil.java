@@ -31,7 +31,7 @@ public class ImportUtil {
                 .setPositiveButton("导入", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        StrUtil.showToast(context, "正在导入，请稍后");
+                        StrUtil.INSTANCE.showToast(context, "正在导入，请稍后");
 //                            new NewThread() {
 //                                @Override
 //                                public void process() {
@@ -78,7 +78,7 @@ public class ImportUtil {
             tango.type = strings[13];
         } catch (IndexOutOfBoundsException e) {
         } finally {
-            if (!StrUtil.isBlank(type)) {
+            if (!StrUtil.INSTANCE.isBlank(type)) {
                 tango.type = type;
             }
             if (tango.addTime.getTime() == 0) {

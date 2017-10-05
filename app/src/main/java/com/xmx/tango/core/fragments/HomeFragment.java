@@ -194,21 +194,21 @@ public class HomeFragment extends xUtilsFragment {
                     case REMEMBER:
                         TangoOperator.getInstance().remember(tango);
                         if (DataManager.getInstance().getVibratorStatus()) {
-                            VibratorUtil.vibrate(getContext(),
+                            VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.REMEMBER_VIBRATE_TIME);
                         }
                         break;
                     case FORGET:
                         TangoOperator.getInstance().forget(tango);
                         if (DataManager.getInstance().getVibratorStatus()) {
-                            VibratorUtil.vibrate(getContext(),
+                            VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.FORGET_VIBRATE_TIME);
                         }
                         break;
                     case REMEMBER_FOREVER:
                         TangoOperator.getInstance().rememberForever(tango);
                         if (DataManager.getInstance().getVibratorStatus()) {
-                            VibratorUtil.vibrate(getContext(),
+                            VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.REMEMBER_FOREVER_VIBRATE_TIME);
                         }
                         break;

@@ -215,7 +215,7 @@ public class UserManager implements IUserManager {
                             logoutProc(userData, callback);
                         }
                     } else {
-                        ExceptionUtil.normalException(e, mContext);
+                        ExceptionUtil.INSTANCE.normalException(e, mContext);
                     }
                 }
             });

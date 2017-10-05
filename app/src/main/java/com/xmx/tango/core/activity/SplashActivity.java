@@ -182,7 +182,7 @@ public class SplashActivity extends BaseSplashActivity {
 
             @Override
             public void error(AVException e) {
-                ExceptionUtil.normalException(e, getBaseContext());
+                ExceptionUtil.INSTANCE.normalException(e, getBaseContext());
             }
 
             @Override

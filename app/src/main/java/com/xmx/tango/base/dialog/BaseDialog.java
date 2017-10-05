@@ -86,7 +86,7 @@ public abstract class BaseDialog extends DialogFragment {
      * @param str 要显示的字符串信息
      */
     protected void showToast(String str) {
-        StrUtil.showToast(mContext, str);
+        StrUtil.INSTANCE.showToast(mContext, str);
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class BaseDialog extends DialogFragment {
      * @param resId 要显示的字符串在strings文件中的ID
      */
     protected void showToast(int resId) {
-        StrUtil.showToast(mContext, resId);
+        StrUtil.INSTANCE.showToast(mContext, resId);
     }
 
     /**
@@ -105,7 +105,7 @@ public abstract class BaseDialog extends DialogFragment {
      * @param msg 日志信息
      */
     protected void showLog(String tag, String msg) {
-        StrUtil.showLog(tag, msg);
+        StrUtil.INSTANCE.showLog(tag, msg);
     }
 
     /**
@@ -115,6 +115,6 @@ public abstract class BaseDialog extends DialogFragment {
      * @param i   数字作为日志信息
      */
     protected void showLog(String tag, int i) {
-        StrUtil.showLog(tag, i);
+        StrUtil.INSTANCE.showLog(tag, i);
     }
 }
