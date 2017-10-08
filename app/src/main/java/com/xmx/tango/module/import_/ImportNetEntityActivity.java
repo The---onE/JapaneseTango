@@ -32,7 +32,7 @@ import java.util.Map;
 @ContentView(R.layout.activity_import_net)
 public class ImportNetEntityActivity extends BaseTempActivity {
 
-    @ViewInject(R.id.edit_type)
+    @ViewInject(R.id.typeView)
     EditText typeView;
 
     @Event(value = R.id.btn_import_net)

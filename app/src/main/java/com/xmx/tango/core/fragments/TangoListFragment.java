@@ -59,7 +59,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     boolean itemDoubleFlag = false;
 
-    @Event(value = R.id.btn_search)
+    @Event(value = R.id.btnSearch)
     private void onSearchClick(View view) {
         SearchTangoDialog dialog = new SearchTangoDialog();
         dialog.initDialog(getContext());
@@ -362,7 +362,7 @@ public class TangoListFragment extends xUtilsFragment {
     public void onEvent(ChooseTangoEvent event) {
         int i = 0;
         for (Tango t : TangoManager.getInstance().getTangoList()) {
-            if (t.id == event.tango.id) {
+            if (t.id == event.getTango().id) {
                 break;
             }
             i++;

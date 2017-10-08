@@ -1,10 +1,7 @@
 package com.xmx.tango.module.import_;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 
@@ -13,7 +10,6 @@ import com.xmx.tango.base.activity.BaseTempActivity;
 import com.xmx.tango.common.net.HttpGetCallback;
 import com.xmx.tango.common.net.HttpManager;
 import com.xmx.tango.module.net.NetConstants;
-import com.xmx.tango.module.tango.Tango;
 import com.xmx.tango.utils.ExceptionUtil;
 import com.xmx.tango.utils.JSONUtil;
 
@@ -32,7 +28,7 @@ import java.util.Map;
 @ContentView(R.layout.activity_import_net)
 public class ImportNetActivity extends BaseTempActivity {
 
-    @ViewInject(R.id.edit_type)
+    @ViewInject(R.id.typeView)
     EditText typeView;
 
     @Event(value = R.id.btn_import_net)

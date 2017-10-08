@@ -45,7 +45,7 @@ public class ImportTangoActivity extends BaseTempActivity {
     @ViewInject(R.id.edit_meaning_index)
     EditText meaningIndexView;
 
-    @ViewInject(R.id.edit_type)
+    @ViewInject(R.id.typeView)
     EditText typeView;
 
     @Event(value = R.id.btn_import_tango)

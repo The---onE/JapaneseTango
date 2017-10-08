@@ -6,7 +6,7 @@
     tools:context=".core.fragments.HomeFragment">
 
     <EditText
-        android:id="@+id/edit_writing"
+        android:id="@+id/writingView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -15,7 +15,7 @@
         android:textSize="32sp" />
 
     <EditText
-        android:id="@+id/edit_pronunciation"
+        android:id="@+id/pronunciationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -24,7 +24,7 @@
         android:textSize="32sp" />
 
     <EditText
-        android:id="@+id/edit_meaning"
+        android:id="@+id/meaningView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -33,7 +33,7 @@
         android:textSize="32sp" />
 
     <EditText
-        android:id="@+id/edit_part_of_speech"
+        android:id="@+id/partOfSpeechView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
         android:textSize="32sp" />
 
     <EditText
-        android:id="@+id/edit_type"
+        android:id="@+id/typeView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -51,7 +51,7 @@
         android:textSize="32sp" />
 
     <Button
-        android:id="@+id/btn_sort"
+        android:id="@+id/btnSort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btn_search"
+            android:id="@+id/btnSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -76,7 +76,7 @@
             android:background="@android:color/darker_gray" />
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

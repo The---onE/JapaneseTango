@@ -1,19 +1,16 @@
 package com.xmx.tango.module.import_;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
-import com.xmx.tango.module.tango.Tango;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -39,7 +36,7 @@ public class ImportFileActivity extends BaseTempActivity {
     @ViewInject(R.id.tv_file_path)
     TextView filePathView;
 
-    @ViewInject(R.id.edit_type)
+    @ViewInject(R.id.typeView)
     EditText typeView;
 
     @Event(value = R.id.btn_choose_file)
