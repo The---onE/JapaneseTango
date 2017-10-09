@@ -199,7 +199,7 @@ class TestActivity : BaseTempActivity() {
      * 显示答案
      */
     private fun showAnswer() {
-        TangoOperator.getInstance().wrong(tango) // 显示答案视为没记住
+        TangoOperator.wrong(tango) // 显示答案视为没记住
         testEdit.setText(tango?.pronunciation) // 显示正确发音
         if (!writingFlag) {
             showTextView(writingView) // 显示写法
@@ -233,9 +233,9 @@ class TestActivity : BaseTempActivity() {
     private fun checkAnswer() {
         if (testEdit.text.toString() == tango?.pronunciation) {
             if (!hintFlag) {
-                TangoOperator.getInstance().rightWithoutHint(tango) // 未提示答对
+                TangoOperator.rightWithoutHint(tango) // 未提示答对
             } else {
-                TangoOperator.getInstance().rightWithHint(tango) // 经提示答对
+                TangoOperator.rightWithHint(tango) // 经提示答对
             }
             if (!writingFlag) {
                 showTextView(writingView) // 显示写法

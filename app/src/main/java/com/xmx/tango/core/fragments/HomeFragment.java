@@ -151,11 +151,11 @@ public class HomeFragment extends xUtilsFragment {
 
     @Event(value = R.id.tv_tango_prev)
     private void onPrevClick(View view) {
-        TangoOperator.getInstance().cancelOperate();
+        TangoOperator.INSTANCE.cancelOperate();
         tango = null;
         loadNewTango(prevTango);
-        countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study +
+        countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
+                "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
                 "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
     }
 
@@ -188,29 +188,29 @@ public class HomeFragment extends xUtilsFragment {
             if (tango != null && tango.getId() > 0) {
                 switch (operation) {
                     case REMEMBER:
-                        TangoOperator.getInstance().remember(tango);
+                        TangoOperator.INSTANCE.remember(tango);
                         if (DataManager.getInstance().getVibratorStatus()) {
                             VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.INSTANCE.getREMEMBER_VIBRATE_TIME());
                         }
                         break;
                     case FORGET:
-                        TangoOperator.getInstance().forget(tango);
+                        TangoOperator.INSTANCE.forget(tango);
                         if (DataManager.getInstance().getVibratorStatus()) {
                             VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.INSTANCE.getFORGET_VIBRATE_TIME());
                         }
                         break;
                     case REMEMBER_FOREVER:
-                        TangoOperator.getInstance().rememberForever(tango);
+                        TangoOperator.INSTANCE.rememberForever(tango);
                         if (DataManager.getInstance().getVibratorStatus()) {
                             VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.INSTANCE.getREMEMBER_FOREVER_VIBRATE_TIME());
                         }
                         break;
                 }
-                countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                        "\n今日已记：" + TangoOperator.getInstance().study +
+                countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
+                        "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
                         "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
 
                 loadNew();
@@ -249,8 +249,8 @@ public class HomeFragment extends xUtilsFragment {
             }
         });
 
-        countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study +
+        countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
+                "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
                 "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
 
         loadNewTango();
@@ -340,7 +340,7 @@ public class HomeFragment extends xUtilsFragment {
 
     private void loadNewTango() {
         int goal = DataManager.getInstance().getTangoGoal();
-        boolean reviewFlag = TangoOperator.getInstance().study >= goal;
+        boolean reviewFlag = TangoOperator.INSTANCE.getStudy() >= goal;
         Tango temp = TangoManager.INSTANCE.randomTango(reviewFlag,
                 DataManager.getInstance().getReviewFrequency(), tango, false);
         loadNewTango(temp);
@@ -550,8 +550,8 @@ public class HomeFragment extends xUtilsFragment {
     @Override
     public void onResume() {
         super.onResume();
-        countView.setText("今日复习：" + TangoOperator.getInstance().review +
-                "\n今日已记：" + TangoOperator.getInstance().study +
+        countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
+                "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
                 "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
     }
 

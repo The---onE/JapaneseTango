@@ -19,10 +19,11 @@ object TangoConstants {
     val DEFAULT_TEST_MEANING_TEXT_SIZE = 42
     // 分数相关常量
     val REMEMBER_SCORE = 7
-    val TIRED_COEFFICIENT = 35
     val REMEMBER_MIN_SCORE = 4
     val FORGET_SCORE = -3
     val REMEMBER_FOREVER_SCORE = 64
+    // 当日学习或复习疲劳系数
+    val TIRED_COEFFICIENT = 35
     // 复习相关常量
     val REVIEW_FREQUENCY = 5
     val TODAY_CONSECUTIVE_REVIEW_MAX = 10

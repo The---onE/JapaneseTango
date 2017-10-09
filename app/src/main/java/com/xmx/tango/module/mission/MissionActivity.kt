@@ -97,7 +97,7 @@ class MissionActivity : BaseTempActivity() {
                     when (operation) {
                         REMEMBER -> {
                             // 记住单语
-                            TangoOperator.getInstance().remember(tango)
+                            TangoOperator.remember(tango)
                             TangoManager.removeFromWaitingList(tango)
                             // 震动提示
                             if (DataManager.getInstance().vibratorStatus) {
@@ -107,7 +107,7 @@ class MissionActivity : BaseTempActivity() {
                         }
                         FORGET -> {
                             // 没记住单语
-                            TangoOperator.getInstance().forget(tango)
+                            TangoOperator.forget(tango)
                             // 震动提示
                             if (DataManager.getInstance().vibratorStatus) {
                                 VibratorUtil.vibrate(this@MissionActivity,
@@ -116,7 +116,7 @@ class MissionActivity : BaseTempActivity() {
                         }
                         REMEMBER_FOREVER -> {
                             // 彻底记住单语
-                            TangoOperator.getInstance().rememberForever(tango)
+                            TangoOperator.rememberForever(tango)
                             TangoManager.removeFromWaitingList(tango)
                             // 震动提示
                             if (DataManager.getInstance().vibratorStatus) {
@@ -197,7 +197,7 @@ class MissionActivity : BaseTempActivity() {
         prevView.setOnClickListener {
             prevTango?.apply {
                 // 撤销上次操作
-                TangoOperator.getInstance().cancelOperate()
+                TangoOperator.cancelOperate()
                 // 将上一个单语作为当前单语重新显示
                 tango = null
                 loadNewTango(this)
@@ -232,7 +232,7 @@ class MissionActivity : BaseTempActivity() {
         setJapaneseFont()
         // 根据学习目标获取任务列表
         val goal = DataManager.getInstance().tangoGoal
-        val reviewFlag = TangoOperator.getInstance().study >= goal
+        val reviewFlag = TangoOperator.study >= goal
         TangoManager.updateWaitingList(reviewFlag,
                 DataManager.getInstance().reviewFrequency,
                 DataManager.getInstance().missionCount)
@@ -377,7 +377,7 @@ class MissionActivity : BaseTempActivity() {
     private fun loadNewTango() {
         // 根据目标随机选取新单语
         val goal = DataManager.getInstance().tangoGoal
-        val reviewFlag = TangoOperator.getInstance().study >= goal
+        val reviewFlag = TangoOperator.study >= goal
         val temp = TangoManager.randomTango(reviewFlag,
                 DataManager.getInstance().reviewFrequency, tango, true)
         temp?.apply { loadNewTango(this) }
