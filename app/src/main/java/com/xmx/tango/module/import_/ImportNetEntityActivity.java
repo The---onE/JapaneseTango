@@ -65,7 +65,7 @@ public class ImportNetEntityActivity extends BaseTempActivity {
                                                         map.get(JSONUtil.RESPONSE_ENTITIES);
                                                 ArrayList<Tango> tangoList = new ArrayList<>();
                                                 for (final Object item : entities) {
-                                                    Tango t = Tango
+                                                    Tango t = Tango.Companion
                                                             .convertFromJson((Map<String, Object>) item);
                                                     tangoList.add(t);
 //                                                    TangoEntityManager.getInstance()

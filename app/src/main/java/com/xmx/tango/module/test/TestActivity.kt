@@ -139,13 +139,13 @@ class TestActivity : BaseTempActivity() {
 
         prevTango = tango // 保存当前单语
         // 随机获取下一个单语
-        tango = TangoManager.getInstance().randomTango(true,
+        tango = TangoManager.randomTango(true,
                 DataManager.getInstance().reviewFrequency, prevTango, false)
         // 测试单语的解释不能为空
         var count = 0 // 避免死循环计数
         while (tango == null || tango?.meaning.isNullOrBlank()) {
             // 重新获取新单语
-            tango = TangoManager.getInstance().randomTango(true,
+            tango = TangoManager.randomTango(true,
                     DataManager.getInstance().reviewFrequency, prevTango, false)
             count++
             if (count > 100) {

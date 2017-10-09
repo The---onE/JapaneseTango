@@ -140,14 +140,14 @@ public class DataManager {
     }
 
     public int getTangoGoal() {
-        return getInt("tango_goal", TangoConstants.DEFAULT_GOAL);
+        return getInt("tango_goal", TangoConstants.INSTANCE.getDEFAULT_GOAL());
     }
     public void setTangoGoal(int goal) {
         setInt("tango_goal", goal);
     }
 
     public int getReviewFrequency() {
-        return getInt("review_frequency", TangoConstants.REVIEW_FREQUENCY);
+        return getInt("review_frequency", TangoConstants.INSTANCE.getREVIEW_FREQUENCY());
     }
     public void setReviewFrequency(int frequency) {
         setInt("review_frequency", frequency);
@@ -189,14 +189,14 @@ public class DataManager {
     }
 
     public String getTangoSpeaker() {
-        return getString("tango_speaker", TangoConstants.SPEAKERS[0]);
+        return getString("tango_speaker", TangoConstants.INSTANCE.getSPEAKERS()[0]);
     }
     public void setTangoSpeaker(String speaker) {
         setString("tango_speaker", speaker);
     }
 
     public int getMissionCount() {
-        return getInt("mission_count", TangoConstants.MISSION_COUNT);
+        return getInt("mission_count", TangoConstants.INSTANCE.getMISSION_COUNT());
     }
     public void setMissionCount(int count) {
         setInt("mission_count", count);

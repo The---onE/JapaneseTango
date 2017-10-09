@@ -89,13 +89,13 @@ public class SplashActivity extends BaseSplashActivity {
         timer.start(Constants.SPLASH_TIME, true);
 
         DataManager dm = DataManager.getInstance();
-        TangoManager.getInstance().writing = dm.getSearchValue("writing");
-        TangoManager.getInstance().pronunciation = dm.getSearchValue("pronunciation");
-        TangoManager.getInstance().meaning = dm.getSearchValue("meaning");
-        TangoManager.getInstance().partOfSpeech = dm.getSearchValue("partOfSpeech");
-        TangoManager.getInstance().type = dm.getSearchValue("type");
+        TangoManager.INSTANCE.setWriting(dm.getSearchValue("writing"));
+        TangoManager.INSTANCE.setPronunciation(dm.getSearchValue("pronunciation"));
+        TangoManager.INSTANCE.setMeaning(dm.getSearchValue("meaning"));
+        TangoManager.INSTANCE.setPartOfSpeech(dm.getSearchValue("partOfSpeech"));
+        TangoManager.INSTANCE.setType(dm.getSearchValue("type"));
 
-        TangoManager.getInstance().updateTangoList();
+        TangoManager.INSTANCE.updateTangoList();
         Date last = new Date(DataManager.getInstance().getForgetLastTime());
         Date now = new Date();
         if (!Constants.isSameDate(now, last)) {
@@ -142,15 +142,15 @@ public class SplashActivity extends BaseSplashActivity {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     try {
-                        List<Tango> tangoList = TangoManager.getInstance().getTangoList();
+                        List<Tango> tangoList = TangoManager.INSTANCE.getTangoList();
                         for (int i = 0; i < tangoList.size(); i++) {
                             Tango tango = tangoList.get(i);
-                            if (tango.score > 0) {
-                                int newScore = TangoConstants.FORGOTTEN_SCORE(tango.score);
+                            if (tango.getScore() > 0) {
+                                int newScore = TangoConstants.INSTANCE.forgottenScore(tango.getScore());
                                 if (newScore <= 0) {
                                     newScore = 1;
                                 }
-                                TangoEntityManager.getInstance().updateData(tango.id,
+                                TangoEntityManager.INSTANCE.updateData(tango.getId(),
                                         "Score=" + newScore);
                             }
                         }

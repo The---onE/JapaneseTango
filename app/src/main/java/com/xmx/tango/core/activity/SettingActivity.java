@@ -84,7 +84,7 @@ public class SettingActivity extends BaseTempActivity {
         String title = DataManager.getInstance().getJapaneseFontTitle();
         String font = null;
         if (title != null) {
-            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+            font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);
         }
         Typeface tf = Typeface.DEFAULT;
         if (font != null) {
@@ -375,11 +375,11 @@ public class SettingActivity extends BaseTempActivity {
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("朗读音色")
                         .setIcon(android.R.drawable.ic_dialog_info)
-                        .setItems(TangoConstants.SPEAKERS, new DialogInterface.OnClickListener() {
+                        .setItems(TangoConstants.INSTANCE.getSPEAKERS(), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                DataManager.getInstance().setTangoSpeaker(TangoConstants.SPEAKERS[i]);
-                                speakView.setText(TangoConstants.SPEAKERS[i]);
+                                DataManager.getInstance().setTangoSpeaker(TangoConstants.INSTANCE.getSPEAKERS()[i]);
+                                speakView.setText(TangoConstants.INSTANCE.getSPEAKERS()[i]);
                             }
                         })
                         .setNegativeButton("取消", null).show();
@@ -446,7 +446,7 @@ public class SettingActivity extends BaseTempActivity {
     public void onEvent(JapaneseFontChangeEvent event) {
         AssetManager mgr = getAssets();
         String title = DataManager.getInstance().getJapaneseFontTitle();
-        String font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+        String font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);
         Typeface tf = Typeface.DEFAULT;
         if (font != null) {
             tf = Typeface.createFromAsset(mgr, font);

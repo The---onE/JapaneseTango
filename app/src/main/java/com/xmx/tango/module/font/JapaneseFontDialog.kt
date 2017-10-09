@@ -48,7 +48,7 @@ class JapaneseFontDialog : BaseDialog() {
                 var holder = ViewHolder()
                 if (v == null) {
                     v = LayoutInflater.from(mContext).inflate(R.layout.item_japanese_font, viewGroup, false)
-                    holder.fontView = v.findViewById(R.id.item_font) as TextView
+                    holder.fontView = v.findViewById(R.id.itemFont) as TextView
                     v.tag = holder
                 } else {
                     holder = v.tag as ViewHolder

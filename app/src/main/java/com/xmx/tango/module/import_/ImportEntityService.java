@@ -29,7 +29,7 @@ public class ImportEntityService extends BaseService {
             @Override
             protected Void doInBackground(Void... voids) {
                 final int total = tangoList.size();
-                TangoEntityManager.getInstance().insertData(tangoList, new InsertCallback() {
+                TangoEntityManager.INSTANCE.insertData(tangoList, new InsertCallback() {
                     @Override
                     public void proceeding(int index) {
                         if (index % 100 == 0) {

@@ -166,11 +166,11 @@ public class TangoListFragment extends xUtilsFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 List<Long> ids = new ArrayList<>();
-                List<Tango> tangoList = TangoManager.getInstance().getTangoList();
+                List<Tango> tangoList = TangoManager.INSTANCE.getTangoList();
                 for (Tango tango : tangoList) {
-                    ids.add(tango.id);
+                    ids.add(tango.getId());
                 }
-                if (TangoEntityManager.getInstance().deleteByIds(ids)) {
+                if (TangoEntityManager.INSTANCE.deleteByIds(ids)) {
                     showToast("删除成功");
                     EventBus.getDefault().post(new TangoListChangeEvent());
                 }
@@ -186,26 +186,26 @@ public class TangoListFragment extends xUtilsFragment {
     }
 
     private void exportTango(boolean personalFlag) {
-        List<Tango> list = TangoManager.getInstance().getTangoList();
+        List<Tango> list = TangoManager.INSTANCE.getTangoList();
         String dir = Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
         String filename = "/export.csv";
         Collection<String> items = new ArrayList<>();
         for (Tango tango : list) {
             String strings[] = new String[]{
-                    tango.writing, //0
-                    tango.pronunciation, //1
-                    tango.meaning, //2
-                    String.valueOf(tango.tone), //3
-                    tango.partOfSpeech, //4
-                    tango.image, //5
-                    tango.voice, // 6
-                    String.valueOf(tango.score), //7
-                    String.valueOf(tango.frequency), //8
-                    String.valueOf(tango.addTime.getTime()), //9
-                    String.valueOf(tango.lastTime.getTime()), //10
-                    tango.flags, //11
-                    String.valueOf(tango.delFlag), //12
-                    tango.type //13
+                    tango.getWriting(), //0
+                    tango.getPronunciation(), //1
+                    tango.getMeaning(), //2
+                    String.valueOf(tango.getTone()), //3
+                    tango.getPartOfSpeech(), //4
+                    tango.getImage(), //5
+                    tango.getVoice(), // 6
+                    String.valueOf(tango.getScore()), //7
+                    String.valueOf(tango.getFrequency()), //8
+                    String.valueOf(tango.getAddTime().getTime()), //9
+                    String.valueOf(tango.getLastTime().getTime()), //10
+                    tango.getFlags(), //11
+                    String.valueOf(tango.getDelFlag()), //12
+                    tango.getType() //13
             };
             if (!personalFlag) {
                 strings[7] = "0"; //Score
@@ -229,9 +229,9 @@ public class TangoListFragment extends xUtilsFragment {
     @Override
     protected void processLogic(Bundle savedInstanceState) {
         //TangoManager.getInstance().updateTangoList(); //在SplashActivity中调用
-        tangoAdapter = new TangoAdapter(getContext(), TangoManager.getInstance().getTangoList());
+        tangoAdapter = new TangoAdapter(getContext(), TangoManager.INSTANCE.getTangoList());
         tangoList.setAdapter(tangoAdapter);
-        int count = TangoEntityManager.getInstance().getCount();
+        int count = TangoEntityManager.INSTANCE.getCount();
         countView.setText("" + count + "/" + count);
 
         tangoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -240,7 +240,7 @@ public class TangoListFragment extends xUtilsFragment {
                 final Tango tango = (Tango) tangoAdapter.getItem(i);
                 if (itemDoubleFlag) { //双按
                     itemDoubleFlag = false;
-                    String writing = tango.writing;
+                    String writing = tango.getWriting();
                     if (!writing.equals("")) {
                         SpeakTangoManager.INSTANCE.speak(getContext(), writing);
                     }
@@ -287,7 +287,7 @@ public class TangoListFragment extends xUtilsFragment {
                         builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                TangoEntityManager.getInstance().deleteById(tango.id);
+                                TangoEntityManager.INSTANCE.deleteById(tango.getId());
                                 EventBus.getDefault().post(new TangoListChangeEvent());
                             }
                         });
@@ -317,29 +317,26 @@ public class TangoListFragment extends xUtilsFragment {
     }
 
     private void updateTangoList() {
-        TangoManager.getInstance().updateTangoList();
-        List<Tango> tangoList = TangoManager.getInstance().getTangoList();
+        TangoManager.INSTANCE.updateTangoList();
+        List<Tango> tangoList = TangoManager.INSTANCE.getTangoList();
         tangoAdapter.updateList(tangoList);
-        countView.setText("" + tangoList.size() + "/" + TangoEntityManager.getInstance().getCount());
+        countView.setText("" + tangoList.size() + "/" + TangoEntityManager.INSTANCE.getCount());
     }
 
     private void showVerbDialog(Tango tango) {
-        String part = tango.partOfSpeech;
+        String part = tango.getPartOfSpeech();
         if (!part.equals("")) {
-            if (part.contains(TangoConstants.VERB_FLAG)) {
-                String verb = tango.writing;
+            if (part.contains(TangoConstants.INSTANCE.getVERB_FLAG())) {
+                String verb = tango.getWriting();
 
                 int type = 0;
-                switch (tango.partOfSpeech) {
-                    case TangoConstants.VERB1_FLAG:
-                        type = 1;
-                        break;
-                    case TangoConstants.VERB2_FLAG:
-                        type = 2;
-                        break;
-                    case TangoConstants.VERB3_FLAG:
-                        type = 3;
-                        break;
+                String p = tango.getPartOfSpeech();
+                if (TangoConstants.INSTANCE.getVERB1_FLAG().equals(p)) {
+                    type = 1;
+                } else if (TangoConstants.INSTANCE.getVERB2_FLAG().equals(p)) {
+                    type = 2;
+                } else if (TangoConstants.INSTANCE.getVERB3_FLAG().equals(p)) {
+                    type = 3;
                 }
 
                 VerbDialog dialog = new VerbDialog();
@@ -361,13 +358,13 @@ public class TangoListFragment extends xUtilsFragment {
     @Subscribe
     public void onEvent(ChooseTangoEvent event) {
         int i = 0;
-        for (Tango t : TangoManager.getInstance().getTangoList()) {
-            if (t.id == event.getTango().id) {
+        for (Tango t : TangoManager.INSTANCE.getTangoList()) {
+            if (t.getId() == event.getTango().getId()) {
                 break;
             }
             i++;
         }
-        if (i < TangoManager.getInstance().getTangoList().size()) {
+        if (i < TangoManager.INSTANCE.getTangoList().size()) {
             tangoList.setSelection(i);
         }
     }

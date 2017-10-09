@@ -58,7 +58,7 @@ class AddTangoActivity : BaseTempActivity() {
             }
             // 添加单语
             entity.addTime = Date()
-            TangoEntityManager.getInstance().insertData(entity)
+            TangoEntityManager.insertData(entity)
             // 清空编辑框
             writingView.setText("")
             pronunciationView.setText("")

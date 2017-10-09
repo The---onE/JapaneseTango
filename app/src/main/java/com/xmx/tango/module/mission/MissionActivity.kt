@@ -98,7 +98,7 @@ class MissionActivity : BaseTempActivity() {
                         REMEMBER -> {
                             // 记住单语
                             TangoOperator.getInstance().remember(tango)
-                            TangoManager.getInstance().removeFromWaitingList(tango)
+                            TangoManager.removeFromWaitingList(tango)
                             // 震动提示
                             if (DataManager.getInstance().vibratorStatus) {
                                 VibratorUtil.vibrate(this@MissionActivity,
@@ -117,7 +117,7 @@ class MissionActivity : BaseTempActivity() {
                         REMEMBER_FOREVER -> {
                             // 彻底记住单语
                             TangoOperator.getInstance().rememberForever(tango)
-                            TangoManager.getInstance().removeFromWaitingList(tango)
+                            TangoManager.removeFromWaitingList(tango)
                             // 震动提示
                             if (DataManager.getInstance().vibratorStatus) {
                                 VibratorUtil.vibrate(this@MissionActivity,
@@ -126,7 +126,7 @@ class MissionActivity : BaseTempActivity() {
                         }
                     }
                     // 获取任务列表剩余单语数
-                    val count = TangoManager.getInstance().waitingList.size
+                    val count = TangoManager.waitingList.size
                     if (count <= 0) {
                         showToast("任务完成！")
                         DataManager.getInstance().todayMission = DataManager.getInstance().todayMission + 1
@@ -201,8 +201,8 @@ class MissionActivity : BaseTempActivity() {
                 // 将上一个单语作为当前单语重新显示
                 tango = null
                 loadNewTango(this)
-                TangoManager.getInstance().addToWaitingList(tango)
-                val count = TangoManager.getInstance().waitingList.size
+                TangoManager.addToWaitingList(tango)
+                val count = TangoManager.waitingList.size
                 countView!!.text = "任务剩余：$count\n任务已记：${totalTango - count}"
             }
         }
@@ -233,11 +233,11 @@ class MissionActivity : BaseTempActivity() {
         // 根据学习目标获取任务列表
         val goal = DataManager.getInstance().tangoGoal
         val reviewFlag = TangoOperator.getInstance().study >= goal
-        TangoManager.getInstance().updateWaitingList(reviewFlag,
+        TangoManager.updateWaitingList(reviewFlag,
                 DataManager.getInstance().reviewFrequency,
                 DataManager.getInstance().missionCount)
         // 获取任务列表单语数
-        val count = TangoManager.getInstance().waitingList.size
+        val count = TangoManager.waitingList.size
         if (count <= 0) {
             showToast("没有符合条件的任务")
             finish()
@@ -378,9 +378,9 @@ class MissionActivity : BaseTempActivity() {
         // 根据目标随机选取新单语
         val goal = DataManager.getInstance().tangoGoal
         val reviewFlag = TangoOperator.getInstance().study >= goal
-        val temp = TangoManager.getInstance().randomTango(reviewFlag,
+        val temp = TangoManager.randomTango(reviewFlag,
                 DataManager.getInstance().reviewFrequency, tango, true)
-        loadNewTango(temp)
+        temp?.apply { loadNewTango(this) }
     }
 
     /**

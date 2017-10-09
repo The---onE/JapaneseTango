@@ -239,7 +239,7 @@ public class SentenceFragment extends xUtilsFragment {
         String title = DataManager.getInstance().getJapaneseFontTitle();
         String font = null;
         if (title != null) {
-            font = TangoConstants.JAPANESE_FONT_MAP.get(title);
+            font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);
         }
         typeface = Typeface.DEFAULT;
         if (font != null) {

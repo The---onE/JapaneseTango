@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Constants {
     public static final boolean EXCEPTION_DEBUG = true;
-    public static final boolean DEBUG_MODE = false;
+    public static final boolean DEBUG_MODE = true;
 
     public static final String APP_ID = "JU6HFVAzc5KrBnJBTMc7QbTe-gzGzoHsz";
     public static final String APP_KEY = "ptscFhYmavGYVvIGCikAczN2";

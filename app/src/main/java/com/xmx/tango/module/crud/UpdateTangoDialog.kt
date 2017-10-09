@@ -101,7 +101,7 @@ class UpdateTangoDialog : BaseDialog() {
             }
             // 更新单语
             tango?.apply {
-                TangoEntityManager.getInstance().updateData(this.id,
+                TangoEntityManager.updateData(this.id,
                         "Writing='$writing'",
                         "Pronunciation='$pronunciation'",
                         "Meaning='$meaning'",

@@ -37,7 +37,7 @@ public class ImportService extends BaseService {
                     //TangoEntityManager.getInstance().insertData(tango);
                     //showForeground(MainActivity.class, "正在导入:" + index + "/" + total);
                 }
-                TangoEntityManager.getInstance().insertData(tangoList, new InsertCallback() {
+                TangoEntityManager.INSTANCE.insertData(tangoList, new InsertCallback() {
                     @Override
                     public void proceeding(int index) {
                         if (index % 100 == 0) {

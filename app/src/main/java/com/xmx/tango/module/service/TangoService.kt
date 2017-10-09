@@ -37,9 +37,9 @@ class TangoService : BaseService() {
         val goal = DataManager.getInstance().tangoGoal
         val reviewFlag = TangoOperator.getInstance().study >= goal
         // 随机选取单语
-        val temp = TangoManager.getInstance().randomTango(reviewFlag,
+        val temp = TangoManager.randomTango(reviewFlag,
                 DataManager.getInstance().reviewFrequency, tango, false)
-        loadNewTango(temp)
+        temp?.apply { loadNewTango(this) }
     }
 
     /**

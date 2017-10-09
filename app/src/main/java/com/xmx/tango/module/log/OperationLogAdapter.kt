@@ -34,7 +34,7 @@ class OperationLogAdapter(context: Context, data: List<OperationLog>) : BaseEnti
             // 生成ViewHolder
             holder = ViewHolder()
             holder.operation = cv.findViewById(R.id.item_operation) as TextView
-            holder.time = cv.findViewById(R.id.item_time) as TextView
+            holder.time = cv.findViewById(R.id.itemTime) as TextView
             cv.tag = holder
         } else {
             holder = cv.tag as ViewHolder

@@ -95,13 +95,13 @@ public class ImportTangoActivity extends BaseTempActivity {
                 meaning = meaning.trim();
             }
 
-            t.writing = writing;
-            t.pronunciation = pronunciation;
-            t.meaning = meaning;
+            t.setWriting(writing);
+            t.setPronunciation(pronunciation);
+            t.setMeaning(meaning);
             match.add(writing + ":" + pronunciation + "|" + meaning);
 
-            t.type = type;
-            t.addTime = new Date();
+            t.setType(type);
+            t.setAddTime(new Date());
 
             tangoList.add(t);
         }
@@ -113,7 +113,7 @@ public class ImportTangoActivity extends BaseTempActivity {
                 .setPositiveButton("导入", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        TangoEntityManager.getInstance().insertData(tangoList);
+                        TangoEntityManager.INSTANCE.insertData(tangoList);
                         EventBus.getDefault().post(new TangoListChangeEvent());
                         showToast("导入成功");
                     }

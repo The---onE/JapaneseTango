@@ -39,11 +39,11 @@ class SearchTangoDialog : BaseDialog() {
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setItems(items) { _, i ->
                     // 若再次选择同一排序字段，则改变顺序或倒序
-                    if (TangoManager.getInstance().order == orders[i]) {
-                        TangoManager.getInstance().ascFlag = !TangoManager.getInstance().ascFlag
+                    if (TangoManager.order == orders[i]) {
+                        TangoManager.ascFlag = !TangoManager.ascFlag
                     } else {
-                        TangoManager.getInstance().ascFlag = true
-                        TangoManager.getInstance().order = orders[i]
+                        TangoManager.ascFlag = true
+                        TangoManager.order = orders[i]
                     }
 
                     EventBus.getDefault().post(TangoListChangeEvent())
@@ -62,11 +62,11 @@ class SearchTangoDialog : BaseDialog() {
         partOfSpeechView = view.findViewById(R.id.partOfSpeechView) as EditText
         typeView = view.findViewById(R.id.typeView) as EditText
         // 根据本机保存的数据设置编辑框
-        writingView?.setText(TangoManager.getInstance().writing)
-        pronunciationView?.setText(TangoManager.getInstance().pronunciation)
-        meaningView?.setText(TangoManager.getInstance().meaning)
-        partOfSpeechView?.setText(TangoManager.getInstance().partOfSpeech)
-        typeView?.setText(TangoManager.getInstance().type)
+        writingView?.setText(TangoManager.writing)
+        pronunciationView?.setText(TangoManager.pronunciation)
+        meaningView?.setText(TangoManager.meaning)
+        partOfSpeechView?.setText(TangoManager.partOfSpeech)
+        typeView?.setText(TangoManager.type)
     }
 
     override fun setListener(view: View) {
@@ -80,11 +80,11 @@ class SearchTangoDialog : BaseDialog() {
             val partOfSpeech = partOfSpeechView?.text.toString()
             val type = typeView?.text.toString()
             // 在单语管理器中进行筛选
-            TangoManager.getInstance().writing = writing
-            TangoManager.getInstance().pronunciation = pronunciation
-            TangoManager.getInstance().meaning = meaning
-            TangoManager.getInstance().partOfSpeech = partOfSpeech
-            TangoManager.getInstance().type = type
+            TangoManager.writing = writing
+            TangoManager.pronunciation = pronunciation
+            TangoManager.meaning = meaning
+            TangoManager.partOfSpeech = partOfSpeech
+            TangoManager.type = type
             // 将筛选条件保存在本机
             val dm = DataManager.getInstance()
             dm.setSearchValue("writing", writing)
