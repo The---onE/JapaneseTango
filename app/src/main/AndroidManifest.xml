@@ -91,16 +91,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.import_.ImportFileActivity"
+            android:name=".module.imp.ImportFileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".module.import_.ImportTangoActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".module.import_.ImportNetActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".module.import_.ImportNetEntityActivity"
+            android:name=".module.imp.ImportNetActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.log.OperationLogActivity"
@@ -116,11 +110,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".module.import_.ImportService"
+            android:name=".module.imp.ImportFileService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name=".module.import_.ImportEntityService"
+            android:name=".module.imp.ImportNetService"
             android:enabled="true"
             android:exported="false" />
         <service

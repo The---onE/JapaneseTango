@@ -13,12 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xmx.tango.core.Constants;
-import com.xmx.tango.module.import_.ImportFileActivity;
+import com.xmx.tango.module.imp.ImportFileActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.module.crud.AddTangoActivity;
 import com.xmx.tango.module.crud.ChooseTangoEvent;
 import com.xmx.tango.module.font.JapaneseFontChangeEvent;
-import com.xmx.tango.module.import_.ImportNetEntityActivity;
+import com.xmx.tango.module.imp.ImportNetActivity;
 import com.xmx.tango.module.operate.OperateTangoEvent;
 import com.xmx.tango.module.crud.SearchTangoDialog;
 import com.xmx.tango.module.speaker.SpeakTangoManager;
@@ -31,8 +31,7 @@ import com.xmx.tango.module.tango.TangoManager;
 import com.xmx.tango.module.crud.UpdateTangoDialog;
 import com.xmx.tango.module.verb.VerbDialog;
 import com.xmx.tango.base.fragment.xUtilsFragment;
-import com.xmx.tango.utils.CSVUtil;
-import com.xmx.tango.utils.StrUtil;
+import com.xmx.tango.utils.CsvUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,7 +40,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -135,17 +133,10 @@ public class TangoListFragment extends xUtilsFragment {
                 startActivity(ImportFileActivity.class);
             }
         });
-//        builder.setNegativeButton("文本导入", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                startActivity(ImportTangoActivity.class);
-//            }
-//        });
         builder.setNegativeButton("网络导入", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-//                startActivity(ImportNetActivity.class);
-                startActivity(ImportNetEntityActivity.class);
+                startActivity(ImportNetActivity.class);
             }
         });
         builder.setNeutralButton("取消", new DialogInterface.OnClickListener() {
@@ -189,37 +180,7 @@ public class TangoListFragment extends xUtilsFragment {
         List<Tango> list = TangoManager.INSTANCE.getTangoList();
         String dir = Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
         String filename = "/export.csv";
-        Collection<String> items = new ArrayList<>();
-        for (Tango tango : list) {
-            String strings[] = new String[]{
-                    tango.getWriting(), //0
-                    tango.getPronunciation(), //1
-                    tango.getMeaning(), //2
-                    String.valueOf(tango.getTone()), //3
-                    tango.getPartOfSpeech(), //4
-                    tango.getImage(), //5
-                    tango.getVoice(), // 6
-                    String.valueOf(tango.getScore()), //7
-                    String.valueOf(tango.getFrequency()), //8
-                    String.valueOf(tango.getAddTime().getTime()), //9
-                    String.valueOf(tango.getLastTime().getTime()), //10
-                    tango.getFlags(), //11
-                    String.valueOf(tango.getDelFlag()), //12
-                    tango.getType() //13
-            };
-            if (!personalFlag) {
-                strings[7] = "0"; //Score
-                strings[8] = "0"; //Frequency
-                strings[9] = "0"; //AddTime
-                strings[10] = "0"; //LastTime
-                strings[11] = ""; //Flags
-                strings[12] = "0"; //DelFlag
-                strings[13] = ""; //Type
-            }
-            String item = StrUtil.INSTANCE.join(strings, ",");
-            items.add(item);
-        }
-        if (CSVUtil.toCSV(items, dir + filename, "UTF-8")) {
+        if (CsvUtil.INSTANCE.exportTango(dir + filename, list, personalFlag)) {
             showToast("成功导出至:" + dir + filename);
         } else {
             showToast("导出失败");

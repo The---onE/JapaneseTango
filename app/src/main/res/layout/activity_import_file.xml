@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".module.import_.ImportFileActivity">
+    tools:context=".module.imp.ImportFileActivity">
 
     <include layout="@layout/tool_bar" />
 
@@ -17,14 +17,14 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_choose_file"
+                android:id="@+id/btnChooseFile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:text="@string/choose_file" />
 
             <TextView
-                android:id="@+id/tv_file_path"
+                android:id="@+id/filePathView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -38,7 +38,7 @@
                 android:textSize="32sp" />
 
             <Button
-                android:id="@+id/btn_import_file"
+                android:id="@+id/btnImportFile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

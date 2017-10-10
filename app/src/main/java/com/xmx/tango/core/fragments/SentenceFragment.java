@@ -105,7 +105,7 @@ public class SentenceFragment extends xUtilsFragment {
         startSentenceActivity(sentence);
     }
 
-    @Event(value = R.id.btn_choose_file)
+    @Event(value = R.id.btnChooseFile)
     private void onChooseFileClick(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
