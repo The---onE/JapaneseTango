@@ -7,10 +7,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.xmx.tango.R;
 import com.xmx.tango.base.activity.BaseTempActivity;
 
@@ -30,9 +26,6 @@ public class ReceiveMessageActivity extends BaseTempActivity {
 
     @ViewInject(R.id.file_url)
     private EditText urlView;
-
-    @ViewInject(R.id.fresco_image)
-    private SimpleDraweeView imageView;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -84,16 +77,7 @@ public class ReceiveMessageActivity extends BaseTempActivity {
 //                    imageView.setLayoutParams(params);
 //                    imageView.setAspectRatio(1);
 
-                    GenericDraweeHierarchyBuilder builder =
-                            new GenericDraweeHierarchyBuilder(getResources());
-                    GenericDraweeHierarchy hierarchy = builder
-                            .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-                            .build();
-                    hierarchy.setPlaceholderImage(R.mipmap.ic_launcher);
-                    imageView.setHierarchy(hierarchy);
-
                     Uri uri = Uri.parse(url);
-                    imageView.setImageURI(uri);
 
 //                    layout.addView(imageView);
 

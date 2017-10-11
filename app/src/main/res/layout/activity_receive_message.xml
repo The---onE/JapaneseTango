@@ -37,12 +37,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textUri" />
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/fresco_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                fresco:viewAspectRatio="1" />
         </LinearLayout>
 
     </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.xmx.tango.common.data.sql.ISQLEntity;
+import com.xmx.tango.module.net.TinyTango;
 
 import java.util.Date;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class Tango implements ISQLEntity, Parcelable {
     private String voice = "";
     private int score = 0;
     private int frequency = 0;
-    private Date addTime = new Date(0);
+    private Date addTime = new Date();
     private Date lastTime = new Date(0);
     private String flags = "";
     private int delFlag = 0;
@@ -163,6 +164,16 @@ public class Tango implements ISQLEntity, Parcelable {
         parcel.writeString(type);
         parcel.writeLong(addTime.getTime());
         parcel.writeLong(lastTime.getTime());
+    }
+
+    public static Tango convertFromTinyTango(TinyTango tinyTango) {
+        Tango tango = new Tango();
+        tango.writing = tinyTango.getWriting();
+        tango.pronunciation = tinyTango.getPronunciation();
+        tango.meaning = tinyTango.getMeaning();
+        tango.tone = tinyTango.getTone();
+        tango.partOfSpeech = tinyTango.getPartOfSpeech();
+        return tango;
     }
 
     public long getId() {

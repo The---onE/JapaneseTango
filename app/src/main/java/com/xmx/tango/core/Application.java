@@ -6,7 +6,6 @@ import android.support.multidex.MultiDexApplication;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.PushService;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xmx.tango.BuildConfig;
 import com.xmx.tango.common.data.DataManager;
 import com.xmx.tango.common.push.ReceiveMessageActivity;
@@ -62,7 +61,5 @@ public class Application extends MultiDexApplication {
         UserManager.getInstance().setContext(this);
 
         DataManager.getInstance().setContext(this);
-
-        Fresco.initialize(this);
     }
 }

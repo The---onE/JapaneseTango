@@ -31,7 +31,7 @@ import com.xmx.tango.module.tango.TangoManager;
 import com.xmx.tango.module.crud.UpdateTangoDialog;
 import com.xmx.tango.module.verb.VerbDialog;
 import com.xmx.tango.base.fragment.xUtilsFragment;
-import com.xmx.tango.utils.CsvUtil;
+import com.xmx.tango.module.imp.CsvUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

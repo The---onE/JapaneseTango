@@ -13,9 +13,9 @@ import java.util.HashMap
  */
 object JsonUtil {
     val RESPONSE_STATUS = "status"
-    val STATUS_ERROR = "0"
-    val STATUS_EXECUTE_SUCCESS = "1"
-    val STATUS_QUERY_SUCCESS = "2"
+    val STATUS_ERROR = 0
+    val STATUS_EXECUTE_SUCCESS = 1
+    val STATUS_QUERY_SUCCESS = 2
     val RESPONSE_PROMPT = "prompt"
     val RESPONSE_ENTITIES = "entities"
 
@@ -121,7 +121,7 @@ object JsonUtil {
      */
     fun formatJSONObject(map: Map<String, Any>, sep: String, tab: String): String {
         var sb = StringBuilder()
-        sb = JsonUtil.appendJSONObject(map, sb, 0, sep, tab)
+        sb = appendJSONObject(map, sb, 0, sep, tab)
         return sb.toString()
     }
 
@@ -135,7 +135,7 @@ object JsonUtil {
      */
     fun formatJSONArray(list: List<Any>, sep: String, tab: String): String {
         var sb = StringBuilder()
-        sb = JsonUtil.appendJSONArray(list, sb, 0, sep, tab)
+        sb = appendJSONArray(list, sb, 0, sep, tab)
         return sb.toString()
     }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 
 import com.xmx.tango.R
 import com.xmx.tango.base.activity.BaseTempActivity
-import com.xmx.tango.utils.CsvUtil
 import kotlinx.android.synthetic.main.activity_import_file.*
 
 import java.util.ArrayList
