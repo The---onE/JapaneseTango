@@ -5,8 +5,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.xmx.tango.core.Constants;
-import com.xmx.tango.common.log.OperationLogEntityManager;
 import com.xmx.tango.utils.ExceptionUtil;
 
 /**

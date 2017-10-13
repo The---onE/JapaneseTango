@@ -16,7 +16,7 @@ import com.xmx.tango.common.user.UserConstants;
 import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.common.user.callback.LoginCallback;
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.core.activity.MainActivity;
 import com.xmx.tango.utils.ExceptionUtil;
 
@@ -103,7 +103,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (mustFlag) {
-            if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
+            if ((System.currentTimeMillis() - mExitTime) > CoreConstants.INSTANCE.getLONGEST_EXIT_TIME()) {
                 showToast(R.string.confirm_exit);
                 mExitTime = System.currentTimeMillis();
             } else {

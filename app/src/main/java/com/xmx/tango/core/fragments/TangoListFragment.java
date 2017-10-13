@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.module.imp.ImportFileActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.module.crud.AddTangoActivity;
@@ -178,7 +178,7 @@ public class TangoListFragment extends xUtilsFragment {
 
     private void exportTango(boolean personalFlag) {
         List<Tango> list = TangoManager.INSTANCE.getTangoList();
-        String dir = Environment.getExternalStorageDirectory() + Constants.FILE_DIR;
+        String dir = Environment.getExternalStorageDirectory() + CoreConstants.INSTANCE.getFILE_DIR();
         String filename = "/export.csv";
         if (CsvUtil.INSTANCE.exportTango(dir + filename, list, personalFlag)) {
             showToast("成功导出至:" + dir + filename);

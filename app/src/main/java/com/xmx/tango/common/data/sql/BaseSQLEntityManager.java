@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.utils.ExceptionUtil;
 
 import java.io.File;
@@ -26,12 +26,12 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
     }
 
     private void openSQLFile() {
-        String d = android.os.Environment.getExternalStorageDirectory() + Constants.DATABASE_DIR;
+        String d = android.os.Environment.getExternalStorageDirectory() + CoreConstants.INSTANCE.getDATABASE_DIR();
         File dir = new File(d);
         boolean flag = dir.exists() || dir.mkdirs();
 
         if (flag) {
-            String sqlFile = android.os.Environment.getExternalStorageDirectory() + Constants.DATABASE_FILE;
+            String sqlFile = android.os.Environment.getExternalStorageDirectory() + CoreConstants.INSTANCE.getDATABASE_FILE();
             File file = new File(sqlFile);
             database = SQLiteDatabase.openOrCreateDatabase(file, null);
             if (database == null) {
@@ -44,13 +44,13 @@ public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
     }
 
     private void openSQLFile(String filename) {
-        String d = android.os.Environment.getExternalStorageDirectory() + Constants.DATABASE_DIR;
+        String d = android.os.Environment.getExternalStorageDirectory() + CoreConstants.INSTANCE.getDATABASE_DIR();
         File dir = new File(d);
         boolean flag = dir.exists() || dir.mkdirs();
 
         if (flag) {
             String sqlFile = android.os.Environment.getExternalStorageDirectory() +
-                    Constants.DATABASE_DIR + "/" + filename + ".db";
+                    CoreConstants.INSTANCE.getDATABASE_DIR() + "/" + filename + ".db";
             File file = new File(sqlFile);
             database = SQLiteDatabase.openOrCreateDatabase(file, null);
             if (database == null) {

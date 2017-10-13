@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 
 import com.xmx.tango.base.dialog.BaseDialog
-import com.xmx.tango.core.Constants
+import com.xmx.tango.core.CoreConstants
 import com.xmx.tango.R
 import com.xmx.tango.module.tango.Tango
 import com.xmx.tango.module.tango.TangoEntityManager
@@ -65,7 +65,7 @@ class UpdateTangoDialog : BaseDialog() {
             partOfSpeechView?.setText(this.partOfSpeech)
             typeView?.setText(this.type)
 
-            if (Constants.DEBUG_MODE) {
+            if (CoreConstants.DEBUG_MODE) {
                 // 测试模式显示内部信息
                 idView?.text = "${this.id}"
                 scoreView?.text = "${this.score}"

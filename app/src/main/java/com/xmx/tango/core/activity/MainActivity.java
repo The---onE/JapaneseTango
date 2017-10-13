@@ -25,11 +25,11 @@ import com.xmx.tango.module.log.OperationLogActivity;
 import com.xmx.tango.R;
 import com.xmx.tango.module.mission.MissionActivity;
 import com.xmx.tango.base.activity.BaseNavigationActivity;
-import com.xmx.tango.core.PagerAdapter;
+import com.xmx.tango.core.HomePagerAdapter;
 import com.xmx.tango.common.user.callback.AutoLoginCallback;
 import com.xmx.tango.common.user.UserConstants;
 import com.xmx.tango.common.user.UserManager;
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.module.crud.ChooseTangoEvent;
 import com.xmx.tango.module.service.TangoService;
 import com.xmx.tango.module.test.TestActivity;
@@ -65,7 +65,7 @@ public class MainActivity extends BaseNavigationActivity {
         titles.add("单词");
         titles.add("句子");
 
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments, titles);
+        HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(), fragments, titles);
 
         vp = getViewById(R.id.view_pager);
         vp.setAdapter(adapter);
@@ -141,7 +141,7 @@ public class MainActivity extends BaseNavigationActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if ((System.currentTimeMillis() - mExitTime) > Constants.LONGEST_EXIT_TIME) {
+            if ((System.currentTimeMillis() - mExitTime) > CoreConstants.INSTANCE.getLONGEST_EXIT_TIME()) {
                 showToast(R.string.confirm_exit);
                 mExitTime = System.currentTimeMillis();
             } else {

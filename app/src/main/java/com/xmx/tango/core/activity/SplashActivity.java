@@ -17,7 +17,7 @@ import com.xmx.tango.common.user.UserConstants;
 import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.common.user.callback.AutoLoginCallback;
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.R;
 import com.xmx.tango.module.calendar.DateData;
 import com.xmx.tango.module.calendar.DateDataEntityManager;
@@ -70,8 +70,12 @@ public class SplashActivity extends BaseSplashActivity {
     protected void processLogic(Bundle savedInstanceState) {
 
         if (checkLocalPhonePermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST)) {
-            if (checkOpsPermission(AppOpsManager.OPSTR_WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST)) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                if (checkOpsPermission(AppOpsManager.OPSTR_WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_SD_REQUEST)) {
+                    init();
+                }
+            } else {
                 init();
             }
         }
@@ -86,7 +90,7 @@ public class SplashActivity extends BaseSplashActivity {
                 skip();
             }
         };
-        timer.start(Constants.SPLASH_TIME, true);
+        timer.start(CoreConstants.INSTANCE.getSPLASH_TIME(), true);
 
         DataManager dm = DataManager.getInstance();
         TangoManager.INSTANCE.setWriting(dm.getSearchValue("writing"));
@@ -98,7 +102,7 @@ public class SplashActivity extends BaseSplashActivity {
         TangoManager.INSTANCE.updateTangoList();
         Date last = new Date(DataManager.getInstance().getForgetLastTime());
         Date now = new Date();
-        if (!Constants.isSameDate(now, last)) {
+        if (!CoreConstants.INSTANCE.isSameDate(now, last)) {
             if (last.getTime() > 0) {
                 // 更新上次签到日数据
                 DateData dateData = DateDataEntityManager.INSTANCE

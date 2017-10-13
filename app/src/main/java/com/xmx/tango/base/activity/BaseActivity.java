@@ -15,9 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.xmx.tango.core.Application;
-import com.xmx.tango.core.Constants;
-import com.xmx.tango.common.log.OperationLogEntityManager;
+import com.xmx.tango.core.MyApplication;
 import com.xmx.tango.utils.ExceptionUtil;
 
 import org.xutils.x;
@@ -35,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         x.view().inject(this);
 
         TAG = this.getClass().getSimpleName();
-        Application.getInstance().addActivity(this);
+        MyApplication.Companion.getInstance().addActivity(this);
 
         initView(savedInstanceState);
         setListener();

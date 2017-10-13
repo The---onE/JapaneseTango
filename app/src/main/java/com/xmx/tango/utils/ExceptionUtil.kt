@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.xmx.tango.common.log.OperationLogEntityManager
-import com.xmx.tango.core.Constants
+import com.xmx.tango.core.CoreConstants
 
 /**
  * Created by The_onE on 2016/11/7.
@@ -20,7 +20,7 @@ object ExceptionUtil {
         // 记录错误日志
         OperationLogEntityManager.getInstance().addLog("$e")
         // 在调试状态显示错误信息
-        if (Constants.EXCEPTION_DEBUG) {
+        if (CoreConstants.EXCEPTION_DEBUG) {
             // 打印异常堆栈跟踪
             Log.e("Error:", Log.getStackTraceString(e))
             // e.printStackTrace()
@@ -39,7 +39,7 @@ object ExceptionUtil {
         // 记录错误日志
         OperationLogEntityManager.getInstance().addLog("$e")
         // 在调试状态显示错误信息
-        if (Constants.EXCEPTION_DEBUG) {
+        if (CoreConstants.EXCEPTION_DEBUG) {
             // 打印异常堆栈跟踪
             Log.e("Error:", Log.getStackTraceString(e))
             // e.printStackTrace()

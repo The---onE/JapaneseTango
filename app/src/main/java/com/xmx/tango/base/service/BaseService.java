@@ -9,9 +9,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.xmx.tango.core.Constants;
+import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.R;
 import com.xmx.tango.common.log.OperationLogEntityManager;
+import com.xmx.tango.core.MyApplication;
 
 /**
  * Created by The_onE on 2016/7/1.
@@ -33,6 +34,8 @@ public abstract class BaseService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        MyApplication.Companion.getInstance().addService(this);
+
         processLogic(intent);
         setForeground(intent);
 
@@ -52,7 +55,7 @@ public abstract class BaseService extends Service {
     }
 
     public void showForeground(Class<?> iActivity, int sIcon,
-                                 String title, String content) {
+                               String title, String content) {
         int notificationId = -1;
         Intent notificationIntent = new Intent(this, iActivity);
         PendingIntent contentIntent = PendingIntent.getActivity(this, notificationId,
@@ -69,7 +72,7 @@ public abstract class BaseService extends Service {
     }
 
     protected boolean filterException(Exception e) {
-        if (e != null && Constants.EXCEPTION_DEBUG) {
+        if (e != null && CoreConstants.INSTANCE.getEXCEPTION_DEBUG()) {
             e.printStackTrace();
             showToast(e.getMessage());
             OperationLogEntityManager.getInstance().addLog(e.getMessage());

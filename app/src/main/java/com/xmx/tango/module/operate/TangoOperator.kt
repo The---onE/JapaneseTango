@@ -1,6 +1,6 @@
 package com.xmx.tango.module.operate
 
-import com.xmx.tango.core.Constants
+import com.xmx.tango.core.CoreConstants
 import com.xmx.tango.common.data.DataManager
 import com.xmx.tango.module.calendar.DateData
 import com.xmx.tango.module.calendar.DateDataEntityManager
@@ -36,7 +36,7 @@ object TangoOperator {
         val now = Date()
         val nowCalendar = Calendar.getInstance()
         nowCalendar.time = now
-        if (!Constants.isSameDate(now, last)) {
+        if (!CoreConstants.isSameDate(now, last)) {
             if (last.time > 0) {
                 // 更新上次签到日数据
                 var dateData = DateDataEntityManager
@@ -102,7 +102,7 @@ object TangoOperator {
             val now = Date()
             var frequency = tango.frequency
             val goal = DataManager.getInstance().tangoGoal
-            if (!Constants.isSameDate(now, last)) {
+            if (!CoreConstants.isSameDate(now, last)) {
                 // 今天第一次学习或复习该单语
                 todayConsecutive = 0 // 重置同一复习频率单语连续复习数
                 if (last != null && last.time > 0) {
@@ -156,7 +156,7 @@ object TangoOperator {
             val last = tango.lastTime
             val now = Date()
             var frequency = tango.frequency
-            if (!Constants.isSameDate(now, last)) {
+            if (!CoreConstants.isSameDate(now, last)) {
                 if (last != null && last.time > 0) {
                     // 遗忘了待复习的单语则提高复习频率
                     frequency++
@@ -186,7 +186,7 @@ object TangoOperator {
 
             val last = tango.lastTime
             val now = Date()
-            if (!Constants.isSameDate(now, last)) {
+            if (!CoreConstants.isSameDate(now, last)) {
                 if (last!!.time > 0) {
                     // 复习
                     review++
@@ -222,7 +222,7 @@ object TangoOperator {
             val last = tango.lastTime
             val now = Date()
             var frequency = tango.frequency
-            if (!Constants.isSameDate(now, last)) {
+            if (!CoreConstants.isSameDate(now, last)) {
                 // 今天第一次复习该单语
                 if (last != null && last.time > 0) {
                     // 复习
@@ -269,7 +269,7 @@ object TangoOperator {
             val last = tango.lastTime
             val now = Date()
             var frequency = tango.frequency
-            if (!Constants.isSameDate(now, last)) {
+            if (!CoreConstants.isSameDate(now, last)) {
                 // 今天第一次复习该单语
                 if (last != null && last.time > 0) {
                     // 复习
@@ -303,7 +303,7 @@ object TangoOperator {
             val last = tango.lastTime
             val now = Date()
             var frequency = tango.frequency
-            if (!Constants.isSameDate(now, last)) {
+            if (!CoreConstants.isSameDate(now, last)) {
                 // 今天第一次复习该单语
                 if (last != null && last.time > 0) {
                     // 增加复习频率

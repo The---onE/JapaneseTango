@@ -67,7 +67,7 @@ object ImportUtil {
             tango.type = record[CsvUtil.TYPE]
         } catch (e: IndexOutOfBoundsException) {
         } finally {
-            if (!StrUtil.isBlank(type)) {
+            if (type.isNotBlank()) {
                 tango.type = type
             }
             if (tango.addTime.time == 0L) {
