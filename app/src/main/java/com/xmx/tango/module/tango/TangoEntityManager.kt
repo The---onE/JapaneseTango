@@ -24,7 +24,7 @@ object TangoEntityManager : BaseSQLEntityManager<Tango>() {
      * @param reviewFlag 是否只选取学习过的单语
      * @param maxFrequency 最大复习系数
      */
-    fun selectTangoScoreAsc(count: Int, reviewFlag: Boolean, maxFrequency: Int): MutableList<Tango>? {
+    fun selectTangoScoreAsc(count: Int, reviewFlag: Boolean, maxFrequency: Int): List<Tango>? {
         if (!checkDatabase()) {
             return null
         }
@@ -59,7 +59,7 @@ object TangoEntityManager : BaseSQLEntityManager<Tango>() {
             conStr += StrUtil.join(conditions, " and ")
         }
         // 从数据库中查询
-        val cursor = database.rawQuery("select * from $tableName $conStr " +
+        val cursor = database?.rawQuery("select * from $tableName $conStr " +
                 "order by $reviewStr Score asc, LastTime asc limit $count", null)
         return convertToEntities(cursor)
     }

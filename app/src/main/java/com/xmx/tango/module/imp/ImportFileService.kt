@@ -49,6 +49,10 @@ class ImportFileService : BaseService() {
                         // 记录导入成功数
                         importNum = total
                     }
+
+                    override fun error(e: Exception) {
+                        filterException(e)
+                    }
                 })
                 return null
             }

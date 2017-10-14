@@ -88,9 +88,9 @@ object TangoManager {
             con.add("Type like '%$type%'")
         }
 
-        val array = con.toTypedArray<String?>()
+        val array = con.toTypedArray()
         // 重新查询单语列表
-        tangoList = manager.selectByCondition(order, ascFlag, *array)
+        tangoList = ArrayList(manager.selectByCondition(order, ascFlag, *array))
 
         version++
         return version
@@ -104,8 +104,8 @@ object TangoManager {
      * @return 待选列表
      */
     fun updateWaitingList(reviewFlag: Boolean, maxFrequency: Int, limit: Int = TangoConstants.DEFAULT_LIMIT): List<Tango>? {
-        waitingList = TangoEntityManager
-                .selectTangoScoreAsc(limit, reviewFlag, maxFrequency) ?: ArrayList()
+        waitingList = ArrayList(TangoEntityManager
+                .selectTangoScoreAsc(limit, reviewFlag, maxFrequency))
         return waitingList
     }
 

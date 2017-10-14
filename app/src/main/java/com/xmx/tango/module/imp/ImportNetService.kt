@@ -3,6 +3,7 @@ package com.xmx.tango.module.imp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
+import com.xiaoleilu.hutool.exceptions.ExceptionUtil
 
 import com.xmx.tango.base.service.BaseService
 import com.xmx.tango.common.data.sql.InsertCallback
@@ -43,6 +44,10 @@ class ImportNetService : BaseService() {
                         val i = Intent(this@ImportNetService, MainActivity::class.java)
                         NotificationUtils.showNotification(baseContext, i, 0, "日词",
                                 "成功导入 $total 条数据")
+                    }
+
+                    override fun error(e: Exception) {
+                        filterException(e)
                     }
                 })
                 return null

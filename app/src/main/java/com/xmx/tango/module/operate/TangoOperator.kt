@@ -40,7 +40,7 @@ object TangoOperator {
             if (last.time > 0) {
                 // 更新上次签到日数据
                 var dateData = DateDataEntityManager
-                        .selectLatest("addTime", false,
+                        .selectFirst("addTime", false,
                                 "Year=" + (lastCalendar.get(Calendar.YEAR)),
                                 "Month=" + (lastCalendar.get(Calendar.MONTH) + 1),
                                 "Date=" + lastCalendar.get(Calendar.DATE))
@@ -64,7 +64,7 @@ object TangoOperator {
             }
             // 今天打卡签到
             var todayData = DateDataEntityManager
-                    .selectLatest("addTime", false,
+                    .selectFirst("addTime", false,
                             "Year=" + (nowCalendar.get(Calendar.YEAR)),
                             "Month=" + (nowCalendar.get(Calendar.MONTH) + 1),
                             "Date=" + nowCalendar.get(Calendar.DATE))

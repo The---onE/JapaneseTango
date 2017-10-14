@@ -17,4 +17,10 @@ abstract class DeleteCallback {
      * @param total 删除的总数
      */
     abstract fun success(total: Int)
+
+    /**
+     * 中途失败的操作
+     * @param e 异常信息
+     */
+    abstract fun error(e: Exception)
 }

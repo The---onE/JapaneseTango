@@ -35,17 +35,19 @@ class CalendarActivity : BaseTempActivity() {
         val info = ArrayList<String>() // 除今天外打卡的日期列表（显示数据信息）
         // 从数据库中获取数据
         val data = DateDataEntityManager.selectAll()
-        for (item in data) {
-            // 生成日历读取的字符串
-            val key = item.year.toString() + "-" + item.month + "-" + item.date
-            checkIn.add(key)
-            // 日期与数据的映射
-            map.put(key, item)
-            // 不是今天则显示数据信息
-            if (item.date != c.get(Calendar.DATE)
-                    || item.month != c.get(Calendar.MONTH) + 1
-                    || item.year != c.get(Calendar.YEAR)) {
-                info.add(key)
+        data?.apply {
+            for (item in this) {
+                // 生成日历读取的字符串
+                val key = item.year.toString() + "-" + item.month + "-" + item.date
+                checkIn.add(key)
+                // 日期与数据的映射
+                map.put(key, item)
+                // 不是今天则显示数据信息
+                if (item.date != c.get(Calendar.DATE)
+                        || item.month != c.get(Calendar.MONTH) + 1
+                        || item.year != c.get(Calendar.YEAR)) {
+                    info.add(key)
+                }
             }
         }
         // 设置日历显示信息

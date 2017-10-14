@@ -106,7 +106,7 @@ public class SplashActivity extends BaseSplashActivity {
             if (last.getTime() > 0) {
                 // 更新上次签到日数据
                 DateData dateData = DateDataEntityManager.INSTANCE
-                        .selectLatest("addTime", false,
+                        .selectFirst("addTime", false,
                                 "Year=" + (last.getYear() + 1900),
                                 "Month=" + (last.getMonth() + 1),
                                 "Date=" + last.getDate());
@@ -126,7 +126,7 @@ public class SplashActivity extends BaseSplashActivity {
             }
             // 今天打卡签到
             DateData todayData = DateDataEntityManager.INSTANCE
-                    .selectLatest("addTime", false,
+                    .selectFirst("addTime", false,
                             "Year=" + (now.getYear() + 1900),
                             "Month=" + (now.getMonth() + 1),
                             "Date=" + now.getDate());

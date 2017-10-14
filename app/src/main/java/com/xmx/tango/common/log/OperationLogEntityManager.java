@@ -20,9 +20,9 @@ public class OperationLogEntityManager extends BaseSQLEntityManager<OperationLog
     }
 
     private OperationLogEntityManager() {
-        tableName = "OperationLog";
-        entityTemplate = new OperationLog();
-        openDatabase();
+        setTableName("OperationLog");
+        setEntityTemplate(new OperationLog());
+        openDatabase(null);
     }
 
     public void addLog(String operation) {

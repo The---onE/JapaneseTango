@@ -17,4 +17,10 @@ abstract class InsertCallback {
      * @param total 插入的总数
      */
     abstract fun success(total: Int)
+
+    /**
+     * 中途执行失败的操作
+     * @param e 异常信息
+     */
+    abstract fun error(e: Exception)
 }
