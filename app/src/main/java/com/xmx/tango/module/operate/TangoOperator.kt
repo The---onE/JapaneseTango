@@ -26,10 +26,10 @@ object TangoOperator {
     private var prevReview: Int = 0
 
     init {
-        study = DataManager.getInstance().tangoStudy
-        review = DataManager.getInstance().tangoReview
+        study = DataManager.tangoStudy
+        review = DataManager.tangoReview
         // 上次运行时间
-        val last = Date(DataManager.getInstance().resetLastTime)
+        val last = Date(DataManager.resetLastTime)
         val lastCalendar = Calendar.getInstance()
         lastCalendar.time = last
         // 当前时间
@@ -79,11 +79,11 @@ object TangoOperator {
             }
             // 清空上次数据
             study = 0
-            DataManager.getInstance().tangoStudy = 0
+            DataManager.tangoStudy = 0
             review = 0
-            DataManager.getInstance().tangoReview = 0
-            DataManager.getInstance().reviewFrequency = TangoConstants.REVIEW_FREQUENCY
-            DataManager.getInstance().resetLastTime = now.time
+            DataManager.tangoReview = 0
+            DataManager.reviewFrequency = TangoConstants.REVIEW_FREQUENCY
+            DataManager.resetLastTime = now.time
         }
     }
 
@@ -101,14 +101,14 @@ object TangoOperator {
             val last = tango.lastTime
             val now = Date()
             var frequency = tango.frequency
-            val goal = DataManager.getInstance().tangoGoal
+            val goal = DataManager.tangoGoal
             if (!CoreConstants.isSameDate(now, last)) {
                 // 今天第一次学习或复习该单语
                 todayConsecutive = 0 // 重置同一复习频率单语连续复习数
                 if (last != null && last.time > 0) {
                     // 复习
                     review++
-                    DataManager.getInstance().tangoReview = review
+                    DataManager.tangoReview = review
                     // 每天第一次复习后降低复习频率
                     if (frequency > 0) {
                         frequency--
@@ -116,7 +116,7 @@ object TangoOperator {
                 } else {
                     // 学习
                     study++
-                    DataManager.getInstance().tangoStudy = study
+                    DataManager.tangoStudy = study
                     frequency = TangoConstants.REVIEW_FREQUENCY
                 }
             } else if (study >= goal) {
@@ -125,9 +125,9 @@ object TangoOperator {
                 // 同一复习频率单语连续复习数过多
                 if (todayConsecutive > TangoConstants.TODAY_CONSECUTIVE_REVIEW_MAX) {
                     todayConsecutive = 0
-                    var frequencyMax = DataManager.getInstance().reviewFrequency
+                    var frequencyMax = DataManager.reviewFrequency
                     frequencyMax--
-                    DataManager.getInstance().reviewFrequency = frequencyMax
+                    DataManager.reviewFrequency = frequencyMax
                 }
             }
             // 处理记住了操作的分数
@@ -190,11 +190,11 @@ object TangoOperator {
                 if (last!!.time > 0) {
                     // 复习
                     review++
-                    DataManager.getInstance().tangoReview = review
+                    DataManager.tangoReview = review
                 } else {
                     // 学习
                     study++
-                    DataManager.getInstance().tangoStudy = study
+                    DataManager.tangoStudy = study
                 }
             }
             // 复习频率为-1不会再被复习到
@@ -227,7 +227,7 @@ object TangoOperator {
                 if (last != null && last.time > 0) {
                     // 复习
                     review++
-                    DataManager.getInstance().tangoReview = review
+                    DataManager.tangoReview = review
                 }
                 if (frequency > 0) {
                     // 降低复习频率
@@ -241,9 +241,9 @@ object TangoOperator {
                 // 同一复习频率单语连续复习数过多
                 if (todayConsecutive > TangoConstants.TODAY_CONSECUTIVE_REVIEW_MAX) {
                     todayConsecutive = 0
-                    var frequencyMax = DataManager.getInstance().reviewFrequency
+                    var frequencyMax = DataManager.reviewFrequency
                     frequencyMax--
-                    DataManager.getInstance().reviewFrequency = frequencyMax
+                    DataManager.reviewFrequency = frequencyMax
                 }
             }
             // 更新数据库中单语学习信息
@@ -274,7 +274,7 @@ object TangoOperator {
                 if (last != null && last.time > 0) {
                     // 复习
                     review++
-                    DataManager.getInstance().tangoReview = review
+                    DataManager.tangoReview = review
                 }
                 // 降低复习频率
                 if (frequency > 0) {

@@ -96,7 +96,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     public void syncFromCloud(final Map<String, Object> conditions,
                               final SelectCallback<Entity> callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         cloudManager.selectByCondition(conditions, null, false, new SelectCallback<Entity>() {
@@ -127,7 +127,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     //向云端添加数据，成功后添加至数据库
     public void insertData(final Entity entity, final InsertCallback callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         cloudManager.insertToCloud(entity, new InsertCallback() {
@@ -154,7 +154,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     //从云端删除一条记录，成功后删除数据库中对应记录
     public void deleteData(final String objectId, final DelCallback callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         cloudManager.deleteFromCloud(objectId, new DelCallback() {
@@ -181,7 +181,7 @@ public abstract class BaseSyncEntityManager<Entity extends ISyncEntity> {
     public void updateData(final String objectId, final Map<String, Object> update,
                            final UpdateCallback callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         cloudManager.updateToCloud(objectId, update, new UpdateCallback() {

@@ -31,12 +31,12 @@ object TangoEntityManager : BaseSQLEntityManager<Tango>() {
         // 筛选条件
         val conditions = ArrayList<String>()
         // 筛选类型
-        val type = DataManager.getInstance().tangoType
+        val type = DataManager.tangoType
         if (type != "") {
             conditions.add("Type like '%$type%'")
         }
         // 筛选词性
-        val part = DataManager.getInstance().partOfSpeech
+        val part = DataManager.partOfSpeech
         if (part != "") {
             conditions.add("PartOfSpeech like '%$part%'")
         }

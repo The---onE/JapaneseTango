@@ -156,7 +156,7 @@ public class HomeFragment extends xUtilsFragment {
         loadNewTango(prevTango);
         countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
                 "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
-                "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
+                "\n今日完成任务：" + DataManager.INSTANCE.getTodayMission());
     }
 
     @Event(value = R.id.layout_tango, type = View.OnLongClickListener.class)
@@ -189,21 +189,21 @@ public class HomeFragment extends xUtilsFragment {
                 switch (operation) {
                     case REMEMBER:
                         TangoOperator.INSTANCE.remember(tango);
-                        if (DataManager.getInstance().getVibratorStatus()) {
+                        if (DataManager.INSTANCE.getVibratorStatus()) {
                             VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.INSTANCE.getREMEMBER_VIBRATE_TIME());
                         }
                         break;
                     case FORGET:
                         TangoOperator.INSTANCE.forget(tango);
-                        if (DataManager.getInstance().getVibratorStatus()) {
+                        if (DataManager.INSTANCE.getVibratorStatus()) {
                             VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.INSTANCE.getFORGET_VIBRATE_TIME());
                         }
                         break;
                     case REMEMBER_FOREVER:
                         TangoOperator.INSTANCE.rememberForever(tango);
-                        if (DataManager.getInstance().getVibratorStatus()) {
+                        if (DataManager.INSTANCE.getVibratorStatus()) {
                             VibratorUtil.INSTANCE.vibrate(getContext(),
                                     TangoConstants.INSTANCE.getREMEMBER_FOREVER_VIBRATE_TIME());
                         }
@@ -211,7 +211,7 @@ public class HomeFragment extends xUtilsFragment {
                 }
                 countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
                         "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
-                        "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
+                        "\n今日完成任务：" + DataManager.INSTANCE.getTodayMission());
 
                 loadNew();
                 return true;
@@ -251,7 +251,7 @@ public class HomeFragment extends xUtilsFragment {
 
         countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
                 "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
-                "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
+                "\n今日完成任务：" + DataManager.INSTANCE.getTodayMission());
 
         loadNewTango();
         if (!EventBus.getDefault().isRegistered(this)) {
@@ -288,7 +288,7 @@ public class HomeFragment extends xUtilsFragment {
     private void delayPronunciation() {
         if (pronunciationTimer != null) {
             pronunciationTimer.stop();
-            pronunciationTimer.start((long) (DataManager.getInstance().getPronunciationTime() * 1000), true);
+            pronunciationTimer.start((long) (DataManager.INSTANCE.getPronunciationTime() * 1000), true);
         }
     }
 
@@ -301,7 +301,7 @@ public class HomeFragment extends xUtilsFragment {
     private void delayWriting() {
         if (writingTimer != null) {
             writingTimer.stop();
-            writingTimer.start((long) (DataManager.getInstance().getWritingTime() * 1000), true);
+            writingTimer.start((long) (DataManager.INSTANCE.getWritingTime() * 1000), true);
         }
     }
 
@@ -316,7 +316,7 @@ public class HomeFragment extends xUtilsFragment {
     private void delayMeaning() {
         if (meaningTimer != null) {
             meaningTimer.stop();
-            meaningTimer.start((long) (DataManager.getInstance().getMeaningTime() * 1000), true);
+            meaningTimer.start((long) (DataManager.INSTANCE.getMeaningTime() * 1000), true);
         }
     }
 
@@ -339,10 +339,10 @@ public class HomeFragment extends xUtilsFragment {
     }
 
     private void loadNewTango() {
-        int goal = DataManager.getInstance().getTangoGoal();
+        int goal = DataManager.INSTANCE.getTangoGoal();
         boolean reviewFlag = TangoOperator.INSTANCE.getStudy() >= goal;
         Tango temp = TangoManager.INSTANCE.randomTango(reviewFlag,
-                DataManager.getInstance().getReviewFrequency(), tango, false);
+                DataManager.INSTANCE.getReviewFrequency(), tango, false);
         loadNewTango(temp);
     }
 
@@ -463,8 +463,8 @@ public class HomeFragment extends xUtilsFragment {
                 showWriting();
                 delayMeaning();
             } else {
-                int pTime = (int) DataManager.getInstance().getPronunciationTime() * 1000;
-                int wTime = (int) DataManager.getInstance().getWritingTime() * 1000;
+                int pTime = (int) DataManager.INSTANCE.getPronunciationTime() * 1000;
+                int wTime = (int) DataManager.INSTANCE.getWritingTime() * 1000;
                 int time = Math.min(pTime, wTime);
                 //delayPronunciation();
                 if (pronunciationTimer != null) {
@@ -552,12 +552,12 @@ public class HomeFragment extends xUtilsFragment {
         super.onResume();
         countView.setText("今日复习：" + TangoOperator.INSTANCE.getReview() +
                 "\n今日已记：" + TangoOperator.INSTANCE.getStudy() +
-                "\n今日完成任务：" + DataManager.getInstance().getTodayMission());
+                "\n今日完成任务：" + DataManager.INSTANCE.getTodayMission());
     }
 
     private void setJapaneseFont() {
         AssetManager mgr = getContext().getAssets();
-        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String title = DataManager.INSTANCE.getJapaneseFontTitle();
         String font = null;
         if (title != null) {
             font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);

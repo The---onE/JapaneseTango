@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseSQLEntityManager<Entity extends ISQLEntity> {
+public abstract class BaseSQLEntityManager<Entity extends ISqlEntity> {
     protected SQLiteDatabase database = null;
     long version = System.currentTimeMillis();
     protected boolean openFlag = false;

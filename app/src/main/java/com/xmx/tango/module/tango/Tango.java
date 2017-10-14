@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.xmx.tango.common.data.sql.ISQLEntity;
+import com.xmx.tango.common.data.sql.ISqlEntity;
 import com.xmx.tango.module.net.TinyTango;
 
 import java.util.Date;
@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by The_onE on 2016/9/13.
  * 单语实体
  */
-public class Tango implements ISQLEntity, Parcelable {
+public class Tango implements ISqlEntity, Parcelable {
     private long id = -1;
     private String writing = "";
     private String pronunciation = "";

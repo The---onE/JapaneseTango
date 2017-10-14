@@ -21,7 +21,7 @@ object SpeakTangoManager {
     fun speak(context: Context, tango: String) {
         val tts = JapaneseTextToSpeech(context, null)
         val params = HashMap<String, String>()
-        val speaker = DataManager.getInstance().tangoSpeaker // 获取设置的音色
+        val speaker = DataManager.tangoSpeaker // 获取设置的音色
         params.put(JapaneseTextToSpeech.KEY_PARAM_SPEAKER, speaker)
         tts.speak(tango, TextToSpeech.QUEUE_FLUSH, params)
     }

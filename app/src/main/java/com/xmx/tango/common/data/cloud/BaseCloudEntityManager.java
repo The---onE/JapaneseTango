@@ -40,7 +40,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
                                   final String order, final boolean ascFlag,
                                   final SelectCallback<Entity> callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -87,13 +87,13 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
-                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        callback.syncError(DataConstants.INSTANCE.getNOT_LOGGED_IN());
                         break;
                     case UserConstants.USERNAME_ERROR:
-                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getUSERNAME_ERROR());
                         break;
                     case UserConstants.CHECKSUM_ERROR:
-                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getCHECKSUM_ERROR());
                         break;
                 }
             }
@@ -102,7 +102,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
 
     public void insertToCloud(final Entity entity, final InsertCallback callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -133,13 +133,13 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
-                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        callback.syncError(DataConstants.INSTANCE.getNOT_LOGGED_IN());
                         break;
                     case UserConstants.USERNAME_ERROR:
-                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getUSERNAME_ERROR());
                         break;
                     case UserConstants.CHECKSUM_ERROR:
-                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getCHECKSUM_ERROR());
                         break;
                 }
             }
@@ -148,7 +148,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
 
     public void deleteFromCloud(final String objectId, final DelCallback callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -185,13 +185,13 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
-                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        callback.syncError(DataConstants.INSTANCE.getNOT_LOGGED_IN());
                         break;
                     case UserConstants.USERNAME_ERROR:
-                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getUSERNAME_ERROR());
                         break;
                     case UserConstants.CHECKSUM_ERROR:
-                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getCHECKSUM_ERROR());
                         break;
                 }
             }
@@ -201,7 +201,7 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
     public void updateToCloud(final String objectId, final Map<String, Object> update,
                               final UpdateCallback callback) {
         if (!checkDatabase()) {
-            callback.syncError(DataConstants.NOT_INIT);
+            callback.syncError(DataConstants.INSTANCE.getNOT_INIT());
             return;
         }
         UserManager.getInstance().checkLogin(new AutoLoginCallback() {
@@ -243,13 +243,13 @@ public abstract class BaseCloudEntityManager<Entity extends ICloudEntity> {
             public void error(int error) {
                 switch (error) {
                     case UserConstants.NOT_LOGGED_IN:
-                        callback.syncError(DataConstants.NOT_LOGGED_IN);
+                        callback.syncError(DataConstants.INSTANCE.getNOT_LOGGED_IN());
                         break;
                     case UserConstants.USERNAME_ERROR:
-                        callback.syncError(DataConstants.USERNAME_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getUSERNAME_ERROR());
                         break;
                     case UserConstants.CHECKSUM_ERROR:
-                        callback.syncError(DataConstants.CHECKSUM_ERROR);
+                        callback.syncError(DataConstants.INSTANCE.getCHECKSUM_ERROR());
                         break;
                 }
             }

@@ -86,7 +86,7 @@ class SearchTangoDialog : BaseDialog() {
             TangoManager.partOfSpeech = partOfSpeech
             TangoManager.type = type
             // 将筛选条件保存在本机
-            val dm = DataManager.getInstance()
+            val dm = DataManager
             dm.setSearchValue("writing", writing)
             dm.setSearchValue("pronunciation", pronunciation)
             dm.setSearchValue("meaning", meaning)

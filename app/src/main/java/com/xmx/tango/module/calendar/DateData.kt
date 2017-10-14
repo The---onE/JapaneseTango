@@ -3,7 +3,7 @@ package com.xmx.tango.module.calendar
 import android.content.ContentValues
 import android.database.Cursor
 
-import com.xmx.tango.common.data.sql.ISQLEntity
+import com.xmx.tango.common.data.sql.ISqlEntity
 
 import java.util.Date
 
@@ -11,7 +11,7 @@ import java.util.Date
  * Created by The_onE on 2016/9/13.
  * 打卡日期数据实体
  */
-class DateData : ISQLEntity {
+class DateData : ISqlEntity {
     var id = -1L
     var year = 0
     var month = 0

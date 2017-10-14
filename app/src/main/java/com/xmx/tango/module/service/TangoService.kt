@@ -22,7 +22,7 @@ class TangoService : BaseService() {
                 loadNewTango()
             }
         }
-        timer?.start(DataManager.getInstance().serviceInterval.toLong())
+        timer?.start(DataManager.serviceInterval.toLong())
     }
 
     override fun setForeground(intent: Intent) {
@@ -34,11 +34,11 @@ class TangoService : BaseService() {
      * 加载新单语
      */
     private fun loadNewTango() {
-        val goal = DataManager.getInstance().tangoGoal
+        val goal = DataManager.tangoGoal
         val reviewFlag = TangoOperator.study >= goal
         // 随机选取单语
         val temp = TangoManager.randomTango(reviewFlag,
-                DataManager.getInstance().reviewFrequency, tango, false)
+                DataManager.reviewFrequency, tango, false)
         temp?.apply { loadNewTango(this) }
     }
 

@@ -69,7 +69,7 @@ class TestActivity : BaseTempActivity() {
                     s.delete(index - 1, index)
                 }
                 // 震动提示
-                if (DataManager.getInstance().vibratorStatus) {
+                if (DataManager.vibratorStatus) {
                     VibratorUtil.vibrate(this@TestActivity,
                             TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
                 }
@@ -140,13 +140,13 @@ class TestActivity : BaseTempActivity() {
         prevTango = tango // 保存当前单语
         // 随机获取下一个单语
         tango = TangoManager.randomTango(true,
-                DataManager.getInstance().reviewFrequency, prevTango, false)
+                DataManager.reviewFrequency, prevTango, false)
         // 测试单语的解释不能为空
         var count = 0 // 避免死循环计数
         while (tango == null || tango?.meaning.isNullOrBlank()) {
             // 重新获取新单语
             tango = TangoManager.randomTango(true,
-                    DataManager.getInstance().reviewFrequency, prevTango, false)
+                    DataManager.reviewFrequency, prevTango, false)
             count++
             if (count > 100) {
                 showToast("没有符合条件的测试")
@@ -245,7 +245,7 @@ class TestActivity : BaseTempActivity() {
             enableFlag = false
             keyboardView.disable()
             // 震动提示
-            if (DataManager.getInstance().vibratorStatus) {
+            if (DataManager.vibratorStatus) {
                 VibratorUtil.vibrate(this@TestActivity,
                         TangoConstants.TEST_RIGHT_VIBRATE_TIME)
             }
@@ -263,11 +263,8 @@ class TestActivity : BaseTempActivity() {
      */
     private fun setJapaneseFont() {
         // 获取保存的字体设置
-        val title = DataManager.getInstance().japaneseFontTitle
-        var font: String? = null
-        if (title != null) {
-            font = TangoConstants.JAPANESE_FONT_MAP[title]
-        }
+        val title = DataManager.japaneseFontTitle
+        val font = TangoConstants.JAPANESE_FONT_MAP[title]
         // 获取设置的字体
         var tf = Typeface.DEFAULT
         val mgr = assets
@@ -305,7 +302,7 @@ class TestActivity : BaseTempActivity() {
         val s = testEdit.text
         s.insert(i, re) // 在光标处插入文字
         // 震动提示
-        if (DataManager.getInstance().vibratorStatus) {
+        if (DataManager.vibratorStatus) {
             VibratorUtil.vibrate(this@TestActivity,
                     TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
         }

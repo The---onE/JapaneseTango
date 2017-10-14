@@ -99,7 +99,7 @@ class SentenceActivity : BaseTempActivity() {
                         hintView.text = hintItem.text
                         StrUtil.copyToClipboard(this@SentenceActivity, token.baseForm)
                         // 震动提示
-                        if (DataManager.getInstance().vibratorStatus) {
+                        if (DataManager.vibratorStatus) {
                             VibratorUtil.vibrate(this@SentenceActivity,
                                     TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
                         }
@@ -129,11 +129,8 @@ class SentenceActivity : BaseTempActivity() {
      */
     private fun setJapaneseFont() {
         // 获取保存的字体设置
-        val title = DataManager.getInstance().japaneseFontTitle
-        var font: String? = null
-        if (title != null) {
-            font = TangoConstants.JAPANESE_FONT_MAP[title]
-        }
+        val title = DataManager.japaneseFontTitle
+        val font = TangoConstants.JAPANESE_FONT_MAP[title]
         // 获取设置的字体
         val mgr = assets
         typeface = Typeface.DEFAULT

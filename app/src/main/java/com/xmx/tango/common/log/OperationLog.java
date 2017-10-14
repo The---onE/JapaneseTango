@@ -3,14 +3,14 @@ package com.xmx.tango.common.log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.xmx.tango.common.data.sql.ISQLEntity;
+import com.xmx.tango.common.data.sql.ISqlEntity;
 
 import java.util.Date;
 
 /**
  * Created by The_onE on 2016/9/4.
  */
-public class OperationLog implements ISQLEntity {
+public class OperationLog implements ISqlEntity {
     public long mId = -1;
     public String mOperation;
     public Date mTime;

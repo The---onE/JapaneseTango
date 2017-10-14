@@ -51,11 +51,8 @@ class TangoAdapter(context: Context, data: List<Tango>) : BaseEntityAdapter<Tang
 
         if (position < mData.size) {
             // 设置字体
-            val title = DataManager.getInstance().japaneseFontTitle
-            var font: String? = null
-            if (title != null) {
-                font = TangoConstants.JAPANESE_FONT_MAP[title]
-            }
+            val title = DataManager.japaneseFontTitle
+            val font = TangoConstants.JAPANESE_FONT_MAP[title]
             val mgr = mContext.assets
             var tf = Typeface.DEFAULT
             if (font != null) {

@@ -80,6 +80,6 @@ class MyApplication : MultiDexApplication() {
         UserManager.getInstance().setContext(this)
 
         // 初始化数据管理器
-        DataManager.getInstance().setContext(this)
+        DataManager.setContext(this)
     }
 }

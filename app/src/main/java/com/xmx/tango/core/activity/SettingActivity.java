@@ -47,41 +47,41 @@ public class SettingActivity extends BaseTempActivity {
         setContentView(R.layout.activity_setting);
 
         typeView = getViewById(R.id.tv_type);
-        String type = DataManager.getInstance().getTangoType();
+        String type = DataManager.INSTANCE.getTangoType();
         if (type.equals("")) {
             type = "全部";
         }
         typeView.setText(type);
 
         partView = getViewById(R.id.tv_part);
-        String part = DataManager.getInstance().getPartOfSpeech();
+        String part = DataManager.INSTANCE.getPartOfSpeech();
         if (part.equals("")) {
             part = "全部";
         }
         partView.setText(part);
 
         goalView = getViewById(R.id.tv_goal);
-        goalView.setText("" + DataManager.getInstance().getTangoGoal());
+        goalView.setText("" + DataManager.INSTANCE.getTangoGoal());
 
         pronunciationTimeView = getViewById(R.id.tv_pronunciation_time);
-        pronunciationTimeView.setText("" + DataManager.getInstance().getPronunciationTime());
+        pronunciationTimeView.setText("" + DataManager.INSTANCE.getPronunciationTime());
 
         writingTimeView = getViewById(R.id.tv_writing_time);
-        writingTimeView.setText("" + DataManager.getInstance().getWritingTime());
+        writingTimeView.setText("" + DataManager.INSTANCE.getWritingTime());
 
         meaningTimeView = getViewById(R.id.tv_meaning_time);
-        meaningTimeView.setText("" + DataManager.getInstance().getMeaningTime());
+        meaningTimeView.setText("" + DataManager.INSTANCE.getMeaningTime());
 
         frequencyView = getViewById(R.id.tv_frequency);
-        frequencyView.setText("" + DataManager.getInstance().getReviewFrequency());
+        frequencyView.setText("" + DataManager.INSTANCE.getReviewFrequency());
 
         missionView = getViewById(R.id.tv_mission_count);
-        missionView.setText("" + DataManager.getInstance().getMissionCount());
+        missionView.setText("" + DataManager.INSTANCE.getMissionCount());
 
         japaneseFontView = getViewById(R.id.tv_japanese_font);
         japaneseFontView.setText("あいうえお 日本語");
         AssetManager mgr = getAssets();
-        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String title = DataManager.INSTANCE.getJapaneseFontTitle();
         String font = null;
         if (title != null) {
             font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);
@@ -93,16 +93,16 @@ public class SettingActivity extends BaseTempActivity {
         japaneseFontView.setTypeface(tf);
 
         speakView = getViewById(R.id.tv_speaker);
-        speakView.setText(DataManager.getInstance().getTangoSpeaker());
+        speakView.setText(DataManager.INSTANCE.getTangoSpeaker());
 
         testView = getViewById(R.id.edit_speak);
 
         vibratorView = getViewById(R.id.tv_vibrator);
-        boolean vibratorFlag = DataManager.getInstance().getVibratorStatus();
+        boolean vibratorFlag = DataManager.INSTANCE.getVibratorStatus();
         vibratorView.setText(vibratorFlag ? "开启" : "关闭");
 
         serviceIntervalView = getViewById(R.id.tv_service_interval);
-        serviceIntervalView.setText("" + DataManager.getInstance().getServiceInterval());
+        serviceIntervalView.setText("" + DataManager.INSTANCE.getServiceInterval());
     }
 
     @Override
@@ -113,7 +113,7 @@ public class SettingActivity extends BaseTempActivity {
                 final EditText typeEdit = new EditText(getBaseContext());
                 typeEdit.setTextColor(Color.BLACK);
                 typeEdit.setTextSize(24);
-                typeEdit.setText(DataManager.getInstance().getTangoType());
+                typeEdit.setText(DataManager.INSTANCE.getTangoType());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("学习的単語类型")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -122,7 +122,7 @@ public class SettingActivity extends BaseTempActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String type = typeEdit.getText().toString().trim();
-                                DataManager.getInstance().setTangoType(type);
+                                DataManager.INSTANCE.setTangoType(type);
                                 if (type.equals("")) {
                                     type = "全部";
                                 }
@@ -141,7 +141,7 @@ public class SettingActivity extends BaseTempActivity {
                 final EditText partEdit = new EditText(getBaseContext());
                 partEdit.setTextColor(Color.BLACK);
                 partEdit.setTextSize(24);
-                partEdit.setText(DataManager.getInstance().getPartOfSpeech());
+                partEdit.setText(DataManager.INSTANCE.getPartOfSpeech());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("学习的単語词性")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -150,7 +150,7 @@ public class SettingActivity extends BaseTempActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String part = partEdit.getText().toString().trim();
-                                DataManager.getInstance().setPartOfSpeech(part);
+                                DataManager.INSTANCE.setPartOfSpeech(part);
                                 if (part.equals("")) {
                                     part = "全部";
                                 }
@@ -170,7 +170,7 @@ public class SettingActivity extends BaseTempActivity {
                 goalEdit.setTextColor(Color.BLACK);
                 goalEdit.setTextSize(24);
                 goalEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
-                goalEdit.setText("" + DataManager.getInstance().getTangoGoal());
+                goalEdit.setText("" + DataManager.INSTANCE.getTangoGoal());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("每日的学习目标")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -186,7 +186,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setTangoGoal(goal);
+                                DataManager.INSTANCE.setTangoGoal(goal);
                                 showToast("更改成功");
                                 goalView.setText("" + goal);
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
@@ -203,7 +203,7 @@ public class SettingActivity extends BaseTempActivity {
                 pronunciationTimeEdit.setTextColor(Color.BLACK);
                 pronunciationTimeEdit.setTextSize(24);
                 pronunciationTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                pronunciationTimeEdit.setText("" + DataManager.getInstance().getPronunciationTime());
+                pronunciationTimeEdit.setText("" + DataManager.INSTANCE.getPronunciationTime());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("发音延迟时间")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -219,7 +219,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setPronunciationTime(pronunciationTime);
+                                DataManager.INSTANCE.setPronunciationTime(pronunciationTime);
                                 showToast("更改成功");
                                 pronunciationTimeView.setText("" + pronunciationTime);
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
@@ -236,7 +236,7 @@ public class SettingActivity extends BaseTempActivity {
                 writingTimeEdit.setTextColor(Color.BLACK);
                 writingTimeEdit.setTextSize(24);
                 writingTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                writingTimeEdit.setText("" + DataManager.getInstance().getWritingTime());
+                writingTimeEdit.setText("" + DataManager.INSTANCE.getWritingTime());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("写法延迟时间")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -252,7 +252,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setWritingTime(writingTime);
+                                DataManager.INSTANCE.setWritingTime(writingTime);
                                 showToast("更改成功");
                                 writingTimeView.setText("" + writingTime);
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
@@ -269,7 +269,7 @@ public class SettingActivity extends BaseTempActivity {
                 meaningTimeEdit.setTextColor(Color.BLACK);
                 meaningTimeEdit.setTextSize(24);
                 meaningTimeEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                meaningTimeEdit.setText("" + DataManager.getInstance().getMeaningTime());
+                meaningTimeEdit.setText("" + DataManager.INSTANCE.getMeaningTime());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("解释延迟时间")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -285,7 +285,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setMeaningTime(meaningTime);
+                                DataManager.INSTANCE.setMeaningTime(meaningTime);
                                 showToast("更改成功");
                                 meaningTimeView.setText("" + meaningTime);
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
@@ -302,7 +302,7 @@ public class SettingActivity extends BaseTempActivity {
                 frequencyEdit.setTextColor(Color.BLACK);
                 frequencyEdit.setTextSize(24);
                 frequencyEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-                frequencyEdit.setText("" + DataManager.getInstance().getReviewFrequency());
+                frequencyEdit.setText("" + DataManager.INSTANCE.getReviewFrequency());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("复习系数")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -318,7 +318,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setReviewFrequency(frequency);
+                                DataManager.INSTANCE.setReviewFrequency(frequency);
                                 showToast("更改成功");
                                 frequencyView.setText("" + frequency);
                                 EventBus.getDefault().post(new LoadNewTangoEvent());
@@ -335,7 +335,7 @@ public class SettingActivity extends BaseTempActivity {
                 missionEdit.setTextColor(Color.BLACK);
                 missionEdit.setTextSize(24);
                 missionEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-                missionEdit.setText("" + DataManager.getInstance().getMissionCount());
+                missionEdit.setText("" + DataManager.INSTANCE.getMissionCount());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("任务模式単語数")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -351,7 +351,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setMissionCount(mission);
+                                DataManager.INSTANCE.setMissionCount(mission);
                                 showToast("更改成功");
                                 missionView.setText("" + mission);
                             }
@@ -378,7 +378,7 @@ public class SettingActivity extends BaseTempActivity {
                         .setItems(TangoConstants.INSTANCE.getSPEAKERS(), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                DataManager.getInstance().setTangoSpeaker(TangoConstants.INSTANCE.getSPEAKERS()[i]);
+                                DataManager.INSTANCE.setTangoSpeaker(TangoConstants.INSTANCE.getSPEAKERS()[i]);
                                 speakView.setText(TangoConstants.INSTANCE.getSPEAKERS()[i]);
                             }
                         })
@@ -397,9 +397,9 @@ public class SettingActivity extends BaseTempActivity {
         getViewById(R.id.layout_vibrator).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean vibratorFlag = DataManager.getInstance().getVibratorStatus();
+                boolean vibratorFlag = DataManager.INSTANCE.getVibratorStatus();
                 vibratorFlag = !vibratorFlag;
-                DataManager.getInstance().setVibratorStatus(vibratorFlag);
+                DataManager.INSTANCE.setVibratorStatus(vibratorFlag);
                 vibratorView.setText(vibratorFlag ? "开启" : "关闭");
             }
         });
@@ -411,7 +411,7 @@ public class SettingActivity extends BaseTempActivity {
                 serviceIntervalEdit.setTextColor(Color.BLACK);
                 serviceIntervalEdit.setTextSize(24);
                 serviceIntervalEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-                serviceIntervalEdit.setText("" + DataManager.getInstance().getServiceInterval());
+                serviceIntervalEdit.setText("" + DataManager.INSTANCE.getServiceInterval());
                 new AlertDialog.Builder(SettingActivity.this)
                         .setTitle("服务换词间隔(ms)")
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -427,7 +427,7 @@ public class SettingActivity extends BaseTempActivity {
                                     showToast("更改失败");
                                     return;
                                 }
-                                DataManager.getInstance().setServiceInterval(serviceInterval);
+                                DataManager.INSTANCE.setServiceInterval(serviceInterval);
                                 showToast("更改成功");
                                 serviceIntervalView.setText("" + serviceInterval);
                             }
@@ -445,7 +445,7 @@ public class SettingActivity extends BaseTempActivity {
     @Subscribe
     public void onEvent(JapaneseFontChangeEvent event) {
         AssetManager mgr = getAssets();
-        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String title = DataManager.INSTANCE.getJapaneseFontTitle();
         String font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);
         Typeface tf = Typeface.DEFAULT;
         if (font != null) {

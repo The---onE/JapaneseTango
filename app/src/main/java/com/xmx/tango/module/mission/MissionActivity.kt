@@ -100,7 +100,7 @@ class MissionActivity : BaseTempActivity() {
                             TangoOperator.remember(tango)
                             TangoManager.removeFromWaitingList(tango)
                             // 震动提示
-                            if (DataManager.getInstance().vibratorStatus) {
+                            if (DataManager.vibratorStatus) {
                                 VibratorUtil.vibrate(this@MissionActivity,
                                         TangoConstants.REMEMBER_VIBRATE_TIME)
                             }
@@ -109,7 +109,7 @@ class MissionActivity : BaseTempActivity() {
                             // 没记住单语
                             TangoOperator.forget(tango)
                             // 震动提示
-                            if (DataManager.getInstance().vibratorStatus) {
+                            if (DataManager.vibratorStatus) {
                                 VibratorUtil.vibrate(this@MissionActivity,
                                         TangoConstants.FORGET_VIBRATE_TIME)
                             }
@@ -119,7 +119,7 @@ class MissionActivity : BaseTempActivity() {
                             TangoOperator.rememberForever(tango)
                             TangoManager.removeFromWaitingList(tango)
                             // 震动提示
-                            if (DataManager.getInstance().vibratorStatus) {
+                            if (DataManager.vibratorStatus) {
                                 VibratorUtil.vibrate(this@MissionActivity,
                                         TangoConstants.REMEMBER_FOREVER_VIBRATE_TIME)
                             }
@@ -129,7 +129,7 @@ class MissionActivity : BaseTempActivity() {
                     val count = TangoManager.waitingList.size
                     if (count <= 0) {
                         showToast("任务完成！")
-                        DataManager.getInstance().todayMission = DataManager.getInstance().todayMission + 1
+                        DataManager.todayMission = DataManager.todayMission + 1
                         finish()
                     }
                     countView!!.text = "任务剩余：$count\n任务已记：${totalTango - count}"
@@ -231,11 +231,11 @@ class MissionActivity : BaseTempActivity() {
         // 设置日文字体
         setJapaneseFont()
         // 根据学习目标获取任务列表
-        val goal = DataManager.getInstance().tangoGoal
+        val goal = DataManager.tangoGoal
         val reviewFlag = TangoOperator.study >= goal
         TangoManager.updateWaitingList(reviewFlag,
-                DataManager.getInstance().reviewFrequency,
-                DataManager.getInstance().missionCount)
+                DataManager.reviewFrequency,
+                DataManager.missionCount)
         // 获取任务列表单语数
         val count = TangoManager.waitingList.size
         if (count <= 0) {
@@ -310,7 +310,7 @@ class MissionActivity : BaseTempActivity() {
      */
     private fun delayPronunciation() {
         pronunciationTimer.stop()
-        pronunciationTimer.start((DataManager.getInstance().pronunciationTime * 1000).toLong(), true)
+        pronunciationTimer.start((DataManager.pronunciationTime * 1000).toLong(), true)
     }
 
     /**
@@ -326,7 +326,7 @@ class MissionActivity : BaseTempActivity() {
      */
     private fun delayWriting() {
         writingTimer.stop()
-        writingTimer.start((DataManager.getInstance().writingTime * 1000).toLong(), true)
+        writingTimer.start((DataManager.writingTime * 1000).toLong(), true)
     }
 
     /**
@@ -343,7 +343,7 @@ class MissionActivity : BaseTempActivity() {
      */
     private fun delayMeaning() {
         meaningTimer.stop()
-        meaningTimer.start((DataManager.getInstance().meaningTime * 1000).toLong(), true)
+        meaningTimer.start((DataManager.meaningTime * 1000).toLong(), true)
     }
 
     /**
@@ -376,10 +376,10 @@ class MissionActivity : BaseTempActivity() {
      */
     private fun loadNewTango() {
         // 根据目标随机选取新单语
-        val goal = DataManager.getInstance().tangoGoal
+        val goal = DataManager.tangoGoal
         val reviewFlag = TangoOperator.study >= goal
         val temp = TangoManager.randomTango(reviewFlag,
-                DataManager.getInstance().reviewFrequency, tango, true)
+                DataManager.reviewFrequency, tango, true)
         temp?.apply { loadNewTango(this) }
     }
 
@@ -513,8 +513,8 @@ class MissionActivity : BaseTempActivity() {
                 delayMeaning()
             } else {
                 // 发音与写法一起显示
-                val pTime = DataManager.getInstance().pronunciationTime.toInt() * 1000
-                val wTime = DataManager.getInstance().writingTime.toInt() * 1000
+                val pTime = DataManager.pronunciationTime.toInt() * 1000
+                val wTime = DataManager.writingTime.toInt() * 1000
                 val time = Math.min(pTime, wTime)
                 pronunciationTimer.stop()
                 pronunciationTimer.start(time.toLong(), true)
@@ -601,11 +601,8 @@ class MissionActivity : BaseTempActivity() {
      */
     private fun setJapaneseFont() {
         // 获取保存的字体设置
-        val title = DataManager.getInstance().japaneseFontTitle
-        var font: String? = null
-        if (title != null) {
-            font = TangoConstants.JAPANESE_FONT_MAP[title]
-        }
+        val title = DataManager.japaneseFontTitle
+        val font = TangoConstants.JAPANESE_FONT_MAP[title]
         // 获取设置的字体
         val mgr = assets
         var tf = Typeface.DEFAULT

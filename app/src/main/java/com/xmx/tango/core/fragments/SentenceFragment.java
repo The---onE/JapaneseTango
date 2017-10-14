@@ -236,7 +236,7 @@ public class SentenceFragment extends xUtilsFragment {
 
     private void setJapaneseFont() {
         AssetManager mgr = getContext().getAssets();
-        String title = DataManager.getInstance().getJapaneseFontTitle();
+        String title = DataManager.INSTANCE.getJapaneseFontTitle();
         String font = null;
         if (title != null) {
             font = TangoConstants.INSTANCE.getJAPANESE_FONT_MAP().get(title);

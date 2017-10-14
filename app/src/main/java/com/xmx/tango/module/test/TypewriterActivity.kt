@@ -45,7 +45,7 @@ class TypewriterActivity : BaseTempActivity() {
                 s.delete(index - 1, index)
             }
             // 震动提示
-            if (DataManager.getInstance().vibratorStatus) {
+            if (DataManager.vibratorStatus) {
                 VibratorUtil.vibrate(this@TypewriterActivity,
                         TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
             }
@@ -70,7 +70,7 @@ class TypewriterActivity : BaseTempActivity() {
             if (text.isNotBlank()) {
                 StrUtil.copyToClipboard(this@TypewriterActivity, text)
                 // 震动提示
-                if (DataManager.getInstance().vibratorStatus) {
+                if (DataManager.vibratorStatus) {
                     VibratorUtil.vibrate(this@TypewriterActivity,
                             TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
                 }
@@ -100,11 +100,8 @@ class TypewriterActivity : BaseTempActivity() {
      */
     private fun setJapaneseFont() {
         // 获取保存的字体设置
-        val title = DataManager.getInstance().japaneseFontTitle
-        var font: String? = null
-        if (title != null) {
-            font = TangoConstants.JAPANESE_FONT_MAP[title]
-        }
+        val title = DataManager.japaneseFontTitle
+        val font = TangoConstants.JAPANESE_FONT_MAP[title]
         // 获取设置的字体
         val mgr = assets
         var tf = Typeface.DEFAULT
@@ -133,7 +130,7 @@ class TypewriterActivity : BaseTempActivity() {
         val s = typewriterEdit.text
         s.insert(i, re) // 在光标处插入文字
         // 震动提示
-        if (DataManager.getInstance().vibratorStatus) {
+        if (DataManager.vibratorStatus) {
             VibratorUtil.vibrate(this@TypewriterActivity,
                     TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
         }

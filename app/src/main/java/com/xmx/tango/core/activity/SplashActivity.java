@@ -92,7 +92,7 @@ public class SplashActivity extends BaseSplashActivity {
         };
         timer.start(CoreConstants.INSTANCE.getSPLASH_TIME(), true);
 
-        DataManager dm = DataManager.getInstance();
+        DataManager dm = DataManager.INSTANCE;
         TangoManager.INSTANCE.setWriting(dm.getSearchValue("writing"));
         TangoManager.INSTANCE.setPronunciation(dm.getSearchValue("pronunciation"));
         TangoManager.INSTANCE.setMeaning(dm.getSearchValue("meaning"));
@@ -100,7 +100,7 @@ public class SplashActivity extends BaseSplashActivity {
         TangoManager.INSTANCE.setType(dm.getSearchValue("type"));
 
         TangoManager.INSTANCE.updateTangoList();
-        Date last = new Date(DataManager.getInstance().getForgetLastTime());
+        Date last = new Date(DataManager.INSTANCE.getForgetLastTime());
         Date now = new Date();
         if (!CoreConstants.INSTANCE.isSameDate(now, last)) {
             if (last.getTime() > 0) {
@@ -112,14 +112,14 @@ public class SplashActivity extends BaseSplashActivity {
                                 "Date=" + last.getDate());
                 if (dateData != null) {
                     DateDataEntityManager.INSTANCE.updateData(dateData.getId(),
-                            "Mission=" + DataManager.getInstance().getTodayMission());
+                            "Mission=" + DataManager.INSTANCE.getTodayMission());
                 } else {
                     dateData = new DateData();
                     dateData.setYear(last.getYear() + 1900);
                     dateData.setMonth(last.getMonth() + 1);
                     dateData.setDate(last.getDate());
                     dateData.setCheckIn(1);
-                    dateData.setMission(DataManager.getInstance().getTodayMission());
+                    dateData.setMission(DataManager.INSTANCE.getTodayMission());
                     dateData.setAddTime(now);
                     DateDataEntityManager.INSTANCE.insertData(dateData);
                 }
@@ -140,8 +140,8 @@ public class SplashActivity extends BaseSplashActivity {
                 DateDataEntityManager.INSTANCE.insertData(todayData);
             }
 
-            DataManager.getInstance().setForgetLastTime(now.getTime());
-            DataManager.getInstance().setTodayMission(0);
+            DataManager.INSTANCE.setForgetLastTime(now.getTime());
+            DataManager.INSTANCE.setTodayMission(0);
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {

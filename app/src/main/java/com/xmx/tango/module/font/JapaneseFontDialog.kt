@@ -72,7 +72,7 @@ class JapaneseFontDialog : BaseDialog() {
     override fun setListener(view: View) {
         // 点击选项设置对应的字体
         fontList?.onItemClickListener = AdapterView.OnItemClickListener { _, _, i, _ ->
-            DataManager.getInstance().japaneseFontTitle = keyArray[i]
+            DataManager.japaneseFontTitle = keyArray[i]
             EventBus.getDefault().post(JapaneseFontChangeEvent())
             dismiss()
         }

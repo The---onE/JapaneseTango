@@ -168,7 +168,7 @@ class KeyboardView(private val mContext: Context, attrs: AttributeSet) : GridLay
             // 更新所有按钮
             updateButton()
             // 震动提示
-            if (DataManager.getInstance().vibratorStatus) {
+            if (DataManager.vibratorStatus) {
                 VibratorUtil.vibrate(mContext, TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
             }
         }
@@ -186,7 +186,7 @@ class KeyboardView(private val mContext: Context, attrs: AttributeSet) : GridLay
             // 更新所有按钮
             updateButton()
             // 震动提示
-            if (DataManager.getInstance().vibratorStatus) {
+            if (DataManager.vibratorStatus) {
                 VibratorUtil.vibrate(mContext, TangoConstants.KEYBOARD_INPUT_VIBRATE_TIME)
             }
         }
