@@ -13,10 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.avos.avoscloud.AVException;
-import com.xmx.tango.common.user.IUserManager;
-import com.xmx.tango.common.user.LoginEvent;
-import com.xmx.tango.common.user.UserData;
 import com.xmx.tango.core.fragments.HomeFragment;
 import com.xmx.tango.core.fragments.SentenceFragment;
 import com.xmx.tango.core.fragments.TangoListFragment;
@@ -26,9 +22,6 @@ import com.xmx.tango.R;
 import com.xmx.tango.module.mission.MissionActivity;
 import com.xmx.tango.base.activity.BaseNavigationActivity;
 import com.xmx.tango.core.HomePagerAdapter;
-import com.xmx.tango.common.user.callback.AutoLoginCallback;
-import com.xmx.tango.common.user.UserConstants;
-import com.xmx.tango.common.user.UserManager;
 import com.xmx.tango.core.CoreConstants;
 import com.xmx.tango.module.crud.ChooseTangoEvent;
 import com.xmx.tango.module.service.TangoService;
@@ -48,8 +41,6 @@ public class MainActivity extends BaseNavigationActivity {
     ViewPager vp;
     // 侧滑菜单登录菜单项
     MenuItem login;
-
-    private IUserManager userManager = UserManager.getInstance();
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -83,56 +74,6 @@ public class MainActivity extends BaseNavigationActivity {
 
     @Override
     protected void processLogic(Bundle savedInstanceState) {
-        NavigationView navigation = getViewById(R.id.nav_view);
-        Menu menu = navigation.getMenu();
-        login = menu.findItem(R.id.nav_logout);
-
-        // 在SplashActivity中自动登录，在此校验登录
-        if (userManager.isLoggedIn()) {
-            checkLogin();
-        }
-    }
-
-    // 处理登录返回
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == UserConstants.LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
-            // 登录成功
-            checkLogin();
-        }
-    }
-
-    private void checkLogin() {
-        userManager.checkLogin(new AutoLoginCallback() {
-            @Override
-            public void success(UserData user) {
-                login.setTitle(user.nickname + " 点击注销");
-            }
-
-            @Override
-            public void error(int error) {
-                switch (error) {
-                    case UserConstants.CANNOT_CHECK_LOGIN:
-                        showToast("请先登录");
-                        break;
-                    case UserConstants.NOT_LOGGED_IN:
-                        showToast("请在侧边栏中选择登录");
-                        break;
-                    case UserConstants.USERNAME_ERROR:
-                        showToast("请在侧边栏中选择登录");
-                        break;
-                    case UserConstants.CHECKSUM_ERROR:
-                        showToast("登录过期，请在侧边栏中重新登录");
-                        break;
-                }
-            }
-
-            @Override
-            public void error(AVException e) {
-                ExceptionUtil.INSTANCE.normalException(e, getBaseContext());
-            }
-        });
     }
 
     @Override
@@ -234,11 +175,6 @@ public class MainActivity extends BaseNavigationActivity {
             startService(new Intent(this, TangoService.class));
             showToast("已开启服务");
         }
-    }
-
-    @Subscribe
-    public void onEvent(LoginEvent event) {
-        checkLogin();
     }
 
     @Subscribe

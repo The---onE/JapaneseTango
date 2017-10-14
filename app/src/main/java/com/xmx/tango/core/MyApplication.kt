@@ -4,13 +4,8 @@ import android.app.Activity
 import android.app.Service
 import android.support.multidex.MultiDexApplication
 
-import com.avos.avoscloud.AVInstallation
-import com.avos.avoscloud.AVOSCloud
-import com.avos.avoscloud.PushService
 import com.xmx.tango.BuildConfig
 import com.xmx.tango.common.data.DataManager
-import com.xmx.tango.common.push.ReceiveMessageActivity
-import com.xmx.tango.common.user.UserManager
 
 import org.xutils.x
 
@@ -69,15 +64,6 @@ class MyApplication : MultiDexApplication() {
 
         // 注册异常处理器
         CrashHandler.init(this)
-
-        // 初始化LeanCloud
-        AVOSCloud.initialize(this, CoreConstants.APP_ID, CoreConstants.APP_KEY)
-        PushService.setDefaultPushCallback(this, ReceiveMessageActivity::class.java)
-        PushService.subscribe(this, "system", ReceiveMessageActivity::class.java)
-        AVInstallation.getCurrentInstallation().saveInBackground()
-
-        // 初始化用户管理器
-        UserManager.getInstance().setContext(this)
 
         // 初始化数据管理器
         DataManager.setContext(this)
