@@ -2,7 +2,6 @@ package com.xmx.tango.module.tango
 
 import com.xmx.tango.common.data.DataManager
 import com.xmx.tango.common.data.sql.BaseSQLEntityManager
-import com.xmx.tango.utils.StrUtil
 
 import java.util.ArrayList
 
@@ -56,7 +55,7 @@ object TangoEntityManager : BaseSQLEntityManager<Tango>() {
         var conStr = ""
         if (conditions.size > 0) {
             conStr = " where "
-            conStr += StrUtil.join(conditions, " and ")
+            conStr += conditions.joinToString(" and ")
         }
         // 从数据库中查询
         val cursor = database?.rawQuery("select * from $tableName $conStr " +

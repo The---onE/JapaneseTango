@@ -75,7 +75,7 @@ public abstract class BaseService extends Service {
         if (e != null && CoreConstants.INSTANCE.getEXCEPTION_DEBUG()) {
             e.printStackTrace();
             showToast(e.getMessage());
-            OperationLogEntityManager.getInstance().addLog(e.getMessage());
+            OperationLogEntityManager.INSTANCE.addLog(e.getMessage());
             return false;
         } else {
             return true;

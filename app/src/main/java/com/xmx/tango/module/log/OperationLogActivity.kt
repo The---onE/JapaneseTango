@@ -35,16 +35,16 @@ class OperationLogActivity : BaseTempActivity() {
     override fun setListener() {
         btnClearLog.setOnClickListener {
             // 清空操作日志
-            OperationLogEntityManager.getInstance().clearDatabase()
-            OperationLogManager.getInstance().updateData()
-            operationLogAdapter?.updateList(OperationLogManager.getInstance().data)
+            OperationLogEntityManager.clearDatabase()
+            OperationLogManager.updateData()
+            operationLogAdapter?.updateList(OperationLogManager.data)
         }
     }
 
     override fun processLogic(savedInstanceState: Bundle?) {
         // 获取操作日志
-        OperationLogManager.getInstance().updateData()
-        operationLogAdapter?.updateList(OperationLogManager.getInstance().data)
+        OperationLogManager.updateData()
+        operationLogAdapter?.updateList(OperationLogManager.data)
         // 注册事件监听
         EventBus.getDefault().register(this)
     }
@@ -54,7 +54,7 @@ class OperationLogActivity : BaseTempActivity() {
      */
     @Subscribe
     fun onEvent(event: LogChangeEvent) {
-        OperationLogManager.getInstance().updateData()
-        operationLogAdapter?.updateList(OperationLogManager.getInstance().data)
+        OperationLogManager.updateData()
+        operationLogAdapter?.updateList(OperationLogManager.data)
     }
 }

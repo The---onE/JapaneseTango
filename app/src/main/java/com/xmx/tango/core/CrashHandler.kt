@@ -98,7 +98,7 @@ object CrashHandler : Thread.UncaughtExceptionHandler {
             Log.e("Error:", Log.getStackTraceString(ex))
         }
         // 记录错误日志
-        OperationLogEntityManager.getInstance().addLog(ex.toString())
+        OperationLogEntityManager.addLog(ex.toString())
         // 已进行处理
         return true
     }

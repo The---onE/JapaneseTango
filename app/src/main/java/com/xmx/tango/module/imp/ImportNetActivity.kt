@@ -58,7 +58,7 @@ class ImportNetActivity : BaseTempActivity() {
 
 
             // 向服务器请求数据
-            HttpManager.getInstance().get(NetConstants.TANGO_ENTITY_LIST_URL, condition,
+            HttpManager.sendGet(NetConstants.TANGO_ENTITY_LIST_URL, condition,
                     object : HttpGetCallback() {
                         override fun success(result: String) {
                             // 获取成功

@@ -18,7 +18,7 @@ object ExceptionUtil {
      */
     fun normalException(e: Exception, context: Context? = null) {
         // 记录错误日志
-        OperationLogEntityManager.getInstance().addLog("$e")
+        OperationLogEntityManager.addLog("$e")
         // 在调试状态显示错误信息
         if (CoreConstants.EXCEPTION_DEBUG) {
             // 打印异常堆栈跟踪
@@ -37,7 +37,7 @@ object ExceptionUtil {
      */
     fun fatalError(e: Exception, context: Context? = null) {
         // 记录错误日志
-        OperationLogEntityManager.getInstance().addLog("$e")
+        OperationLogEntityManager.addLog("$e")
         // 在调试状态显示错误信息
         if (CoreConstants.EXCEPTION_DEBUG) {
             // 打印异常堆栈跟踪

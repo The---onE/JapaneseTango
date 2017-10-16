@@ -72,6 +72,7 @@
         <activity
             android:name=".module.sentence.SentenceActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".common.notification.NotificationTempActivity" />
 
         <service
             android:name=".module.imp.ImportFileService"

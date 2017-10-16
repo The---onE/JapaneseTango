@@ -61,7 +61,7 @@ class ImportFileService : BaseService() {
                 // 导入成功
                 // 在状态栏显示信息，点击进入主Activity
                 val i = Intent(this@ImportFileService, MainActivity::class.java)
-                NotificationUtils.showNotification(baseContext, i, 0, "日词",
+                NotificationUtils.showNotification(baseContext, 0, i, "日词",
                         "成功导入 $importNum 条数据")
                 showToast("导入成功")
                 EventBus.getDefault().post(TangoListChangeEvent())

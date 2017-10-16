@@ -25,15 +25,6 @@ object DataManager {
         mData = context.getSharedPreferences("DATA", Context.MODE_PRIVATE)
     }
 
-    // 当前版本
-    var version: Long
-        get() = mData.getLong("version", -1)
-        set(value) {
-            val editor = mData.edit()
-            editor.putLong("version", value)
-            editor.apply()
-        }
-
     // 上次进行遗忘减分的时间
     var forgetLastTime: Long
         get() = getLong("last_forget_time", 0)

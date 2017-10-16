@@ -42,7 +42,7 @@ class ImportNetService : BaseService() {
                     override fun success(total: Int) {
                         // 在状态栏显示信息，点击进入主Activity
                         val i = Intent(this@ImportNetService, MainActivity::class.java)
-                        NotificationUtils.showNotification(baseContext, i, 0, "日词",
+                        NotificationUtils.showNotification(baseContext, 0, i, "日词",
                                 "成功导入 $total 条数据")
                     }
 
