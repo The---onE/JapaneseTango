@@ -19,7 +19,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/layout_type"
+                android:id="@+id/layoutType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -31,7 +31,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_type"
+                    android:id="@+id/typeView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -43,7 +43,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_part"
+                android:id="@+id/layoutPart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -55,7 +55,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_part"
+                    android:id="@+id/partView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -67,7 +67,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_goal"
+                android:id="@+id/layoutGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -79,7 +79,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_goal"
+                    android:id="@+id/goalView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -91,7 +91,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_pronunciation_time"
+                android:id="@+id/layoutPronunciationTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -103,7 +103,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_pronunciation_time"
+                    android:id="@+id/pronunciationTimeView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -115,7 +115,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_writing_time"
+                android:id="@+id/layoutWritingTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -127,7 +127,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_writing_time"
+                    android:id="@+id/writingTimeView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -139,7 +139,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_meaning_time"
+                android:id="@+id/layoutMeaningTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -151,7 +151,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_meaning_time"
+                    android:id="@+id/meaningTimeView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -163,7 +163,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_frequency"
+                android:id="@+id/layoutFrequency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -175,7 +175,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_frequency"
+                    android:id="@+id/frequencyView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -187,7 +187,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_mission_count"
+                android:id="@+id/layoutMissionCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -199,7 +199,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_mission_count"
+                    android:id="@+id/missionView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -211,7 +211,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_japanese_font"
+                android:id="@+id/layoutJapaneseFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -223,7 +223,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_japanese_font"
+                    android:id="@+id/japaneseFontView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -235,7 +235,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_speaker"
+                android:id="@+id/layoutSpeaker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -247,7 +247,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_speaker"
+                    android:id="@+id/speakView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -259,13 +259,13 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edit_speak"
+                    android:id="@+id/editSpeak"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/test_text" />
 
                 <Button
-                    android:id="@+id/btn_speak"
+                    android:id="@+id/btnSpeak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/speak_test" />
@@ -277,7 +277,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_vibrator"
+                android:id="@+id/layoutVibrator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -289,7 +289,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_vibrator"
+                    android:id="@+id/vibratorView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />
@@ -301,7 +301,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/layout_service_interval"
+                android:id="@+id/layoutServiceInterval"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -313,7 +313,7 @@
                     android:textSize="32sp" />
 
                 <TextView
-                    android:id="@+id/tv_service_interval"
+                    android:id="@+id/serviceIntervalView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp" />

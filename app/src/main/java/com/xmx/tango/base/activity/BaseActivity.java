@@ -40,8 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         processLogic(savedInstanceState);
     }
 
-    protected <VT extends View> VT getViewById(@IdRes int id) {
-        return (VT) findViewById(id);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApplication.Companion.getInstance().removeActivity(this);
     }
 
     protected abstract void initView(Bundle savedInstanceState);
@@ -107,8 +109,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 检查系统是否授予权限
+     *
      * @param permission 需要的权限 Manifest.permission.权限名
-     * @param requestId 请求ID
+     * @param requestId  请求ID
      */
     public boolean checkLocalPhonePermission(String permission, int requestId) {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -125,9 +128,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 检查定制系统(小米)是否授予权限
+     *
      * @param opsPermission 定制系统权限名 AppOpsManager.权限名
-     * @param permission 需要的权限 Manifest.permission.权限名
-     * @param requestId 请求ID
+     * @param permission    需要的权限 Manifest.permission.权限名
+     * @param requestId     请求ID
      */
     public boolean checkOpsPermission(String opsPermission, String permission, int requestId) {
         if (Build.VERSION.SDK_INT >= 19) {

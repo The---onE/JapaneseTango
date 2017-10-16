@@ -2,6 +2,7 @@
     <string name="app_name">日词</string>
 
     <string name="skip">跳过</string>
+    <string name="permission">请点击按钮授予读写权限</string>
 
     <string name="navigation_drawer_open">打开导航栏</string>
     <string name="navigation_drawer_close">关闭导航栏</string>

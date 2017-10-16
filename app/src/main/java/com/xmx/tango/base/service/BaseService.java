@@ -27,19 +27,21 @@ public abstract class BaseService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-//        processLogic();
-//        setForeground();
+        MyApplication.Companion.getInstance().addService(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        MyApplication.Companion.getInstance().addService(this);
-
         processLogic(intent);
         setForeground(intent);
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MyApplication.Companion.getInstance().removeService(this);
     }
 
     protected abstract void processLogic(Intent intent);

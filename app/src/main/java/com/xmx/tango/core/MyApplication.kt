@@ -26,7 +26,7 @@ class MyApplication : MultiDexApplication() {
     // 运行中的Activity容器
     private val activityList = LinkedList<Activity>()
     // 运行中的Service容器
-    private val serviceList = LinkedList<Service>()
+    val serviceList = LinkedList<Service>()
 
     /**
      * 添加Activity到容器中
@@ -37,11 +37,27 @@ class MyApplication : MultiDexApplication() {
     }
 
     /**
+     * 从容器中移除Activity
+     * @param activity 要添加的Activity
+     */
+    fun removeActivity(activity: Activity) {
+        activityList.remove(activity)
+    }
+
+    /**
      * 添加Service到容器中
      * @param service 要添加的Service
      */
     fun addService(service: Service) {
         serviceList.add(service)
+    }
+
+    /**
+     * 从容器中移除Service
+     * @param service 要添加的Service
+     */
+    fun removeService(service: Service) {
+        serviceList.remove(service)
     }
 
     /**
