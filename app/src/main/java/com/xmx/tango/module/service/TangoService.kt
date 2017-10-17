@@ -1,6 +1,7 @@
 package com.xmx.tango.module.service
 
 import android.content.Intent
+import android.os.IBinder
 
 import com.xmx.tango.base.service.BaseService
 import com.xmx.tango.common.data.DataManager
@@ -11,7 +12,6 @@ import com.xmx.tango.module.tango.TangoManager
 import com.xmx.tango.utils.Timer
 
 class TangoService : BaseService() {
-
     private var timer: Timer? = null
     private var tango: Tango? = null
 
@@ -52,7 +52,7 @@ class TangoService : BaseService() {
             // 设置在通知栏显示单语信息
             val word = "${this.writing}(${this.pronunciation})"
             val meaning = "[${this.partOfSpeech}]${this.meaning}"
-            showForeground(MainActivity::class.java, word, meaning)
+            showForeground(MainActivity::class.java, meaning, word)
         }
     }
 }

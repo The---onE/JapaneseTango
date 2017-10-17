@@ -56,7 +56,7 @@ class JapaneseFontDialog : BaseDialog() {
                 // 设置测试文本
                 holder.fontView?.text = "あいうえお 日本語"
                 // 设置字体
-                val mgr = mContext.assets
+                val mgr = mContext?.assets
                 val font = TangoConstants.JAPANESE_FONT_MAP[keyArray[i]]
                 var tf = Typeface.DEFAULT
                 if (font != null) {

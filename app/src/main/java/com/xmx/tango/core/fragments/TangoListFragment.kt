@@ -47,11 +47,11 @@ class TangoListFragment : BaseFragment() {
     }
     private var itemDoubleFlag = false // 是否已点击一次，接受双按
 
-    override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View? =
+    override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View =
             inflater.inflate(R.layout.fragment_tango_list, container, false)
 
     @SuppressLint("SetTextI18n")
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
         // 设置列表适配器
         tangoList.adapter = tangoAdapter
         // 在SplashActivity中调用了updateTangoList

@@ -3,7 +3,7 @@ package com.xmx.tango.module.imp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
-import com.xiaoleilu.hutool.exceptions.ExceptionUtil
+import android.os.IBinder
 
 import com.xmx.tango.base.service.BaseService
 import com.xmx.tango.common.data.sql.InsertCallback
@@ -12,6 +12,7 @@ import com.xmx.tango.core.activity.MainActivity
 import com.xmx.tango.module.crud.TangoListChangeEvent
 import com.xmx.tango.module.tango.Tango
 import com.xmx.tango.module.tango.TangoEntityManager
+import com.xmx.tango.utils.ExceptionUtil
 
 import org.greenrobot.eventbus.EventBus
 
@@ -20,7 +21,6 @@ import org.greenrobot.eventbus.EventBus
  * 导入单语实体Service
  */
 class ImportNetService : BaseService() {
-
     @SuppressLint("StaticFieldLeak")
     override fun processLogic(intent: Intent) {
         // 获取要导入的单语列表
@@ -47,7 +47,7 @@ class ImportNetService : BaseService() {
                     }
 
                     override fun error(e: Exception) {
-                        filterException(e)
+                        ExceptionUtil.normalException(e)
                     }
                 })
                 return null

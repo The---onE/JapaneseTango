@@ -139,7 +139,7 @@ class HomeFragment : BaseFragment() {
     override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View =
             inflater.inflate(R.layout.fragment_home, container, false)
 
-    override fun initView(view: View) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
     }
 
     @SuppressLint("ClickableViewAccessibility", "SetTextI18n")

@@ -19,6 +19,7 @@ import com.xmx.tango.module.sentence.LrcParser
 import com.xmx.tango.module.sentence.SentenceActivity
 import com.xmx.tango.module.speaker.SpeakTangoManager
 import com.xmx.tango.module.tango.TangoConstants
+import com.xmx.tango.utils.ExceptionUtil
 import kotlinx.android.synthetic.main.fragment_sentence.*
 
 import org.greenrobot.eventbus.EventBus
@@ -81,10 +82,10 @@ class SentenceFragment : BaseFragment() {
     override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View =
             inflater.inflate(R.layout.fragment_sentence, container, false)
 
-    override fun initView(view: View?) {
+    override fun initView(view: View, savedInstanceState: Bundle?) {
     }
 
-    override fun setListener(view: View?) {
+    override fun setListener(view: View) {
         // 分析自定义句子
         btnKuromoji.setOnClickListener {
             val sentence = editSentence.text.toString()
@@ -108,7 +109,7 @@ class SentenceFragment : BaseFragment() {
         }
     }
 
-    override fun processLogic(view: View?, savedInstanceState: Bundle?) {
+    override fun processLogic(view: View, savedInstanceState: Bundle?) {
         // 未加载文件的测试句子
         sentences.add("君はメロディー　メロディー")
         sentences.add("懐かしいハーモニー　ハーモニー")
@@ -134,7 +135,7 @@ class SentenceFragment : BaseFragment() {
                 }
             }
         } catch (e: IOException) {
-            filterException(e)
+            ExceptionUtil.normalException(e)
         }
         // 设置日文字体
         setJapaneseFont()
@@ -215,7 +216,7 @@ class SentenceFragment : BaseFragment() {
                             else -> showToast("暂不支持打开该类型文件")
                         }
                     } catch (e: Exception) {
-                        filterException(e)
+                        ExceptionUtil.normalException(e)
                     }
                 }
 

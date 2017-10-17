@@ -34,21 +34,24 @@ class SearchTangoDialog : BaseDialog() {
         val items = arrayOf("ID", "分数", "添加时间", "上次时间")
         // 数据库字段名
         val orders = arrayOf("ID", "Score", "AddTime", "LastTime")
-        AlertDialog.Builder(mContext)
-                .setTitle("操作")
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setItems(items) { _, i ->
-                    // 若再次选择同一排序字段，则改变顺序或倒序
-                    if (TangoManager.order == orders[i]) {
-                        TangoManager.ascFlag = !TangoManager.ascFlag
-                    } else {
-                        TangoManager.ascFlag = true
-                        TangoManager.order = orders[i]
-                    }
+        mContext?.apply {
+            AlertDialog.Builder(this)
+                    .setTitle("操作")
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setItems(items) { _, i ->
+                        // 若再次选择同一排序字段，则改变顺序或倒序
+                        if (TangoManager.order == orders[i]) {
+                            TangoManager.ascFlag = !TangoManager.ascFlag
+                        } else {
+                            TangoManager.ascFlag = true
+                            TangoManager.order = orders[i]
+                        }
 
-                    EventBus.getDefault().post(TangoListChangeEvent())
-                }
-                .setNegativeButton("取消", null).show()
+                        EventBus.getDefault().post(TangoListChangeEvent())
+                    }
+                    .setNegativeButton("取消", null)
+                    .show()
+        }
     }
 
     override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View =

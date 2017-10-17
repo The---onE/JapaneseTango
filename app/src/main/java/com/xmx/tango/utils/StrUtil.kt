@@ -21,7 +21,7 @@ object StrUtil {
      * @param context 当前上下文
      * @param str 要显示的字符串信息
      */
-    fun showToast(context: Context, str: String) {
+    fun showToast(context: Context?, str: String) {
         Toast.makeText(context, str, Toast.LENGTH_SHORT).show()
     }
 
@@ -30,7 +30,7 @@ object StrUtil {
      * @param context 当前上下文
      * @param resId 要显示的字符串在strings文件中的ID
      */
-    fun showToast(context: Context, @StringRes resId: Int) {
+    fun showToast(context: Context?, @StringRes resId: Int) {
         Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
     }
 
