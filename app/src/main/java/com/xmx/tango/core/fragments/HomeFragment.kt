@@ -1,4 +1,4 @@
-package com.xmx.tango.module.mission
+package com.xmx.tango.core.fragments
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -7,13 +7,12 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.view.MotionEvent
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.TextView
-
 import com.xmx.tango.R
+import com.xmx.tango.base.fragment.BaseFragment
+
+import com.xmx.tango.module.crud.ChooseTangoEvent
 import com.xmx.tango.module.font.JapaneseFontChangeEvent
 import com.xmx.tango.module.operate.LoadNewTangoEvent
 import com.xmx.tango.module.speaker.SpeakTangoManager
@@ -22,11 +21,10 @@ import com.xmx.tango.module.tango.TangoConstants
 import com.xmx.tango.module.tango.TangoManager
 import com.xmx.tango.module.operate.TangoOperator
 import com.xmx.tango.module.verb.VerbDialog
-import com.xmx.tango.base.activity.BaseTempActivity
 import com.xmx.tango.common.data.DataManager
 import com.xmx.tango.utils.Timer
 import com.xmx.tango.utils.VibratorUtil
-import kotlinx.android.synthetic.main.activity_mission.*
+import kotlinx.android.synthetic.main.fragment_home.*
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -34,17 +32,10 @@ import org.greenrobot.eventbus.Subscribe
 import java.util.Random
 
 /**
- * Created by The_onE on 2017/9/30.
- * 任务模式Activity
+ * Created by The_onE on 2017/10/16.
+ * 首页Fragment
  */
-class MissionActivity : BaseTempActivity() {
-    private var tango: Tango? = null // 当前单语
-    private var prevTango: Tango? = null // 上一个单语
-    private var prevOperate: Int = 0 // 上一次操作
-    private var totalTango: Int = 0 // 本次任务单语总数
-    private var random = Random() // 生成随机数
-
-    private var operateFlag = true // 是否可以操作
+class HomeFragment : BaseFragment() {
 
     companion object {
         private val REMEMBER = 1 // 记住了
@@ -52,88 +43,89 @@ class MissionActivity : BaseTempActivity() {
         private val REMEMBER_FOREVER = 3 // 彻底记住
     }
 
-    // 定时显示发音
-    private var pronunciationTimer: Timer = object : Timer() {
+    private var tango: Tango? = null // 当前单语
+    private var prevTango: Tango? = null // 上一个单语
+    private var prevOperate: Int = 0 // 上一次操作
+    private var operateFlag = true // 当前是否可以操作
+    private var random = Random() // 随机数生成器
+
+    // 显示发音定时器
+    private var pronunciationFlag = false
+    private var pronunciationTimer = object : Timer() {
         override fun timer() {
             showPronunciation()
             checkAnswer()
         }
     }
-    private var pronunciationFlag = false // 是否已显示发音
-
-    // 定时显示写法
-    private var writingTimer: Timer = object : Timer() {
+    // 显示写法定时器
+    private var writingFlag = false
+    private var writingTimer = object : Timer() {
         override fun timer() {
             showWriting()
             checkAnswer()
         }
     }
-    private var writingFlag = false // 是否已显示写法
-
-    // 定时显示解释
-    private var meaningTimer: Timer = object : Timer() {
+    // 显示解释定时器
+    private var meaningFlag = false
+    private var meaningTimer = object : Timer() {
         override fun timer() {
             showMeaning()
             checkAnswer()
         }
     }
-    private var meaningFlag = false // 是否已显示解释
 
     /**
      * 操作单语
+     * @param operation 操作
+     * @return 是否操作成功
      */
     @SuppressLint("SetTextI18n")
     private fun operateTango(operation: Int): Boolean {
         if (operateFlag) {
-            // 可以操作则暂时不能操作
+            // 若为可以操作状态，阻止重复操作
             operateFlag = false
+            // 设置按钮为灰色状态
             rememberButton.setBackgroundColor(Color.LTGRAY)
             forgetButton.setBackgroundColor(Color.LTGRAY)
-            // 记录为上一次操作
+            // 保存操作记录
             prevOperate = operation
             tango?.apply {
                 if (this.id > 0) {
-                    // 可以操作
+                    // 若非测试单语（数据库无数据时显示的单语）
                     when (operation) {
                         REMEMBER -> {
-                            // 记住单语
+                            // 记住了
                             TangoOperator.remember(tango)
-                            TangoManager.removeFromWaitingList(tango)
-                            // 震动提示
+                            // 震动
                             if (DataManager.vibratorStatus) {
-                                VibratorUtil.vibrate(this@MissionActivity,
+                                VibratorUtil.vibrate(context,
                                         TangoConstants.REMEMBER_VIBRATE_TIME)
                             }
                         }
                         FORGET -> {
-                            // 没记住单语
+                            // 没记住
                             TangoOperator.forget(tango)
-                            // 震动提示
+                            // 震动
                             if (DataManager.vibratorStatus) {
-                                VibratorUtil.vibrate(this@MissionActivity,
+                                VibratorUtil.vibrate(context,
                                         TangoConstants.FORGET_VIBRATE_TIME)
                             }
                         }
                         REMEMBER_FOREVER -> {
-                            // 彻底记住单语
+                            // 彻底记住
                             TangoOperator.rememberForever(tango)
-                            TangoManager.removeFromWaitingList(tango)
-                            // 震动提示
+                            // 震动
                             if (DataManager.vibratorStatus) {
-                                VibratorUtil.vibrate(this@MissionActivity,
+                                VibratorUtil.vibrate(context,
                                         TangoConstants.REMEMBER_FOREVER_VIBRATE_TIME)
                             }
                         }
                     }
-                    // 获取任务列表剩余单语数
-                    val count = TangoManager.waitingList.size
-                    if (count <= 0) {
-                        showToast("任务完成！")
-                        DataManager.todayMission = DataManager.todayMission + 1
-                        finish()
-                    }
-                    countView!!.text = "任务剩余：$count\n任务已记：${totalTango - count}"
-
+                    // 更新学习记录
+                    countView.text = "今日复习：${TangoOperator.review}\n" +
+                            "今日已记：${TangoOperator.study}\n" +
+                            "今日完成任务：${DataManager.todayMission}"
+                    // 加载新单语
                     loadNew()
                     return true
                 }
@@ -145,39 +137,47 @@ class MissionActivity : BaseTempActivity() {
         }
     }
 
-    override fun initView(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_mission)
+    override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View =
+            inflater.inflate(R.layout.fragment_home, container, false)
+
+    override fun initView(view: View) {
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun setListener() {
+    @SuppressLint("ClickableViewAccessibility", "SetTextI18n")
+    override fun setListener(view: View) {
         // 记住了
-        rememberButton.setOnClickListener { operateTango(REMEMBER) }
+        rememberButton.setOnClickListener {
+            operateTango(REMEMBER)
+        }
         // 没记住
-        forgetButton.setOnClickListener { operateTango(FORGET) }
+        forgetButton.setOnClickListener {
+            operateTango(FORGET)
+        }
         // 显示答案
-        answerButton.setOnClickListener { showAnswer() }
-        // 点击写法朗读单语
+        answerButton.setOnClickListener {
+            showAnswer()
+        }
+        // 点击写法，朗读单语
         writingView.setOnClickListener {
             val writing = writingView.text.toString()
-            if (writing != "") {
-                SpeakTangoManager.speak(this@MissionActivity, writing)
+            if (writing.isNotBlank()) {
+                SpeakTangoManager.speak(context, writing)
             }
         }
-        // 点击发音朗读单语
+        // 点击发音，朗读单语
         pronunciationView.setOnClickListener {
-            val pronunciation = pronunciationView!!.text.toString()
-            if (pronunciation != "") {
-                SpeakTangoManager.speak(this@MissionActivity, pronunciation)
+            val pronunciation = pronunciationView.text.toString()
+            if (pronunciation.isNotBlank()) {
+                SpeakTangoManager.speak(context, pronunciation)
             }
         }
-        // 点击词性，若为动词则显示动词变形对话框
+        // 点击词性，若为动词弹出动词变形对话框
         partView.setOnClickListener {
-            val part = partView.text.toString()
-            if (part.isNotBlank()) {
-                if (part.contains(TangoConstants.VERB_FLAG)) {
-                    // 若为动词
-                    tango?.apply {
+            tango?.apply {
+                val part = partView.text.toString()
+                if (part.isNotBlank()) {
+                    if (part.contains(TangoConstants.VERB_FLAG)) {
+                        // 若为动词
                         val verb = this.writing
                         val type = when (this.partOfSpeech) {
                             TangoConstants.VERB1_FLAG -> 1
@@ -185,40 +185,48 @@ class MissionActivity : BaseTempActivity() {
                             TangoConstants.VERB3_FLAG -> 3
                             else -> 0
                         }
-                        // 显示动词变形对话框
+                        // 弹出动词变形对话框
                         if (type > 0) {
                             val dialog = VerbDialog()
-                            dialog.initDialog(this@MissionActivity, verb, type)
-                            dialog.show(fragmentManager, "VERB")
+                            dialog.initDialog(context, verb, type)
+                            dialog.show(activity.fragmentManager, "VERB")
                         }
                     }
                 }
             }
         }
-        // 点击上一个单语，撤销上次操作
+        // 恢复上一次操作
         prevView.setOnClickListener {
             prevTango?.apply {
-                // 撤销上次操作
                 TangoOperator.cancelOperate()
-                // 将上一个单语作为当前单语重新显示
                 tango = null
                 loadNewTango(this)
-                TangoManager.addToWaitingList(tango)
-                val count = TangoManager.waitingList.size
-                countView!!.text = "任务剩余：$count\n任务已记：${totalTango - count}"
+                countView.text = "今日复习：${TangoOperator.review}\n" +
+                        "今日已记：${TangoOperator.study}\n" +
+                        "今日完成任务：${DataManager.todayMission}"
             }
         }
-        // 按住记住了按钮向上滑动
+        // 长按单语，找到列表中对应的项
+        layoutTango.setOnLongClickListener {
+            tango?.apply { EventBus.getDefault().post(ChooseTangoEvent(this)) }
+            true
+        }
+        // 长按单语，找到列表中对应的项
+        writingView.setOnLongClickListener {
+            tango?.apply { EventBus.getDefault().post(ChooseTangoEvent(this)) }
+            true
+        }
+        // 按住记住按钮上滑一定高度，彻底记住单语
         rememberButton.setOnTouchListener { _, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_UP -> {
-                    val wm = applicationContext
+                    // 若按住按钮上滑超过屏幕高度1/3，标识单语为彻底记住
+                    val size = Point()
+                    val wm = context.applicationContext
                             .getSystemService(Context.WINDOW_SERVICE) as WindowManager
-                    val p = Point()
-                    wm.defaultDisplay.getSize(p)
-                    val h = p.y
+                    wm.defaultDisplay.getSize(size)
+                    val h = size.y
                     val y = h - motionEvent.rawY
-                    // 向上滑动超过屏幕高度1/3，永久记住单语
                     if (y > h / 3) {
                         operateTango(REMEMBER_FOREVER)
                     }
@@ -229,56 +237,26 @@ class MissionActivity : BaseTempActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    override fun processLogic(savedInstanceState: Bundle?) {
+    override fun processLogic(view: View, savedInstanceState: Bundle?) {
         // 设置日文字体
         setJapaneseFont()
-        // 根据学习目标获取任务列表
-        val goal = DataManager.tangoGoal
-        val reviewFlag = TangoOperator.study >= goal
-        TangoManager.updateWaitingList(reviewFlag,
-                DataManager.reviewFrequency,
-                DataManager.missionCount)
-        // 获取任务列表单语数
-        val count = TangoManager.waitingList.size
-        if (count <= 0) {
-            showToast("没有符合条件的任务")
-            finish()
-        }
-        totalTango = count
-        countView.text = "任务剩余：$count\n任务已记：${totalTango - count}"
+        // 显示学习记录
+        countView.text = "今日复习：${TangoOperator.review}\n" +
+                "今日已记：${TangoOperator.study}\n" +
+                "今日完成任务：${DataManager.todayMission}"
         // 加载新单语
         loadNewTango()
-        // 注册事件监听
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
     }
 
-    override fun onBackPressed() {
-        // 显示提示对话框
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage("任务还未完成，确认要退出吗？")
-                .setTitle("提示")
-                .setPositiveButton("确认") { dialog, _ ->
-                    dialog.dismiss()
-                    finish()
-                }
-                .setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
-                .create()
-                .show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // 首页重新加载
-        EventBus.getDefault().post(LoadNewTangoEvent())
-    }
-
     /**
-     * 检查信息是否全部显示，若全部显示则隐藏显示答案按钮
+     * 检查单语信息是否全部显示，若全部显示则隐藏“显示答案”按钮
      */
     private fun checkAnswer() {
         if (pronunciationFlag && writingFlag && meaningFlag) {
+            // 显示答案按钮渐隐
             answerLine.visibility = View.GONE
             answerButton.isEnabled = false
             val animator = ObjectAnimator.ofFloat(answerButton, "alpha", 1f, 0f) // 渐出效果
@@ -288,8 +266,8 @@ class MissionActivity : BaseTempActivity() {
     }
 
     /**
-     * 渐变显示文本
-     * @param tv 要显示的文本框
+     * 渐入显示文本
+     * @param tv 要显示的TextView
      */
     private fun showTextView(tv: TextView) {
         tv.visibility = View.VISIBLE
@@ -353,10 +331,10 @@ class MissionActivity : BaseTempActivity() {
      */
     private fun loadNew() {
         if (pronunciationFlag && writingFlag && meaningFlag) {
-            // 答案已显示，则直接加载新单语
+            // 若单语信息已全部显示则直接加载新单语
             loadNewTango()
         } else {
-            // 答案未显示，则显示答案，并延迟加载新单语
+            // 若单语信息未全部显示则显示全部信息，并延迟一定时间后加载新单语
             showAnswer()
             object : Timer() {
                 override fun timer() {
@@ -369,6 +347,7 @@ class MissionActivity : BaseTempActivity() {
     /**
      * 测量文本宽度
      * @param textView 待测量的文本
+     * @return 文本宽度
      */
     private fun measureWidth(textView: TextView): Float =
             textView.paint.measureText(textView.text.toString())
@@ -377,31 +356,35 @@ class MissionActivity : BaseTempActivity() {
      * 加载新单语
      */
     private fun loadNewTango() {
-        // 根据目标随机选取新单语
+        // 判断今日学习数是否超过目标
         val goal = DataManager.tangoGoal
         val reviewFlag = TangoOperator.study >= goal
+        // 随机选取新单语
         val temp = TangoManager.randomTango(reviewFlag,
-                DataManager.reviewFrequency, tango, true)
-        temp?.apply { loadNewTango(this) }
+                DataManager.reviewFrequency, tango, false)
+        // 加载新单语
+        if (temp != null) {
+            loadNewTango(temp)
+        }
     }
 
     /**
      * 加载新单语
-     * @param newTango 要加载的单语
+     * @param newTango 要加载的新单语
      */
     @SuppressLint("SetTextI18n")
     private fun loadNewTango(newTango: Tango) {
-        // 初始化单语状态
+        // 初始化状态
         pronunciationFlag = false
         writingFlag = false
         meaningFlag = false
-        // 显示答案按钮
+        // 渐入显示“显示答案”按钮
         answerLine.visibility = View.VISIBLE
         answerButton.isEnabled = true
         val animator = ObjectAnimator.ofFloat(answerButton, "alpha", 0f, 1f) // 渐入效果
         animator.duration = 300
         animator.start()
-        // 恢复按钮状态
+        // 防误触，一定时间后可以操作
         object : Timer() {
             override fun timer() {
                 operateFlag = true
@@ -414,13 +397,13 @@ class MissionActivity : BaseTempActivity() {
             prevTango = tango
             showPrevTango()
         } else {
-            prevView!!.text = ""
+            prevView.text = ""
         }
+        // 设置新单语
         tango = newTango
 
-        // 测量屏幕宽度用于调整文字大小
-        val wm = applicationContext
-                .getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        // 获取屏幕宽度使字体大小自动适应
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val p = Point()
         wm.defaultDisplay.getSize(p)
         val width = p.x
@@ -445,7 +428,7 @@ class MissionActivity : BaseTempActivity() {
         }
         // 处理写法
         textSize = TangoConstants.DEFAULT_WRITING_TEXT_SIZE
-        writingView!!.textSize = textSize.toFloat()
+        writingView.textSize = textSize.toFloat()
         writingView.text = newTango.writing
         writingView.visibility = View.INVISIBLE
         var writingLength = measureWidth(writingView)
@@ -598,6 +581,14 @@ class MissionActivity : BaseTempActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    override fun onResume() {
+        super.onResume()
+        countView!!.text = "今日复习：${TangoOperator.review}\n" +
+                "今日已记：${TangoOperator.study}\n" +
+                "今日完成任务：${DataManager.todayMission}"
+    }
+
     /**
      * 设置日文字体
      */
@@ -606,12 +597,11 @@ class MissionActivity : BaseTempActivity() {
         val title = DataManager.japaneseFontTitle
         val font = TangoConstants.JAPANESE_FONT_MAP[title]
         // 获取设置的字体
-        val mgr = assets
+        val mgr = context.assets
         var tf = Typeface.DEFAULT
         if (font != null) {
             tf = Typeface.createFromAsset(mgr, font)
         }
-        // 为日文设置字体
         pronunciationView.typeface = tf
         writingView.typeface = tf
     }

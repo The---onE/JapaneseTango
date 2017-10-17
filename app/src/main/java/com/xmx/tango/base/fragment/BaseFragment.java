@@ -1,6 +1,7 @@
 package com.xmx.tango.base.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +14,16 @@ public abstract class BaseFragment extends BFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = getContentView(inflater, container);
+        return getContentView(inflater, container);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         initView(view);
         setListener(view);
         processLogic(view, savedInstanceState);
-
-        return view;
     }
 
     protected abstract View getContentView(LayoutInflater inflater, ViewGroup container);

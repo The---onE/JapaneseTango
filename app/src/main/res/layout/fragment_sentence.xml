@@ -13,20 +13,20 @@
         android:text="@string/choose_file" />
 
     <ListView
-        android:id="@+id/list_sentence"
+        android:id="@+id/sentenceList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/edit_sentence"
+        android:layout_above="@+id/editSentence"
         android:layout_below="@+id/btnChooseFile" />
 
     <EditText
-        android:id="@+id/edit_sentence"
+        android:id="@+id/editSentence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_kuromoji" />
+        android:layout_above="@+id/btnKuromoji" />
 
     <Button
-        android:id="@+id/btn_kuromoji"
+        android:id="@+id/btnKuromoji"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

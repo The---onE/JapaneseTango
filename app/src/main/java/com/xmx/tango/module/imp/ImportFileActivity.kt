@@ -61,7 +61,6 @@ class ImportFileActivity : BaseTempActivity() {
                     // 处理文件路径
                         this.contains("primary:") -> {
                             val split = this.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-//                            val fileType = split[0]
                             android.os.Environment.getExternalStorageDirectory()
                                     .toString() + "/" + split[1]
                         }
