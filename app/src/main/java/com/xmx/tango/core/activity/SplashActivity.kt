@@ -19,6 +19,7 @@ import com.xmx.tango.module.crud.TangoListChangeEvent
 import com.xmx.tango.module.tango.TangoManager
 import com.xmx.tango.base.activity.BaseSplashActivity
 import com.xmx.tango.common.data.DataManager
+import com.xmx.tango.utils.ExceptionUtil
 import com.xmx.tango.utils.Timer
 import kotlinx.android.synthetic.main.activity_splash.*
 
@@ -150,7 +151,7 @@ class SplashActivity : BaseSplashActivity() {
                                     "Score=" + newScore)
                         }
                     } catch (e: Exception) {
-                        filterException(e)
+                        ExceptionUtil.normalException(e, this@SplashActivity)
                     }
                     return null
                 }

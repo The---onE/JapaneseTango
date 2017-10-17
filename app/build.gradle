@@ -44,7 +44,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'
     compile 'com.google.android:flexbox:0.3.0'
     // 经典框架
-    compile 'org.xutils:xutils:3.3.36'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
     // 常用工具

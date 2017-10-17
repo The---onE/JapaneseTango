@@ -28,8 +28,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-
-import java.util.Random
+import java.util.*
 
 /**
  * Created by The_onE on 2017/10/16.
@@ -256,12 +255,14 @@ class HomeFragment : BaseFragment() {
      */
     private fun checkAnswer() {
         if (pronunciationFlag && writingFlag && meaningFlag) {
-            // 显示答案按钮渐隐
-            answerLine.visibility = View.GONE
-            answerButton.isEnabled = false
-            val animator = ObjectAnimator.ofFloat(answerButton, "alpha", 1f, 0f) // 渐出效果
-            animator.duration = 300
-            animator.start()
+            answerButton?.let {
+                // 显示答案按钮渐隐
+                answerLine.visibility = View.GONE
+                answerButton.isEnabled = false
+                val animator = ObjectAnimator.ofFloat(answerButton, "alpha", 1f, 0f) // 渐出效果
+                animator.duration = 300
+                animator.start()
+            }
         }
     }
 
@@ -269,11 +270,13 @@ class HomeFragment : BaseFragment() {
      * 渐入显示文本
      * @param tv 要显示的TextView
      */
-    private fun showTextView(tv: TextView) {
-        tv.visibility = View.VISIBLE
-        val animator = ObjectAnimator.ofFloat(tv, "alpha", 0f, 1f) // 渐入效果
-        animator.duration = 300
-        animator.start()
+    private fun showTextView(tv: TextView?) {
+        tv?.apply {
+            tv.visibility = View.VISIBLE
+            val animator = ObjectAnimator.ofFloat(tv, "alpha", 0f, 1f) // 渐入效果
+            animator.duration = 300
+            animator.start()
+        }
     }
 
     /**
@@ -584,7 +587,7 @@ class HomeFragment : BaseFragment() {
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-        countView!!.text = "今日复习：${TangoOperator.review}\n" +
+        countView.text = "今日复习：${TangoOperator.review}\n" +
                 "今日已记：${TangoOperator.study}\n" +
                 "今日完成任务：${DataManager.todayMission}"
     }

@@ -4,10 +4,7 @@ import android.app.Activity
 import android.app.Service
 import android.support.multidex.MultiDexApplication
 
-import com.xmx.tango.BuildConfig
 import com.xmx.tango.common.data.DataManager
-
-import org.xutils.x
 
 import java.util.LinkedList
 
@@ -73,10 +70,6 @@ class MyApplication : MultiDexApplication() {
         super.onCreate()
         // 设置当前实例
         ins = this
-
-        // 注册xUtils
-        x.Ext.init(this)
-        x.Ext.setDebug(BuildConfig.DEBUG)
 
         // 注册异常处理器
         CrashHandler.init(this)

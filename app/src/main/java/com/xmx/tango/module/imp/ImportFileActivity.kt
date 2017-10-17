@@ -6,6 +6,7 @@ import android.os.Bundle
 
 import com.xmx.tango.R
 import com.xmx.tango.base.activity.BaseTempActivity
+import com.xmx.tango.utils.ExceptionUtil
 import kotlinx.android.synthetic.main.activity_import_file.*
 
 import java.util.ArrayList
@@ -109,7 +110,7 @@ class ImportFileActivity : BaseTempActivity() {
             // 显示导入对话框提示导入
             ImportUtil.showFileDialog(dialogStrings, filePath, type, this@ImportFileActivity)
         } catch (e: Exception) {
-            filterException(e)
+            ExceptionUtil.normalException(e, this)
         }
     }
 }
