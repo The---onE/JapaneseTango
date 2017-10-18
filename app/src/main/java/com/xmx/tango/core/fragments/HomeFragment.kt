@@ -50,27 +50,21 @@ class HomeFragment : BaseFragment() {
 
     // 显示发音定时器
     private var pronunciationFlag = false
-    private var pronunciationTimer = object : Timer() {
-        override fun timer() {
-            showPronunciation()
-            checkAnswer()
-        }
+    private var pronunciationTimer = Timer {
+        showPronunciation()
+        checkAnswer()
     }
     // 显示写法定时器
     private var writingFlag = false
-    private var writingTimer = object : Timer() {
-        override fun timer() {
-            showWriting()
-            checkAnswer()
-        }
+    private var writingTimer = Timer {
+        showWriting()
+        checkAnswer()
     }
     // 显示解释定时器
     private var meaningFlag = false
-    private var meaningTimer = object : Timer() {
-        override fun timer() {
-            showMeaning()
-            checkAnswer()
-        }
+    private var meaningTimer = Timer {
+        showMeaning()
+        checkAnswer()
     }
 
     /**
@@ -339,10 +333,8 @@ class HomeFragment : BaseFragment() {
         } else {
             // 若单语信息未全部显示则显示全部信息，并延迟一定时间后加载新单语
             showAnswer()
-            object : Timer() {
-                override fun timer() {
-                    loadNewTango()
-                }
+            Timer {
+                loadNewTango()
             }.start(TangoConstants.NEW_TANGO_DELAY, true)
         }
     }
@@ -388,12 +380,10 @@ class HomeFragment : BaseFragment() {
         animator.duration = 300
         animator.start()
         // 防误触，一定时间后可以操作
-        object : Timer() {
-            override fun timer() {
-                operateFlag = true
-                rememberButton.setBackgroundColor(Color.TRANSPARENT)
-                forgetButton.setBackgroundColor(Color.TRANSPARENT)
-            }
+        Timer {
+            operateFlag = true
+            rememberButton.setBackgroundColor(Color.TRANSPARENT)
+            forgetButton.setBackgroundColor(Color.TRANSPARENT)
         }.start(TangoConstants.INTERVAL_TIME_MIN, true)
         // 记录上一个单语
         if (tango != null) {

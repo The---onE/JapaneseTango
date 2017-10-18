@@ -28,11 +28,9 @@ import java.util.*
 
 class SplashActivity : BaseSplashActivity() {
     // 跳转至主Activity定时器
-    private val timer: Timer = object : Timer() {
-        override fun timer() {
-            timeFlag = true
-            skip()
-        }
+    private val timer = Timer {
+        timeFlag = true
+        skip()
     }
     private var readyFlag = false // 数据库是否已更新完毕
     private var timeFlag = false // 是否已过自动跳转时间

@@ -1,7 +1,6 @@
 package com.xmx.tango.module.log
 
 import android.os.Bundle
-import android.view.View
 
 import com.xmx.tango.R
 import com.xmx.tango.base.activity.BaseTempActivity

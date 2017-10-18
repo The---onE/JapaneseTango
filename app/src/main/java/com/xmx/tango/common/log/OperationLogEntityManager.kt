@@ -1,6 +1,6 @@
 package com.xmx.tango.common.log
 
-import com.xmx.tango.common.data.sql.BaseSQLEntityManager
+import com.xmx.tango.common.data.sql.BaseSqlEntityManager
 
 import org.greenrobot.eventbus.EventBus
 
@@ -10,7 +10,7 @@ import java.util.Date
  * Created by The_onE on 2016/9/4.
  * 操作日志实体管理器
  */
-object OperationLogEntityManager : BaseSQLEntityManager<OperationLog>() {
+object OperationLogEntityManager : BaseSqlEntityManager<OperationLog>() {
 
     init {
         tableName = "OperationLog"

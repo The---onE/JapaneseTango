@@ -50,7 +50,7 @@ object VibratorUtil {
             vibrator.vibrate(longArrayOf(pauseTime, vibrateTime), 0)
         } else {
             // 0, V, P, V, P, V, ...
-            val array = Array<Long>(repeatTimes * 2, { i ->
+            val array = Array(repeatTimes * 2, { i ->
                 when (i) {
                     0 -> 0
                     else -> when (i % 2) {

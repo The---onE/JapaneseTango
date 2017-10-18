@@ -209,10 +209,8 @@ class TestActivity : BaseTempActivity() {
         enableFlag = false
         keyboardView.disable()
         // 一定时间后加载新单语
-        object : Timer() {
-            override fun timer() {
-                loadNewTango()
-            }
+        Timer {
+            loadNewTango()
         }.start(TangoConstants.SHOW_ANSWER_DELAY, true)
     }
 
@@ -250,10 +248,8 @@ class TestActivity : BaseTempActivity() {
                         TangoConstants.TEST_RIGHT_VIBRATE_TIME)
             }
             // 一定时间后加载新单语
-            object : Timer() {
-                override fun timer() {
-                    loadNewTango()
-                }
+            Timer {
+                loadNewTango()
             }.start(TangoConstants.NEW_TANGO_DELAY, true)
         }
     }

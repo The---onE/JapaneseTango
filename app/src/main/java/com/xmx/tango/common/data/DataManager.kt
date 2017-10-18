@@ -110,8 +110,6 @@ object DataManager {
         get() = getInt("service_interval", 5000)
         set(count) = setInt("service_interval", count)
 
-    private fun getInt(key: String): Int = mData.getInt(key, -1)
-
     private fun getInt(key: String, def: Int): Int = mData.getInt(key, def)
 
     private fun setInt(key: String, value: Int) {
@@ -120,20 +118,12 @@ object DataManager {
         editor.apply()
     }
 
-    private fun getFloat(key: String): Float = mData.getFloat(key, -1f)
-
     private fun getFloat(key: String, def: Float): Float = mData.getFloat(key, def)
 
     private fun setFloat(key: String, value: Float) {
         val editor = mData.edit()
         editor.putFloat(key, value)
         editor.apply()
-    }
-
-    private fun intIncrease(key: String, delta: Int) {
-        var i = getInt(key)
-        i += delta
-        setInt(key, i)
     }
 
     private fun getLong(key: String, def: Long): Long = mData.getLong(key, def)

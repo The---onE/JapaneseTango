@@ -53,29 +53,23 @@ class MissionActivity : BaseTempActivity() {
     }
 
     // 定时显示发音
-    private var pronunciationTimer: Timer = object : Timer() {
-        override fun timer() {
-            showPronunciation()
-            checkAnswer()
-        }
+    private var pronunciationTimer = Timer {
+        showPronunciation()
+        checkAnswer()
     }
     private var pronunciationFlag = false // 是否已显示发音
 
     // 定时显示写法
-    private var writingTimer: Timer = object : Timer() {
-        override fun timer() {
-            showWriting()
-            checkAnswer()
-        }
+    private var writingTimer = Timer {
+        showWriting()
+        checkAnswer()
     }
     private var writingFlag = false // 是否已显示写法
 
     // 定时显示解释
-    private var meaningTimer: Timer = object : Timer() {
-        override fun timer() {
-            showMeaning()
-            checkAnswer()
-        }
+    private var meaningTimer = Timer {
+        showMeaning()
+        checkAnswer()
     }
     private var meaningFlag = false // 是否已显示解释
 
@@ -358,10 +352,8 @@ class MissionActivity : BaseTempActivity() {
         } else {
             // 答案未显示，则显示答案，并延迟加载新单语
             showAnswer()
-            object : Timer() {
-                override fun timer() {
-                    loadNewTango()
-                }
+            Timer {
+                loadNewTango()
             }.start(TangoConstants.NEW_TANGO_DELAY, true)
         }
     }
@@ -402,12 +394,10 @@ class MissionActivity : BaseTempActivity() {
         animator.duration = 300
         animator.start()
         // 恢复按钮状态
-        object : Timer() {
-            override fun timer() {
-                operateFlag = true
-                rememberButton.setBackgroundColor(Color.TRANSPARENT)
-                forgetButton.setBackgroundColor(Color.TRANSPARENT)
-            }
+        Timer {
+            operateFlag = true
+            rememberButton.setBackgroundColor(Color.TRANSPARENT)
+            forgetButton.setBackgroundColor(Color.TRANSPARENT)
         }.start(TangoConstants.INTERVAL_TIME_MIN, true)
         // 记录上一个单语
         if (tango != null) {

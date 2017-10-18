@@ -1,7 +1,7 @@
 package com.xmx.tango.module.tango
 
 import com.xmx.tango.common.data.DataManager
-import com.xmx.tango.common.data.sql.BaseSQLEntityManager
+import com.xmx.tango.common.data.sql.BaseSqlEntityManager
 
 import java.util.ArrayList
 
@@ -9,7 +9,7 @@ import java.util.ArrayList
  * Created by The_onE on 2016/9/13.
  * 单语数据库实体管理器
  */
-object TangoEntityManager : BaseSQLEntityManager<Tango>() {
+object TangoEntityManager : BaseSqlEntityManager<Tango>() {
 
     init {
         tableName = "Tango"

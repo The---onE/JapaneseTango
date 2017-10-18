@@ -1,7 +1,6 @@
 package com.xmx.tango.module.service
 
 import android.content.Intent
-import android.os.IBinder
 
 import com.xmx.tango.base.service.BaseService
 import com.xmx.tango.common.data.DataManager
@@ -17,10 +16,8 @@ class TangoService : BaseService() {
 
     override fun processLogic(intent: Intent) {
         // 开启定时器，定时加载新单语
-        timer = object : Timer() {
-            override fun timer() {
-                loadNewTango()
-            }
+        timer = Timer {
+            loadNewTango()
         }
         timer?.start(DataManager.serviceInterval.toLong())
     }

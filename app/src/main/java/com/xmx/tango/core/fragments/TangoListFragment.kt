@@ -95,15 +95,13 @@ class TangoListFragment : BaseFragment() {
                 }
             } else {
                 itemDoubleFlag = true
-                object : Timer() {
-                    override fun timer() {
-                        if (itemDoubleFlag) { // 超时未按下第二次
-                            // 执行单按逻辑
-                            // 显示动词变形对话框
-                            showVerbDialog(tango)
-                        }
-                        itemDoubleFlag = false
+                Timer {
+                    if (itemDoubleFlag) { // 超时未按下第二次
+                        // 执行单按逻辑
+                        // 显示动词变形对话框
+                        showVerbDialog(tango)
                     }
+                    itemDoubleFlag = false
                 }.start(ViewConfiguration.getDoubleTapTimeout().toLong(), true)
             }
         }

@@ -7,8 +7,6 @@ import android.support.annotation.StringRes
 import android.util.Log
 import android.widget.Toast
 
-import java.util.ArrayList
-
 /**
  * 字符串工具类
  *

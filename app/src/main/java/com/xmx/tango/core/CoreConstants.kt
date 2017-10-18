@@ -19,7 +19,6 @@ object CoreConstants {
 
     val LONGEST_EXIT_TIME: Long = 2000 // 再按一次退出程序响应时间
     val SPLASH_TIME: Long = 2000 // 启动页自动跳转时间
-    val LONGEST_SPLASH_TIME: Long = 6000 // 启动页等待登录成功最长事件
 
     val SECOND_TIME: Long = 1000 // 一秒钟毫秒数
     val MINUTE_TIME = 60 * SECOND_TIME // 一分钟毫秒数

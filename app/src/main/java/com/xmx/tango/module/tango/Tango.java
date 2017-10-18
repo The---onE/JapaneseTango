@@ -4,12 +4,12 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.xmx.tango.common.data.sql.ISqlEntity;
 import com.xmx.tango.module.net.TinyTango;
 
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Created by The_onE on 2016/9/13.
@@ -35,6 +35,7 @@ public class Tango implements ISqlEntity, Parcelable {
     public Tango() {
     }
 
+    @NonNull
     @Override
     public String tableFields() {
         return "ID integer not null primary key autoincrement, " +
@@ -54,6 +55,7 @@ public class Tango implements ISqlEntity, Parcelable {
                 "Type text";
     }
 
+    @NonNull
     @Override
     public ContentValues getContent() {
         ContentValues content = new ContentValues();
@@ -77,8 +79,9 @@ public class Tango implements ISqlEntity, Parcelable {
         return content;
     }
 
+    @NonNull
     @Override
-    public Tango convertToEntity(Cursor c) {
+    public Tango convertToEntity(@NonNull Cursor c) {
         Tango entity = new Tango();
         entity.id = c.getLong(0);
         entity.writing = c.getString(1);
@@ -98,19 +101,6 @@ public class Tango implements ISqlEntity, Parcelable {
 
         return entity;
     }
-
-    public static Tango convertFromJson(Map<String, Object> map) {
-        Tango entity = new Tango();
-        entity.id = (long) map.get("id");
-        entity.writing = (String) map.get("writing");
-        entity.pronunciation = (String) map.get("pronunciation");
-        entity.meaning = (String) map.get("meaning");
-        entity.tone = (int) map.get("tone");
-        entity.partOfSpeech = (String) map.get("partOfSpeech");
-
-        return entity;
-    }
-
 
     @Override
     public int describeContents() {

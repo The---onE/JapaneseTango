@@ -3,7 +3,6 @@ package com.xmx.tango.module.imp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
-import android.os.IBinder
 
 import com.xmx.tango.base.service.BaseService
 import com.xmx.tango.common.data.sql.InsertCallback

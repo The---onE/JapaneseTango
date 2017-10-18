@@ -2,8 +2,6 @@ package com.xmx.tango.module.sentence
 
 import java.io.BufferedReader
 import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
 import java.util.TreeMap
 import java.util.regex.Pattern
 
@@ -27,7 +25,7 @@ object LrcParser {
     /**
      * 将输入流中的信息解析，返回一个LrcInfo对象
      *
-     * @param inputStream 输入流
+     * @param reader 输入流
      * @return 解析好的LrcInfo对象
      * @throws IOException
      */
