@@ -14,7 +14,7 @@ import java.util.ArrayList
  * Created by The_onE on 2017/10/14.
  * SQLite数据库管理基类，提供常用的增删改查功能
  */
-abstract class BaseSQLEntityManager<Entity : ISqlEntity> {
+abstract class BaseSqlEntityManager<Entity : ISqlEntity> {
     // 管理数据库连接
     protected var database: SQLiteDatabase? = null
     // 数据变更时会更新版本
@@ -138,7 +138,7 @@ abstract class BaseSQLEntityManager<Entity : ISqlEntity> {
      * @param callback 事务执行回调
      * @return 事务是否执行成功
      */
-    fun operationInTransaction(callback: TransactionCallback): Boolean {
+    private fun operationInTransaction(callback: TransactionCallback): Boolean {
         if (!checkDatabase()) {
             return false
         }
@@ -156,31 +156,6 @@ abstract class BaseSQLEntityManager<Entity : ISqlEntity> {
             database?.endTransaction()
         }
         return flag
-    }
-
-    /**
-     * 插入多条实体数据，在同一事务中
-     * @param entities 要插入的实体列表
-     * @return 是否全部插入成功
-     */
-    fun insertData(entities: List<Entity>): Boolean {
-        return operationInTransaction(object : TransactionCallback() {
-            @Throws(Exception::class)
-            override fun operation(): Int {
-                for (entity in entities) {
-                    database?.insert(tableName, null, entity.getContent())
-                }
-                return entities.size
-            }
-
-            override fun success(total: Int) {
-
-            }
-
-            override fun error(e: Exception) {
-                ExceptionUtil.normalException(e, null)
-            }
-        })
     }
 
     /**

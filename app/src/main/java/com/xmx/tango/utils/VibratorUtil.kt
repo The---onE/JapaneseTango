@@ -1,6 +1,8 @@
 package com.xmx.tango.utils
 
 import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
 import android.os.Vibrator
 
 /**
@@ -9,6 +11,8 @@ import android.os.Vibrator
  */
 
 object VibratorUtil {
+    private var AMPLITUDE = 127 // 震动强度
+
     /**
      * 获取系统震动器
      * @param[context] 当前上下文
@@ -24,7 +28,11 @@ object VibratorUtil {
      */
     fun vibrate(context: Context, time: Long) {
         val vibrator = getVibrator(context)
-        vibrator.vibrate(time)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(time, AMPLITUDE))
+        } else {
+            vibrator.vibrate(time)
+        }
     }
 
     /**
@@ -33,7 +41,11 @@ object VibratorUtil {
      */
     fun vibrate(context: Context) {
         val vibrator = getVibrator(context)
-        vibrator.vibrate(longArrayOf(0, 10000), 0)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 10000), 0))
+        } else {
+            vibrator.vibrate(longArrayOf(0, 10000), 0)
+        }
     }
 
     /**
@@ -60,7 +72,11 @@ object VibratorUtil {
                     }
                 }
             })
-            vibrator.vibrate(array.toLongArray(), -1)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(array.toLongArray(), -1))
+            } else {
+                vibrator.vibrate(array.toLongArray(), -1)
+            }
         }
     }
 
@@ -72,7 +88,11 @@ object VibratorUtil {
      */
     fun vibrate(context: Context, pattern: LongArray, repeat: Int) {
         val vibrator = getVibrator(context)
-        vibrator.vibrate(pattern, repeat)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, repeat))
+        } else {
+            vibrator.vibrate(pattern, repeat)
+        }
     }
 
     /**
