@@ -33,7 +33,7 @@ class JapaneseFontDialog : BaseDialog() {
             inflater.inflate(R.layout.dialog_japanese_font, container)
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        fontList = view.findViewById(R.id.listFont) as ListView
+        fontList = view.findViewById(R.id.listFont)
         // 获取可以设置的字体
         keyArray = TangoConstants.JAPANESE_FONT_MAP.keys.toTypedArray()
         val adapter = object : BaseAdapter() {
@@ -44,13 +44,15 @@ class JapaneseFontDialog : BaseDialog() {
             override fun getItemId(i: Int): Long = i.toLong()
 
             override fun getView(i: Int, view: View?, viewGroup: ViewGroup?): View {
-                var v = view
-                var holder = ViewHolder()
-                if (v == null) {
+                val v: View
+                val holder: ViewHolder
+                if (view == null) {
                     v = LayoutInflater.from(mContext).inflate(R.layout.item_japanese_font, viewGroup, false)
-                    holder.fontView = v.findViewById(R.id.itemFont) as TextView
+                    holder = ViewHolder()
+                    holder.fontView = v.findViewById(R.id.itemFont)
                     v.tag = holder
                 } else {
+                    v = view
                     holder = v.tag as ViewHolder
                 }
                 // 设置测试文本
@@ -63,7 +65,7 @@ class JapaneseFontDialog : BaseDialog() {
                     tf = Typeface.createFromAsset(mgr, font)
                 }
                 holder.fontView?.typeface = tf
-                return v!!
+                return v
             }
         }
         fontList?.adapter = adapter

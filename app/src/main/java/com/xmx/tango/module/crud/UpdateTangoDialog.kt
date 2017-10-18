@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
@@ -48,14 +49,14 @@ class UpdateTangoDialog : BaseDialog() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         // 初始化编辑框
-        writingView = view.findViewById(R.id.writingView) as EditText
-        pronunciationView = view.findViewById(R.id.pronunciationView) as EditText
-        meaningView = view.findViewById(R.id.meaningView) as EditText
-        toneView = view.findViewById(R.id.toneView) as EditText
-        partOfSpeechView = view.findViewById(R.id.partOfSpeechView) as EditText
-        typeView = view.findViewById(R.id.typeView) as EditText
-        idView = view.findViewById(R.id.idView) as TextView
-        scoreView = view.findViewById(R.id.scoreView) as TextView
+        writingView = view.findViewById(R.id.writingView)
+        pronunciationView = view.findViewById(R.id.pronunciationView)
+        meaningView = view.findViewById(R.id.meaningView)
+        toneView = view.findViewById(R.id.toneView)
+        partOfSpeechView = view.findViewById(R.id.partOfSpeechView)
+        typeView = view.findViewById(R.id.typeView)
+        idView = view.findViewById(R.id.idView)
+        scoreView = view.findViewById(R.id.scoreView)
         tango?.apply {
             // 设置原单语信息
             writingView?.setText(this.writing)
@@ -77,7 +78,7 @@ class UpdateTangoDialog : BaseDialog() {
     }
 
     override fun setListener(view: View) {
-        view.findViewById(R.id.btnUpdate).setOnClickListener(View.OnClickListener {
+        view.findViewById<Button>(R.id.btnUpdate).setOnClickListener(View.OnClickListener {
             val writing = writingView?.text.toString()
             val pronunciation = pronunciationView?.text.toString()
             val meaning = meaningView?.text.toString()
@@ -114,7 +115,7 @@ class UpdateTangoDialog : BaseDialog() {
             }
         })
 
-        view.findViewById(R.id.btnCancel).setOnClickListener { dismiss() }
+        view.findViewById<Button>(R.id.btnCancel).setOnClickListener { dismiss() }
     }
 
     override fun processLogic(view: View, savedInstanceState: Bundle?) {

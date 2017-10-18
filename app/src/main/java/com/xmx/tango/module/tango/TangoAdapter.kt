@@ -31,21 +31,22 @@ class TangoAdapter(context: Context, data: List<Tango>) : BaseEntityAdapter<Tang
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var cv = convertView
+        val cv: View
         val holder: ViewHolder
-        if (cv == null) {
+        if (convertView == null) {
             // 生成ViewHolder
             cv = LayoutInflater.from(mContext).inflate(R.layout.item_tango, parent, false)
             holder = ViewHolder()
-            holder.writing = cv.findViewById(R.id.itemWriting) as TextView
-            holder.pronunciation = cv.findViewById(R.id.itemPronunciation) as TextView
-            holder.tone = cv.findViewById(R.id.itemTone) as TextView
-            holder.meaning = cv.findViewById(R.id.itemMeaning) as TextView
-            holder.part = cv.findViewById(R.id.itemPart) as TextView
-            holder.time = cv.findViewById(R.id.itemTime) as TextView
+            holder.writing = cv.findViewById(R.id.itemWriting)
+            holder.pronunciation = cv.findViewById(R.id.itemPronunciation)
+            holder.tone = cv.findViewById(R.id.itemTone)
+            holder.meaning = cv.findViewById(R.id.itemMeaning)
+            holder.part = cv.findViewById(R.id.itemPart)
+            holder.time = cv.findViewById(R.id.itemTime)
 
             cv.tag = holder
         } else {
+            cv = convertView
             holder = cv.tag as ViewHolder
         }
 
@@ -88,6 +89,6 @@ class TangoAdapter(context: Context, data: List<Tango>) : BaseEntityAdapter<Tang
             holder.writing?.text = "加载失败"
         }
 
-        return cv!!
+        return cv
     }
 }

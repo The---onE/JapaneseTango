@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 
 import com.xmx.tango.R
@@ -59,11 +60,11 @@ class SearchTangoDialog : BaseDialog() {
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         // 初始化编辑框
-        writingView = view.findViewById(R.id.writingView) as EditText
-        pronunciationView = view.findViewById(R.id.pronunciationView) as EditText
-        meaningView = view.findViewById(R.id.meaningView) as EditText
-        partOfSpeechView = view.findViewById(R.id.partOfSpeechView) as EditText
-        typeView = view.findViewById(R.id.typeView) as EditText
+        writingView = view.findViewById(R.id.writingView)
+        pronunciationView = view.findViewById(R.id.pronunciationView)
+        meaningView = view.findViewById(R.id.meaningView)
+        partOfSpeechView = view.findViewById(R.id.partOfSpeechView)
+        typeView = view.findViewById(R.id.typeView)
         // 根据本机保存的数据设置编辑框
         writingView?.setText(TangoManager.writing)
         pronunciationView?.setText(TangoManager.pronunciation)
@@ -74,9 +75,9 @@ class SearchTangoDialog : BaseDialog() {
 
     override fun setListener(view: View) {
         // 打开排序对话框
-        view.findViewById(R.id.btnSort).setOnClickListener { orderTango() }
+        view.findViewById<Button>(R.id.btnSort).setOnClickListener { orderTango() }
         // 进行筛选
-        view.findViewById(R.id.btnSearch).setOnClickListener {
+        view.findViewById<Button>(R.id.btnSearch).setOnClickListener {
             val writing = writingView?.text.toString()
             val pronunciation = pronunciationView?.text.toString()
             val meaning = meaningView?.text.toString()
@@ -100,7 +101,7 @@ class SearchTangoDialog : BaseDialog() {
             dismiss()
         }
         // 取消筛选
-        view.findViewById(R.id.btnCancel).setOnClickListener { dismiss() }
+        view.findViewById<Button>(R.id.btnCancel).setOnClickListener { dismiss() }
     }
 
     override fun processLogic(view: View, savedInstanceState: Bundle?) {

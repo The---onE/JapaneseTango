@@ -26,32 +26,33 @@ class OperationLogAdapter(context: Context, data: List<OperationLog>) : BaseEnti
 
     @SuppressLint("SimpleDateFormat")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var cv = convertView
+        val cv: View
         val holder: ViewHolder
-        if (cv == null) {
+        if (convertView == null) {
             // 生成新View
             cv = LayoutInflater.from(mContext).inflate(R.layout.item_operation_log, parent, false)
             // 生成ViewHolder
             holder = ViewHolder()
-            holder.operation = cv.findViewById(R.id.item_operation) as TextView
-            holder.time = cv.findViewById(R.id.itemTime) as TextView
+            holder.operation = cv.findViewById(R.id.item_operation)
+            holder.time = cv.findViewById(R.id.itemTime)
             cv.tag = holder
         } else {
+            cv = convertView
             holder = cv.tag as ViewHolder
         }
         // 处理数据
         if (position < mData.size) {
             val log = mData[position]
             // 日志内容
-            holder.operation!!.text = log.mOperation
+            holder.operation?.text = log.mOperation
             // 日志时间
             val df = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             val timeString = df.format(log.mTime)
-            holder.time!!.text = timeString
+            holder.time?.text = timeString
         } else {
-            holder.operation!!.text = "加载失败"
+            holder.operation?.text = "加载失败"
         }
 
-        return cv!!
+        return cv
     }
 }

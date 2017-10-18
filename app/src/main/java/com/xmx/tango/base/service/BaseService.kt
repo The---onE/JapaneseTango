@@ -69,7 +69,7 @@ abstract class BaseService : Service() {
         val notificationIntent = Intent(this, iActivity)
         val contentIntent = PendingIntent.getActivity(this, notificationId,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val mBuilder = NotificationCompat.Builder(this)
+        val mBuilder = NotificationCompat.Builder(this, content)
                 .setSmallIcon(sIcon)
                 .setContentTitle(title)
                 .setContentText(content)

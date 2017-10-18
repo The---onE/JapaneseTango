@@ -59,16 +59,17 @@ class SentenceFragment : BaseFragment() {
         override fun getItemId(i: Int): Long = i.toLong()
 
         override fun getView(i: Int, view: View?, viewGroup: ViewGroup): View {
-            var v = view
+            val v : View
             val holder: ViewHolder
-            if (v == null) {
+            if (view == null) {
                 v = LayoutInflater.from(context).inflate(R.layout.item_sentence, viewGroup, false)
                 holder = ViewHolder()
-                holder.textView = v!!.findViewById(R.id.itemSentence) as TextView
+                holder.textView = v.findViewById(R.id.itemSentence)
 
                 v.tag = holder
             } else {
-                holder = v.tag as ViewHolder
+                v = view
+                holder = view.tag as ViewHolder
             }
             holder.textView!!.text = sentences[i]
             if (typeface != null) {

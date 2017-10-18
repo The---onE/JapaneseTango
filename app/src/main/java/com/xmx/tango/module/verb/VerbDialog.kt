@@ -295,55 +295,55 @@ class VerbDialog : BaseDialog() {
                         }
                     else -> return
                 }
-                val cishuView = view.findViewById(R.id.tv_verb_cishu) as TextView
+                val cishuView = view.findViewById<TextView>(R.id.tv_verb_cishu)
                 cishuView.text = cishu
                 textViews.add(cishuView)
 
-                val lianyongView = view.findViewById(R.id.tv_verb_lianyong) as TextView
+                val lianyongView = view.findViewById<TextView>(R.id.tv_verb_lianyong)
                 lianyongView.text = lianyong
                 textViews.add(lianyongView)
 
-                val teView = view.findViewById(R.id.tv_verb_te) as TextView
+                val teView = view.findViewById<TextView>(R.id.tv_verb_te)
                 teView.text = te
                 textViews.add(teView)
 
-                val taView = view.findViewById(R.id.tv_verb_ta) as TextView
+                val taView = view.findViewById<TextView>(R.id.tv_verb_ta)
                 taView.text = ta
                 textViews.add(taView)
 
-                val weiranView = view.findViewById(R.id.tv_verb_weiran) as TextView
+                val weiranView = view.findViewById<TextView>(R.id.tv_verb_weiran)
                 weiranView.text = weiran
                 textViews.add(weiranView)
 
-                val yizhiView = view.findViewById(R.id.tv_verb_yizhi) as TextView
+                val yizhiView = view.findViewById<TextView>(R.id.tv_verb_yizhi)
                 yizhiView.text = yizhi
                 textViews.add(yizhiView)
 
-                val minglingView = view.findViewById(R.id.tv_verb_mingling) as TextView
+                val minglingView = view.findViewById<TextView>(R.id.tv_verb_mingling)
                 minglingView.text = mingling
                 textViews.add(minglingView)
 
-                val jiadingView = view.findViewById(R.id.tv_verb_jiading) as TextView
+                val jiadingView = view.findViewById<TextView>(R.id.tv_verb_jiading)
                 jiadingView.text = jiading
                 textViews.add(jiadingView)
 
-                val kenengView = view.findViewById(R.id.tv_verb_keneng) as TextView
+                val kenengView = view.findViewById<TextView>(R.id.tv_verb_keneng)
                 kenengView.text = keneng
                 textViews.add(kenengView)
 
-                val shiyiView = view.findViewById(R.id.tv_verb_shiyi) as TextView
+                val shiyiView = view.findViewById<TextView>(R.id.tv_verb_shiyi)
                 shiyiView.text = shiyi
                 textViews.add(shiyiView)
 
-                val beidongView = view.findViewById(R.id.tv_verb_beidong) as TextView
+                val beidongView = view.findViewById<TextView>(R.id.tv_verb_beidong)
                 beidongView.text = beidong
                 textViews.add(beidongView)
 
-                val zifaView = view.findViewById(R.id.tv_verb_zifa) as TextView
+                val zifaView = view.findViewById<TextView>(R.id.tv_verb_zifa)
                 zifaView.text = zifa
                 textViews.add(zifaView)
 
-                val shiyibeidongView = view.findViewById(R.id.tv_verb_shiyibeidong) as TextView
+                val shiyibeidongView = view.findViewById<TextView>(R.id.tv_verb_shiyibeidong)
                 shiyibeidongView.text = shiyibeidong
                 textViews.add(shiyibeidongView)
 

@@ -39,7 +39,7 @@ object NotificationUtils {
         val contentIntent = PendingIntent.getBroadcast(context, id, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
         // 生成通知
-        val mBuilder = NotificationCompat.Builder(context)
+        val mBuilder = NotificationCompat.Builder(context, content)
                 .setSmallIcon(sIcon)
                 .setContentTitle(title)
                 .setContentText(content)

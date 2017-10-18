@@ -54,11 +54,11 @@ class SentenceActivity : BaseTempActivity() {
                     // 生成一个成分View
                     val v = View.inflate(this@SentenceActivity, R.layout.item_sentence_tango, null)
                     // 写法
-                    val writingItem = v.findViewById(R.id.writingView) as TextView
+                    val writingItem = v.findViewById<TextView>(R.id.writingView)
                     writingItem.typeface = typeface
                     writingItem.text = token.surface
                     // 读音
-                    val readingItem = v.findViewById(R.id.readingView) as TextView
+                    val readingItem = v.findViewById<TextView>(R.id.readingView)
                     readingItem.typeface = typeface
                     val reading = token.reading // 读法
                     val surface = token.surface // 写法
@@ -76,12 +76,12 @@ class SentenceActivity : BaseTempActivity() {
                     }
 
                     // 词性
-                    val partItem = v.findViewById(R.id.partView) as TextView
+                    val partItem = v.findViewById<TextView>(R.id.partView) as TextView
                     partItem.typeface = typeface
                     partItem.text = token.partOfSpeechLevel1
 
                     // 点击成分时显示对应详细信息
-                    val hintItem = v.findViewById(R.id.hintView) as TextView
+                    val hintItem = v.findViewById<TextView>(R.id.hintView) as TextView
                     val s = token.surface + "\n" +
                             "品詞:" + token.partOfSpeechLevel1 + "\n" +
                             "品詞細分1:" + token.partOfSpeechLevel2 + "\n" +
