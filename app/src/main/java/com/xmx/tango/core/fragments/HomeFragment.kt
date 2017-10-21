@@ -382,8 +382,8 @@ class HomeFragment : BaseFragment() {
         // 防误触，一定时间后可以操作
         Timer {
             operateFlag = true
-            rememberButton.setBackgroundColor(Color.TRANSPARENT)
-            forgetButton.setBackgroundColor(Color.TRANSPARENT)
+            rememberButton?.setBackgroundColor(Color.TRANSPARENT)
+            forgetButton?.setBackgroundColor(Color.TRANSPARENT)
         }.start(TangoConstants.INTERVAL_TIME_MIN, true)
         // 记录上一个单语
         if (tango != null) {
