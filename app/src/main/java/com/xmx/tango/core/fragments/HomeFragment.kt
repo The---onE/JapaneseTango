@@ -287,7 +287,7 @@ class HomeFragment : BaseFragment() {
      */
     private fun delayPronunciation() {
         pronunciationTimer.stop()
-        pronunciationTimer.start((DataManager.pronunciationTime * 1000).toLong(), true)
+        pronunciationTimer.start((DataManager.pronunciationTime * 1000).toLong(), true, this)
     }
 
     /**
@@ -303,7 +303,7 @@ class HomeFragment : BaseFragment() {
      */
     private fun delayWriting() {
         writingTimer.stop()
-        writingTimer.start((DataManager.writingTime * 1000).toLong(), true)
+        writingTimer.start((DataManager.writingTime * 1000).toLong(), true, this)
     }
 
     /**
@@ -320,7 +320,7 @@ class HomeFragment : BaseFragment() {
      */
     private fun delayMeaning() {
         meaningTimer.stop()
-        meaningTimer.start((DataManager.meaningTime * 1000).toLong(), true)
+        meaningTimer.start((DataManager.meaningTime * 1000).toLong(), true, this)
     }
 
     /**
@@ -335,7 +335,7 @@ class HomeFragment : BaseFragment() {
             showAnswer()
             Timer {
                 loadNewTango()
-            }.start(TangoConstants.NEW_TANGO_DELAY, true)
+            }.start(TangoConstants.NEW_TANGO_DELAY, true, this)
         }
     }
 
@@ -384,7 +384,7 @@ class HomeFragment : BaseFragment() {
             operateFlag = true
             rememberButton?.setBackgroundColor(Color.TRANSPARENT)
             forgetButton?.setBackgroundColor(Color.TRANSPARENT)
-        }.start(TangoConstants.INTERVAL_TIME_MIN, true)
+        }.start(TangoConstants.INTERVAL_TIME_MIN, true, this)
         // 记录上一个单语
         if (tango != null) {
             prevTango = tango
@@ -495,10 +495,10 @@ class HomeFragment : BaseFragment() {
                 val wTime = DataManager.writingTime.toInt() * 1000
                 val time = Math.min(pTime, wTime)
                 pronunciationTimer.stop()
-                pronunciationTimer.start(time.toLong(), true)
+                pronunciationTimer.start(time.toLong(), true, this)
 
                 writingTimer.stop()
-                writingTimer.start(time.toLong(), true)
+                writingTimer.start(time.toLong(), true, this)
                 showMeaning()
             }
         } else {
@@ -580,6 +580,11 @@ class HomeFragment : BaseFragment() {
         countView.text = "今日复习：${TangoOperator.review}\n" +
                 "今日已记：${TangoOperator.study}\n" +
                 "今日完成任务：${DataManager.todayMission}"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timer.release(this)
     }
 
     /**
