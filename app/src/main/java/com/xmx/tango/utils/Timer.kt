@@ -15,7 +15,7 @@ class Timer(private val timer: () -> Unit) {
         private val map = HashMap<Any, MutableList<Timer>>() // 定时器与对象关联
 
         /**
-         * 释放对象，关闭所有与对象管理的定时器
+         * 释放对象，关闭所有与对象关联的定时器
          * @param obj 释放的对象
          */
         fun release(obj: Any) {
@@ -23,9 +23,9 @@ class Timer(private val timer: () -> Unit) {
             if (list != null) {
                 for (item in list) {
                     item.stop()
-                    map.remove(obj)
                 }
             }
+            map.remove(obj)
         }
     }
 
@@ -50,9 +50,9 @@ class Timer(private val timer: () -> Unit) {
 
     /**
      * 开始计时，d毫秒后执行一次，之后每d毫秒后执行一次
-     * @param[o] 关联的对象
      * @param[d] 间隔事件
      * @param[once] 是否只执行一次
+     * @param[o] 关联的对象
      */
     fun start(d: Long, once: Boolean = false, o: Any? = null) {
         delay = d
@@ -77,10 +77,7 @@ class Timer(private val timer: () -> Unit) {
         handler.removeCallbacks(runnable)
         // 取消与对象的关联
         obj?.apply {
-            val list = map[this]
-            if (list != null) {
-                list.removeAll { it == this }
-            }
+            map[this]?.removeAll { it == this }
         }
     }
 
