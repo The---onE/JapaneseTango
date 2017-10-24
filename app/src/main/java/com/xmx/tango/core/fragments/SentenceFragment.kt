@@ -238,15 +238,7 @@ class SentenceFragment : BaseFragment() {
      * 设置日文字体
      */
     private fun setJapaneseFont() {
-        // 获取保存的字体设置
-        val title = DataManager.japaneseFontTitle
-        val font = TangoConstants.JAPANESE_FONT_MAP[title]
-        // 获取设置的字体
-        val mgr = context.assets
-        typeface = Typeface.DEFAULT
-        if (font != null) {
-            typeface = Typeface.createFromAsset(mgr, font)
-        }
+        typeface = DataManager.getJapaneseTypeface()
     }
 
     /**

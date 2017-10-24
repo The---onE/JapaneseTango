@@ -57,13 +57,7 @@ class SettingActivity : BaseTempActivity() {
         missionView.text = "${DataManager.missionCount}"
         // 设置日文字体
         japaneseFontView.text = "あいうえお 日本語"
-        val title = DataManager.japaneseFontTitle
-        val font = TangoConstants.JAPANESE_FONT_MAP[title]
-        val mgr = assets
-        var tf = Typeface.DEFAULT
-        if (font != null) {
-            tf = Typeface.createFromAsset(mgr, font)
-        }
+        val tf = DataManager.getJapaneseTypeface()
         japaneseFontView.typeface = tf
         // 设置朗读音色
         speakView.text = DataManager.tangoSpeaker
@@ -348,13 +342,7 @@ class SettingActivity : BaseTempActivity() {
 
     @Subscribe
     fun onEvent(event: JapaneseFontChangeEvent) {
-        // 设置日文字体
-        val title = DataManager.japaneseFontTitle
-        val font = TangoConstants.JAPANESE_FONT_MAP[title]
-        var tf = Typeface.DEFAULT
-        if (font != null) {
-            tf = Typeface.createFromAsset(assets, font)
-        }
+        val tf = DataManager.getJapaneseTypeface()
         japaneseFontView.typeface = tf
     }
 }

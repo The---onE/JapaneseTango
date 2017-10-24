@@ -3,6 +3,7 @@ package com.xmx.tango.common.data
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Typeface
 
 import com.xmx.tango.module.tango.TangoConstants
 
@@ -99,6 +100,18 @@ object DataManager {
     var japaneseFontTitle: String
         get() = getString("japanese_font_title", "默认")
         set(fontTitle) = setString("japanese_font_title", fontTitle)
+
+    fun getJapaneseTypeface(): Typeface {
+        // 获取保存的字体设置
+        val title = japaneseFontTitle
+        val font = TangoConstants.JAPANESE_FONT_MAP[title]
+        // 获取设置的字体
+        var tf = Typeface.DEFAULT
+        if (font != null) {
+            tf = Typeface.createFromAsset(mContext.assets, font)
+        }
+        return tf
+    }
 
     // 震动状态
     var vibratorStatus: Boolean

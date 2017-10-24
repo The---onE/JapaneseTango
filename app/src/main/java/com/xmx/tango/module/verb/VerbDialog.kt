@@ -352,13 +352,7 @@ class VerbDialog : BaseDialog() {
                     tv.textSize = TEXT_SIZE
 
                     // 设置字体
-                    val mgr = mContext?.assets
-                    val title = DataManager.japaneseFontTitle
-                    val font = TangoConstants.JAPANESE_FONT_MAP[title]
-                    var tf = Typeface.DEFAULT
-                    if (font != null) {
-                        tf = Typeface.createFromAsset(mgr, font)
-                    }
+                    val tf = DataManager.getJapaneseTypeface()
                     tv.typeface = tf
                 }
             }

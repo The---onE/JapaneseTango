@@ -258,16 +258,7 @@ class TestActivity : BaseTempActivity() {
      * 设置日文字体
      */
     private fun setJapaneseFont() {
-        // 获取保存的字体设置
-        val title = DataManager.japaneseFontTitle
-        val font = TangoConstants.JAPANESE_FONT_MAP[title]
-        // 获取设置的字体
-        var tf = Typeface.DEFAULT
-        val mgr = assets
-        if (font != null) {
-            tf = Typeface.createFromAsset(mgr, font)
-        }
-        // 为日文设置字体
+        val tf = DataManager.getJapaneseTypeface()
         testEdit.typeface = tf
         writingView.typeface = tf
     }
