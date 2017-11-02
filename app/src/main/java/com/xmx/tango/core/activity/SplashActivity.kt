@@ -119,7 +119,7 @@ class SplashActivity : BaseSplashActivity() {
                             "Month=" + (nowCalendar.get(Calendar.MONTH) + 1),
                             "Date=" + nowCalendar.get(Calendar.DATE))
             if (todayData == null) {
-                // 添加今天打开签到数据
+                // 添加今天打卡签到数据
                 todayData = DateData()
                 todayData.year = nowCalendar.get(Calendar.YEAR)
                 todayData.month = nowCalendar.get(Calendar.MONTH) + 1
@@ -137,8 +137,8 @@ class SplashActivity : BaseSplashActivity() {
                 override fun doInBackground(vararg voids: Void?): Void? {
                     try {
                         val tangoList = TangoManager.tangoList
-                        // 将所有分数大于0的单语进行遗忘减分
-                        tangoList.filter { it.score > 0 }.forEach {
+                        // 将所有分数大于1的单语进行遗忘减分
+                        tangoList.filter { it.score > 1 }.forEach {
                             var newScore = TangoConstants.forgottenScore(it.score)
                             if (newScore <= 0) {
                                 // 学习过的单语最低分为1
